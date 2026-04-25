@@ -38,7 +38,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group" aria-label="MindSync">
-          <img src="/brand/logo.png" alt="" width={44} height={44} className="block" />
+          <img src="/brand/logo-transparent.png" alt="" width={44} height={44} className="block" />
           <span className="text-ms-ink-900 font-grotesk text-[17px] tracking-tight font-bold leading-none">MindSync</span>
         </a>
 
