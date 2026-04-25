@@ -4,7 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-MindSync public landing page (Kuwait AI automation agency). Bilingual AR/EN marketing site driving WhatsApp demo bookings. Business context, brand tokens, and bundle pricing live in the sibling `MindSync/` repo — see `MindSync/CLAUDE.md` and `MindSync/brand-identity.md`. A local `brand-identity.md` mirror exists here.
+MindSync public landing page (Kuwait AI automation agency). Bilingual AR/EN marketing site driving WhatsApp demo bookings.
+
+- **Live:** https://www.mindsynckw.com (since 2026-04-25)
+- **GitHub:** https://github.com/abdulazizfaras93-dotcom/mindsync-web (private, `main`)
+- **Netlify site:** `mindsync-web` — auto-deploys on push to `main`, Node 20
+
+Business context, brand tokens, and bundle pricing live in the sibling `MindSync/` repo — see `MindSync/CLAUDE.md` and `MindSync/brand-identity.md`. A local `brand-identity.md` mirror exists here. The canonical logo PNG is at `public/brand/logo.png` (mirror of `MindSync/assets/logo.png`).
 
 ## Stack
 
@@ -17,7 +23,7 @@ MindSync public landing page (Kuwait AI automation agency). Bilingual AR/EN mark
 
 - `npm install`
 - `npm run dev` — Next dev server on :3000
-- `npm run build` — production build
+- `npm run build` — **fails locally on Node 25.** Push to `main` and let Netlify CI build instead.
 - `npm run start` — serve built app
 
 No test or lint script is configured. ESLint config lives in `eslint.config.mjs` (run via `npx eslint .`).
