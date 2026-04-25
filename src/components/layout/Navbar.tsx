@@ -37,24 +37,9 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3 group">
-          <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
-            <defs>
-              <linearGradient id="navGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#153E2D"/>
-                <stop offset="100%" stopColor="#BF8D38"/>
-              </linearGradient>
-            </defs>
-            <path d="M 12 44 C 12 28 20 18 32 18 C 44 18 52 28 52 44" stroke="url(#navGrad)" strokeWidth="5" fill="none" strokeLinecap="round"/>
-            <path d="M 22 44 C 22 34 26 28 32 28 C 38 28 42 34 42 44" stroke="#BF8D38" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-            <circle cx="12" cy="44" r="4" fill="#BF8D38"/>
-            <circle cx="52" cy="44" r="4" fill="#BF8D38"/>
-            <circle cx="32" cy="18" r="3" fill="#153E2D" stroke="#BF8D38" strokeWidth="1.5"/>
-          </svg>
-          <div className="flex flex-col leading-none">
-            <span className="text-ms-ink-900 font-grotesk font-700 text-[17px] tracking-tight font-bold">MindSync</span>
-            <span className="text-ms-ink-600 font-arabic text-[11px] font-light" style={{fontFamily:'Noto Kufi Arabic'}}>مايند سينك</span>
-          </div>
+        <a href="#" className="flex items-center gap-3 group" aria-label="MindSync">
+          <img src="/brand/logo.png" alt="" width={44} height={44} className="block" />
+          <span className="text-ms-ink-900 font-grotesk text-[17px] tracking-tight font-bold leading-none">MindSync</span>
         </a>
 
         {/* Desktop nav */}
