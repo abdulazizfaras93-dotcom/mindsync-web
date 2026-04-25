@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Kufi+Arabic:wght@500;700&family=JetBrains+Mono:wght@500&display=swap');
+:root{
+  --green:#153E2D; --green-deep:#0F2E22; --green-mid:#1C5038;
+  --gold:#BF8D38; --gold-light:#D9A85A;
+  --ivory:#FBFAF5; --ivory-2:#F5F3EC;
+  --ink:#0E1512; --ink-muted:#4A5550;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:1200px;height:630px;overflow:hidden;}
+body{font-family:'Space Grotesk',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;}
+.ar{font-family:'Noto Kufi Arabic',sans-serif;direction:rtl;}
+.mono{font-family:'JetBrains Mono',monospace;}

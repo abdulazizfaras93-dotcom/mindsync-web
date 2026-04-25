@@ -20,9 +20,33 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
+const SITE_URL = 'https://www.mindsynckw.com'
+const TITLE = 'MindSync — Your Business, Automated | أعمالك مؤتمتة'
+const DESCRIPTION = "Kuwait's only full-stack AI automation agency for SMBs. WhatsApp bots to client dashboards in 7 business days."
+
 export const metadata: Metadata = {
-  title: 'MindSync — Your Business, Automated | أعمالك مؤتمتة',
-  description: "Kuwait's only full-stack AI automation agency for SMBs. WhatsApp bots to client dashboards in 7 business days.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: 'MindSync',
+    title: TITLE,
+    description: DESCRIPTION,
+    locale: 'ar_KW',
+    alternateLocale: ['en_US'],
+    images: [
+      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — أعمالك، مؤتمتة' },
+      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — Your Business, Automated' },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ['/og/b-terminal-ar.png'],
+  },
 }
 
 export const viewport: Viewport = {
