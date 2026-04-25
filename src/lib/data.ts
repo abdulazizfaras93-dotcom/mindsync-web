@@ -1,88 +1,554 @@
-export const BUNDLES = [
+export type TierId = 'essential' | 'advanced' | 'full-stack'
+
+export type BundleTier = {
+  id: TierId
+  en: string
+  ar: string
+  retainer: number
+  badge?: { en: string; ar: string }
+  features: { en: string[]; ar: string[] }
+}
+
+export type Bundle = {
+  id: string
+  en: string
+  ar: string
+  industry: { en: string; ar: string }
+  buildFee: number
+  painStat: { en: string; ar: string }
+  icon: string
+  color: string
+  tiers: BundleTier[]
+}
+
+export const BUNDLES: Bundle[] = [
   {
     id: 'clinic',
-    en: 'Clinic AI Bundle',
-    ar: 'باقة العيادة الذكية',
+    en: 'Clinic AI',
+    ar: 'العيادة الذكية',
     industry: { en: 'Health & Dental Clinics', ar: 'العيادات الصحية والأسنان' },
     buildFee: 640,
-    retainer: 240,
-    features: {
-      en: ['WhatsApp AI Receptionist', 'Appointment Booking & Reminders', 'Patient Follow-up Automation', 'CRM Setup & Training', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['مساعد واتساب ذكي', 'حجز المواعيد والتذكيرات', 'أتمتة متابعة المرضى', 'إعداد نظام CRM والتدريب', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: '67% of patient inquiries can be resolved without a single staff member.',
+      ar: '٦٧٪ من استفسارات المرضى يمكن حلها دون أي موظف.',
     },
     icon: '🏥',
     color: '#153E2D',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 240,
+        features: {
+          en: [
+            'WhatsApp AI Receptionist (24/7)',
+            'Appointment Booking & Reminders',
+            'Patient FAQ Bot (pricing, prep, directions)',
+            'CRM Setup & Training',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'مساعد واتساب ذكي (٢٤/٧)',
+            'حجز المواعيد والتذكيرات',
+            'بوت الأسئلة الشائعة',
+            'إعداد نظام CRM والتدريب',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 380,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Cancellation Auto-Fill from Waitlist',
+            'Post-Treatment Follow-up Sequence (Day 1 / 7 / 30)',
+            'Google Review Request Automation',
+            'Patient Reactivation Campaigns',
+            'Pre-Visit Prep Checklist via WhatsApp',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'ملء الإلغاءات تلقائياً من قائمة الانتظار',
+            'متابعة ما بعد العلاج (اليوم ١ / ٧ / ٣٠)',
+            'أتمتة طلب تقييمات Google',
+            'حملات إعادة تنشيط المرضى',
+            'قائمة تحضير ما قبل الزيارة',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 520,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Campaign Broadcasts (Eid, National Day)',
+            'Invoice & Payment Reminder Automation',
+            'Insurance/Payment Info Pre-Screening Bot',
+            'Revenue & No-Show Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (عيد، اليوم الوطني)',
+            'أتمتة الفواتير وتذكيرات الدفع',
+            'بوت فلترة التأمين والدفع المسبق',
+            'لوحة تحليلات الإيرادات والغيابات',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
   {
     id: 'salon',
-    en: 'Salon AI Bundle',
-    ar: 'باقة الصالون الذكي',
+    en: 'Salon AI',
+    ar: 'الصالون الذكي',
     industry: { en: 'Men & Women Salons', ar: 'صالونات الرجال والنساء' },
     buildFee: 480,
-    retainer: 160,
-    features: {
-      en: ['WhatsApp Booking Bot', 'Stylist-Specific Scheduling', 'Rebooking Reminders', 'Client Loyalty Tracking', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['بوت حجز واتساب', 'جدولة حسب المختص', 'تذكيرات إعادة الحجز', 'تتبع ولاء العملاء', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: 'Salons lose up to 15% of revenue every month to no-shows and missed calls.',
+      ar: 'الصالونات تخسر ١٥٪ من إيراداتها شهرياً بسبب الغيابات والمكالمات الفائتة.',
     },
     icon: '✂️',
     color: '#1C5038',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 160,
+        features: {
+          en: [
+            'WhatsApp Booking Bot (24/7)',
+            'Stylist-Specific Scheduling',
+            'Appointment Reminders & Confirmations',
+            'Client Loyalty Visit Tracking',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت حجز واتساب (٢٤/٧)',
+            'جدولة حسب المختص',
+            'تذكيرات وتأكيدات المواعيد',
+            'تتبع ولاء العملاء',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 260,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Rebooking Nudge 3 Weeks Post-Visit',
+            'Upsell Suggestion at Booking (add-on treatments)',
+            'Google Review Request Automation',
+            'Missed-Call Auto-Text Response',
+            'Stylist Performance Stats in Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'تذكير الحجز بعد ٣ أسابيع من الزيارة',
+            'اقتراح خدمات إضافية عند الحجز',
+            'أتمتة طلب تقييمات Google',
+            'رد تلقائي على المكالمات الفائتة',
+            'إحصائيات أداء المختصين',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 360,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Promo Broadcasts (Eid, National Day)',
+            'Win-Back Campaign for 30-Day Inactive Clients',
+            'Birthday & Anniversary Automated Offers',
+            'Revenue & Occupancy Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (عيد، اليوم الوطني)',
+            'حملة استعادة العملاء غير النشطين',
+            'عروض أعياد الميلاد والمناسبات',
+            'لوحة تحليلات الإيرادات والإشغال',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
   {
     id: 'gym',
-    en: 'Gym AI Bundle',
-    ar: 'باقة الجيم الذكي',
+    en: 'Gym AI',
+    ar: 'الجيم الذكي',
     industry: { en: 'Men & Women Gyms', ar: 'صالات الرجال والنساء' },
     buildFee: 560,
-    retainer: 200,
-    features: {
-      en: ['WhatsApp Membership Bot', 'Attendance & Check-in Tracking', 'Auto Renewal Reminders', 'Class Scheduling Assistant', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['بوت الاشتراكات', 'تتبع الحضور', 'تذكيرات التجديد التلقائي', 'مساعد جدولة الحصص', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: 'Most gyms lose 30% of members annually — simply because nobody followed up.',
+      ar: 'معظم الصالات تخسر ٣٠٪ من أعضائها سنوياً — لأن أحداً لم يتابع معهم.',
     },
     icon: '💪',
     color: '#153E2D',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 200,
+        features: {
+          en: [
+            'WhatsApp Membership Bot (24/7)',
+            'Attendance & Check-in Tracking',
+            'Auto Renewal Reminders (Day -14, -7, -1)',
+            'Class Scheduling Assistant',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت الاشتراكات (٢٤/٧)',
+            'تتبع الحضور',
+            'تذكيرات التجديد التلقائي (١٤، ٧، ١ أيام)',
+            'مساعد جدولة الحصص',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 320,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Waitlist Auto-Fill for Cancelled Classes',
+            'New Member Onboarding Sequence (Goals + Tips)',
+            'PT Session Rebooking Prompts',
+            'Google Review Request Automation',
+            'Membership FAQ Bot',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'ملء الحصص الملغاة من قائمة الانتظار',
+            'تسلسل استقبال الأعضاء الجدد',
+            'تذكير إعادة حجز جلسات المدرب',
+            'أتمتة طلب تقييمات Google',
+            'بوت الأسئلة الشائعة للاشتراكات',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 440,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Win-Back Campaign (30/60/90-day lapsed members)',
+            'Seasonal Offer Broadcasts (Ramadan, Summer)',
+            'Peak Hours Heatmap & Staffing Insights',
+            'Revenue & Churn Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملة استعادة الأعضاء المنقطعين',
+            'حملات موسمية (رمضان، الصيف)',
+            'خريطة أوقات الذروة وتحسين التوظيف',
+            'لوحة تحليلات الإيرادات والتسرب',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
   {
     id: 'garage',
-    en: 'Garage AI Bundle',
-    ar: 'باقة الورشة الذكية',
+    en: 'Garage AI',
+    ar: 'الورشة الذكية',
     industry: { en: 'Car Garages & Auto Service', ar: 'ورش السيارات والصيانة' },
     buildFee: 520,
-    retainer: 180,
-    features: {
-      en: ['WhatsApp Job Status Bot', 'Customer Update Automation', 'Service History Tracking', 'Invoice Notifications', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['بوت حالة الطلبات', 'تحديثات العملاء التلقائية', 'تتبع سجل الصيانة', 'إشعارات الفواتير', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: 'Garages spend 2–3 hours daily answering "is my car ready?" — that\'s revenue time wasted.',
+      ar: 'الورش تقضي ٢-٣ ساعات يومياً تجيب على "السيارة جاهزة؟" — وقت ضائع من الإيرادات.',
     },
     icon: '🔧',
     color: '#1C5038',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 180,
+        features: {
+          en: [
+            'WhatsApp Job Status Bot (24/7)',
+            'Customer Update Automation (Received → In Progress → Ready)',
+            'Service History Tracking',
+            'WhatsApp Invoice Delivery',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت حالة الطلبات (٢٤/٧)',
+            'تحديثات تلقائية (استلام → تحت التنفيذ → جاهز)',
+            'تتبع سجل الصيانة',
+            'إرسال الفواتير عبر واتساب',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 290,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Post-Pickup Follow-up (Day 3 Check-in)',
+            'Service Interval Reminders (3/6 months)',
+            'WhatsApp Job Intake Form for New Requests',
+            'Google Review Request After Pickup',
+            'Per-Job Revenue Tracking in Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'متابعة ما بعد الاستلام (اليوم ٣)',
+            'تذكيرات دورية للصيانة (٣/٦ أشهر)',
+            'نموذج استقبال طلبات جديدة',
+            'طلب تقييم Google بعد الاستلام',
+            'تتبع إيرادات كل طلب في اللوحة',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 400,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Campaign Broadcasts (AC Season, Ramadan Rush)',
+            'Auto-Built Customer CRM from WhatsApp',
+            'Payment Reminder Sequences',
+            'Job Volume & Turnaround Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (موسم التكييف، رمضان)',
+            'CRM تلقائي من واتساب',
+            'تسلسل تذكيرات الدفع',
+            'لوحة تحليلات حجم الطلبات والدوران',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
   {
     id: 'restaurant',
-    en: 'Restaurant AI Bundle',
-    ar: 'باقة المطعم الذكي',
+    en: 'Restaurant AI',
+    ar: 'المطعم الذكي',
     industry: { en: 'F&B, Cafes & Restaurants', ar: 'المطاعم والكافيهات' },
     buildFee: 560,
-    retainer: 220,
-    features: {
-      en: ['WhatsApp Menu & FAQ Bot', 'Reservation Management', 'Order Status Updates', 'Seasonal Campaign Broadcasts', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['بوت المنيو والأسئلة', 'إدارة الحجوزات', 'تحديثات حالة الطلبات', 'حملات موسمية', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: '43% of restaurant calls go unanswered — that\'s an estimated $20B in lost revenue globally per year.',
+      ar: '٤٣٪ من مكالمات المطاعم لا يُرد عليها — خسارة تُقدّر بـ ٢٠ مليار دولار سنوياً.',
     },
     icon: '🍽️',
     color: '#153E2D',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 220,
+        features: {
+          en: [
+            'WhatsApp Menu & FAQ Bot (24/7)',
+            'Reservation Management & Reminders',
+            'Order Status Updates',
+            'After-Hours Booking Capture',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت المنيو والأسئلة (٢٤/٧)',
+            'إدارة الحجوزات والتذكيرات',
+            'تحديثات حالة الطلبات',
+            'استقبال الحجوزات خارج أوقات العمل',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 360,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'No-Show Confirmation Flow (reduce empty tables)',
+            'Catering Inquiry Capture Bot (high-ticket)',
+            'Google Review Request Post-Visit',
+            '"We Miss You" Campaign for 30-Day Inactive',
+            'Table Utilization Stats in Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'تأكيد الحجوزات لتقليل الطاولات الفارغة',
+            'بوت استقبال طلبات الكاترينج',
+            'طلب تقييم Google بعد الزيارة',
+            'حملة "افتقدناكم" للعملاء غير النشطين',
+            'إحصائيات إشغال الطاولات في اللوحة',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 500,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Campaign Broadcasts (Eid, National Day, Ramadan)',
+            'Upsell Bot at Reservation (desserts, drinks, upgrades)',
+            'Staff Tip & Peak-Hour Intelligence',
+            'Revenue & Cover Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (عيد، اليوم الوطني، رمضان)',
+            'بوت البيع الإضافي عند الحجز',
+            'تحليل أوقات الذروة والإيرادات',
+            'لوحة تحليلات الإيرادات والأغطية',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
   {
     id: 'real-estate',
-    en: 'Real Estate AI Bundle',
-    ar: 'باقة العقارات الذكية',
+    en: 'Real Estate AI',
+    ar: 'العقارات الذكية',
     industry: { en: 'Brokers & Real Estate Offices', ar: 'مكاتب العقارات والوسطاء' },
     buildFee: 680,
-    retainer: 260,
-    badge: { en: 'Highest Value', ar: 'الأكثر قيمة' },
-    features: {
-      en: ['WhatsApp Listings Bot', 'Buyer Qualification (Budget & Area)', 'Viewing Scheduler & Reminders', 'New Listing Broadcasts to Buyer List', 'Client Portal Dashboard', 'Monthly Maintenance'],
-      ar: ['بوت العقارات على واتساب', 'تأهيل المشتري (الميزانية والمنطقة)', 'جدولة المعاينات والتذكيرات', 'بث العقارات الجديدة لقائمة المشترين', 'بوابة العميل', 'صيانة شهرية'],
+    painStat: {
+      en: 'Real estate leads go cold in under 5 minutes — most agents respond in 5 hours.',
+      ar: 'العميل العقاري يبرد في أقل من ٥ دقائق — معظم الوسطاء يردون بعد ٥ ساعات.',
     },
     icon: '🏢',
     color: '#1C5038',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 260,
+        features: {
+          en: [
+            'WhatsApp Listings Bot (24/7)',
+            'Instant Lead Qualification (Budget & Area)',
+            'Viewing Scheduler & Reminders',
+            'New Listing Broadcasts to Buyer List',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت العقارات (٢٤/٧)',
+            'تأهيل العملاء فوراً (الميزانية والمنطقة)',
+            'جدولة المعاينات والتذكيرات',
+            'بث العقارات الجديدة',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 420,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Post-Viewing Follow-up + Next Step Prompt',
+            'Segmented Broadcasts by Area / Budget / Type',
+            'Seller Auto-Update on Inquiry & Offer Activity',
+            'Lead Drip Sequence (New Matching Listings)',
+            'Viewing Show-Up Rate in Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'متابعة ما بعد المعاينة + الخطوة التالية',
+            'بث مقسّم حسب المنطقة والميزانية والنوع',
+            'تحديث تلقائي للبائع على الاستفسارات',
+            'تسلسل رعاية العملاء المحتملين',
+            'معدل حضور المعاينات في اللوحة',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 580,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Agent Handoff Logic (qualify → route to human)',
+            'Portfolio Vacancy & Lead Pipeline Dashboard',
+            'Landlord Monthly Performance Report (Auto)',
+            'Market Broadcast Campaigns (seasonal/price drops)',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'منطق تحويل العملاء للوكيل البشري',
+            'لوحة المحفظة العقارية وخط العملاء',
+            'تقرير أداء شهري تلقائي للملاك',
+            'حملات سوقية (تخفيضات، مواسم)',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
   },
 ]
 
