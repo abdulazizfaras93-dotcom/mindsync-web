@@ -83,10 +83,17 @@ body {
   }
   .animate-fade-up { animation: fadeUp 0.7s ease forwards; }
 
-  @keyframes marquee-left  { from { transform: translateX(0); }     to { transform: translateX(-33.3333%); } }
-  @keyframes marquee-right { from { transform: translateX(-33.3333%); } to { transform: translateX(0); } }
-  .marquee-left  { animation: marquee-left  40s linear infinite; width: max-content; }
-  .marquee-right { animation: marquee-right 40s linear infinite; width: max-content; }
+}
+
+/* Marquee — defined OUTSIDE prefers-reduced-motion so it always animates.
+   Reduced-motion users get the rule below that pauses it. */
+@keyframes marquee-left  { from { transform: translateX(0); }       to { transform: translateX(-33.3333%); } }
+@keyframes marquee-right { from { transform: translateX(-33.3333%); } to { transform: translateX(0); } }
+.marquee-left  { animation: marquee-left  40s linear infinite; width: max-content; will-change: transform; }
+.marquee-right { animation: marquee-right 40s linear infinite; width: max-content; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left, .marquee-right { animation: none; }
 }
 
 ::-webkit-scrollbar { width: 5px; }
