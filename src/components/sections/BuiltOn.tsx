@@ -7,47 +7,50 @@ const t = {
   sub:     { en: 'Every channel your customers already use, every tool your team already trusts. We connect them — you don\'t.', ar: 'كل قناة يستخدمها عملاؤك بالفعل، وكل أداة يعتمد عليها فريقك. نحن نربطها — أنت لا تحتاج لذلك.' },
 }
 
-type Logo = { name: string; slug?: string; wordmark?: boolean }
+type Logo = { name: string; slug?: string; local?: string; wordmark?: boolean }
 
 const ROW_1: Logo[] = [
   { name: 'WhatsApp Business', slug: 'whatsapp' },
   { name: 'Instagram',         slug: 'instagram' },
   { name: 'Telegram',          slug: 'telegram' },
   { name: 'Messenger',         slug: 'messenger' },
-  { name: 'Claude',            wordmark: true },
+  { name: 'Claude',            local: 'claude.svg' },
   { name: 'n8n',               slug: 'n8n' },
-  { name: 'OpenAI',            slug: 'openai' },
-  { name: 'Google Workspace',  slug: 'googleworkspace' },
+  { name: 'OpenAI',            local: 'openai.svg' },
+  { name: 'Google',            slug: 'google' },
 ]
 
 const ROW_2: Logo[] = [
   { name: 'MyFatoorah',  wordmark: true },
-  { name: 'KNET',        wordmark: true },
+  { name: 'KNET',        local: 'knet.svg' },
   { name: 'Tap',         wordmark: true },
   { name: 'Notion',      slug: 'notion' },
   { name: 'Airtable',    slug: 'airtable' },
   { name: 'Calendly',    slug: 'calendly' },
-  { name: 'Foodics',     wordmark: true },
-  { name: 'Fresha',      wordmark: true },
+  { name: 'Foodics',     local: 'foodics.svg' },
+  { name: 'Fresha',      local: 'fresha.svg' },
 ]
 
 // Repeat enough times for a seamless loop on wide screens.
 const repeated = <T,>(items: T[], n = 3) => Array.from({ length: n }).flatMap(() => items)
 
 function LogoTile({ logo }: { logo: Logo }) {
+  const src = logo.local
+    ? `/brand/integrations/${logo.local}`
+    : logo.slug
+      ? `https://cdn.simpleicons.org/${logo.slug}/153E2D`
+      : null
   return (
     <div className="h-16 w-44 flex-shrink-0 rounded-xl bg-white border border-ms-ivory-200 shadow-[0_1px_2px_rgba(15,46,34,0.04)] flex items-center justify-center px-4">
-      {logo.wordmark ? (
-        <span className="font-mono text-[14px] font-bold text-ms-green-800 tracking-tight">{logo.name}</span>
-      ) : (
+      {src ? (
         <img
-          src={`https://cdn.simpleicons.org/${logo.slug}/153E2D`}
+          src={src}
           alt={logo.name}
-          width={28}
-          height={28}
-          className="h-7 w-auto opacity-90"
+          className="h-7 w-auto max-w-[140px] object-contain opacity-90"
           loading="lazy"
         />
+      ) : (
+        <span className="font-mono text-[14px] font-bold text-ms-green-800 tracking-tight">{logo.name}</span>
       )}
     </div>
   )
