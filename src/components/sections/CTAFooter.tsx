@@ -20,7 +20,7 @@ export function CTA() {
       <div className="max-w-3xl mx-auto px-6 text-center">
         <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-4">{t.eyebrow[lang]}</p>
         <h2 className="text-[40px] md:text-[52px] font-bold text-ms-ivory-0 tracking-tight leading-[1.1] mb-5">{t.headline[lang]}</h2>
-        <p className="text-white/60 text-[16px] leading-relaxed max-w-xl mx-auto mb-10">{t.sub[lang]}</p>
+        <p className="text-white/85 text-[16px] leading-relaxed max-w-xl mx-auto mb-10">{t.sub[lang]}</p>
         <div className="flex flex-wrap justify-center gap-4">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
              className="wa-pulse bg-[#25D366] text-white font-bold text-[15px] px-8 py-4 rounded-xl inline-flex items-center gap-2 hover:bg-[#20bd5a] transition-colors">

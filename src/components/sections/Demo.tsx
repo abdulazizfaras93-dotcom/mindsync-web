@@ -44,7 +44,7 @@ export default function Demo() {
         </div>
 
         {/* Hybrid chat + portal preview */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch">
           <DemoChat industry={selected} bundleLabel={bundle[isAr ? 'ar' : 'en']} />
           <PortalPreview bundleName={{ en: bundle.en, ar: bundle.ar }} />
         </div>

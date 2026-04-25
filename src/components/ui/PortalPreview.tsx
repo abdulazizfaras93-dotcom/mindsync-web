@@ -53,7 +53,7 @@ export default function PortalPreview({ bundleName, stats = DEFAULT_STATS }: Por
   ]
 
   return (
-    <div className="bg-ms-green-900 rounded-2xl border border-ms-green-700/50 overflow-hidden shadow-sm">
+    <div className="bg-ms-green-900 rounded-2xl border border-ms-green-700/50 overflow-hidden shadow-sm h-full flex flex-col">
       {/* Header */}
       <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between">
         <div>

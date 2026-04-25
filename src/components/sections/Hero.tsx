@@ -3,7 +3,7 @@ import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
 
 const t = {
-  eyebrow:  { en: 'Kuwait AI Automation Agency · وكالة الأتمتة الذكية', ar: 'وكالة الأتمتة الذكية · Kuwait AI Automation Agency' },
+  eyebrow:  { en: 'AI Automation Agency · وكالة الأتمتة الذكية', ar: 'وكالة الأتمتة الذكية · AI Automation Agency' },
   headline: { en: 'Your Business,', ar: 'أعمالك،' },
   headlineAccent: { en: 'Automated.', ar: 'مؤتمتة.' },
   sub:      { en: 'AI agents for clinics, salons, gyms, garages, restaurants & real-estate offices in Kuwait. Built, deployed, and maintained — in 7 business days.', ar: 'وكلاء ذكاء اصطناعي للعيادات والصالونات والجيمات وورش السيارات والمطاعم ومكاتب العقارات في الكويت. مبنية، مُشغَّلة، ومُصانة — في 7 أيام عمل.' },
@@ -17,7 +17,6 @@ const t = {
   stat3l:   { en: 'Agent uptime', ar: 'وقت تشغيل الوكيل' },
   stat4n:   { en: '100%', ar: '١٠٠٪' },
   stat4l:   { en: 'You own the data & flows', ar: 'بياناتك وسيناريوهاتك ملكك' },
-  badge:    { en: 'Built in Kuwait', ar: 'صُنع في الكويت' },
 }
 
 export default function Hero() {
@@ -46,29 +45,18 @@ export default function Hero() {
       <div className="relative max-w-6xl mx-auto px-6 py-24">
         <div className="max-w-3xl">
 
-          {/* Kuwait badge — SVG shield, not emoji (brand rule) */}
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full ps-2 pe-4 py-1.5 mb-8">
-            <span
-              aria-hidden
-              className="w-5 h-5 rounded-full bg-ms-gold-600 text-ms-green-900 text-[9px] font-bold flex items-center justify-center font-mono"
-            >
-              KW
-            </span>
-            <span className="text-ms-gold-600 text-[11px] font-mono tracking-widest uppercase">{t.badge[lang]}</span>
-          </div>
-
           {/* Eyebrow */}
-          <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-6">{t.eyebrow[lang]}</p>
+          <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-6 mt-4">{t.eyebrow[lang]}</p>
 
           {/* Headline */}
           <h1 className="text-[56px] md:text-[72px] font-bold tracking-tight leading-[1.05] mb-4">
             <span className="text-ms-ivory-0">{t.headline[lang]}</span>
             <br/>
-            <span className="gradient-text-light">{t.headlineAccent[lang]}</span>
+            <span className="text-ms-gold-600">{t.headlineAccent[lang]}</span>
           </h1>
 
           {/* Sub */}
-          <p className="text-white/65 text-[17px] leading-relaxed max-w-xl mb-10 font-light">{t.sub[lang]}</p>
+          <p className="text-white/85 text-[17px] leading-relaxed max-w-xl mb-10 font-light">{t.sub[lang]}</p>
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-4 mb-20">
@@ -80,7 +68,7 @@ export default function Hero() {
               </svg>
             </a>
             <a href="#bundles"
-               className="bg-white/8 text-ms-ivory-0 font-medium text-[15px] px-8 py-4 rounded-xl border border-white/15 hover:bg-white/12 transition-all duration-200">
+               className="bg-white/15 text-ms-ivory-0 font-semibold text-[15px] px-8 py-4 rounded-xl border border-white/25 hover:bg-white/25 transition-all duration-200">
               {t.cta2[lang]}
             </a>
           </div>
@@ -95,7 +83,7 @@ export default function Hero() {
             ].map((s, i) => (
               <div key={i} className="bg-white/5 px-6 py-5">
                 <p className="text-ms-gold-600 text-[28px] font-bold leading-none mb-1">{s.n}</p>
-                <p className="text-white/50 text-[12px] leading-snug">{s.l}</p>
+                <p className="text-white/85 text-[12px] leading-snug">{s.l}</p>
               </div>
             ))}
           </div>

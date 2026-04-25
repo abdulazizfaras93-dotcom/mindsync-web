@@ -98,7 +98,7 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-ms-ivory-200 overflow-hidden shadow-sm flex flex-col">
+    <div className="bg-white rounded-2xl border border-ms-ivory-200 overflow-hidden shadow-sm flex flex-col h-full">
       {/* Header */}
       <div className="bg-ms-green-800 px-4 py-3 flex items-center gap-3">
         <div className="w-9 h-9 rounded-full bg-ms-gold-600/20 flex items-center justify-center" aria-hidden>
@@ -128,7 +128,7 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
       {/* Body */}
       <div
         ref={chatRef}
-        className="h-72 overflow-y-auto px-4 py-4 space-y-3 bg-[#ECE5DD]"
+        className="flex-1 min-h-[288px] overflow-y-auto px-4 py-4 space-y-3 bg-[#ECE5DD]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23BF8D38' stroke-width='0.2' opacity='0.15'%3E%3Cpolygon points='20,2 38,11 38,29 20,38 2,29 2,11'/%3E%3C/g%3E%3C/svg%3E\")",
