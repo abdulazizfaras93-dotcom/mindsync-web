@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero'
 import Demo from '@/components/sections/Demo'
 import Bundles from '@/components/sections/Bundles'
 import Process from '@/components/sections/Process'
+import BuiltOn from '@/components/sections/BuiltOn'
 import FAQ from '@/components/sections/FAQ'
 import { CTA, Footer } from '@/components/sections/CTAFooter'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
@@ -17,6 +18,7 @@ export default function Home() {
         <Demo />
         <Bundles />
         <Process />
+        <BuiltOn />
         <FAQ />
         <CTA />
       </main>

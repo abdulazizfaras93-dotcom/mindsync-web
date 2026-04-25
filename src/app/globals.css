@@ -82,6 +82,11 @@ body {
     to   { opacity: 1; transform: translateY(0); }
   }
   .animate-fade-up { animation: fadeUp 0.7s ease forwards; }
+
+  @keyframes marquee-left  { from { transform: translateX(0); }     to { transform: translateX(-33.3333%); } }
+  @keyframes marquee-right { from { transform: translateX(-33.3333%); } to { transform: translateX(0); } }
+  .marquee-left  { animation: marquee-left  40s linear infinite; width: max-content; }
+  .marquee-right { animation: marquee-right 40s linear infinite; width: max-content; }
 }
 
 ::-webkit-scrollbar { width: 5px; }
