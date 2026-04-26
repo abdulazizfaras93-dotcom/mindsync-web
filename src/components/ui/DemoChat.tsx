@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/lib/lang'
 import { getScript, type IndustryId } from '@/lib/demo-scripts'
+import { WHATSAPP_URL } from '@/lib/data'
 
 /**
  * Hybrid demo chat — Decision 5-C in the rollout plan.
@@ -28,11 +29,15 @@ type DemoChatProps = {
 }
 
 const t = {
-  agent:     { en: 'MindSync Agent', ar: 'وكيل مايندسينك' },
-  online:    { en: 'Online · replies in seconds', ar: 'متصل · يرد خلال ثوانٍ' },
-  askOwn:    { en: 'Ask your own question…', ar: 'اسأل سؤالك الخاص…' },
-  sending:   { en: 'Sending…', ar: 'يرسل…' },
-  errorSend: { en: 'Something broke. Try again in a moment.', ar: 'صار خطأ. جرّب مرة ثانية.' },
+  agent:    { en: 'MindSync Agent', ar: 'وكيل مايندسينك' },
+  online:   { en: 'Online · replies in seconds', ar: 'متصل · يرد خلال ثوانٍ' },
+  askOwn:   { en: 'Ask your own question…', ar: 'اسأل سؤالك الخاص…' },
+  sending:  { en: 'Sending…', ar: 'يرسل…' },
+  prototype: {
+    en: "This is just a prototype showing how the agent will sound on your WhatsApp. The real version gets built and tuned for your business during the 7-day delivery.\n\nWant to start? Message us on WhatsApp 👇",
+    ar: 'هذي نسخة تجريبية تورّيك شلون بيكون شكل الوكيل على واتساب عملك. النسخة الحقيقية نبنيها ونضبطها لأعمالك خلال ٧ أيام.\n\nتبي تبدأ؟ راسلنا على واتساب 👇',
+  },
+  waCta: { en: 'Open WhatsApp', ar: 'افتح واتساب' },
 }
 
 function nowTime() {
@@ -48,7 +53,6 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
   const [liveMessages, setLiveMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 
   const scriptFinished = playedCount >= script.length
@@ -57,7 +61,6 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
   useEffect(() => {
     setPlayedCount(0)
     setLiveMessages([])
-    setError(null)
     const timers: ReturnType<typeof setTimeout>[] = []
     script.forEach((_, i) => {
       timers.push(setTimeout(() => setPlayedCount(i + 1), i * 900 + 300))
@@ -70,7 +73,7 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight
   }, [playedCount, liveMessages, loading])
 
-  async function sendLive(e: React.FormEvent) {
+  function sendLive(e: React.FormEvent) {
     e.preventDefault()
     const text = input.trim()
     if (!text || loading) return
@@ -79,22 +82,11 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
     setLiveMessages((prev) => [...prev, userMsg])
     setInput('')
     setLoading(true)
-    setError(null)
 
-    try {
-      const res = await fetch('/api/demo', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ industry, message: text, lang }),
-      })
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const data = (await res.json()) as { reply: string }
-      setLiveMessages((prev) => [...prev, { from: 'bot', text: data.reply, ts: nowTime() }])
-    } catch (err) {
-      setError(t.errorSend[lang])
-    } finally {
+    setTimeout(() => {
+      setLiveMessages((prev) => [...prev, { from: 'bot', text: t.prototype[lang], ts: nowTime() }])
       setLoading(false)
-    }
+    }, 700)
   }
 
   return (
@@ -155,10 +147,22 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
           <Bubble key={`l-${i}`} isUser={m.from === 'user'} text={m.text} ts={m.ts} />
         ))}
         {scriptFinished && loading && <TypingBubble />}
-        {error && (
-          <p className="text-[12px] text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2" role="alert">
-            {error}
-          </p>
+
+        {/* WhatsApp CTA appears once the prototype disclaimer has been delivered */}
+        {scriptFinished && liveMessages.some((m) => m.from === 'bot' && m.text === t.prototype[lang]) && (
+          <div className="flex justify-start">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white text-[13px] font-semibold rounded-full px-4 py-2 shadow-sm hover:bg-[#20bd5a] transition-colors"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M20.52 3.48A11.78 11.78 0 0012.04 0C5.5 0 .17 5.33.16 11.88c0 2.1.55 4.14 1.6 5.95L0 24l6.3-1.65a11.86 11.86 0 005.74 1.46h.01c6.55 0 11.88-5.33 11.88-11.88a11.78 11.78 0 00-3.41-8.45z"/>
+              </svg>
+              {t.waCta[lang]}
+            </a>
+          </div>
         )}
       </div>
 
