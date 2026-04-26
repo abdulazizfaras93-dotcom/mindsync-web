@@ -555,45 +555,80 @@ export const BUNDLES: Bundle[] = [
 export const WHATSAPP_NUMBER = '96599539006'
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 
+// DEMO_CONVERSATIONS — Kuwaiti dialect, 8 turns per industry
+// Format: { en: [single string], ar: [single string] }
+// Even index = user bubble, Odd index = bot bubble
 export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]> = {
+
+  // ─── CLINIC ───
   clinic: [
-    { en: ['Hi, I need to book a dental appointment', 'مرحبا، أريد حجز موعد أسنان'], ar: ['مرحبا، أريد حجز موعد أسنان', 'Hi, I need to book a dental appointment'] },
-    { en: ['Hello! Welcome to the clinic. What day works best for you? We have slots available Monday to Saturday.', 'أهلاً! ما هو اليوم المناسب لك؟ لدينا مواعيد من الاثنين إلى السبت.'], ar: ['أهلاً! ما هو اليوم المناسب لك؟ لدينا مواعيد من الاثنين إلى السبت.', 'Hello! Welcome to the clinic. What day works best for you?'] },
-    { en: ['Wednesday afternoon please', 'الأربعاء بعد الظهر من فضلك'], ar: ['الأربعاء بعد الظهر من فضلك', 'Wednesday afternoon please'] },
-    { en: ['Wednesday 3pm or 4:30pm — which works?', 'الأربعاء الساعة 3 أو 4:30 عصراً؟'], ar: ['الأربعاء الساعة 3 أو 4:30 عصراً؟', 'Wednesday 3pm or 4:30pm — which works?'] },
-    { en: ['3pm perfect', 'الساعة 3 ممتاز'], ar: ['الساعة 3 ممتاز', '3pm perfect'] },
-    { en: ['✅ Booked! Wednesday 3pm. You\'ll get a reminder 2 hours before. See you then!', '✅ تم الحجز! الأربعاء الساعة 3. ستصلك رسالة تذكير قبل ساعتين.'], ar: ['✅ تم الحجز! الأربعاء الساعة 3. ستصلك رسالة تذكير قبل ساعتين.', '✅ Booked! Wednesday 3pm. You\'ll get a reminder 2 hours before.'] },
+    { en: ['Hi, I need to book a dental appointment for a cleaning'], ar: ['هلا، أبي أحجز موعد عند دكتور الأسنان، تنظيف أسنان'] },
+    { en: ['Hala! 😊 We have slots available this week. Which day works best for you — weekday or weekend?'], ar: ['هلا وغلا! 😊 عندنا مواعيد متاحة هالأسبوع. متى تحب؟ — يوم دوام ولا عطلة؟'] },
+    { en: ['Wednesday evening if possible, around 6 or 7pm'], ar: ['الأربعاء المساء لو في، حوالي ٦ أو ٧'] },
+    { en: ['Perfect! Wednesday we have 6:00pm and 7:30pm open. Which one works for you?'], ar: ['زين! الأربعاء عندنا الساعة ٦ مساءً و ٧:٣٠. أي وقت يناسبك؟'] },
+    { en: ['6pm is great. Also — how much does a cleaning cost?'], ar: ['الساعة ٦ تمام. وبس — جم سعر التنظيف؟'] },
+    { en: ['Cleaning is 25 KWD. Includes scaling, polishing, and a full checkup. Shall I confirm the 6pm slot for you?'], ar: ['التنظيف بـ ٢٥ دينار. يشمل التنظيف العميق والتلميع وفحص كامل. أأكد لك موعد الساعة ٦؟'] },
+    { en: ['Yes please, my name is Ahmad Al-Rashidi'], ar: ['أكيد، اسمي أحمد الراشدي'] },
+    { en: ['✅ Done, Ahmad! Wednesday 6:00pm confirmed. You\'ll get a WhatsApp reminder 2 hours before. See you then! 🦷'], ar: ['✅ تم يا أحمد! الأربعاء الساعة ٦ مساءً مؤكد. راح يوصلك تذكير على واتساب قبل ساعتين. نشوفك على خير! 🦷'] },
   ],
+
+  // ─── SALON ───
   salon: [
-    { en: ['Is Sarah available Saturday?', 'هل سارة متاحة السبت؟'], ar: ['هل سارة متاحة السبت؟', 'Is Sarah available Saturday?'] },
-    { en: ['Let me check... Yes! Sarah has 11am and 2pm open Saturday. Which works?', 'يلا أشوف... نعم! سارة عندها 11 صباحاً و 2 ظهراً السبت. أيهما يناسبك؟'], ar: ['يلا أشوف... نعم! سارة عندها 11 صباحاً و 2 ظهراً السبت. أيهما يناسبك؟', 'Let me check... Yes! Sarah has 11am and 2pm open Saturday.'] },
-    { en: ['11am please', 'الساعة 11 من فضلك'], ar: ['الساعة 11 من فضلك', '11am please'] },
-    { en: ['✅ Booked with Sarah, Saturday 11am. See you!', '✅ محجوز مع سارة، السبت الساعة 11. نشوفك!'], ar: ['✅ محجوز مع سارة، السبت الساعة 11. نشوفك!', '✅ Booked with Sarah, Saturday 11am. See you!'] },
+    { en: ['Hey, is Fatima available this Saturday for a keratin treatment?'], ar: ['هلا، فاطمة فاضيه يوم السبت؟ أبي أسوي كيراتين'] },
+    { en: ['Hala! Let me check Fatima\'s schedule... ✅ She has Saturday at 11am and 2pm open. Which works?'], ar: ['هلا! ثواني أشوف جدول فاطمة الحين... ✅ عندها السبت الساعة ١١ الصبح و ٢ الظهر. أي وقت يناسب؟'] },
+    { en: ['2pm is better. How long does keratin take?'], ar: ['الساعة ٢ أحسن. وجم ياخذ الكيراتين وقت؟'] },
+    { en: ['Keratin takes around 2.5 to 3 hours depending on hair length. Fatima\'s fully available from 2pm. Want me to book it?'], ar: ['الكيراتين ياخذ تقريباً ٢.٥ إلى ٣ ساعات حسب طول الشعر. فاطمة فاضية من الساعة ٢. أحجز؟'] },
+    { en: ['Yes! And what\'s the price?'], ar: ['أكيد! وجم سعرها؟'] },
+    { en: ['Keratin with Fatima is 45 KWD. Includes blow-dry and style finish. Should I put your name down?'], ar: ['الكيراتين عند فاطمة بـ ٤٥ دينار. يشمل مجفف وتسريحة نهائية. أحط اسمك؟'] },
+    { en: ['Please, it\'s Mariam'], ar: ['لو سمحتي، اسمي مريم'] },
+    { en: ['✅ Booked, Mariam! Saturday 2:00pm with Fatima — Keratin. Reminder coming your way the morning of 💅'], ar: ['✅ تم الحجز يا مريم! السبت الساعة ٢ مع فاطمة — كيراتين. راح يوصل تذكير صباح اليوم 💅'] },
   ],
+
+  // ─── GYM ───
   gym: [
-    { en: ['How much is a monthly membership?', 'كم سعر الاشتراك الشهري؟'], ar: ['كم سعر الاشتراك الشهري؟', 'How much is a monthly membership?'] },
-    { en: ['Monthly: 35 KWD · 3 months: 90 KWD · 6 months: 160 KWD. Want to start today?', 'شهري: 35 د.ك · 3 أشهر: 90 د.ك · 6 أشهر: 160 د.ك. تبي تبدأ اليوم؟'], ar: ['شهري: 35 د.ك · 3 أشهر: 90 د.ك · 6 أشهر: 160 د.ك. تبي تبدأ اليوم؟', 'Monthly: 35 KWD · 3 months: 90 KWD · 6 months: 160 KWD. Want to start?'] },
-    { en: ['Yes, 3 months please', 'نعم، 3 أشهر من فضلك'], ar: ['نعم، 3 أشهر من فضلك', 'Yes, 3 months please'] },
-    { en: ['✅ 90 KWD for 3 months. Our team will send payment details shortly!', '✅ 90 د.ك لمدة 3 أشهر. فريقنا سيرسل تفاصيل الدفع قريباً!'], ar: ['✅ 90 د.ك لمدة 3 أشهر. فريقنا سيرسل تفاصيل الدفع قريباً!', '✅ 90 KWD for 3 months. Payment details coming shortly!'] },
+    { en: ['Hi, I want to join the gym. What memberships do you have?'], ar: ['هلا، أبي أشترك بالجيم. شنو عندكم من اشتراكات؟'] },
+    { en: ['Hala, welcome! 💪 We have 3 options:\n• Monthly: 35 KWD\n• 3 Months: 90 KWD\n• 6 Months: 160 KWD\nAll include full access + locker. Which one interests you?'], ar: ['هلا وغلا، حياك! 💪 عندنا ٣ خيارات:\n• شهري: ٣٥ دينار\n• ٣ أشهر: ٩٠ دينار\n• ٦ أشهر: ١٦٠ دينار\nكلها تشمل دخول كامل + خزانة. أي وحدة تبي؟'] },
+    { en: ['The 3 months sounds good. Do you have personal training too?'], ar: ['الثلاثة أشهر زينة. وعندكم تدريب شخصي؟'] },
+    { en: ['Yes! PT sessions are 15 KWD each or 8 sessions for 100 KWD. Our trainers speak Arabic and English. Want to add PT with your membership?'], ar: ['أكيد عندنا! جلسات التدريب الشخصي بـ ١٥ دينار الجلسة، أو ٨ جلسات بـ ١٠٠ دينار. مدربينا يتكلمون عربي وإنجليزي. تبي تضيف تدريب مع الاشتراك؟'] },
+    { en: ['Maybe later. What are the gym hours? And where are you located?'], ar: ['بعدين إن شاء الله. متى ساعات العمل؟ ووين موقعكم؟'] },
+    { en: ['We\'re open 5:30am–11pm weekdays, 7am–10pm weekends. Located in Salmiya, near the co-op. I\'ll send you the location pin on WhatsApp 📍'], ar: ['فاتحين من ٥:٣٠ الصبح إلى ١١ الليل أيام الدوام، و٧ الصبح إلى ١٠ الليل العطل. موقعنا في السالمية، قريب الجمعية. أرسلك اللوكيشن على واتساب 📍'] },
+    { en: ['Perfect. I\'ll take the 3-month membership. My name is Khalid'], ar: ['تمام. أبي اشتراك ٣ أشهر. اسمي خالد'] },
+    { en: ['✅ Khalid, you\'re in! 3-month membership registered. Our team will send payment details on WhatsApp within minutes. See you at the gym! 💪'], ar: ['✅ يا خالد، تم تسجيلك! اشتراك ٣ أشهر محجوز. فريقنا راح يرسللك تفاصيل الدفع على واتساب بدقايق. نشوفك بالجيم! 💪'] },
   ],
+
+  // ─── GARAGE ───
   garage: [
-    { en: ['Any update on my Toyota Camry?', 'في أي تحديث على سيارتي كامري؟'], ar: ['في أي تحديث على سيارتي كامري؟', 'Any update on my Toyota Camry?'] },
-    { en: ['Your Camry (plate: 12345) — engine service complete, waiting on AC part. Ready Thursday.', 'الكامري (12345) — تم تغيير الزيت، ننتظر قطعة التكييف. جاهزة الخميس.'], ar: ['الكامري (12345) — تم تغيير الزيت، ننتظر قطعة التكييف. جاهزة الخميس.', 'Your Camry — engine service complete, waiting on AC part. Ready Thursday.'] },
-    { en: ['Thanks! How much?', 'شكراً! كم الحساب؟'], ar: ['شكراً! كم الحساب؟', 'Thanks! How much?'] },
-    { en: ['Total: 85 KWD. We\'ll send the invoice when ready. 📋', 'المجموع: 85 د.ك. نرسل الفاتورة لما تكون جاهزة. 📋'], ar: ['المجموع: 85 د.ك. نرسل الفاتورة لما تكون جاهزة. 📋', 'Total: 85 KWD. Invoice coming when ready. 📋'] },
+    { en: ['Hi, I left my Camry with you guys yesterday. Any update?'], ar: ['هلا، خليت الكامري عندكم أمس. في أي تحديث؟'] },
+    { en: ['Hala! Let me check... Your Camry (plate: 12345) — engine oil done ✅, AC filter replaced ✅. Currently waiting on a brake pad part, arrives tomorrow morning إن شاء الله.'], ar: ['هلا! أشوف الحين... الكامري (لوحة: ١٢٣٤٥) — تغيير الزيت خلاص ✅، فلتر التكييف اتغير ✅. الحين ننطر قطعة الفرامل، توصل باجر الصبح إن شاء الله.'] },
+    { en: ['Okay good. And roughly how much is the total going to be?'], ar: ['زين. وتقريباً جم يطلع الحساب كامل؟'] },
+    { en: ['Estimated total: 75–85 KWD depending on the brake pad price. We\'ll send the exact invoice on WhatsApp once the part arrives. No surprises 👍'], ar: ['الحساب المتوقع: ٧٥–٨٥ دينار حسب سعر قطعة الفرامل. نرسل الفاتورة الدقيقة على واتساب لما توصل القطعة. ماكو مفاجآت 👍'] },
+    { en: ['Good. And when will it be fully ready for pickup?'], ar: ['حلو. ومتى تكون جاهزة للاستلام بالكامل؟'] },
+    { en: ['If the part arrives on time tomorrow, your Camry will be ready by Thursday afternoon. We\'ll send you a WhatsApp message the moment it\'s done ✅'], ar: ['إذا وصلت القطعة باجر بوقتها، الكامري تكون جاهزة الخميس بعد الظهر. نرسللك رسالة واتساب وقت ما تخلص ✅'] },
+    { en: ['Perfect. And can I pay by knet when I pick it up?'], ar: ['تمام. وأقدر أدفع كي-نت وقت الاستلام؟'] },
+    { en: ['Akeed! We accept Knet, cash, and bank transfer. No problem at all. See you Thursday, and laa tsheel hamm — your car is in good hands 🔧'], ar: ['أكيد! نقبل كي-نت، كاش، وتحويل بنكي. ولا يهمك. نشوفك الخميس، لا تشيل هم — سيارتك بأيدٍ أمينة 🔧'] },
   ],
+
+  // ─── RESTAURANT ───
   restaurant: [
-    { en: ['Do you have a table for 4 tonight?', 'عندكم طاولة لـ4 الليلة؟'], ar: ['عندكم طاولة لـ4 الليلة؟', 'Do you have a table for 4 tonight?'] },
-    { en: ['Yes! 7pm or 8:30pm available tonight for 4 guests. Which do you prefer?', 'نعم! الساعة 7 أو 8:30 مساءً متاحة الليلة لـ4. أيهما تفضل؟'], ar: ['نعم! الساعة 7 أو 8:30 مساءً متاحة الليلة لـ4. أيهما تفضل؟', 'Yes! 7pm or 8:30pm available tonight for 4 guests.'] },
-    { en: ['7pm please', 'الساعة 7 من فضلك'], ar: ['الساعة 7 من فضلك', '7pm please'] },
-    { en: ['✅ Reserved for 4 at 7pm tonight. We\'ll see you soon! 🍽️', '✅ محجوز لـ4 الساعة 7 الليلة. نشوفكم قريباً! 🍽️'], ar: ['✅ محجوز لـ4 الساعة 7 الليلة. نشوفكم قريباً! 🍽️', '✅ Reserved for 4 at 7pm tonight. See you soon! 🍽️'] },
+    { en: ['Hey, do you have a table for 5 this Friday evening?'], ar: ['هلا، عندكم طاولة لـ٥ أشخاص يوم الجمعة المساء؟'] },
+    { en: ['Hala! Friday evening we have availability at 7:30pm and 9:00pm for 5 guests. Any preference?'], ar: ['هلا وغلا! الجمعة المساء عندنا طاولة متاحة الساعة ٧:٣٠ والساعة ٩ لـ٥ أشخاص. أي وقت يناسبكم؟'] },
+    { en: ['7:30pm works. Is it indoors or outdoors? We prefer outside'], ar: ['الساعة ٧:٣٠ تمام. هل الطاولة داخلية ولا خارجية؟ نبي برّة'] },
+    { en: ['Great choice! We have outdoor seating available at 7:30pm. Should I reserve an outdoor table for 5 in your name?'], ar: ['خيار ممتاز! عندنا جلوس خارجي متاح الساعة ٧:٣٠. أحجزلكم طاولة برّة لـ٥ بإسمك؟'] },
+    { en: ['Yes please. Also, do you have a set menu or à la carte?'], ar: ['اي لو سمحت. وهل عندكم مينيو ثابت ولا بوفيه؟'] },
+    { en: ['Both! Full à la carte menu plus a weekend set menu at 12 KWD per person (3 courses). I\'ll send the full menu link on WhatsApp 🍽️ What\'s the name for the reservation?'], ar: ['الثنين! قائمة مينيو كاملة وكذلك البوفيه للعطلة بـ ١٢ دينار للشخص (٣ أطباق). أرسللك رابط المنيو الكامل على واتساب 🍽️ شنو الاسم للحجز؟'] },
+    { en: ['Nasser Al-Mutairi'], ar: ['ناصر المطيري'] },
+    { en: ['✅ Reserved, Nasser! Friday 7:30pm, outdoor table for 5. Reminder + menu link coming to you on WhatsApp. See you then! 🌟'], ar: ['✅ تم الحجز يا ناصر! الجمعة الساعة ٧:٣٠، طاولة برّة لـ٥. تذكير ورابط المنيو يوصلك على واتساب. نشوفكم! 🌟'] },
   ],
+
+  // ─── REAL ESTATE ───
   'real-estate': [
-    { en: ['Hi, do you have apartments for sale in Salmiya?', 'السلام عليكم، عندكم شقق للبيع في السالمية؟'], ar: ['السلام عليكم، عندكم شقق للبيع في السالمية؟', 'Hi, do you have apartments for sale in Salmiya?'] },
-    { en: ['Welcome! Yes, 3 apartments available in Salmiya right now. Is this for investment or residence? And what\'s your budget range?', 'هلا والله! نعم، عندنا ٣ شقق متاحة في السالمية. استثمار أو سكن؟ وكم ميزانيتك تقريباً؟'], ar: ['هلا والله! نعم، عندنا ٣ شقق متاحة في السالمية. استثمار أو سكن؟ وكم ميزانيتك تقريباً؟', 'Welcome! Yes, 3 apartments available in Salmiya. Investment or residence? What\'s your budget?'] },
-    { en: ['Residence, budget around 120K', 'للسكن، ميزانيتي حوالي ١٢٠ ألف'], ar: ['للسكن، ميزانيتي حوالي ١٢٠ ألف', 'Residence, budget around 120K'] },
-    { en: ['Got it — 2 listings fit: 110K (3BR, 8th floor, sea view) and 125K (4BR, ground floor, garden). Should I send photos + location?', 'تمام — عندنا شقتين تناسبك: ١١٠ ألف (٣ غرف، طابق ٨، إطلالة بحر) و ١٢٥ ألف (٤ غرف، أرضي مع حديقة). أرسل لك الصور والموقع؟'], ar: ['تمام — عندنا شقتين تناسبك: ١١٠ ألف (٣ غرف، طابق ٨، إطلالة بحر) و ١٢٥ ألف (٤ غرف، أرضي مع حديقة). أرسل لك الصور والموقع؟', 'Got it — 2 listings fit: 110K (3BR, sea view) and 125K (4BR, garden).'] },
-    { en: ['Yes please, and when can I view?', 'نعم من فضلك، والمعاينة متى ممكن؟'], ar: ['نعم من فضلك، والمعاينة متى ممكن؟', 'Yes please, and when can I view?'] },
-    { en: ['✅ Details sent. Viewings available tomorrow 6pm or Thursday 4pm. Which works? 🏢', '✅ أرسلنا التفاصيل. جاهزين للمعاينة بكرة ٦ مساءً أو الخميس ٤ عصراً. أيهما يناسبك؟ 🏢'], ar: ['✅ أرسلنا التفاصيل. جاهزين للمعاينة بكرة ٦ مساءً أو الخميس ٤ عصراً. أيهما يناسبك؟ 🏢', '✅ Details sent. Viewings tomorrow 6pm or Thursday 4pm. Which works? 🏢'] },
+    { en: ['Hi, I\'m looking for an apartment to buy in Salmiya, budget around 120K'], ar: ['هلا، أبي أشتري شقة في السالمية، ميزانيتي حوالي ١٢٠ ألف'] },
+    { en: ['Hala, welcome! Great area. Quick question — is this for personal residence or investment?'], ar: ['هلا وغلا، حياك! منطقة زينة. سؤال سريع — للسكن الشخصي ولا استثمار؟'] },
+    { en: ['Personal residence. I need at least 3 bedrooms, prefer a high floor'], ar: ['للسكن. أبي على الأقل ٣ غرف، وأفضل طابق عالي'] },
+    { en: ['Perfect. I have 2 matching listings right now:\n• 110K — 3BR, 8th floor, sea view, 180m²\n• 118K — 3BR, 12th floor, city view, 165m²\nShall I send photos and full details on WhatsApp?'], ar: ['ممتاز. عندي الحين ٢ عقارات تناسبك:\n• ١١٠ ألف — ٣ غرف، طابق ٨، إطلالة بحر، ١٨٠م²\n• ١١٨ ألف — ٣ غرف، طابق ١٢، إطلالة مدينة، ١٦٥م²\nأرسللك الصور والتفاصيل الكاملة على واتساب؟'] },
+    { en: ['Yes send them. The sea view one sounds interesting'], ar: ['أرسل. اللي فيها إطلالة على البحر'] },
+    { en: ['Sent! 📲 The 110K unit is on the 8th floor, direct sea view, 2 parking spots included, building has a pool and gym. Available for viewing anytime this week. When\'s good for you?'], ar: ['أرسلت! 📲 الوحدة بـ ١١٠ ألف في الطابق الثامن، إطلالة بحر مباشرة، مواقفين سيارات، في البناية مسبح وجيم. جاهزة للمعاينة أي وقت هالأسبوع. متى يناسبك؟'] },
+    { en: ['How about tomorrow evening, around 6?'], ar: ['باجر المساء، حوالي الساعة ٦؟'] },
+    { en: ['✅ Viewing confirmed! Tomorrow 6:00pm — Salmiya, 8th floor sea view unit. I\'ll send you the exact location and our agent\'s number on WhatsApp. Yalla, see you there! 🏢'], ar: ['✅ تمت جدولة المعاينة! باجر الساعة ٦ مساءً — السالمية، الطابق الثامن، إطلالة البحر. أرسللك الموقع الدقيق ورقم الوكيل على واتساب. يالله نشوفك هناك! 🏢'] },
   ],
 }
