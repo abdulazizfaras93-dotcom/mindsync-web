@@ -28,6 +28,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
+  keywords: [
+    'AI automation Kuwait', 'ذكاء اصطناعي الكويت', 'WhatsApp bot Kuwait',
+    'AI agency Kuwait', 'business automation Kuwait', 'MindSync',
+    'chatbot clinic Kuwait', 'AI salon Kuwait', 'automation SMB Gulf',
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     type: 'website',
     url: SITE_URL,
