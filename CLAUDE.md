@@ -44,3 +44,9 @@ Gulf Premium palette only — deep green `#153E2D`, gold `#BF8D38`, ivory `#FBFA
 ## Deploy
 
 Netlify builds with `npm run build`, publishes `.next/`. Do not commit `.next/` or `node_modules/`.
+
+## Git & Deploy Rules
+
+- **Never use `git add -A` or `git add .`** — always stage specific files by name (e.g., `git add src/app/page.tsx`). Using `-A` or `.` risks staging stray files from the parent `MindSync/` directory that OneDrive or Windows surfaces inside the repo working directory.
+- Before every commit, run `git status` and review every staged file.
+- Push to `main` → Netlify auto-builds. Never run `npm run build` locally (Node 25 breaks it).
