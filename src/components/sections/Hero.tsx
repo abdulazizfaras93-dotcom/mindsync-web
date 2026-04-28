@@ -26,113 +26,123 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 }
 
 const t = {
-  eyebrow:  { en: 'AI Automation Agency · وكالة الأتمتة الذكية', ar: 'وكالة الأتمتة الذكية · AI Automation Agency' },
-  headline: { en: 'Your Business,', ar: 'أعمالك،' },
+  eyebrow:        { en: 'AI Automation Agency · Kuwait', ar: 'وكالة الأتمتة الذكية · الكويت' },
+  headline:       { en: 'Your Business,', ar: 'أعمالك،' },
   headlineAccent: { en: 'Automated.', ar: 'مؤتمتة.' },
-  sub:      { en: 'AI agents for clinics, salons, gyms, garages, restaurants & real-estate offices in Kuwait. Built, deployed, and maintained — in 7 business days.', ar: 'وكلاء ذكاء اصطناعي للعيادات والصالونات والجيمات وورش السيارات والمطاعم ومكاتب العقارات في الكويت. مبنية، مُشغَّلة، ومُصانة — في 7 أيام عمل.' },
-  cta1:     { en: 'Chat on WhatsApp',  ar: 'تواصل على واتساب' },
-  cta2:     { en: 'See the Bundles',   ar: 'اكتشف الباقات' },
-  stat1n:   { en: '7', ar: '٧' },
-  stat1l:   { en: 'Business days to go live', ar: 'أيام عمل للإطلاق' },
-  stat2n:   { en: '6', ar: '٦' },
-  stat2l:   { en: 'Industry bundles', ar: 'باقات صناعية' },
-  stat3n:   { en: '24/7', ar: '٢٤/٧' },
-  stat3l:   { en: 'Agent uptime', ar: 'وقت تشغيل الوكيل' },
-  stat4n:   { en: '100%', ar: '١٠٠٪' },
-  stat4l:   { en: 'You own the data & flows', ar: 'بياناتك وسيناريوهاتك ملكك' },
+  sub: {
+    en: 'AI agents for clinics, salons, gyms, garages, restaurants & real-estate offices in Kuwait. Built, deployed, and maintained — in 7 business days.',
+    ar: 'وكلاء ذكاء اصطناعي للعيادات والصالونات والجيمات وورش السيارات والمطاعم ومكاتب العقارات في الكويت. مبنية، مُشغَّلة، ومُصانة — في 7 أيام عمل.',
+  },
+  cta1:   { en: 'Chat on WhatsApp', ar: 'تواصل على واتساب' },
+  cta2:   { en: 'See the Bundles',  ar: 'اكتشف الباقات' },
+  stat1l: { en: 'Days to go live',  ar: 'أيام للإطلاق' },
+  stat2l: { en: 'Industry bundles', ar: 'باقات صناعية' },
+  stat3l: { en: 'Agent uptime',     ar: 'وقت التشغيل' },
+  stat4l: { en: 'Data stays yours', ar: 'بياناتك ملكك' },
 }
 
 export default function Hero() {
   const { lang } = useLang()
 
+  const stats = [
+    { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
+    { count: 6,    suffix: '',  display: null,   label: t.stat2l[lang] },
+    { count: null, suffix: '',  display: '24/7', label: t.stat3l[lang] },
+    { count: 100,  suffix: '%', display: null,   label: t.stat4l[lang] },
+  ]
+
   return (
-    <section className="relative min-h-screen hero-bg pattern-overlay flex flex-col justify-center pt-16">
+    <section className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-[calc(100dvh-4rem)] items-center">
 
-      {/* Neural globe background */}
-      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-        <NeuralGlobe />
-      </div>
+          {/* LEFT: Content */}
+          <div className="py-20 lg:py-0 lg:pr-16 flex flex-col justify-center">
 
-      {/* Gold geometric accent — top right */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] opacity-10 pointer-events-none">
-        <svg viewBox="0 0 400 400" fill="none">
-          <circle cx="400" cy="0" r="200" stroke="#BF8D38" strokeWidth="0.5"/>
-          <circle cx="400" cy="0" r="140" stroke="#BF8D38" strokeWidth="0.5"/>
-          <circle cx="400" cy="0" r="80" stroke="#BF8D38" strokeWidth="0.5"/>
-        </svg>
-      </div>
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="w-6 h-px bg-ms-gold-600 shrink-0" />
+              <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium">
+                {t.eyebrow[lang]}
+              </p>
+            </motion.div>
 
-      {/* Bottom left geometric */}
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] opacity-8 pointer-events-none">
-        <svg viewBox="0 0 300 300" fill="none">
-          <polygon points="0,300 150,0 300,300" stroke="#BF8D38" strokeWidth="0.5" fill="none"/>
-          <polygon points="30,300 150,60 270,300" stroke="#BF8D38" strokeWidth="0.5" fill="none"/>
-        </svg>
-      </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-[58px] md:text-[72px] lg:text-[82px] font-bold tracking-[-0.02em] leading-[0.93] mb-6"
+            >
+              <span className="text-ms-ivory-0 block">{t.headline[lang]}</span>
+              <span className="text-ms-gold-600 block">{t.headlineAccent[lang]}</span>
+            </motion.h1>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-        <div className="max-w-3xl">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.38 }}
+              className="text-white/65 text-[16px] leading-relaxed max-w-[480px] mb-10"
+            >
+              {t.sub[lang]}
+            </motion.p>
 
-          {/* Eyebrow */}
-          <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-6 mt-4">{t.eyebrow[lang]}</p>
-
-          {/* Headline */}
-          <h1 className="text-[56px] md:text-[72px] font-bold tracking-tight leading-[1.05] mb-4">
-            <span className="text-ms-ivory-0">{t.headline[lang]}</span>
-            <br/>
-            <span className="text-ms-gold-600">{t.headlineAccent[lang]}</span>
-          </h1>
-
-          {/* Sub */}
-          <p className="text-white/85 text-[17px] leading-relaxed max-w-xl mb-10 font-light">{t.sub[lang]}</p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4 mb-20">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
-               className="bg-ms-gold-600 text-ms-green-900 font-bold text-[15px] px-8 py-4 rounded-xl hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2">
-              {t.cta1[lang]}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </a>
-            <a href="#bundles"
-               className="bg-white/15 text-ms-ivory-0 font-semibold text-[15px] px-8 py-4 rounded-xl border border-white/25 hover:bg-white/25 transition-all duration-200">
-              {t.cta2[lang]}
-            </a>
-          </div>
-
-          {/* Stats row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
-            {[
-              { count: 7,   suffix: '',    label: t.stat1l[lang] },
-              { count: 6,   suffix: '',    label: t.stat2l[lang] },
-              { count: null, display: '24/7', label: t.stat3l[lang] },
-              { count: 100, suffix: '%',   label: t.stat4l[lang] },
-            ].map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="bg-white/5 px-6 py-5"
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.48 }}
+              className="flex flex-wrap gap-3 mb-14"
+            >
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]"
               >
-                <p className="text-ms-gold-600 text-[28px] font-bold leading-none mb-1">
-                  {s.count !== null && s.count !== undefined
-                    ? <><CountUp to={s.count} />{s.suffix}</>
-                    : s.display}
-                </p>
-                <p className="text-white/85 text-[12px] leading-snug">{s.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
+                {t.cta1[lang]}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a
+                href="#bundles"
+                className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
+              >
+                {t.cta2[lang]}
+              </a>
+            </motion.div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <div className="w-px h-12 bg-gradient-to-b from-white/0 to-white/60"></div>
-        <div className="w-1 h-1 rounded-full bg-white/60"></div>
+            {/* Stats — horizontal rule with dividers */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.62 }}
+              className="grid grid-cols-4 border-t border-white/10 pt-8"
+            >
+              {stats.map((s, i) => (
+                <div key={i} className={`${i > 0 ? 'pl-5 border-l border-white/10' : ''}`}>
+                  <p className="text-ms-gold-600 text-[24px] font-bold leading-none mb-1.5 font-mono tabular-nums">
+                    {s.count !== null && s.count !== undefined
+                      ? <><CountUp to={s.count} />{s.suffix}</>
+                      : s.display}
+                  </p>
+                  <p className="text-white/40 text-[11px] leading-tight">{s.label}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Globe (desktop only) */}
+          <div className="hidden lg:block relative self-stretch">
+            <div className="sticky top-16 h-[calc(100dvh-4rem)] w-full">
+              <NeuralGlobe />
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )

@@ -6,7 +6,7 @@ import { TiltCard } from '@/components/ui/TiltCard'
 import type { Bundle, TierId } from '@/lib/data'
 import {
   Stethoscope, Scissors, Dumbbell, Wrench, UtensilsCrossed, Building2,
-  Check, ArrowRight,
+  Check, ArrowRight, Clock,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -22,15 +22,16 @@ const ICON_MAP: Record<string, LucideIcon> = {
 const TIER_ORDER: TierId[] = ['essential', 'advanced', 'full-stack']
 
 const t = {
-  eyebrow:   { en: 'Pricing',              ar: 'التسعير' },
-  headline:  { en: 'Pick your industry. Pick your tier.', ar: 'اختر مجالك. اختر باقتك.' },
+  eyebrow:   { en: 'Pricing',                                 ar: 'التسعير' },
+  headline:  { en: 'Pick your industry. Pick your tier.',     ar: 'اختر مجالك. اختر باقتك.' },
   sub:       { en: 'One-time build fee. Fixed KWD retainer. No surprises.', ar: 'رسم بناء لمرة واحدة. اشتراك شهري ثابت. بدون مفاجآت.' },
-  build:     { en: 'Build fee',            ar: 'رسم البناء' },
-  retainer:  { en: '/mo retainer',         ar: '/شهر اشتراك' },
-  kwd:       { en: 'KWD',                  ar: 'د.ك' },
-  cta:       { en: 'Get Started',          ar: 'ابدأ الآن' },
-  delivery:  { en: '7-day delivery',       ar: 'توصيل في ٧ أيام' },
-  popular:   { en: 'Most Popular',         ar: 'الأكثر طلباً' },
+  build:     { en: 'Build fee',                               ar: 'رسم البناء' },
+  retainer:  { en: '/mo retainer',                            ar: '/شهر اشتراك' },
+  kwd:       { en: 'KWD',                                     ar: 'د.ك' },
+  cta:       { en: 'Get Started',                             ar: 'ابدأ الآن' },
+  delivery:  { en: '7-day delivery',                          ar: 'توصيل في ٧ أيام' },
+  popular:   { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
+  problem:   { en: 'The Problem',                             ar: 'المشكلة الشائعة' },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
@@ -39,15 +40,7 @@ const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
   'full-stack': { en: 'Full-Stack',  ar: 'المتكاملة' },
 }
 
-function TierCard({
-  bundle,
-  tierId,
-  lang,
-}: {
-  bundle: Bundle
-  tierId: TierId
-  lang: 'en' | 'ar'
-}) {
+function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; lang: 'en' | 'ar' }) {
   const isAr = lang === 'ar'
   const tier = bundle.tiers.find((t) => t.id === tierId)!
   const isAdvanced = tierId === 'advanced'
@@ -61,13 +54,12 @@ function TierCard({
 
   return (
     <div
-      className={`relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
+      className={`relative flex flex-col rounded-2xl overflow-hidden h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
         isAdvanced
           ? 'bg-ms-green-900 border border-ms-gold-600/40 shadow-lg'
           : 'bg-white border border-ms-ivory-200'
       }`}
     >
-      {/* Most Popular badge */}
       {isAdvanced && (
         <div className="bg-ms-gold-600 text-ms-green-900 text-[10px] font-mono tracking-[0.15em] uppercase text-center py-1.5 font-semibold">
           {t.popular[lang]}
@@ -75,7 +67,6 @@ function TierCard({
       )}
 
       <div className="p-6 flex flex-col flex-1">
-        {/* Tier name */}
         <div className="flex items-center justify-between mb-5">
           <div>
             <p className={`text-[10px] tracking-[0.18em] uppercase font-medium mb-1 ${isAdvanced ? 'text-ms-gold-600' : 'text-ms-ink-500'}`}>
@@ -92,7 +83,6 @@ function TierCard({
           </span>
         </div>
 
-        {/* Pricing */}
         <div className={`rounded-xl p-4 mb-5 ${isAdvanced ? 'bg-white/6 border border-white/10' : 'bg-ms-ivory-100'}`}>
           <p className={`text-[10px] uppercase tracking-wider mb-1 ${isAdvanced ? 'text-white/50' : 'text-ms-ink-500'}`}>
             {t.build[lang]}
@@ -110,18 +100,13 @@ function TierCard({
           </p>
         </div>
 
-        {/* Features */}
         <ul className="space-y-2.5 mb-6 flex-1">
           {tier.features[isAr ? 'ar' : 'en'].map((f, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <span className={`mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full ${
                 isAdvanced ? 'bg-ms-gold-600/20' : 'bg-ms-green-800/10'
               }`}>
-                <Check
-                  size={10}
-                  strokeWidth={2.5}
-                  className={isAdvanced ? 'text-ms-gold-600' : 'text-ms-green-800'}
-                />
+                <Check size={10} strokeWidth={2.5} className={isAdvanced ? 'text-ms-gold-600' : 'text-ms-green-800'} />
               </span>
               <span className={`text-[13px] leading-snug ${
                 i === 0 && tierId !== 'essential'
@@ -134,15 +119,17 @@ function TierCard({
           ))}
         </ul>
 
-        {/* Delivery tag + CTA */}
-        <div className={`text-[11px] font-mono tracking-wider text-center mb-3 ${isAdvanced ? 'text-ms-gold-600/60' : 'text-ms-ink-400'}`}>
-          ⏱ {t.delivery[lang]}
+        <div className={`text-[11px] font-mono tracking-wider text-center mb-3 flex items-center justify-center gap-1.5 ${
+          isAdvanced ? 'text-ms-gold-600/60' : 'text-ms-ink-400'
+        }`}>
+          <Clock size={10} strokeWidth={2} />
+          {t.delivery[lang]}
         </div>
         <a
           href={`${WHATSAPP_URL}?text=${waText}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-[13px] font-semibold tracking-wide transition-all duration-150 ${
+          className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-[13px] font-semibold tracking-wide transition-all duration-150 active:scale-[0.98] ${
             isAdvanced
               ? 'bg-ms-gold-600 text-ms-green-900 hover:bg-ms-gold-500'
               : 'bg-ms-green-800 text-ms-ivory-0 hover:bg-ms-green-700'
@@ -166,68 +153,99 @@ export default function Bundles() {
     <section id="bundles" className="py-24 bg-ms-ivory-0">
       <div className="max-w-6xl mx-auto px-6">
 
-        {/* Section header */}
-        <div className="text-center mb-10">
-          <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-3">
+        {/* Section header — left-aligned */}
+        <div className="mb-12">
+          <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-3">
             {t.eyebrow[lang]}
           </p>
-          <h2 className="text-[36px] md:text-[44px] font-bold text-ms-ink-900 tracking-tight mb-4">
+          <h2 className="text-[40px] md:text-[52px] font-bold text-ms-ink-900 tracking-tight leading-[1.0] mb-3">
             {t.headline[lang]}
           </h2>
-          <p className="text-ms-ink-600 text-[16px] max-w-md mx-auto leading-relaxed">
+          <p className="text-ms-ink-500 text-[16px] max-w-md leading-relaxed">
             {t.sub[lang]}
           </p>
         </div>
 
-        {/* Industry tab picker */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {BUNDLES.map((b) => {
-            const Icon = ICON_MAP[b.id] ?? Building2
-            const isActive = b.id === activeId
-            return (
-              <button
-                key={b.id}
-                onClick={() => setActiveId(b.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 focus-visible:ring-offset-2 ${
-                  isActive
-                    ? 'bg-ms-green-800 text-ms-ivory-0 shadow-sm'
-                    : 'bg-white text-ms-ink-600 border border-ms-ivory-200 hover:border-ms-green-800/30 hover:text-ms-green-800'
-                }`}
-              >
-                <Icon size={13} strokeWidth={1.75} />
-                {b[isAr ? 'ar' : 'en']}
-              </button>
-            )
-          })}
-        </div>
+        {/* Body: sidebar (desktop) + cards */}
+        <div className="flex gap-10 items-start">
 
-        {/* Pain stat — changes per industry */}
-        <div className="max-w-2xl mx-auto mb-10">
-          <div className="flex items-start gap-3 bg-ms-green-900/5 border border-ms-green-800/12 rounded-xl px-5 py-4">
-            <span className="text-ms-gold-600 text-[18px] mt-0.5 shrink-0">⚠️</span>
-            <p className="text-ms-ink-700 text-[14px] leading-relaxed font-medium">
-              {activeBundle.painStat[lang]}
-            </p>
+          {/* LEFT: Industry sidebar — desktop only */}
+          <div className="hidden md:block shrink-0 w-44">
+            <div className="space-y-0.5">
+              {BUNDLES.map((b) => {
+                const Icon = ICON_MAP[b.id] ?? Building2
+                const isActive = b.id === activeId
+                return (
+                  <button
+                    key={b.id}
+                    onClick={() => setActiveId(b.id)}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 ${
+                      isActive
+                        ? 'bg-ms-green-800 text-ms-ivory-0'
+                        : 'text-ms-ink-600 hover:bg-ms-ivory-100 hover:text-ms-ink-900'
+                    }`}
+                  >
+                    <Icon size={13} strokeWidth={1.75} className="shrink-0" />
+                    <span className="text-[13px] font-medium">{b[isAr ? 'ar' : 'en']}</span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Pain stat below sidebar */}
+            <div className="mt-8 pt-6 border-t border-ms-ivory-200">
+              <p className="text-ms-ink-400 text-[10px] uppercase tracking-[0.15em] mb-2 font-mono">
+                {t.problem[lang]}
+              </p>
+              <p className="text-ms-ink-600 text-[12px] leading-relaxed">
+                {activeBundle.painStat[lang]}
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: Cards area */}
+          <div className="flex-1 min-w-0">
+
+            {/* Mobile: horizontal pill tabs */}
+            <div className="flex md:hidden flex-wrap gap-2 mb-6">
+              {BUNDLES.map((b) => {
+                const Icon = ICON_MAP[b.id] ?? Building2
+                const isActive = b.id === activeId
+                return (
+                  <button
+                    key={b.id}
+                    onClick={() => setActiveId(b.id)}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-150 focus-visible:outline-none ${
+                      isActive
+                        ? 'bg-ms-green-800 text-ms-ivory-0'
+                        : 'bg-white text-ms-ink-600 border border-ms-ivory-200 hover:border-ms-green-800/30'
+                    }`}
+                  >
+                    <Icon size={12} strokeWidth={1.75} />
+                    {b[isAr ? 'ar' : 'en']}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Mobile: pain stat */}
+            <div className="md:hidden mb-6">
+              <p className="text-ms-ink-600 text-[13px] leading-relaxed italic border-l-2 border-ms-gold-600/40 pl-3">
+                {activeBundle.painStat[lang]}
+              </p>
+            </div>
+
+            {/* Tier cards — asymmetric grid */}
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr_2fr] gap-4">
+              {TIER_ORDER.map((tierId) => (
+                <TiltCard key={tierId}>
+                  <TierCard bundle={activeBundle} tierId={tierId} lang={lang} />
+                </TiltCard>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* 3-tier cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {TIER_ORDER.map((tierId) => (
-            <TiltCard key={tierId}>
-              <TierCard
-                bundle={activeBundle}
-                tierId={tierId}
-                lang={lang}
-              />
-            </TiltCard>
-          ))}
-        </div>
-
-        {/* Industry label below */}
-        <p className="text-center text-ms-ink-400 text-[12px] mt-6 tracking-wide">
-          {activeBundle.industry[lang]}
-        </p>
       </div>
     </section>
   )
