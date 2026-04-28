@@ -74,8 +74,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/brand/logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/brand/logo.png" />
+        <link rel="icon" href="/brand/logo-transparent.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/brand/logo-transparent.png" />
       </head>
       <body className="antialiased">{children}</body>
     </html>
