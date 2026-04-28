@@ -63,9 +63,36 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'MindSync',
+  alternateName: 'مايند سينك',
+  description: "Kuwait's full-stack AI automation agency for SMBs — WhatsApp bots to client dashboards in 7 business days.",
+  url: 'https://www.mindsynckw.com',
+  logo: 'https://www.mindsynckw.com/brand/logo-transparent.png',
+  image: 'https://www.mindsynckw.com/og/b-terminal-ar.png',
+  telephone: '+965',
+  email: 'admin@mindsynckw.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kuwait City',
+    addressCountry: 'KW',
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Kuwait' },
+    { '@type': 'Country', name: 'Saudi Arabia' },
+    { '@type': 'Country', name: 'United Arab Emirates' },
+  ],
+  priceRange: '$$',
+  knowsAbout: ['AI automation', 'WhatsApp Business API', 'chatbot development', 'n8n workflows', 'Claude AI'],
+  sameAs: [
+    'https://www.instagram.com/mindsyncKW',
+    'https://www.tiktok.com/@mindsynckw',
+  ],
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // Default to Arabic for Kuwait ICP. The LangProvider syncs the actual
-  // user choice to document.documentElement on mount (localStorage).
   return (
     <html
       lang="ar"
@@ -76,6 +103,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/brand/logo-transparent.png" type="image/png" />
         <link rel="apple-touch-icon" href="/brand/logo-transparent.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
       </head>
       <body className="antialiased">{children}</body>
     </html>

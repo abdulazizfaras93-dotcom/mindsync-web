@@ -1,9 +1,29 @@
 'use client'
+import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
 
 const NeuralGlobe = dynamic(() => import('@/components/canvas/NeuralGlobe'), { ssr: false })
+
+function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
+  const [val, setVal] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.5 })
+  useEffect(() => {
+    if (!inView) return
+    const start = performance.now()
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1)
+      const ease = 1 - Math.pow(1 - p, 3)
+      setVal(Math.round(ease * to))
+      if (p < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }, [inView, to, duration])
+  return <span ref={ref}>{val}</span>
+}
 
 const t = {
   eyebrow:  { en: 'AI Automation Agency · وكالة الأتمتة الذكية', ar: 'وكالة الأتمتة الذكية · AI Automation Agency' },
@@ -84,15 +104,26 @@ export default function Hero() {
           {/* Stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
             {[
-              { n: t.stat1n[lang], l: t.stat1l[lang] },
-              { n: t.stat2n[lang], l: t.stat2l[lang] },
-              { n: t.stat3n[lang], l: t.stat3l[lang] },
-              { n: t.stat4n[lang], l: t.stat4l[lang] },
+              { count: 7,   suffix: '',    label: t.stat1l[lang] },
+              { count: 6,   suffix: '',    label: t.stat2l[lang] },
+              { count: null, display: '24/7', label: t.stat3l[lang] },
+              { count: 100, suffix: '%',   label: t.stat4l[lang] },
             ].map((s, i) => (
-              <div key={i} className="bg-white/5 px-6 py-5">
-                <p className="text-ms-gold-600 text-[28px] font-bold leading-none mb-1">{s.n}</p>
-                <p className="text-white/85 text-[12px] leading-snug">{s.l}</p>
-              </div>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+                className="bg-white/5 px-6 py-5"
+              >
+                <p className="text-ms-gold-600 text-[28px] font-bold leading-none mb-1">
+                  {s.count !== null && s.count !== undefined
+                    ? <><CountUp to={s.count} />{s.suffix}</>
+                    : s.display}
+                </p>
+                <p className="text-white/85 text-[12px] leading-snug">{s.label}</p>
+              </motion.div>
             ))}
           </div>
         </div>

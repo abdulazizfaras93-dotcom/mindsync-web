@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
@@ -51,22 +52,44 @@ export default function FAQ() {
             const f = lang === 'ar' ? faq.ar : faq.en
             const isOpen = open === i
             return (
-              <div key={i} className={`bg-white rounded-xl border overflow-hidden transition-all duration-200 ${isOpen ? 'border-ms-green-800/20' : 'border-ms-ivory-200'}`}>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.35, delay: i * 0.05 }}
+                className={`bg-white rounded-xl border overflow-hidden ${isOpen ? 'border-ms-green-800/20' : 'border-ms-ivory-200'}`}
+              >
                 <button onClick={() => setOpen(isOpen ? null : i)}
                   className="w-full px-6 py-4 flex items-center justify-between text-left gap-4">
                   <span className={`text-[15px] font-semibold transition-colors ${isOpen ? 'text-ms-green-800' : 'text-ms-ink-900'}`}>{f.q}</span>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${isOpen ? 'bg-ms-green-800 rotate-45' : 'bg-ms-ivory-100'}`}>
+                  <motion.div
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                    className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${isOpen ? 'bg-ms-green-800' : 'bg-ms-ivory-100'}`}
+                  >
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                       <path d="M6 2v8M2 6h8" stroke={isOpen ? 'white' : '#4A5550'} strokeWidth="1.5" strokeLinecap="round"/>
                     </svg>
-                  </div>
+                  </motion.div>
                 </button>
-                {isOpen && (
-                  <div className="px-6 pb-5 pt-0">
-                    <p className="text-ms-ink-600 text-[14px] leading-relaxed">{f.a}</p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-5 pt-0">
+                        <p className="text-ms-ink-600 text-[14px] leading-relaxed">{f.a}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             )
           })}
         </div>

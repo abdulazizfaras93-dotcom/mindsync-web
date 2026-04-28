@@ -7,8 +7,10 @@ import ReceptionistChat from '@/components/sections/ReceptionistChat'
 import Process from '@/components/sections/Process'
 import BuiltOn from '@/components/sections/BuiltOn'
 import FAQ from '@/components/sections/FAQ'
+import ROICalculator from '@/components/sections/ROICalculator'
 import { CTA, Footer } from '@/components/sections/CTAFooter'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import ExitIntent from '@/components/ui/ExitIntent'
 
 export default function Home() {
   return (
@@ -18,6 +20,7 @@ export default function Home() {
         <Hero />
         <Demo />
         <Bundles />
+        <ROICalculator />
         <ReceptionistChat />
         <Process />
         <BuiltOn />
@@ -26,6 +29,7 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <ExitIntent />
     </LangProvider>
   )
 }

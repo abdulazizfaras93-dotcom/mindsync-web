@@ -1,4 +1,5 @@
 'use client'
+import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
@@ -41,7 +42,11 @@ function LogoTile({ logo }: { logo: Logo }) {
       ? `https://cdn.simpleicons.org/${logo.slug}/153E2D`
       : null
   return (
-    <div className="h-16 w-44 flex-shrink-0 rounded-xl bg-white border border-ms-ivory-200 shadow-[0_1px_2px_rgba(15,46,34,0.04)] flex items-center justify-center px-4">
+    <motion.div
+      whileHover={{ y: -4, boxShadow: '0 8px 24px rgba(15,46,34,0.12)' }}
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      className="h-16 w-44 flex-shrink-0 rounded-xl bg-white border border-ms-ivory-200 shadow-[0_1px_2px_rgba(15,46,34,0.04)] flex items-center justify-center px-4 cursor-default"
+    >
       {src ? (
         <img
           src={src}
@@ -52,7 +57,7 @@ function LogoTile({ logo }: { logo: Logo }) {
       ) : (
         <span className="font-mono text-[14px] font-bold text-ms-green-800 tracking-tight">{logo.name}</span>
       )}
-    </div>
+    </motion.div>
   )
 }
 

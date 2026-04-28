@@ -1,7 +1,37 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
+
+function MagneticLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLAnchorElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const sx = useSpring(x, { stiffness: 200, damping: 18 })
+  const sy = useSpring(y, { stiffness: 200, damping: 18 })
+
+  const handleMove = (e: React.MouseEvent) => {
+    if (!ref.current) return
+    const r = ref.current.getBoundingClientRect()
+    x.set(((e.clientX - (r.left + r.width / 2)) / r.width) * 10)
+    y.set(((e.clientY - (r.top + r.height / 2)) / r.height) * 6)
+  }
+  const handleLeave = () => { x.set(0); y.set(0) }
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      style={{ x: sx, y: sy }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className="text-[14px] text-ms-ink-600 hover:text-ms-green-800 transition-colors font-medium"
+    >
+      {children}
+    </motion.a>
+  )
+}
 
 const t = {
   demo:     { en: 'Live Demo',   ar: 'تجربة مباشرة' },
@@ -13,7 +43,7 @@ const t = {
 }
 
 export default function Navbar() {
-  const { lang, toggle, isAr } = useLang()
+  const { lang, toggle } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -45,10 +75,9 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map(link => (
-            <a key={link.href} href={link.href}
-               className="text-[14px] text-ms-ink-600 hover:text-ms-green-800 transition-colors font-medium">
+            <MagneticLink key={link.href} href={link.href}>
               {link.label[lang]}
-            </a>
+            </MagneticLink>
           ))}
         </div>
 
