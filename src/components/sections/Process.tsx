@@ -1,5 +1,8 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useLang } from '@/lib/lang'
+
+const ProcessFlow = dynamic(() => import('@/components/canvas/ProcessFlow'), { ssr: false })
 
 const t = {
   eyebrow: { en: 'How It Works', ar: 'آلية العمل' },
@@ -42,6 +45,11 @@ export default function Process() {
           <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-3">{t.eyebrow[lang]}</p>
           <h2 className="text-[36px] md:text-[44px] font-bold text-ms-ivory-0 tracking-tight mb-4">{t.headline[lang]}</h2>
           <p className="text-white/55 text-[16px] max-w-lg mx-auto leading-relaxed">{t.sub[lang]}</p>
+        </div>
+
+        {/* Animated flow tube */}
+        <div className="w-full h-28 my-2 overflow-hidden" aria-hidden>
+          <ProcessFlow />
         </div>
 
         {/* Steps */}

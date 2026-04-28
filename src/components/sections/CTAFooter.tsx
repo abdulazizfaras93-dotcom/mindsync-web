@@ -1,6 +1,10 @@
 'use client'
+import { useRef } from 'react'
+import dynamic from 'next/dynamic'
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
+
+const KuwaitParticles = dynamic(() => import('@/components/canvas/KuwaitParticles'), { ssr: false })
 
 const t = {
   eyebrow: { en: "Let's build", ar: 'لنبدأ البناء' },
@@ -15,9 +19,14 @@ const t = {
 
 export function CTA() {
   const { lang } = useLang()
+  const sectionRef = useRef<HTMLDivElement>(null)
   return (
-    <section className="py-24 hero-bg pattern-overlay">
-      <div className="max-w-3xl mx-auto px-6 text-center">
+    <section className="relative py-24 hero-bg pattern-overlay">
+      {/* Kuwait map particle field */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden>
+        <KuwaitParticles containerRef={sectionRef} />
+      </div>
+      <div ref={sectionRef} className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-4">{t.eyebrow[lang]}</p>
         <h2 className="text-[40px] md:text-[52px] font-bold text-ms-ivory-0 tracking-tight leading-[1.1] mb-5">{t.headline[lang]}</h2>
         <p className="text-white/85 text-[16px] leading-relaxed max-w-xl mx-auto mb-10">{t.sub[lang]}</p>

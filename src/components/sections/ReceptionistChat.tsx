@@ -1,8 +1,11 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
+
+const ChatBubbles = dynamic(() => import('@/components/canvas/ChatBubbles'), { ssr: false })
 
 const WEBHOOK_URL = 'https://ifaras911.app.n8n.cloud/webhook/receptionist-website'
 
@@ -175,8 +178,12 @@ export default function ReceptionistChat() {
   }
 
   return (
-    <section ref={sectionRef} className="bg-ms-green-900 py-24 px-6">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section ref={sectionRef} className="relative bg-ms-green-900 py-24 px-6">
+      {/* Floating bubble background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-35 overflow-hidden" aria-hidden>
+        <ChatBubbles />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: copy */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/lang'
 import { BUNDLES, WHATSAPP_URL } from '@/lib/data'
+import { TiltCard } from '@/components/ui/TiltCard'
 import type { Bundle, TierId } from '@/lib/data'
 import {
   Stethoscope, Scissors, Dumbbell, Wrench, UtensilsCrossed, Building2,
@@ -213,12 +214,13 @@ export default function Bundles() {
         {/* 3-tier cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {TIER_ORDER.map((tierId) => (
-            <TierCard
-              key={tierId}
-              bundle={activeBundle}
-              tierId={tierId}
-              lang={lang}
-            />
+            <TiltCard key={tierId}>
+              <TierCard
+                bundle={activeBundle}
+                tierId={tierId}
+                lang={lang}
+              />
+            </TiltCard>
           ))}
         </div>
 

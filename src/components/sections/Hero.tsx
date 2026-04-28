@@ -1,6 +1,9 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
+
+const NeuralGlobe = dynamic(() => import('@/components/canvas/NeuralGlobe'), { ssr: false })
 
 const t = {
   eyebrow:  { en: 'AI Automation Agency · وكالة الأتمتة الذكية', ar: 'وكالة الأتمتة الذكية · AI Automation Agency' },
@@ -25,6 +28,11 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen hero-bg pattern-overlay flex flex-col justify-center pt-16">
 
+      {/* Neural globe background */}
+      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+        <NeuralGlobe />
+      </div>
+
       {/* Gold geometric accent — top right */}
       <div className="absolute top-0 right-0 w-[400px] h-[400px] opacity-10 pointer-events-none">
         <svg viewBox="0 0 400 400" fill="none">
@@ -42,7 +50,7 @@ export default function Hero() {
         </svg>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 py-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
         <div className="max-w-3xl">
 
           {/* Eyebrow */}
