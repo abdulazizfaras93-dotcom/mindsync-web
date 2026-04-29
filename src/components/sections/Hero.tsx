@@ -26,27 +26,34 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 }
 
 const t = {
-  eyebrow:        { en: 'AI Automation Agency · Kuwait', ar: 'وكالة الأتمتة الذكية · الكويت' },
-  headline:       { en: 'Your Business,', ar: 'أعمالك،' },
-  headlineAccent: { en: 'Automated.', ar: 'مؤتمتة.' },
+  pilot:          { en: 'Pilot open — 3 clinic spots at 320 KWD', ar: 'عرض تجريبي — ٣ عيادات بـ ٣٢٠ د.ك' },
+  eyebrow:        { en: 'AI Receptionist for Kuwait Clinics',       ar: 'مساعد ذكي للعيادات · الكويت' },
+  headline:       { en: 'Never miss a clinic booking.',             ar: 'لا تفوّت حجزاً بعد الآن.' },
+  headlineAccent: { en: 'While you sleep.',                          ar: 'وأنت نائم.' },
   sub: {
-    en: 'AI agents for clinics, salons, gyms, garages, restaurants & real-estate offices in Kuwait. Built, deployed, and maintained — in 7 business days.',
-    ar: 'وكلاء ذكاء اصطناعي للعيادات والصالونات والجيمات وورش السيارات والمطاعم ومكاتب العقارات في الكويت. مبنية، مُشغَّلة، ومُصانة — في 7 أيام عمل.',
+    en: "We wire your clinic's WhatsApp to an AI agent in 7 days. It handles bookings, sends appointment reminders, and replies after hours — in Kuwaiti Arabic.",
+    ar: 'نربط واتساب عيادتك بوكيل ذكي خلال ٧ أيام. يحجز المواعيد، يُذكّر المرضى، ويردّ بعد دوام الاستقبال — بالعربي الكويتي.',
   },
-  cta1:   { en: 'Chat on WhatsApp', ar: 'تواصل على واتساب' },
-  cta2:   { en: 'See the Bundles',  ar: 'اكتشف الباقات' },
-  stat1l: { en: 'Days to go live',  ar: 'أيام للإطلاق' },
-  stat2l: { en: 'Industry bundles', ar: 'باقات صناعية' },
-  stat3l: { en: 'Agent uptime',     ar: 'وقت التشغيل' },
-  stat4l: { en: 'Data stays yours', ar: 'بياناتك ملكك' },
+  cta1:   { en: 'Chat on WhatsApp',    ar: 'تواصل على واتساب' },
+  cta2:   { en: 'See Clinic Pricing',  ar: 'اطّلع على التسعير' },
+  stat1l: { en: 'Days to go live',     ar: 'أيام للإطلاق' },
+  stat2l: { en: 'Clinic automations',  ar: 'أتمتة للعيادة' },
+  stat3l: { en: 'Agent uptime',        ar: 'وقت التشغيل' },
+  stat4l: { en: 'Data stays yours',    ar: 'بياناتك ملكك' },
 }
 
 export default function Hero() {
   const { lang } = useLang()
 
+  const waText = encodeURIComponent(
+    lang === 'ar'
+      ? 'السلام عليكم، مهتم بنظام الحجز الذكي للعيادات — ابي اعرف أكثر عن العرض التجريبي'
+      : "Hi, I'm interested in the AI booking system for clinics — tell me more about the pilot offer"
+  )
+
   const stats = [
     { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
-    { count: 6,    suffix: '',  display: null,   label: t.stat2l[lang] },
+    { count: 5,    suffix: '',  display: null,   label: t.stat2l[lang] },
     { count: null, suffix: '',  display: '24/7', label: t.stat3l[lang] },
     { count: 100,  suffix: '%', display: null,   label: t.stat4l[lang] },
   ]
@@ -59,11 +66,25 @@ export default function Hero() {
           {/* LEFT: Content */}
           <div className="py-20 lg:py-0 lg:pr-16 flex flex-col justify-center">
 
+            {/* Pilot badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.05 }}
+              className="inline-flex items-center gap-2 self-start bg-ms-gold-600/10 border border-ms-gold-600/25 rounded-full px-3.5 py-1.5 mb-7"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-ms-gold-600 animate-pulse shrink-0" />
+              <span className="text-ms-gold-600 text-[11px] font-medium tracking-wide">
+                {t.pilot[lang]}
+              </span>
+            </motion.div>
+
+            {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex items-center gap-3 mb-8"
+              transition={{ duration: 0.5, delay: 0.12 }}
+              className="flex items-center gap-3 mb-7"
             >
               <div className="w-6 h-px bg-ms-gold-600 shrink-0" />
               <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium">
@@ -71,16 +92,18 @@ export default function Hero() {
               </p>
             </motion.div>
 
+            {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-[58px] md:text-[72px] lg:text-[82px] font-bold tracking-[-0.02em] leading-[0.93] mb-6"
+              transition={{ duration: 0.7, delay: 0.22 }}
+              className="text-[54px] md:text-[68px] lg:text-[76px] font-bold tracking-[-0.02em] leading-[0.95] mb-6"
             >
               <span className="text-ms-ivory-0 block">{t.headline[lang]}</span>
               <span className="text-ms-gold-600 block">{t.headlineAccent[lang]}</span>
             </motion.h1>
 
+            {/* Sub */}
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -90,6 +113,7 @@ export default function Hero() {
               {t.sub[lang]}
             </motion.p>
 
+            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -97,7 +121,7 @@ export default function Hero() {
               className="flex flex-wrap gap-3 mb-14"
             >
               <a
-                href={WHATSAPP_URL}
+                href={`${WHATSAPP_URL}?text=${waText}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]"

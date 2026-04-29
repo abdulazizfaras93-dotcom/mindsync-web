@@ -21,6 +21,8 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 const TIER_ORDER: TierId[] = ['essential', 'advanced', 'full-stack']
 
+const CLINIC_PILOT_FEE = 320
+
 const t = {
   eyebrow:   { en: 'Pricing',                                 ar: 'التسعير' },
   headline:  { en: 'Pick your industry. Pick your tier.',     ar: 'اختر مجالك. اختر باقتك.' },
@@ -32,6 +34,12 @@ const t = {
   delivery:  { en: '7-day delivery',                          ar: 'توصيل في ٧ أيام' },
   popular:   { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
   problem:   { en: 'The Problem',                             ar: 'المشكلة الشائعة' },
+  pilotBanner: {
+    en: 'Pilot offer — build fee halved to 320 KWD for the first 3 clinics. Retainer unchanged.',
+    ar: 'عرض تجريبي — رسم البناء نصف السعر (٣٢٠ د.ك) لأول ٣ عيادات. الاشتراك الشهري بدون تغيير.',
+  },
+  pilotLabel: { en: 'Pilot', ar: 'عرض تجريبي' },
+  was:        { en: 'was',   ar: 'كان' },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
@@ -40,11 +48,16 @@ const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
   'full-stack': { en: 'Full-Stack',  ar: 'المتكاملة' },
 }
 
-function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; lang: 'en' | 'ar' }) {
+function TierCard({
+  bundle, tierId, lang, pilotBuildFee,
+}: {
+  bundle: Bundle; tierId: TierId; lang: 'en' | 'ar'; pilotBuildFee?: number
+}) {
   const isAr = lang === 'ar'
   const tier = bundle.tiers.find((t) => t.id === tierId)!
   const isAdvanced = tierId === 'advanced'
   const Icon = ICON_MAP[bundle.id] ?? Building2
+  const displayFee = pilotBuildFee ?? bundle.buildFee
 
   const waText = encodeURIComponent(
     isAr
@@ -87,10 +100,15 @@ function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; la
           <p className={`text-[10px] uppercase tracking-wider mb-1 ${isAdvanced ? 'text-white/50' : 'text-ms-ink-500'}`}>
             {t.build[lang]}
           </p>
-          <p className={`text-[30px] font-bold leading-none mb-3 ${isAdvanced ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>
-            {bundle.buildFee}
+          <p className={`text-[30px] font-bold leading-none mb-1 ${isAdvanced ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>
+            {displayFee}
             <span className={`text-[13px] font-medium ms-1 ${isAdvanced ? 'text-white/50' : 'text-ms-ink-400'}`}>{t.kwd[lang]}</span>
           </p>
+          {pilotBuildFee && (
+            <p className={`text-[11px] mb-2 ${isAdvanced ? 'text-white/30' : 'text-ms-ink-300'}`}>
+              <span className="line-through">{bundle.buildFee} {t.kwd[lang]}</span>
+            </p>
+          )}
           <div className={`h-px mb-3 ${isAdvanced ? 'bg-white/10' : 'bg-ms-ivory-200'}`} />
           <p className={`text-[22px] font-bold leading-none ${isAdvanced ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>
             {tier.retainer}
@@ -235,11 +253,27 @@ export default function Bundles() {
               </p>
             </div>
 
+            {/* Pilot offer banner — clinic only */}
+            {activeId === 'clinic' && (
+              <div className="mb-5 flex items-center gap-3 bg-ms-gold-600/8 border border-ms-gold-600/20 rounded-xl px-4 py-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-ms-gold-600 animate-pulse shrink-0" />
+                <p className="text-ms-ink-700 text-[13px]">
+                  <span className="font-semibold text-ms-gold-600 me-1">{t.pilotLabel[lang]}</span>
+                  {t.pilotBanner[lang]}
+                </p>
+              </div>
+            )}
+
             {/* Tier cards — asymmetric grid */}
             <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr_2fr] gap-4">
               {TIER_ORDER.map((tierId) => (
                 <TiltCard key={tierId}>
-                  <TierCard bundle={activeBundle} tierId={tierId} lang={lang} />
+                  <TierCard
+                    bundle={activeBundle}
+                    tierId={tierId}
+                    lang={lang}
+                    pilotBuildFee={activeId === 'clinic' ? CLINIC_PILOT_FEE : undefined}
+                  />
                 </TiltCard>
               ))}
             </div>
