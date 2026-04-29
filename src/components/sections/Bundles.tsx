@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
 import { useLang } from '@/lib/lang'
-import { BUNDLES, WHATSAPP_URL } from '@/lib/data'
+import { BUNDLES, ADDONS, WHATSAPP_URL } from '@/lib/data'
 import { TiltCard } from '@/components/ui/TiltCard'
 import type { Bundle, TierId } from '@/lib/data'
 import {
   Stethoscope, Scissors, Dumbbell, Wrench, UtensilsCrossed, Building2,
-  Sparkles, Home, Check, ArrowRight, Clock,
+  Sparkles, Home, Check, ArrowRight, Clock, Globe, Smartphone,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -23,17 +23,25 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 const TIER_ORDER: TierId[] = ['essential', 'advanced', 'full-stack']
 
+const ADDON_ICON_MAP: Record<string, LucideIcon> = {
+  globe: Globe,
+  smartphone: Smartphone,
+}
+
 const t = {
-  eyebrow:   { en: 'Pricing',                                 ar: 'التسعير' },
-  headline:  { en: 'Pick your industry. Pick your tier.',     ar: 'اختر مجالك. اختر باقتك.' },
-  sub:       { en: 'One-time build fee. Fixed KWD retainer. No surprises.', ar: 'رسم بناء لمرة واحدة. اشتراك شهري ثابت. بدون مفاجآت.' },
-  build:     { en: 'Build fee',                               ar: 'رسم البناء' },
-  retainer:  { en: '/mo retainer',                            ar: '/شهر اشتراك' },
-  kwd:       { en: 'KWD',                                     ar: 'د.ك' },
-  cta:       { en: 'Get Started',                             ar: 'ابدأ الآن' },
-  delivery:  { en: '7-day delivery',                          ar: 'توصيل في ٧ أيام' },
-  popular:   { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
-  problem:   { en: 'The Problem',                             ar: 'المشكلة الشائعة' },
+  eyebrow:      { en: 'Pricing',                                 ar: 'التسعير' },
+  headline:     { en: 'Pick your industry. Pick your tier.',     ar: 'اختر مجالك. اختر باقتك.' },
+  sub:          { en: 'One-time build fee. Fixed KWD retainer. No surprises.', ar: 'رسم بناء لمرة واحدة. اشتراك شهري ثابت. بدون مفاجآت.' },
+  build:        { en: 'Build fee',                               ar: 'رسم البناء' },
+  retainer:     { en: '/mo retainer',                            ar: '/شهر اشتراك' },
+  kwd:          { en: 'KWD',                                     ar: 'د.ك' },
+  cta:          { en: 'Get Started',                             ar: 'ابدأ الآن' },
+  delivery:     { en: '7-day delivery',                          ar: 'توصيل في ٧ أيام' },
+  popular:      { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
+  problem:      { en: 'The Problem',                             ar: 'المشكلة الشائعة' },
+  addonsLabel:  { en: 'Optional Add-ons',                        ar: 'إضافات اختيارية' },
+  addonsSub:    { en: 'Enhance any AI bundle with a custom website or mobile app — priced per project.', ar: 'عزّز أي باقة ذكاء اصطناعي بموقع أو تطبيق مخصص — بسعر يُحدَّد حسب المشروع.' },
+  getQuote:     { en: 'Get a Quote',                             ar: 'احصل على عرض سعر' },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
@@ -253,6 +261,70 @@ export default function Bundles() {
                 </TiltCard>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Add-ons */}
+        <div className="mt-16 pt-12 border-t border-ms-ivory-200">
+          <div className="mb-8">
+            <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-2">
+              {t.addonsLabel[lang]}
+            </p>
+            <p className="text-ms-ink-500 text-[15px] max-w-xl leading-relaxed">
+              {t.addonsSub[lang]}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+            {ADDONS.map((addon) => {
+              const Icon = ADDON_ICON_MAP[addon.icon] ?? Globe
+              const waText = encodeURIComponent(
+                lang === 'ar'
+                  ? `السلام عليكم، أودّ الاستفسار عن ${addon.name.ar}`
+                  : `Hi, I'd like to enquire about ${addon.name.en}`
+              )
+              return (
+                <div
+                  key={addon.id}
+                  className="bg-white border border-ms-ivory-200 rounded-2xl p-6 flex flex-col hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-ms-green-800/8 text-ms-green-800 shrink-0">
+                      <Icon size={20} strokeWidth={1.75} />
+                    </span>
+                    <div>
+                      <p className="text-[15px] font-semibold text-ms-ink-900 mb-0.5">
+                        {addon.name[lang]}
+                      </p>
+                      <p className="text-[13px] text-ms-ink-500 leading-snug">
+                        {addon.description[lang]}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {addon.features[lang].map((f, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-ms-green-800/10">
+                          <Check size={10} strokeWidth={2.5} className="text-ms-green-800" />
+                        </span>
+                        <span className="text-[13px] leading-snug text-ms-ink-600">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={`${WHATSAPP_URL}?text=${waText}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold tracking-wide border border-ms-green-800 text-ms-green-800 hover:bg-ms-green-800 hover:text-ms-ivory-0 transition-all duration-150 active:scale-[0.98]"
+                  >
+                    {t.getQuote[lang]}
+                    <ArrowRight size={13} strokeWidth={2} />
+                  </a>
+                </div>
+              )
+            })}
           </div>
         </div>
 

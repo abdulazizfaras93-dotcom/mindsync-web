@@ -731,6 +731,69 @@ export const BUNDLES: Bundle[] = [
 export const WHATSAPP_NUMBER = '96599539006'
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 
+export type AddonId = 'website-design' | 'mobile-app'
+
+export type Addon = {
+  id: AddonId
+  name: { en: string; ar: string }
+  description: { en: string; ar: string }
+  features: { en: string[]; ar: string[] }
+  icon: string
+}
+
+export const ADDONS: Addon[] = [
+  {
+    id: 'website-design',
+    name: { en: 'Website Design', ar: 'تصميم الموقع' },
+    description: {
+      en: 'A professional, fast website for your business — built to convert visitors into customers.',
+      ar: 'موقع احترافي وسريع لعملك — مصمم لتحويل الزوار إلى عملاء.',
+    },
+    features: {
+      en: [
+        'Custom design matching your brand',
+        'Mobile-first & SEO-ready',
+        'Arabic + English bilingual support',
+        'WhatsApp & contact form integration',
+        'Delivered in 14 business days',
+      ],
+      ar: [
+        'تصميم مخصص يعكس هويتك التجارية',
+        'متجاوب مع الجوال وجاهز لمحركات البحث',
+        'دعم ثنائي اللغة: عربي وإنجليزي',
+        'تكامل واتساب ونموذج التواصل',
+        'تسليم خلال ١٤ يوم عمل',
+      ],
+    },
+    icon: 'globe',
+  },
+  {
+    id: 'mobile-app',
+    name: { en: 'Mobile App (iOS & Android)', ar: 'تطبيق الجوال (iOS & Android)' },
+    description: {
+      en: 'A native mobile app for your business — give your customers a branded experience on their phone.',
+      ar: 'تطبيق جوال أصيل لعملك — امنح عملاءك تجربة احترافية بهويتك التجارية.',
+    },
+    features: {
+      en: [
+        'iOS & Android from one codebase',
+        'Booking, catalog, or loyalty features',
+        'Push notifications for offers & reminders',
+        'WhatsApp bot integration ready',
+        'Published to App Store & Google Play',
+      ],
+      ar: [
+        'iOS وأندرويد من كود واحد',
+        'ميزات الحجز أو الكتالوج أو الولاء',
+        'إشعارات فورية للعروض والتذكيرات',
+        'جاهز للتكامل مع بوت واتساب',
+        'نشر على App Store وGoogle Play',
+      ],
+    },
+    icon: 'smartphone',
+  },
+]
+
 // DEMO_CONVERSATIONS — Kuwaiti dialect, 8 turns per industry
 // Format: { en: [single string], ar: [single string] }
 // Even index = user bubble, Odd index = bot bubble
