@@ -79,8 +79,11 @@ export function Footer() {
           {/* Brand column */}
           <div>
             <p className="text-ms-ivory-0 font-bold text-[18px] mb-2">MindSync</p>
-            <p className="text-white/30 text-[12px] mb-5" style={{ fontFamily: 'Noto Kufi Arabic' }}>
+            <p className="text-white/30 text-[12px] mb-1" style={{ fontFamily: 'Noto Kufi Arabic' }}>
               {t.legal[lang]}
+            </p>
+            <p className="text-white/20 text-[11px] font-mono mb-5">
+              {lang === 'ar' ? 'س.ت. 546511' : 'CR 546511'}
             </p>
             <p className="text-white/35 text-[13px] leading-relaxed max-w-[260px]">
               {t.tagline[lang]}
