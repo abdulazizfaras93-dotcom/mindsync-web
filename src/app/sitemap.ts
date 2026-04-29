@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 const BASE = 'https://www.mindsynckw.com';
 
-const VERTICALS = ['clinics', 'salons', 'gyms', 'garages', 'restaurants', 'real-estate']
+const VERTICALS = ['clinics', 'salons', 'spas', 'gyms', 'garages', 'restaurants', 'real-estate', 'home-businesses']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

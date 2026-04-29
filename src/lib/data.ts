@@ -27,7 +27,7 @@ export const BUNDLES: Bundle[] = [
     en: 'Clinic AI',
     ar: 'العيادة الذكية',
     industry: { en: 'Health & Dental Clinics', ar: 'العيادات الصحية والأسنان' },
-    buildFee: 640,
+    buildFee: 320,
     painStat: {
       en: '67% of patient inquiries can be resolved without a single staff member.',
       ar: '٦٧٪ من استفسارات المرضى يمكن حلها دون أي موظف.',
@@ -115,7 +115,7 @@ export const BUNDLES: Bundle[] = [
     en: 'Salon AI',
     ar: 'الصالون الذكي',
     industry: { en: 'Men & Women Salons', ar: 'صالونات الرجال والنساء' },
-    buildFee: 480,
+    buildFee: 240,
     painStat: {
       en: 'Salons lose up to 15% of revenue every month to no-shows and missed calls.',
       ar: 'الصالونات تخسر ١٥٪ من إيراداتها شهرياً بسبب الغيابات والمكالمات الفائتة.',
@@ -199,11 +199,99 @@ export const BUNDLES: Bundle[] = [
     ],
   },
   {
+    id: 'spa',
+    en: 'Spa AI',
+    ar: 'السبا الذكي',
+    industry: { en: 'Men & Women Spas', ar: 'سبا الرجال والنساء' },
+    buildFee: 240,
+    painStat: {
+      en: 'Spas lose 20%+ of bookings to unanswered WhatsApps — clients book elsewhere within minutes.',
+      ar: 'السبا يخسر أكثر من ٢٠٪ من الحجوزات بسبب واتساب بلا رد — العميل يحجز عند غيرك خلال دقائق.',
+    },
+    icon: 'spa',
+    color: '#1C5038',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 160,
+        features: {
+          en: [
+            'WhatsApp Booking Bot (24/7)',
+            'Therapist-Specific Scheduling',
+            'Appointment Reminders & Confirmations',
+            'Service Menu FAQ Bot',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت حجز واتساب (٢٤/٧)',
+            'جدولة حسب المعالج',
+            'تذكيرات وتأكيدات المواعيد',
+            'بوت الأسئلة الشائعة للخدمات',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 260,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Rebooking Nudge 3 Weeks Post-Visit',
+            'Upsell Add-On Treatments at Booking',
+            'Google Review Request Automation',
+            'Missed-Call Auto-Text Response',
+            'Therapist Utilization Stats in Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'تذكير الحجز بعد ٣ أسابيع من الزيارة',
+            'اقتراح خدمات إضافية عند الحجز',
+            'أتمتة طلب تقييمات Google',
+            'رد تلقائي على المكالمات الفائتة',
+            'إحصائيات إشغال المعالجين',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 360,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Offer Broadcasts (Eid, National Day)',
+            'Win-Back Campaign for 30-Day Inactive Clients',
+            'Birthday & Anniversary Automated Offers',
+            'Revenue & Occupancy Analytics Dashboard',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (عيد، اليوم الوطني)',
+            'حملة استعادة العملاء غير النشطين',
+            'عروض أعياد الميلاد والمناسبات',
+            'لوحة تحليلات الإيرادات والإشغال',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
+  },
+  {
     id: 'gym',
     en: 'Gym AI',
     ar: 'الجيم الذكي',
     industry: { en: 'Men & Women Gyms', ar: 'صالات الرجال والنساء' },
-    buildFee: 560,
+    buildFee: 280,
     painStat: {
       en: 'Most gyms lose 30% of members annually — simply because nobody followed up.',
       ar: 'معظم الصالات تخسر ٣٠٪ من أعضائها سنوياً — لأن أحداً لم يتابع معهم.',
@@ -291,7 +379,7 @@ export const BUNDLES: Bundle[] = [
     en: 'Garage AI',
     ar: 'الورشة الذكية',
     industry: { en: 'Car Garages & Auto Service', ar: 'ورش السيارات والصيانة' },
-    buildFee: 520,
+    buildFee: 260,
     painStat: {
       en: 'Garages spend 2–3 hours daily answering "is my car ready?" — that\'s revenue time wasted.',
       ar: 'الورش تقضي ٢-٣ ساعات يومياً تجيب على "السيارة جاهزة؟" — وقت ضائع من الإيرادات.',
@@ -379,7 +467,7 @@ export const BUNDLES: Bundle[] = [
     en: 'Restaurant AI',
     ar: 'المطعم الذكي',
     industry: { en: 'F&B, Cafes & Restaurants', ar: 'المطاعم والكافيهات' },
-    buildFee: 560,
+    buildFee: 280,
     painStat: {
       en: '43% of restaurant calls go unanswered — that\'s an estimated $20B in lost revenue globally per year.',
       ar: '٤٣٪ من مكالمات المطاعم لا يُرد عليها — خسارة تُقدّر بـ ٢٠ مليار دولار سنوياً.',
@@ -467,7 +555,7 @@ export const BUNDLES: Bundle[] = [
     en: 'Real Estate AI',
     ar: 'العقارات الذكية',
     industry: { en: 'Brokers & Real Estate Offices', ar: 'مكاتب العقارات والوسطاء' },
-    buildFee: 680,
+    buildFee: 340,
     painStat: {
       en: 'Real estate leads go cold in under 5 minutes — most agents respond in 5 hours.',
       ar: 'العميل العقاري يبرد في أقل من ٥ دقائق — معظم الوسطاء يردون بعد ٥ ساعات.',
@@ -550,6 +638,94 @@ export const BUNDLES: Bundle[] = [
       },
     ],
   },
+  {
+    id: 'home-business',
+    en: 'Home Business AI',
+    ar: 'المشاريع المنزلية الذكية',
+    industry: { en: 'Home-Based Businesses', ar: 'المشاريع المنزلية' },
+    buildFee: 200,
+    painStat: {
+      en: 'Home businesses answer WhatsApp 16+ hours a day — AI handles it while you focus on your craft.',
+      ar: 'أصحاب المشاريع المنزلية يردون على واتساب أكثر من ١٦ ساعة يومياً — الذكاء الاصطناعي يتولى ذلك.',
+    },
+    icon: 'home-business',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'essential',
+        en: 'Essential',
+        ar: 'الأساسية',
+        retainer: 120,
+        features: {
+          en: [
+            'WhatsApp Inquiry & Order Bot (24/7)',
+            'Product/Service FAQ Automation',
+            'Order Confirmation & Status Updates',
+            'Custom Pricing & Catalogue Replies',
+            'Client Portal Dashboard',
+            'Monthly Maintenance',
+          ],
+          ar: [
+            'بوت الاستفسارات والطلبات (٢٤/٧)',
+            'أتمتة الأسئلة الشائعة',
+            'تأكيد الطلبات وتحديثات الحالة',
+            'ردود أسعار وكتالوج مخصصة',
+            'بوابة العميل',
+            'صيانة شهرية',
+          ],
+        },
+      },
+      {
+        id: 'advanced',
+        en: 'Advanced',
+        ar: 'المتقدمة',
+        retainer: 200,
+        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        features: {
+          en: [
+            'Everything in Essential',
+            'Repeat-Customer Recognition & Loyalty Tracking',
+            'Upsell at Order Confirmation',
+            'Google Review Request After Delivery',
+            'Abandoned Inquiry Follow-Up',
+            'Revenue & Order Analytics Dashboard',
+          ],
+          ar: [
+            'كل ما في الأساسية',
+            'التعرف على العملاء المتكررين وتتبع الولاء',
+            'اقتراح منتجات إضافية عند تأكيد الطلب',
+            'طلب تقييم Google بعد التسليم',
+            'متابعة الاستفسارات غير المكتملة',
+            'لوحة تحليلات الطلبات والإيرادات',
+          ],
+        },
+      },
+      {
+        id: 'full-stack',
+        en: 'Full-Stack',
+        ar: 'المتكاملة',
+        retainer: 280,
+        features: {
+          en: [
+            'Everything in Advanced',
+            'Seasonal Promo Broadcasts (Eid, National Day)',
+            'Win-Back Campaign for Inactive Customers',
+            'Custom Order Intake Form via WhatsApp',
+            'Bulk Broadcast to Customer List',
+            'Priority Support + Monthly Strategy Call',
+          ],
+          ar: [
+            'كل ما في المتقدمة',
+            'حملات موسمية (عيد، اليوم الوطني)',
+            'حملة استعادة العملاء المنقطعين',
+            'نموذج استقبال طلبات مخصص عبر واتساب',
+            'بث جماعي لقائمة العملاء',
+            'دعم أولوية + مكالمة استراتيجية شهرية',
+          ],
+        },
+      },
+    ],
+  },
 ]
 
 export const WHATSAPP_NUMBER = '96599539006'
@@ -582,6 +758,18 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['Keratin with Fatima is 45 KWD. Includes blow-dry and style finish. Should I put your name down?'], ar: ['الكيراتين عند فاطمة بـ ٤٥ دينار. يشمل مجفف وتسريحة نهائية. أحط اسمك؟'] },
     { en: ['Please, it\'s Mariam'], ar: ['لو سمحتي، اسمي مريم'] },
     { en: ['✅ Booked, Mariam! Saturday 2:00pm with Fatima — Keratin. Reminder coming your way the morning of 💅'], ar: ['✅ تم الحجز يا مريم! السبت الساعة ٢ مع فاطمة — كيراتين. راح يوصل تذكير صباح اليوم 💅'] },
+  ],
+
+  // ─── SPA ───
+  spa: [
+    { en: ['Hi, I want to book a Swedish massage for this Thursday'], ar: ['هلا، أبي أحجز مساج سويدي يوم الخميس'] },
+    { en: ['Hala! 😊 Thursday we have availability at 3pm, 5pm, and 7pm. Which time works best for you?'], ar: ['هلا وغلا! 😊 الخميس عندنا مواعيد الساعة ٣ وٰ٥ وٰ٧. أي وقت يناسبك؟'] },
+    { en: ['5pm is perfect. How long is the session?'], ar: ['الساعة ٥ تمام. وجم تاخذ الجلسة؟'] },
+    { en: ['Swedish massage is 60 minutes. We also have a 90-minute option with hot stone for 10 KWD more. Interested in the upgrade?'], ar: ['المساج السويدي ٦٠ دقيقة. عندنا كذلك خيار ٩٠ دقيقة مع الحجارة الساخنة بـ ١٠ دنانير إضافية. تحب الترقية؟'] },
+    { en: ['No thanks, 60 minutes is fine. What\'s the price?'], ar: ['لا شكراً، ٦٠ دقيقة كافي. وجم السعر؟'] },
+    { en: ['Swedish massage 60 min is 35 KWD. Includes aromatherapy oils and post-session herbal tea. Shall I book Thursday 5pm for you?'], ar: ['المساج السويدي ٦٠ دقيقة بـ ٣٥ دينار. يشمل زيوت عطرية وشاي أعشاب بعد الجلسة. أحجزلك الخميس الساعة ٥؟'] },
+    { en: ['Yes please, my name is Sara'], ar: ['أكيدي، اسمي سارة'] },
+    { en: ['✅ Booked, Sara! Thursday 5:00pm — Swedish Massage 60 min. You\'ll receive a reminder on WhatsApp the morning of. See you soon! 🌿'], ar: ['✅ تم الحجز يا سارة! الخميس الساعة ٥ مساءً — مساج سويدي ٦٠ دقيقة. راح يوصلك تذكير صباح يوم الخميس. نشوفك! 🌿'] },
   ],
 
   // ─── GYM ───
@@ -630,5 +818,17 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['Sent! 📲 The 110K unit is on the 8th floor, direct sea view, 2 parking spots included, building has a pool and gym. Available for viewing anytime this week. When\'s good for you?'], ar: ['أرسلت! 📲 الوحدة بـ ١١٠ ألف في الطابق الثامن، إطلالة بحر مباشرة، مواقفين سيارات، في البناية مسبح وجيم. جاهزة للمعاينة أي وقت هالأسبوع. متى يناسبك؟'] },
     { en: ['How about tomorrow evening, around 6?'], ar: ['باجر المساء، حوالي الساعة ٦؟'] },
     { en: ['✅ Viewing confirmed! Tomorrow 6:00pm — Salmiya, 8th floor sea view unit. I\'ll send you the exact location and our agent\'s number on WhatsApp. Yalla, see you there! 🏢'], ar: ['✅ تمت جدولة المعاينة! باجر الساعة ٦ مساءً — السالمية، الطابق الثامن، إطلالة البحر. أرسللك الموقع الدقيق ورقم الوكيل على واتساب. يالله نشوفك هناك! 🏢'] },
+  ],
+
+  // ─── HOME BUSINESS ───
+  'home-business': [
+    { en: ['Hi, I saw your page on Instagram. Do you take custom cake orders?'], ar: ['هلا، شفت صفحتك على انستغرام. تقبلين طلبات كيكات مخصصة؟'] },
+    { en: ['Hala, welcome! 😊 Yes, I take custom cake orders. What\'s the occasion — birthday, wedding, or something else?'], ar: ['هلا وغلا! 😊 أكيد أقبل طلبات مخصصة. شنو المناسبة — عيد ميلاد، أفراح، ولا شي ثاني؟'] },
+    { en: ['Birthday cake for 20 people, this Friday. Is that possible?'], ar: ['كيكة عيد ميلاد لـ٢٠ شخص، يوم الجمعة هذا. ممكن؟'] },
+    { en: ['Friday is doable! I need the order by Wednesday to start prep. What flavor and design are you thinking?'], ar: ['الجمعة ممكن! أحتاج الطلب يوم الأربعاء لأبدأ التحضير. شنو النكهة والتصميم اللي تبيه؟'] },
+    { en: ['Vanilla sponge with strawberry cream. And can you write a name on it?'], ar: ['إسفنجية فانيلا بكريمة فراولة. وتقدرين تكتبين اسم عليها؟'] },
+    { en: ['Absolutely! Name writing is included. A custom cake for 20 people is 28 KWD. Delivery to Kuwait City areas is 3 KWD extra. Shall I confirm your order?'], ar: ['أكيدي! كتابة الاسم مشمولة. كيكة مخصصة لـ٢٠ شخص بـ ٢٨ دينار. التوصيل لمناطق مدينة الكويت ٣ دنانير إضافية. أأكد طلبك؟'] },
+    { en: ['Yes please! My name is Dalal, delivery to Rumaithiya'], ar: ['أكيدي! اسمي دلال، توصيل الرميثية'] },
+    { en: ['✅ Order confirmed, Dalal! Vanilla sponge + strawberry cream for 20, Friday delivery to Rumaithiya — total 31 KWD. I\'ll send payment details on WhatsApp now 🎂'], ar: ['✅ تم تأكيد الطلب يا دلال! فانيلا بفراولة لـ٢٠، توصيل الجمعة الرميثية — المجموع ٣١ دينار. أرسللك تفاصيل الدفع على واتساب الحين 🎂'] },
   ],
 }
