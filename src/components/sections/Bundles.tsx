@@ -249,6 +249,16 @@ export default function Bundles() {
               </p>
             </div>
 
+            {/* Zone B — Pain headline */}
+            <div className="mb-8">
+              <p className="font-mono text-ms-gold-600 text-[15px] md:text-[17px] font-semibold leading-snug whitespace-pre-line">
+                {activeBundle.scenario.painHeadline[lang]}
+              </p>
+              <p className="text-ms-green-800 dark:text-ms-green-400 font-medium text-[14px] mt-2">
+                {activeBundle.scenario.painSolution[lang]}
+              </p>
+            </div>
+
             {/* Tier cards — asymmetric grid */}
             <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr_2fr] gap-4">
               {TIER_ORDER.map((tierId) => (
