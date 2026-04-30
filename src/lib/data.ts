@@ -9,6 +9,21 @@ export type BundleTier = {
   features: { en: string[]; ar: string[] }
 }
 
+export type BundleScenario = {
+  painHeadline: { en: string; ar: string }
+  painSolution: { en: string; ar: string }
+  tasksEliminated: {
+    essential:    { en: string[]; ar: string[] }
+    advanced:     { en: string[]; ar: string[] }
+    'full-stack': { en: string[]; ar: string[] }
+  }
+  tierCtas: {
+    essential:    { en: string; ar: string }
+    advanced:     { en: string; ar: string }
+    'full-stack': { en: string; ar: string }
+  }
+}
+
 export type Bundle = {
   id: string
   en: string
@@ -19,6 +34,7 @@ export type Bundle = {
   icon: string
   color: string
   tiers: BundleTier[]
+  scenario: BundleScenario
 }
 
 export const BUNDLES: Bundle[] = [
@@ -109,6 +125,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: '٦٧٪ من استفسارات المرضى يمكن حلها بدون موظف واحد.\nموظف الاستقبال عندك يقضي ٣–٤ ساعات يومياً يرد على نفس الأسئلة —\nما يقارب ٢٤٠ دينار شهرياً من وقت الموظف على ردود متكررة.',
+        en: '67% of patient inquiries can be resolved without a single staff member.\nYour receptionist spends 3–4 hours daily answering the same questions —\nroughly 240 KWD/month of staff time on repeated replies.',
+      },
+      painSolution: {
+        ar: 'نظام مايند سينك يتولى كل استفسار — حتى الساعة ١١ بالليل.',
+        en: "MindSync's system handles every inquiry — even at 11pm.",
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين'],
+          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients'],
+        },
+        advanced: {
+          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين'],
+          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients'],
+        },
+        'full-stack': {
+          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين', 'متابعة الفواتير غير المدفوعة'],
+          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients', 'Chasing unpaid invoices'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'قلّل خسارة المرضى — ابدأ الآن', en: 'Stop Losing Patients — Get Started' },
+        advanced:     { ar: 'استرجع كل موعد ملغى تلقائياً', en: 'Auto-Recover Every Cancelled Slot' },
+        'full-stack': { ar: 'شغّل عيادتك بالكامل', en: 'Run Your Clinic on Autopilot' },
+      },
+    },
   },
   {
     id: 'salon',
@@ -197,6 +242,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'الصالونات تخسر ١٥٪ من إيراداتها شهرياً\nبسبب الغيابات والمكالمات الفائتة.\nعلى صالون دخله ٢٠٠٠ دينار — هذا ٣٠٠ دينار ضائعة في الشهر.',
+        en: "Salons lose 15% of monthly revenue to no-shows and missed calls.\nOn a salon earning 2,000 KWD — that's 300 KWD lost every month.",
+      },
+      painSolution: {
+        ar: 'مايند سينك يملأ الجدول ويذكّر — تلقائياً.',
+        en: 'MindSync fills your calendar and sends reminders — automatically.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
+          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
+        },
+        advanced: {
+          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
+          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
+        },
+        'full-stack': {
+          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
+          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'خلّي الجدول يتملأ بنفسه', en: 'Let the Calendar Fill Itself' },
+        advanced:     { ar: 'ارجعي لكل عميلة قبل ما تنساك', en: 'Win Back Every Client Before They Forget' },
+        'full-stack': { ar: 'شغّلي الصالون — أنتِ تركّزين', en: 'Run the Salon — You Focus' },
+      },
+    },
   },
   {
     id: 'spa',
@@ -285,6 +359,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'السبا يخسر أكثر من ٢٠٪ من حجوزاته\nلأن واتساب ما اتردّ بسرعة.\nالعميل يقرر خلال ٥ دقائق — إذا ما رددتِ، قرر بحسابك.',
+        en: "Spas lose 20%+ of bookings because WhatsApp went unanswered.\nClients decide in 5 minutes — if you don't reply, they decide without you.",
+      },
+      painSolution: {
+        ar: 'مايند سينك يرد خلال ثوانٍ — في أي وقت.',
+        en: 'MindSync responds in seconds — any time of day.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
+          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
+        },
+        advanced: {
+          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
+          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
+        },
+        'full-stack': {
+          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
+          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'ما تخسر حجزاً ثانياً', en: "Don't Lose Another Booking" },
+        advanced:     { ar: 'ارجع لكل عميل قبل ما يُنسى', en: 'Win Back Every Client Before They Go Cold' },
+        'full-stack': { ar: 'شغّل السبا — بنظام كامل', en: 'Run the Spa — With a Full System' },
+      },
+    },
   },
   {
     id: 'gym',
@@ -373,6 +476,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'معظم الجيمات تخسر ٣٠٪ من أعضائها سنوياً.\nالسبب مو السعر — السبب ما تابع أحد.\nعضو بـ٣٥ دينار شهرياً × ١٢ شهر = ٤٢٠ دينار تخسرها\nلأن ما أرسل أحد رسالة واحدة.',
+        en: 'Most gyms lose 30% of members annually.\nNot because of price — because nobody followed up.\nOne member at 35 KWD/mo × 12 months = 420 KWD lost\nbecause nobody sent a single message.',
+      },
+      painSolution: {
+        ar: 'مايند سينك يتابع كل عضو — من أول يوم لآخر تجديد.',
+        en: 'MindSync follows up with every member — from day one to last renewal.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
+          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
+        },
+        advanced: {
+          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
+          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
+        },
+        'full-stack': {
+          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
+          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'قلّل خسارة الأعضاء', en: 'Stop Losing Members' },
+        advanced:     { ar: 'اجعل كل عضو يجدد تلقائياً', en: 'Make Every Member Renew Automatically' },
+        'full-stack': { ar: 'شغّل الجيم — من عضو، لكل يوم', en: 'Run the Gym — Every Member, Every Day' },
+      },
+    },
   },
   {
     id: 'garage',
@@ -461,6 +593,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'فريق الورشة يقضي ٢–٣ ساعات يومياً\nيجيب على سؤال واحد: "السيارة جاهزة؟"\n٣ ساعات × ٢٦ يوم عمل × ٣ دينار/ساعة = ٢٣٤ دينار شهرياً\nتدفعها على ردود متكررة — لا على الصيانة.',
+        en: 'Your team spends 2–3 hours daily\nanswering one question: "Is my car ready?"\n3 hrs × 26 working days × 3 KWD/hr = 234 KWD/month\npaid for repeated answers — not actual work.',
+      },
+      painSolution: {
+        ar: 'مايند سينك يجيب عن هذا السؤال — إلى الأبد.',
+        en: 'MindSync answers that question — permanently.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
+          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
+        },
+        advanced: {
+          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
+          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
+        },
+        'full-stack': {
+          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
+          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'خلي النظام يجاوب عنك', en: 'Let the System Answer For You' },
+        advanced:     { ar: 'عملاؤك يرجع — قبل ما يفكر بغيرك', en: 'Customers Come Back — Before They Think of Anyone Else' },
+        'full-stack': { ar: 'شغّل الورشة — بنظام كامل', en: 'Run the Garage — With a Full System' },
+      },
+    },
   },
   {
     id: 'restaurant',
@@ -549,6 +710,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: '٤٣٪ من مكالمات المطاعم ما يُرد عليها.\nطاولة لـ٤ أشخاص × ٢٠ دينار متوسط = ٨٠ دينار من كل حجز فائت.\nمطعم يخسر ٣–٤ حجوزات أسبوعياً =\nما بين ٩٦٠–١٢٨٠ دينار شهرياً.',
+        en: '43% of restaurant calls go unanswered.\nA table of 4 × 20 KWD average = 80 KWD per missed booking.\nA restaurant losing 3–4 bookings weekly =\n960 to 1,280 KWD lost every month.',
+      },
+      painSolution: {
+        ar: 'مايند سينك يستقبل الحجوزات — حتى بعد الدوام.',
+        en: 'MindSync takes bookings — even after closing time.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
+          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        },
+        advanced: {
+          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
+          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        },
+        'full-stack': {
+          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
+          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'ما تترك طاولة فاضية ثانياً', en: "Don't Leave Another Table Empty" },
+        advanced:     { ar: 'حوّل كل زيارة لزيارة ثانية', en: 'Turn Every Visit Into a Second One' },
+        'full-stack': { ar: 'شغّل المطعم — في كل يوم', en: 'Run the Restaurant — Every Single Day' },
+      },
+    },
   },
   {
     id: 'real-estate',
@@ -637,6 +827,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'العميل العقاري يبرد في أقل من ٥ دقائق.\nمعظم الوسطاء يردون بعد ٥ ساعات.\nعمولة متوسطة في الكويت: ١٥٠٠–٤٠٠٠ دينار.\nكل استفسار ما رددت عليه فوراً = عمولة محتملة راحت.',
+        en: 'Real estate leads go cold in under 5 minutes.\nMost agents respond in 5 hours.\nAverage commission in Kuwait: 1,500–4,000 KWD.\nEvery unanswered inquiry = a potential commission gone.',
+      },
+      painSolution: {
+        ar: 'مايند سينك يرد فوراً ويؤهل العميل — قبل ما يبرد.',
+        en: 'MindSync responds instantly and qualifies the lead — before they go cold.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة'],
+          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up'],
+        },
+        advanced: {
+          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة'],
+          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up'],
+        },
+        'full-stack': {
+          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة', 'تقارير الملاك الشهرية'],
+          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up', 'Monthly landlord reports'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'ما تترك استفساراً بدون رد', en: "Don't Leave an Inquiry Unanswered" },
+        advanced:     { ar: 'حوّل كل استفسار لمعاينة', en: 'Convert Every Inquiry Into a Viewing' },
+        'full-stack': { ar: 'شغّل مكتبك — من عميل، لكل عقار', en: 'Run the Office — Every Client, Every Property' },
+      },
+    },
   },
   {
     id: 'home-business',
@@ -725,6 +944,35 @@ export const BUNDLES: Bundle[] = [
         },
       },
     ],
+    scenario: {
+      painHeadline: {
+        ar: 'صاحبة مشروع منزلي تقضي في المتوسط\n٥–٦ ساعات يومياً تدير واتساب.\nبقيمة وقت ٥ دنانير/ساعة —\nهذا ٧٥٠–٩٠٠ دينار شهرياً تذهب على رسائل متكررة.',
+        en: "A home business owner spends an average of\n5–6 hours daily managing WhatsApp.\nAt 5 KWD/hour value of time —\nthat's 750–900 KWD/month spent on repeated messages.",
+      },
+      painSolution: {
+        ar: 'مايند سينك يشيل هالحمل — وأنتِ تركّزين على الإبداع.',
+        en: 'MindSync takes that weight off — so you focus on your craft.',
+      },
+      tasksEliminated: {
+        essential: {
+          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
+          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        },
+        advanced: {
+          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
+          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        },
+        'full-stack': {
+          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
+          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        },
+      },
+      tierCtas: {
+        essential:    { ar: 'شيلي ثقل الواتساب عن كتفك', en: 'Take WhatsApp Off Your Plate' },
+        advanced:     { ar: 'خلّي مشروعك يكبر بدون ضغط', en: 'Let Your Business Grow Without the Grind' },
+        'full-stack': { ar: 'شغّلي مشروعك — ركّزي على الجودة', en: 'Run Your Business — Focus on Quality' },
+      },
+    },
   },
 ]
 
