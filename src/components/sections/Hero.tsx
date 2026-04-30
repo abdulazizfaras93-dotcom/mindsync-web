@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL } from '@/lib/data'
 
 const NeuralGlobe = dynamic(() => import('@/components/canvas/NeuralGlobe'), { ssr: false })
 
@@ -33,7 +32,7 @@ const t = {
     en: 'We build your business a custom software system with AI agents — responding, booking, following up, and analyzing.\nFrom WhatsApp to your dashboard in 7 business days.',
     ar: 'نبني ونعلم نظاماً خصصناه ببرمجيات وذكاء اصطناعي —\nيرد، يحجز، يتابع، ويحلل.\nمن واتساب للوحة تحكم في ٧ أيام عمل.',
   },
-  cta1:   { en: 'Chat on WhatsApp', ar: 'تواصل على الواتساب' },
+  cta1:   { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
   cta2:   { en: 'See the Bundles',  ar: 'شوف الباقات' },
   stat1l: { en: 'Days to go live',  ar: 'أيام ونخلص الإعداد' },
   stat2l: { en: 'Industry bundles', ar: 'باقات متخصصة' },
@@ -99,9 +98,7 @@ export default function Hero() {
               className="flex flex-wrap gap-3 mb-14"
             >
               <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/discovery"
                 className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]"
               >
                 {t.cta1[lang]}

@@ -2,15 +2,14 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL } from '@/lib/data'
 
 const COOKIE_KEY = 'ms_exit_shown'
 const COOKIE_DAYS = 7
 
 const t = {
   headline: { en: 'Wait — get a free quote in 24h', ar: 'لحظة — احصل على عرض مجاني خلال ٢٤ ساعة' },
-  sub:      { en: 'Send us your business type and the one task you hate doing manually. We\'ll send back a fixed-price scope before you sleep.', ar: 'أرسل لنا نوع عملك والمهمة التي تكرهها يدوياً. سنرد بعرض محدد السعر قبل نومك.' },
-  cta:      { en: 'Message us on WhatsApp', ar: 'راسلنا على واتساب' },
+  sub:      { en: 'Fill in our discovery form and we\'ll send back a fixed-price scope before you sleep.', ar: 'أكمل استبيان الاكتشاف وسنرد بعرض محدد السعر قبل نومك.' },
+  cta:      { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
   dismiss:  { en: 'No thanks', ar: 'لا شكراً' },
 }
 
@@ -43,12 +42,6 @@ export default function ExitIntent() {
     setVisible(false)
     setCookie(COOKIE_DAYS)
   }
-
-  const waMsg = encodeURIComponent(
-    lang === 'ar'
-      ? 'السلام عليكم، أريد عرض سعر مجاني لأتمتة أعمالي.'
-      : 'Hi, I\'d like a free quote for automating my business.'
-  )
 
   return (
     <AnimatePresence>
@@ -91,8 +84,7 @@ export default function ExitIntent() {
               <p className="text-white/65 text-[14px] leading-relaxed mb-7">{t.sub[lang]}</p>
 
               <a
-                href={`${WHATSAPP_URL}?text=${waMsg}`}
-                target="_blank" rel="noopener noreferrer"
+                href="/discovery"
                 onClick={dismiss}
                 className="block w-full bg-ms-gold-600 text-ms-green-900 font-bold text-[15px] py-4 rounded-xl text-center hover:bg-ms-gold-500 transition-colors mb-3"
               >

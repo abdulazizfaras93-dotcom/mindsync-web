@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/lib/lang'
 import { getScript, type IndustryId } from '@/lib/demo-scripts'
-import { WHATSAPP_URL } from '@/lib/data'
 
 /**
  * Hybrid demo chat — Decision 5-C in the rollout plan.
@@ -34,10 +33,10 @@ const t = {
   askOwn:   { en: 'Ask your own question…', ar: 'اسأل سؤالك الخاص…' },
   sending:  { en: 'Sending…', ar: 'يرسل…' },
   prototype: {
-    en: "This is just a prototype showing how the agent will sound on your WhatsApp. The real version gets built and tuned for your business during the 7-day delivery.\n\nWant to start? Message us on WhatsApp 👇",
-    ar: 'هذي نسخة تجريبية تورّيك شلون بيكون شكل الوكيل على واتساب عملك. النسخة الحقيقية نبنيها ونضبطها لأعمالك خلال ٧ أيام.\n\nتبي تبدأ؟ راسلنا على واتساب 👇',
+    en: "This is just a prototype showing how the agent will sound on your WhatsApp. The real version gets built and tuned for your business during the 7-day delivery.\n\nWant to start? Fill in the discovery form 👇",
+    ar: 'هذي نسخة تجريبية تورّيك شلون بيكون شكل الوكيل على واتساب عملك. النسخة الحقيقية نبنيها ونضبطها لأعمالك خلال ٧ أيام.\n\nتبي تبدأ؟ أكمل استبيان الاكتشاف 👇',
   },
-  waCta: { en: 'Open WhatsApp', ar: 'افتح واتساب' },
+  discoveryCta: { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
 }
 
 function nowTime() {
@@ -148,19 +147,17 @@ export default function DemoChat({ industry, bundleLabel }: DemoChatProps) {
         ))}
         {scriptFinished && loading && <TypingBubble />}
 
-        {/* WhatsApp CTA appears once the prototype disclaimer has been delivered */}
+        {/* Discovery CTA appears once the prototype disclaimer has been delivered */}
         {scriptFinished && liveMessages.some((m) => m.from === 'bot' && m.text === t.prototype[lang]) && (
           <div className="flex justify-start">
             <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white text-[13px] font-semibold rounded-full px-4 py-2 shadow-sm hover:bg-[#20bd5a] transition-colors"
+              href="/discovery"
+              className="inline-flex items-center gap-2 bg-ms-gold-600 text-ms-green-900 text-[13px] font-semibold rounded-full px-4 py-2 shadow-sm hover:bg-ms-gold-500 transition-colors"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M20.52 3.48A11.78 11.78 0 0012.04 0C5.5 0 .17 5.33.16 11.88c0 2.1.55 4.14 1.6 5.95L0 24l6.3-1.65a11.86 11.86 0 005.74 1.46h.01c6.55 0 11.88-5.33 11.88-11.88a11.78 11.78 0 00-3.41-8.45z"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-              {t.waCta[lang]}
+              {t.discoveryCta[lang]}
             </a>
           </div>
         )}

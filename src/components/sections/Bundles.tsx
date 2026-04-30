@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useLang } from '@/lib/lang'
-import { BUNDLES, ADDONS, WHATSAPP_URL } from '@/lib/data'
+import { BUNDLES, ADDONS } from '@/lib/data'
 import { TiltCard } from '@/components/ui/TiltCard'
 import type { Bundle, TierId } from '@/lib/data'
 import {
@@ -35,13 +35,13 @@ const t = {
   build:        { en: 'Build fee',                               ar: 'رسوم بناء النظام' },
   retainer:     { en: '/mo retainer',                            ar: '/شهر اشتراك' },
   kwd:          { en: 'KWD',                                     ar: 'د.ك' },
-  cta:          { en: 'Get Started',                             ar: 'ابدأ الآن' },
+  cta:          { en: 'Fill in Discovery Form',                  ar: 'استبيان لفهم طبيعة مشروعك' },
   delivery:     { en: '7-day delivery',                          ar: 'جاهز في ٧ أيام' },
   popular:      { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
   problem:      { en: 'The Problem',                             ar: 'المشكلة اللي نواجهها' },
   addonsLabel:  { en: 'Optional Add-ons',                        ar: 'خدمات إضافية' },
   addonsSub:    { en: 'Enhance any AI bundle with a custom website or mobile app.', ar: 'عزز أي باقة ذكاء اصطناعي بموقع أو تطبيق مخصص.' },
-  getQuote:     { en: 'Get a Quote',                             ar: 'احصل على عرض سعر' },
+  getQuote:     { en: 'Fill in Discovery Form',                  ar: 'استبيان لفهم طبيعة مشروعك' },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
@@ -59,12 +59,6 @@ function TierCard({
   const tier = bundle.tiers.find((t) => t.id === tierId)!
   const isAdvanced = tierId === 'advanced'
   const Icon = ICON_MAP[bundle.id] ?? Building2
-
-  const waText = encodeURIComponent(
-    isAr
-      ? `السلام عليكم، مهتم بـ${bundle.ar} — باقة ${TIER_LABELS[tierId].ar} — بناء ${bundle.buildFee} د.ك`
-      : `Hi, I'm interested in ${bundle.en} — ${TIER_LABELS[tierId].en} tier — ${bundle.buildFee} KWD build`
-  )
 
   return (
     <div
@@ -137,9 +131,7 @@ function TierCard({
           {t.delivery[lang]}
         </div>
         <a
-          href={`${WHATSAPP_URL}?text=${waText}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/discovery"
           className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-[13px] font-semibold tracking-wide transition-all duration-150 active:scale-[0.98] ${
             isAdvanced
               ? 'bg-ms-gold-600 text-ms-green-900 hover:bg-ms-gold-500'
@@ -285,11 +277,6 @@ export default function Bundles() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
             {ADDONS.map((addon) => {
               const Icon = ADDON_ICON_MAP[addon.icon] ?? Globe
-              const waText = encodeURIComponent(
-                lang === 'ar'
-                  ? `السلام عليكم، بغيت استفسر عن ${addon.name.ar}`
-                  : `Hi, I'd like to enquire about ${addon.name.en}`
-              )
               return (
                 <div
                   key={addon.id}
@@ -321,9 +308,7 @@ export default function Bundles() {
                   </ul>
 
                   <a
-                    href={`${WHATSAPP_URL}?text=${waText}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/discovery"
                     className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold tracking-wide border border-ms-green-800 text-ms-green-800 hover:bg-ms-green-800 hover:text-ms-ivory-0 transition-all duration-150 active:scale-[0.98]"
                   >
                     {t.getQuote[lang]}

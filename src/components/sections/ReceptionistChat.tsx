@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL } from '@/lib/data'
 
 const ChatBubbles = dynamic(() => import('@/components/canvas/ChatBubbles'), { ssr: false })
 
@@ -356,10 +355,8 @@ function FallbackBubble({ text, ts, waText }: { text: string; ts: string; waText
       <div className="max-w-[78%] bg-ms-green-700 text-ms-ivory-0 rounded-2xl rounded-bl-sm shadow-sm px-3.5 py-2.5 text-[13px] leading-relaxed">
         <p className="whitespace-pre-line">{text}</p>
         <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 inline-flex items-center gap-2 bg-[#25D366] text-white text-[12px] font-semibold rounded-full px-3.5 py-1.5 shadow-sm hover:bg-[#20bd5a] transition-colors"
+          href="/discovery"
+          className="mt-2 inline-flex items-center gap-2 bg-ms-green-800 text-ms-ivory-0 text-[12px] font-semibold rounded-full px-3.5 py-1.5 shadow-sm hover:bg-ms-green-700 transition-colors"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
             <path d="M20.52 3.48A11.78 11.78 0 0012.04 0C5.5 0 .17 5.33.16 11.88c0 2.1.55 4.14 1.6 5.95L0 24l6.3-1.65a11.86 11.86 0 005.74 1.46h.01c6.55 0 11.88-5.33 11.88-11.88a11.78 11.78 0 00-3.41-8.45z" />

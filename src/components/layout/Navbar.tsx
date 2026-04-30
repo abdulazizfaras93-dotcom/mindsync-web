@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL } from '@/lib/data'
 
 function MagneticLink({ href, children }: { href: string; children: React.ReactNode }) {
   const ref = useRef<HTMLAnchorElement>(null)
@@ -38,7 +37,7 @@ const t = {
   bundles:  { en: 'Bundles',     ar: 'الباقات' },
   process:  { en: 'How It Works',ar: 'آلية العمل' },
   faq:      { en: 'FAQ',         ar: 'الأسئلة' },
-  cta:      { en: 'Chat on WhatsApp', ar: 'تواصل على واتساب' },
+  cta:      { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
   toggleAr: { en: 'العربية',     ar: 'English' },
 }
 
@@ -87,7 +86,7 @@ export default function Navbar() {
             className="hidden md:block text-[13px] text-ms-ink-600 hover:text-ms-green-800 transition-colors border border-ms-ivory-200 rounded-full px-3 py-1">
             {t.toggleAr[lang]}
           </button>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+          <a href="/discovery"
              className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-ms-green-700 transition-colors hidden md:block">
             {t.cta[lang]}
           </a>
@@ -114,7 +113,7 @@ export default function Navbar() {
               className="text-[13px] text-ms-ink-600 border border-ms-ivory-200 rounded-full px-3 py-1">
               {t.toggleAr[lang]}
             </button>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+            <a href="/discovery"
                className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg">
               {t.cta[lang]}
             </a>

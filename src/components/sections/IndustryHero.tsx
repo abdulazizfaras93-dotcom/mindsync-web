@@ -1,17 +1,11 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL, BUNDLES } from '@/lib/data'
+import { BUNDLES } from '@/lib/data'
 
 export default function IndustryHero({ industryId }: { industryId: string }) {
   const { lang } = useLang()
   const bundle = BUNDLES.find(b => b.id === industryId)!
-
-  const waMsg = encodeURIComponent(
-    lang === 'ar'
-      ? `السلام عليكم، مهتم بـ${bundle.ar} — بغيت عرض سعر.`
-      : `Hi, I'm interested in ${bundle.en}. Please send me a quote.`
-  )
 
   return (
     <section className="relative min-h-[70vh] hero-bg pattern-overlay flex flex-col justify-center pt-16">
@@ -41,11 +35,10 @@ export default function IndustryHero({ industryId }: { industryId: string }) {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href={`${WHATSAPP_URL}?text=${waMsg}`}
-              target="_blank" rel="noopener noreferrer"
+              href="/discovery"
               className="bg-ms-gold-600 text-ms-green-900 font-bold text-[15px] px-8 py-4 rounded-xl hover:bg-ms-gold-400 transition-all inline-flex items-center gap-2"
             >
-              {lang === 'ar' ? 'احصل على عرض سعر' : 'Get a Quote'}
+              {lang === 'ar' ? 'استبيان لفهم طبيعة مشروعك' : 'Fill in Discovery Form'}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a

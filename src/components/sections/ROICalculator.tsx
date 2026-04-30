@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { WHATSAPP_URL } from '@/lib/data'
 
 const t = {
   eyebrow:   { en: 'ROI Calculator', ar: 'حاسبة العائد المادي' },
@@ -27,12 +26,6 @@ export default function ROICalculator() {
   const savedKwd = savedHrs * 3
   const annualSavings = savedKwd * 12
   const roi = Math.round((annualSavings / 640) * 100)
-
-  const waMsg = encodeURIComponent(
-    lang === 'ar'
-      ? `السلام عليكم، بغيت حساب العائد لأعمالي. عندي حوالي ${msgs} رسالة أسبوعياً وأقضي ${hrs} ساعات على الواتساب.`
-      : `Hi, I'd like to get my savings calculated. I get ~${msgs} messages/week and spend ${hrs} hrs/week on WhatsApp.`
-  )
 
   return (
     <section className="py-24 bg-ms-ivory-0">
@@ -119,11 +112,10 @@ export default function ROICalculator() {
             ))}
 
             <a
-              href={`${WHATSAPP_URL}?text=${waMsg}`}
-              target="_blank" rel="noopener noreferrer"
+              href="/discovery"
               className="block w-full bg-ms-gold-600 text-ms-green-900 font-bold text-[15px] py-4 rounded-xl text-center hover:bg-ms-gold-500 transition-colors"
             >
-              {t.cta[lang]}
+              {lang === 'ar' ? 'استبيان لفهم طبيعة مشروعك' : 'Fill in Discovery Form'}
             </a>
           </motion.div>
         </div>
