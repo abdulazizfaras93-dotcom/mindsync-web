@@ -45,9 +45,9 @@ const t = {
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
-  essential:    { en: 'Essential',   ar: 'الأساسية' },
-  advanced:     { en: 'Advanced',    ar: 'المتقدمة' },
-  'full-stack': { en: 'Full-Stack',  ar: 'المتكاملة' },
+  essential:    { en: 'Always Online',             ar: 'دايما اونلاين' },
+  advanced:     { en: 'Automated Growth',          ar: 'النمو المؤتمت' },
+  'full-stack': { en: 'Fully Automated Business',  ar: 'مشروعك مؤتمت بالكامل' },
 }
 
 function TierCard({
