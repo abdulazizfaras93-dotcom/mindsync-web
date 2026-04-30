@@ -8,8 +8,8 @@ const KuwaitParticles = dynamic(() => import('@/components/canvas/KuwaitParticle
 
 const t = {
   eyebrow: { en: "Let's build",       ar: 'لنبدأ البناء' },
-  headline:{ en: "Let's build your first agent. This month.", ar: 'خلنا نبني وكيلك الأول. هذا الشهر.' },
-  sub:     { en: "Message us your business name and the one problem you're most tired of handling manually. We'll reply with a fixed-scope quote in under 24 hours.", ar: "أرسل لنا اسم عملك والمشكلة التي أرهقتك يدوياً. سنرد بعرض سعر محدد النطاق في أقل من ٢٤ ساعة." },
+  headline:{ en: "What task are you tired of doing manually? We'll automate it.", ar: 'ما الشغل اللي تعبت منه يدوياً؟ وأتمتناه.' },
+  sub:     { en: "Send us your business name and the daily problem. We'll reply with a scoped quote in under 24 hours — free.", ar: 'أرسل لنا اسم عملك والمشكلة اليومية. نرد بعرض سعر في أقل من ٢٤ ساعة — مجاناً.' },
   cta1:    { en: 'WhatsApp Us Now',    ar: 'راسلنا على واتساب الآن' },
   cta2:    { en: 'Try the Live Demo', ar: 'جرّب العرض المباشر' },
   legal:   { en: 'مايند سينك لتصميم وبرمجة البرمجيات الخاصة', ar: 'مايند سينك لتصميم وبرمجة البرمجيات الخاصة' },
