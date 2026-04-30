@@ -2,6 +2,7 @@ import { LangProvider } from '@/lib/lang'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/sections/Hero'
 import Demo from '@/components/sections/Demo'
+import WhyNotBot from '@/components/sections/WhyNotBot'
 import Bundles from '@/components/sections/Bundles'
 import ReceptionistChat from '@/components/sections/ReceptionistChat'
 import Process from '@/components/sections/Process'
@@ -19,6 +20,7 @@ export default function Home() {
       <main>
         <Hero />
         <Demo />
+        <WhyNotBot />
         <Bundles />
         <ROICalculator />
         <ReceptionistChat />
