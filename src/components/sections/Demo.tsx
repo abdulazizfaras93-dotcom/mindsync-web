@@ -21,8 +21,14 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 const t = {
   eyebrow:  { en: 'Live Demo',    ar: 'تجربة مباشرة' },
-  headline: { en: 'See what your customers experience.',           ar: 'شاهد ما يختبره عملاؤك.' },
-  sub:      { en: 'Pick your industry. Watch the agent handle a real conversation — then ask your own question.', ar: 'اختر مجالك. شاهد الوكيل يتعامل مع محادثة حقيقية — ثم اسأل سؤالك بنفسك.' },
+  headline: {
+    en: 'Watch the system work',
+    ar: 'شاهد النظام يعمل',
+  },
+  sub: {
+    en: 'This is not a bot reading pre-written replies.\nThis is a custom software system, trained on your business, running 24/7.',
+    ar: 'هذا ليس بوت يقرأ من قائمة جاهزة.\nهذا نظام برمجي مخصص، مدرَّب على عملك، يعمل ٢٤ ساعة.',
+  },
 }
 
 export default function Demo() {
@@ -43,7 +49,9 @@ export default function Demo() {
             {t.headline[lang]}
           </h2>
           <p className="text-ms-ink-600 text-[16px] max-w-lg mx-auto leading-relaxed">
-            {t.sub[lang]}
+            {t.sub[lang].split('\n').map((line, i) => (
+              <span key={i} className="block">{line}</span>
+            ))}
           </p>
         </div>
 
