@@ -26,15 +26,15 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 }
 
 const t = {
-  eyebrow:        { en: 'AI Automation Agency · Kuwait', ar: 'وكالة الأتمتة الذكية · الكويت' },
-  headline:       { en: 'Your Business,', ar: 'أعمالك،' },
-  headlineAccent: { en: 'Automated.', ar: 'مؤتمتة.' },
+  eyebrow:        { en: 'AI Software Agency · Kuwait', ar: 'وكالة برمجيات وذكاء اصطناعي · الكويت' },
+  headline:       { en: 'Your business deserves',      ar: 'عملك يستاهل' },
+  headlineAccent: { en: 'to run without you.',         ar: 'يشغل بدونك.' },
   sub: {
-    en: 'AI agents for clinics, salons, spas, gyms, garages, restaurants, home businesses & real-estate offices in Kuwait. Built, deployed, and maintained — in 7 business days.',
-    ar: 'وكلاء ذكاء اصطناعي للعيادات والصالونات والسبا والجيمات وورش السيارات والمطاعم والمشاريع المنزلية ومكاتب العقارات في الكويت. مبنية، مُشغَّلة، ومُصانة — في 7 أيام عمل.',
+    en: 'We build your business a custom software system with AI agents — responding, booking, following up, and analyzing.\nFrom WhatsApp to your dashboard in 7 business days.',
+    ar: 'نبني ونعلم نظاماً خصصناه ببرمجيات وذكاء اصطناعي —\nيرد، يحجز، يتابع، ويحلل.\nمن واتساب للوحة تحكم في ٧ أيام عمل.',
   },
-  cta1:   { en: 'Chat on WhatsApp', ar: 'تواصل على واتساب' },
-  cta2:   { en: 'See the Bundles',  ar: 'اكتشف الباقات' },
+  cta1:   { en: 'Chat on WhatsApp', ar: 'راسلنا على واتساب' },
+  cta2:   { en: 'See the Bundles',  ar: 'شاهد الباقات' },
   stat1l: { en: 'Days to go live',  ar: 'أيام للإطلاق' },
   stat2l: { en: 'Industry bundles', ar: 'باقات صناعية' },
   stat3l: { en: 'Agent uptime',     ar: 'وقت التشغيل' },
@@ -87,7 +87,9 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.38 }}
               className="text-white/65 text-[16px] leading-relaxed max-w-[480px] mb-10"
             >
-              {t.sub[lang]}
+              {t.sub[lang].split('\n').map((line, i) => (
+                <span key={i} className="block">{line}</span>
+              ))}
             </motion.p>
 
             <motion.div
