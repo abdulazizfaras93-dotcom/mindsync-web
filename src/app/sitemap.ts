@@ -2,14 +2,12 @@ import { MetadataRoute } from 'next';
 
 const BASE = 'https://www.mindsynckw.com';
 
-const VERTICALS = ['clinics', 'salons', 'spas', 'gyms', 'garages', 'restaurants', 'real-estate', 'home-businesses']
+const VERTICALS = ['clinics', 'salons', 'spa', 'gyms', 'garages', 'restaurants', 'real-estate', 'home-businesses']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE}/#bundles`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/#process`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE}/#faq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/discovery`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     ...VERTICALS.map(v => ({
       url: `${BASE}/${v}`,
       lastModified: new Date(),
