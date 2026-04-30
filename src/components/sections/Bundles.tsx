@@ -114,24 +114,21 @@ function TierCard({
           </p>
         </div>
 
-        <ul className="space-y-2.5 mb-6 flex-1">
-          {tier.features[isAr ? 'ar' : 'en'].map((f, i) => (
-            <li key={i} className="flex items-start gap-2.5">
-              <span className={`mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full ${
-                isAdvanced ? 'bg-ms-gold-600/20' : 'bg-ms-green-800/10'
-              }`}>
-                <Check size={10} strokeWidth={2.5} className={isAdvanced ? 'text-ms-gold-600' : 'text-ms-green-800'} />
-              </span>
-              <span className={`text-[13px] leading-snug ${
-                i === 0 && tierId !== 'essential'
-                  ? isAdvanced ? 'text-ms-gold-600 font-medium' : 'text-ms-green-800 font-medium'
-                  : isAdvanced ? 'text-white/70' : 'text-ms-ink-600'
-              }`}>
-                {f}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {/* Zone D — Task elimination table */}
+        <table className="w-full text-sm mt-4 mb-4 flex-1">
+          <tbody>
+            {bundle.scenario.tasksEliminated[tierId][lang].map((task, i) => (
+              <tr key={i} className="border-b border-ms-ivory-200/20 last:border-0">
+                <td className={`py-2 pr-4 text-[13px] leading-snug ${isAdvanced ? 'text-white/60' : 'text-ms-ink-600'}`}>
+                  {task}
+                </td>
+                <td className={`py-2 text-right font-mono text-[11px] whitespace-nowrap font-semibold ${isAdvanced ? 'text-red-400' : 'text-red-500'}`}>
+                  {lang === 'ar' ? '× انتهى' : '× Gone'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
         <div className={`text-[11px] font-mono tracking-wider text-center mb-3 flex items-center justify-center gap-1.5 ${
           isAdvanced ? 'text-ms-gold-600/60' : 'text-ms-ink-400'
@@ -149,7 +146,7 @@ function TierCard({
               : 'bg-ms-green-800 text-ms-ivory-0 hover:bg-ms-green-700'
           }`}
         >
-          {t.cta[lang]}
+          {bundle.scenario.tierCtas[tierId][lang]}
           <ArrowRight size={14} strokeWidth={2} />
         </a>
       </div>
