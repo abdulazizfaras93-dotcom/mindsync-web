@@ -4,8 +4,8 @@ import { useLang } from '@/lib/lang'
 
 const t = {
   eyebrow: { en: 'Built on', ar: 'مبني على' },
-  headline:{ en: 'The stack we wire into your business.', ar: 'المنظومة التي نبنيها داخل أعمالك.' },
-  sub:     { en: 'Every channel your customers already use, every tool your team already trusts. We connect them — you don\'t.', ar: 'كل قناة يستخدمها عملاؤك بالفعل، وكل أداة يعتمد عليها فريقك. نحن نربطها — أنت لا تحتاج لذلك.' },
+  headline:{ en: 'The stack we wire into your business.', ar: 'المنظومة التي نبنيها داخل مشروعك.' },
+  sub:     { en: 'Every channel your customers already use, every tool your team already trusts. We connect them — you don\'t.', ar: 'كل قناة يستخدمها عملاؤك الحين, وكل أداة يعتمد عليها موظفينك. احنا نربطها — أنت خلك مرتاح.' },
 }
 
 type Logo = { name: string; slug?: string; local?: string; wordmark?: boolean }

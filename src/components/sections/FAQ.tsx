@@ -4,35 +4,35 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
-  eyebrow: { en: 'FAQ',                              ar: 'الأسئلة الشائعة' },
-  headline:{ en: 'Questions we hear on every call.', ar: 'أسئلة تتكرر في كل مكالمة.' },
+  eyebrow: { en: 'FAQ',                              ar: 'الأسئلة المتكررة' },
+  headline:{ en: 'Questions we hear often.', ar: 'أسئلة دايم نسمعها' },
 }
 
 const FAQS = [
   {
     en: { q: 'Do I need to change my WhatsApp number?', a: "No. We connect your existing business number through the Meta WhatsApp Business API. Your customers keep texting the number they already know." },
-    ar: { q: 'هل يجب أن أغير رقم واتساب؟',            a: "لا. نربط رقمك الحالي عبر واتساب بيزنس API من ميتا. عملاؤك يستمرون في مراسلة نفس الرقم." },
+    ar: { q: 'هل محتاج اغير رقم الواتساب لمشروعي؟',            a: "لا. نربط رقمك الحالي بواتساب بيزنس API. عملاؤك يستمرون في مراسلة نفس الرقم." },
   },
   {
     en: { q: "What if the agent doesn't know the answer?", a: "It escalates gracefully. We train a polite handoff that pulls you into the chat only for cases worth your time." },
-    ar: { q: "ماذا لو لم يعرف الوكيل الإجابة؟",          a: "يحوّل المحادثة بأدب. ندرّب تحويلاً ذكياً ينقل المحادثة إليك فقط في الحالات التي تستحق وقتك." },
+    ar: { q: "شنو يصير لو الوكيل الذكي ماعرف يرد على استفسارات عملائنا؟",          a: "يحوّل المحادثة بأدب. ندرّب الوكيل الذكي على تحويل المحادثة لك بالحالات اللي تستاهل." },
   },
   {
     en: { q: 'Who owns the data and flows?', a: "You do. All logs live in your portal and your accounts. If you ever leave, we export everything and walk away." },
-    ar: { q: "من يملك البيانات والسيناريوهات؟", a: "أنت. جميع السجلات في بوابتك وحساباتك. إذا قررت التوقف، نصدّر كل شيء وننسحب." },
+    ar: { q: "منو يملك البيانات والسيناريوهات؟", a: "أنت. كل البيانات محفوظة في بوابتك ولو وقفت بنوخر كل شي." },
   },
   {
     en: { q: 'What does the monthly retainer cover?', a: "Monitoring, prompt tuning, small updates, WhatsApp API costs, and a monthly performance report. Everything to keep your agent sharp." },
-    ar: { q: "ماذا يشمل الاشتراك الشهري؟",          a: "المراقبة، ضبط التعليمات، التعديلات الصغيرة، تكاليف واتساب API، وتقرير أداء شهري." },
+    ar: { q: "شنو يشمل الاشتراك الشهري؟",          a: "المراقبة، ضبط المحادثة، التحديثات البسيطة، تكاليف واتساب، وتقرير أداء شهري." },
   },
   {
     en: { q: 'Can I start with just one channel?', a: "Yes. Most clients launch on WhatsApp, then add Instagram DM or a web chat widget after the first month." },
-    ar: { q: "هل يمكنني البدء بقناة واحدة فقط?", a: "نعم. معظم العملاء ينطلقون بواتساب، ثم يضيفون إنستغرام أو محادثة الموقع بعد الشهر الأول." },
+    ar: { q: "يصير ابدي بقناة وحدة بس؟", a: "اي. أغلب اللي معانا يبدون بواتساب، وبعدين يضيفون انستغرام أو محادثة الموقع بعد الشهر الأول." },
   },
   {
     en: { q: 'What happens if something breaks at 11pm?', a: "You message us on WhatsApp. We have monitoring alerts and SLA response times built into every retainer plan." },
-    ar: { q: "ماذا لو تعطل شيء الساعة 11 ليلاً؟",       a: "تراسلنا على واتساب. لدينا تنبيهات مراقبة ومستويات خدمة مضمونة في كل خطة." },
-  },
+    ar: { q: "شلون لو شي اخترب؟",       a: "تراسلنا على واتساب. إحنا نتصرف." },
+  },  
 ]
 
 export default function FAQ() {

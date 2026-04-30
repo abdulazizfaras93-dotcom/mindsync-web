@@ -26,19 +26,19 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 }
 
 const t = {
-  eyebrow:        { en: 'AI Software Agency · Kuwait', ar: 'وكالة برمجيات وذكاء اصطناعي · الكويت' },
-  headline:       { en: 'Your business deserves',      ar: 'عملك يستاهل' },
-  headlineAccent: { en: 'to run without you.',         ar: 'يشغل بدونك.' },
+  eyebrow:        { en: 'AI Software Agency · Kuwait', ar: 'شركة برمجيات وذكاء اصطناعي · الكويت' },
+  headline:       { en: 'Your business deserves',      ar: 'مشروعك يستاهل' },
+  headlineAccent: { en: 'to run without you.',         ar: 'يشتغل بدونك.' },
   sub: {
     en: 'We build your business a custom software system with AI agents — responding, booking, following up, and analyzing.\nFrom WhatsApp to your dashboard in 7 business days.',
     ar: 'نبني ونعلم نظاماً خصصناه ببرمجيات وذكاء اصطناعي —\nيرد، يحجز، يتابع، ويحلل.\nمن واتساب للوحة تحكم في ٧ أيام عمل.',
   },
-  cta1:   { en: 'Chat on WhatsApp', ar: 'راسلنا على واتساب' },
-  cta2:   { en: 'See the Bundles',  ar: 'شاهد الباقات' },
-  stat1l: { en: 'Days to go live',  ar: 'أيام للإطلاق' },
-  stat2l: { en: 'Industry bundles', ar: 'باقات صناعية' },
+  cta1:   { en: 'Chat on WhatsApp', ar: 'تواصل على الواتساب' },
+  cta2:   { en: 'See the Bundles',  ar: 'شوف الباقات' },
+  stat1l: { en: 'Days to go live',  ar: 'أيام ونخلص الإعداد' },
+  stat2l: { en: 'Industry bundles', ar: 'باقات متخصصة' },
   stat3l: { en: 'Agent uptime',     ar: 'وقت التشغيل' },
-  stat4l: { en: 'Data stays yours', ar: 'بياناتك ملكك' },
+  stat4l: { en: 'Data stays yours', ar: 'البيانات محفوظة عندك' },
 }
 
 export default function Hero() {

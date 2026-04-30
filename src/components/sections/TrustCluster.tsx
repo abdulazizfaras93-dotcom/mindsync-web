@@ -14,11 +14,11 @@ import { useLang } from '@/lib/lang'
 
 const t = {
   eyebrow:    { en: 'Trust & credentials', ar: 'الثقة والاعتمادات' },
-  madeIn:     { en: 'Made in Kuwait',      ar: 'صُنع في الكويت' },
-  agentsLbl:  { en: 'live agents running', ar: 'وكيل شغّال الآن' },
+  madeIn:     { en: 'Made in Kuwait',      ar: 'شركة كويتية' },
+  agentsLbl:  { en: 'live agents running', ar: 'وكلاء شغّالين' },
   residency:  {
     en: 'Your data stays in Kuwait. We don\'t sell it. We don\'t share it.',
-    ar: 'بياناتك تبقى في الكويت — ما نبيعها، ما نشاركها.',
+    ar: 'معلوماتك تبقى بالكويت، ما نبيعها وما نشاركها.',
   },
   fatoorah:   { en: 'MyFatoorah payments', ar: 'دفع عبر ماي فاتورة' },
   metaPartner:{ en: 'Meta Business Partner', ar: 'شريك ميتا للأعمال' },

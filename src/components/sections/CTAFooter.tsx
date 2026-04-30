@@ -7,17 +7,17 @@ import { WHATSAPP_URL } from '@/lib/data'
 const KuwaitParticles = dynamic(() => import('@/components/canvas/KuwaitParticles'), { ssr: false })
 
 const t = {
-  eyebrow: { en: "Let's build",       ar: 'لنبدأ البناء' },
-  headline:{ en: "What task are you tired of doing manually? We'll automate it.", ar: 'ما الشغل اللي تعبت منه يدوياً؟ وأتمتناه.' },
-  sub:     { en: "Send us your business name and the daily problem. We'll reply with a scoped quote in under 24 hours — free.", ar: 'أرسل لنا اسم عملك والمشكلة اليومية. نرد بعرض سعر في أقل من ٢٤ ساعة — مجاناً.' },
-  cta1:    { en: 'WhatsApp Us Now',    ar: 'راسلنا على واتساب الآن' },
-  cta2:    { en: 'Try the Live Demo', ar: 'جرّب العرض المباشر' },
-  legal:   { en: 'مايند سينك لتصميم وبرمجة البرمجيات الخاصة', ar: 'مايند سينك لتصميم وبرمجة البرمجيات الخاصة' },
+  eyebrow: { en: "Let's build",       ar: 'يالله نبني' },
+  headline:{ en: "What task are you tired of doing manually? We'll automate it.", ar: 'شنو الشغل اللي تعبت تسويه يدوياً؟ احنا نأتمتة.' },
+  sub:     { en: "Send us your business name and the daily problem. We'll reply with a scoped quote in under 24 hours.", ar: 'أرسل لنا اسم مشروعك والمشاكل الي تواججها يومياً، واحنا راح نرد عليك بعرض سعر بأقل من ٢٤ ساعة.' },
+  cta1:    { en: 'WhatsApp Us Now',    ar: 'راسلنا على الواتساب' },
+  cta2:    { en: 'Try the Live Demo', ar: 'عرض توضيحي مباشر' },
+  legal:   { en: 'MindSync · Software Design and Development Company', ar: 'مايند سينك شركة تصميم وتطوير البرمجيات' },
   copy:    { en: '© 2026 MindSync · Kuwait City', ar: '© 2026 مايندسينك · مدينة الكويت' },
   links:   { en: ['Bundles', 'How It Works', 'FAQ', 'WhatsApp'], ar: ['الباقات', 'آلية العمل', 'الأسئلة', 'واتساب'] },
   navLabel:{ en: 'Navigation', ar: 'التنقل' },
   contact: { en: 'Contact',    ar: 'تواصل' },
-  tagline: { en: "Kuwait's only full-stack AI automation agency for small businesses.", ar: 'وكالة الأتمتة الذكية الوحيدة في الكويت للشركات الصغيرة والمتوسطة.' },
+  tagline: { en: "Kuwait's only full-stack AI automation company.", ar: 'شركة برمجة و أتمتة ذكاء اصطناعي الوحيدة في الكويت للشركات الصغيرة والمتوسطة.' },
 }
 
 export function CTA() {

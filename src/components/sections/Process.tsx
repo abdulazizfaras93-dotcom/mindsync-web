@@ -6,14 +6,14 @@ import { useLang } from '@/lib/lang'
 const ProcessFlow = dynamic(() => import('@/components/canvas/ProcessFlow'), { ssr: false })
 
 const t = {
-  eyebrow:  { en: 'How It Works', ar: 'آلية العمل' },
+  eyebrow: { en: 'How It Works', ar: 'آلية العمل عندنا' },
   headline: {
-    en: '7 business days. Your system is live.',
-    ar: '٧ أيام عمل. نظامك جاهز.',
+    en: '7 business days and your system is live.',
+    ar: 'في خلال ٧ أيام عمل نظامك جاهز',
   },
   sub: {
     en: "The clock starts after contract signing — we don't stop until you're satisfied.",
-    ar: 'العداد يبدأ بعد توقيع العقد — ولا نتوقف حتى تكون راضياً.',
+    ar: 'العداد يبدأ بعد توقيع العقد — ولا نتوقف حتى تكون راضياً تماماً.',
   },
 }
 
@@ -21,12 +21,12 @@ const STEPS = [
   {
     num: '01',
     en: { title: 'Discovery', sub: '60-min scoping call', desc: 'We map your most common questions, booking tools, opening hours, and tone of voice.' },
-    ar: { title: 'الاكتشاف', sub: 'مكالمة تحديد النطاق', desc: 'نحدد أكثر الأسئلة تكراراً، وأدوات الحجز، وساعات العمل، وأسلوب التواصل.' },
+    ar: { title: 'الاكتشاف', sub: 'مكالمة تحديد النطاق', desc: 'نحدد أكثر المشاكل تكراراً، طريقة تلقي الحجوزات، وساعات العمل، وأسلوب التواصل.' },
   },
   {
     num: '02',
-    en: { title: 'Build', sub: 'Agent + integrations', desc: 'n8n flows, Claude prompts, WhatsApp API, calendar and payments — wired in your brand voice.' },
-    ar: { title: 'البناء', sub: 'وكيل وتكاملات', desc: 'سيناريوهات n8n، تعليمات Claude، واتساب API، التقويم والمدفوعات — بلغة علامتك التجارية.' },
+    en: { title: 'Build', sub: 'Agent + integrations', desc: 'All integrations, calendar, payments, and more — tailored to your needs.' },
+    ar: { title: 'البناء', sub: 'وكيل وتكاملات', desc: 'كل التفاصيل ودمج الأدوات والخدمات المطلوبة.' },
   },
   {
     num: '03',
@@ -92,8 +92,8 @@ export default function Process() {
 
         <p className="text-white/25 text-[13px] mt-8 border-t border-white/10 pt-6">
           {lang === 'ar'
-            ? 'لا نبدأ العدّاد إلا بعد اعتماد رقم واتساب عملك من ميتا.'
-            : "The 7-day clock doesn't start until your WhatsApp number is approved by Meta."}
+            ? 'لا نبدأ البناء إلا بعد اعتماد بيانات مشروعك.'
+            : "The 7-day clock doesn't start until your project data is approved."}
         </p>
       </div>
     </section>

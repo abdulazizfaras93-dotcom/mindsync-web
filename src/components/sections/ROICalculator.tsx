@@ -5,15 +5,15 @@ import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
 
 const t = {
-  eyebrow:   { en: 'ROI Calculator', ar: 'حاسبة العائد' },
-  headline:  { en: 'How much is manual WhatsApp costing you?', ar: 'كم يكلّفك واتساب اليدوي؟' },
-  sub:       { en: 'Move the sliders and see your estimated monthly savings.', ar: 'حرّك الأشرطة لترى توفيرك الشهري المتوقع.' },
-  inquiries: { en: 'Customer messages per week', ar: 'رسائل العملاء أسبوعياً' },
-  hours:     { en: 'Hours spent on WhatsApp per week', ar: 'ساعات على واتساب أسبوعياً' },
-  savedHrs:  { en: 'Hours saved / month', ar: 'ساعة توفّر / شهر' },
-  savedKwd:  { en: 'Staff cost saved / month', ar: 'توفير تكلفة موظف / شهر' },
+  eyebrow:   { en: 'ROI Calculator', ar: 'حاسبة العائد المادي' },
+  headline:  { en: 'How much is manual WhatsApp costing you?', ar: 'شكثر يكلّفك الواتساب اليدوي؟' },
+  sub:       { en: 'Move the sliders and see your monthly savings.', ar: 'حرّك الأشرطة لترى توفيرك الشهري المتوقع.' },
+  inquiries: { en: 'Customer messages per week', ar: 'الاستفسارات أسبوعياً' },
+  hours:     { en: 'Hours spent on WhatsApp per week', ar: 'ساعات على الواتساب أسبوعياً' },
+  savedHrs:  { en: 'Hours saved / month', ar: 'ساعة توفير / شهر' },
+  savedKwd:  { en: 'Staff cost saved / month', ar: 'توفير راتب موظف / شهر' },
   roiLabel:  { en: 'Annual ROI vs. build fee', ar: 'العائد السنوي مقابل رسم البناء' },
-  cta:       { en: 'Get my free quote →', ar: 'احصل على عرض مجاني ←' },
+  cta:       { en: 'Calculate your real savings →', ar: 'احسب توفيرك الحقيقي ←' },
   disclaimer:{ en: 'Based on 67% automation rate and 3 KWD/hr staff cost.', ar: 'بناءً على معدل أتمتة ٦٧٪ وتكلفة موظف ٣ د.ك/ساعة.' },
 }
 
@@ -30,8 +30,8 @@ export default function ROICalculator() {
 
   const waMsg = encodeURIComponent(
     lang === 'ar'
-      ? `السلام عليكم، أريد حساب العائد لأعمالي. لديّ حوالي ${msgs} رسالة أسبوعياً وأقضي ${hrs} ساعات على واتساب.`
-      : `Hi, I'd like to get a quote. I get ~${msgs} messages/week and spend ${hrs} hrs/week on WhatsApp.`
+      ? `السلام عليكم، بغيت حساب العائد لأعمالي. عندي حوالي ${msgs} رسالة أسبوعياً وأقضي ${hrs} ساعات على الواتساب.`
+      : `Hi, I'd like to get my savings calculated. I get ~${msgs} messages/week and spend ${hrs} hrs/week on WhatsApp.`
   )
 
   return (

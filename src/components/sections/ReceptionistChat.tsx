@@ -19,26 +19,26 @@ type Msg = {
 
 const t = {
   eyebrow: { en: 'LIVE', ar: 'مباشر' },
-  headline: { en: 'Talk to the AI Receptionist', ar: 'تكلم مع موظف الاستقبال الذكي' },
+  headline: { en: 'Talk to the AI Receptionist', ar: 'تكلم مع وكيل الاستقبال الذكي' },
   sub: {
     en: 'Available 24/7 — responds, qualifies, and books a call',
     ar: 'متاح ٢٤/٧ — يرد، يؤهّل، ويحجز لك موعد',
   },
-  bullet1: { en: 'Replies in Kuwaiti dialect, Arabic, or English', ar: 'يرد بالكويتي والعربي والإنجليزي' },
+  bullet1: { en: 'Replies in Kuwaiti dialect, Arabic, or English', ar: 'يرد باللهجة الكويتية أو الإنجليزية' },
   bullet2: { en: 'Books appointments and qualifies leads', ar: 'يحجز المواعيد ويؤهل العملاء' },
   bullet3: { en: 'Hands off to your team on WhatsApp', ar: 'يحوّل العميل لفريقك على واتساب' },
   agentName: { en: 'MindSync Receptionist', ar: 'موظف الاستقبال' },
   online: { en: 'Online · 24/7', ar: 'متصل · ٢٤/٧' },
-  placeholder: { en: 'Type your message…', ar: 'اكتب رسالتك…' },
+  placeholder: { en: 'Type your message…', ar: 'اكتب كل الاسئلة الي فبالك...' },
   opener: {
-    en: "Hello! I'm MindSync's AI receptionist 👋 What type of business do you have?",
-    ar: 'هلا! أنا موظف الاستقبال لمايندسينك 👋 شنو نوع مشروعك؟',
+    en: "Hello! I'm the AI receptionist 👋",
+    ar: 'هلا والله! 👋 ',
   },
   errorReply: {
-    en: 'Connection lost, reach us on WhatsApp 👇',
-    ar: 'انقطع الاتصال، تواصل معانا على واتساب 👇',
+    en: 'Get in touch on WhatsApp 👇',
+    ar: 'تواصل ويانا على الواتساب 👇',
   },
-  waCta: { en: 'Open WhatsApp', ar: 'افتح واتساب' },
+  waCta: { en: 'Open WhatsApp', ar: 'افتح الواتساب' },
   contactAsk: {
     en: 'Your name and WhatsApp number? So we can follow up 🙏',
     ar: 'اسمك ورقم واتسابك؟ عشان نتواصل معاك 🙏',

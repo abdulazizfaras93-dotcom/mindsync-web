@@ -3,16 +3,16 @@ import { useLang } from '@/lib/lang'
 
 const t = {
   eyebrow: {
-    ar: 'ليش مايند سينك وليس بوت عادي؟',
-    en: 'Why MindSync and not just a bot?',
+    ar: 'ليش مايند سينك مو بوت عادي؟',
+    en: 'Why MindSync not just a bot?',
   },
   headline: {
     ar: 'شركات كثيرة في الكويت تبيعك بوت.\nمايند سينك تبني لك نظام.\nالفرق؟ كل شيء.',
     en: 'Many companies in Kuwait will sell you a bot.\nMindSync builds you a system.\nThe difference? Everything.',
   },
   body: {
-    ar: 'البوت يقرأ من قائمة أجوبة جاهزة.\nالنظام الذي نبنيه يفكر — يعرف عملك، يقرر متى يحجز،\nمتى يتابع، ومتى يحيلك لنا. مبني خصوصاً لك،\nلا نسخة من قالب استخدمناه لغيرك.',
-    en: "A bot reads from a prepared answer list.\nThe system we build thinks — it knows your business,\ndecides when to book, when to follow up, and when to escalate.\nBuilt specifically for you. No two MindSync systems are identical.",
+    ar: 'البوت يقرأ من قائمة أجوبة جاهزة.\nالنظام اللي نبنيه يفكر — يعرف اللي تبيه، يقرر متى يحجز،\nمتى يتابع، ومتى يحيلك لنا. مبني خصوصاً لك،\nما نستخدم قوالب جاهزة.',
+    en: "A bot reads from a prepared answer list.\nThe system we build thinks — it knows what you want,\ndecides when to book, when to follow up, and when to escalate.\nBuilt specifically for you. No two MindSync systems are identical.",
   },
   tableHeaders: {
     ar: ['شركات البوت', 'فريلانسر', 'Enterprise AI', 'مايند سينك'],
@@ -20,16 +20,16 @@ const t = {
   },
   cards: [
     {
-      title: { ar: 'مبنيّ لك، مش نسخة من قالب', en: 'Built for you, not copied from a template' },
+      title: { ar: 'مبنيّ لك، مو نسخة من قالب', en: 'Built for you, not copied from a template' },
       body:  { ar: 'كل نظام نبنيه برمج خصوصاً لعملك — أسعارك، فريقك، ساعات عملك، أسلوبك. ما في نسختين متطابقتين في مايند سينك.', en: 'Every system we build is programmed specifically for your business — your pricing, team, hours, tone. No two MindSync systems are identical.' },
     },
     {
       title: { ar: 'نعلّم الذكاء الاصطناعي بعملك', en: 'We teach the AI your business' },
-      body:  { ar: 'مو سيناريو يقرأ من قائمة. ذكاء اصطناعي يتعلم كيف تفكر، متى تحيل، وكيف يرد — بلغتك وأسلوبك.', en: "Not a script reading from a list. An AI agent that learns how you think, when to escalate, and how to respond — in your language and your tone." },
+      body:  { ar: 'مو سيناريو يقرأ من قائمة. ذكاء اصطناعي يتعلم كيف تفكر، متى يحيل، وكيف يرد — بلغتك وأسلوبك.', en: "Not a script reading from a list. An AI agent that learns how you think, when to escalate, and how to respond — in your language and your tone." },
     },
     {
-      title: { ar: 'نبقى معك بعد الإطلاق', en: 'We stay with you after launch' },
-      body:  { ar: 'الاشتراك الشهري مو رسوم — هو ضمان. شخص يراقب نظامك ويطوّره كل شهر. بدون ما تطلب.', en: "The monthly retainer isn't a fee — it's a guarantee. Someone watching, fixing, and improving your system every month. Without you asking." },
+      title: { ar: 'نبقى معاك بعد الإطلاق', en: 'We stay with you after launch' },
+      body:  { ar: 'الاشتراك الشهري مو رسوم — هو ضمان. شخص يراقب نظامك ويطوّره كل شهر. من دون ما تطلب.', en: "The monthly retainer isn't a fee — it's a guarantee. Someone watching, fixing, and improving your system every month. Without you asking." },
     },
   ],
 }

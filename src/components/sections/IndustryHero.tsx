@@ -9,7 +9,7 @@ export default function IndustryHero({ industryId }: { industryId: string }) {
 
   const waMsg = encodeURIComponent(
     lang === 'ar'
-      ? `السلام عليكم، مهتم بـ${bundle.ar} — أريد عرض سعر.`
+      ? `السلام عليكم، مهتم بـ${bundle.ar} — بغيت عرض سعر.`
       : `Hi, I'm interested in ${bundle.en}. Please send me a quote.`
   )
 
@@ -36,8 +36,8 @@ export default function IndustryHero({ industryId }: { industryId: string }) {
           </p>
           <p className="text-white/60 text-[16px] leading-relaxed max-w-xl mb-10">
             {lang === 'ar'
-              ? 'وكيل ذكاء اصطناعي مخصص لمجالك — واتساب، حجوزات، ومدفوعات — جاهز في ٧ أيام.'
-              : 'A dedicated AI agent for your industry — WhatsApp, bookings, and payments — live in 7 days.'}
+              ? 'وكيل ذكاء اصطناعي مخصص لمجالك — يساعدك في الرد على واستقبال طلبات العملاء، حجوزات، ومدفوعات — جاهز في ٧ أيام.'
+              : 'A dedicated AI agent for your industry — Helps you answer and receive customer requests, bookings, and payments — ready in 7 days.'}
           </p>
           <div className="flex flex-wrap gap-4">
             <a

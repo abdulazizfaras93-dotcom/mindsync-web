@@ -31,23 +31,23 @@ const ADDON_ICON_MAP: Record<string, LucideIcon> = {
 const t = {
   eyebrow:      { en: 'Pricing',                                 ar: 'التسعير' },
   headline:     { en: 'Pick your industry. Pick your tier.',     ar: 'اختر مجالك. اختر باقتك.' },
-  sub:          { en: 'One-time build fee. Fixed KWD retainer. No surprises.', ar: 'رسم بناء لمرة واحدة. اشتراك شهري ثابت. بدون مفاجآت.' },
-  build:        { en: 'Build fee',                               ar: 'رسم البناء' },
+  sub:          { en: 'One-time build fee. Fixed KWD retainer. No surprises.', ar: 'رسوم بناء النظام لمرة واحدة. اشتراك شهري بسيط. لا مفاجآت.' },
+  build:        { en: 'Build fee',                               ar: 'رسوم بناء النظام' },
   retainer:     { en: '/mo retainer',                            ar: '/شهر اشتراك' },
   kwd:          { en: 'KWD',                                     ar: 'د.ك' },
   cta:          { en: 'Get Started',                             ar: 'ابدأ الآن' },
-  delivery:     { en: '7-day delivery',                          ar: 'توصيل في ٧ أيام' },
+  delivery:     { en: '7-day delivery',                          ar: 'جاهز في ٧ أيام' },
   popular:      { en: 'Most Popular',                            ar: 'الأكثر طلباً' },
-  problem:      { en: 'The Problem',                             ar: 'المشكلة الشائعة' },
-  addonsLabel:  { en: 'Optional Add-ons',                        ar: 'إضافات اختيارية' },
-  addonsSub:    { en: 'Enhance any AI bundle with a custom website or mobile app — priced per project.', ar: 'عزّز أي باقة ذكاء اصطناعي بموقع أو تطبيق مخصص — بسعر يُحدَّد حسب المشروع.' },
+  problem:      { en: 'The Problem',                             ar: 'المشكلة اللي نواجهها' },
+  addonsLabel:  { en: 'Optional Add-ons',                        ar: 'خدمات إضافية' },
+  addonsSub:    { en: 'Enhance any AI bundle with a custom website or mobile app.', ar: 'عزز أي باقة ذكاء اصطناعي بموقع أو تطبيق مخصص.' },
   getQuote:     { en: 'Get a Quote',                             ar: 'احصل على عرض سعر' },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
-  essential:    { en: 'Automated Inbox',           ar: 'صندوق الوارد المؤتمت' },
-  advanced:     { en: 'Automated Growth',          ar: 'نمو مؤتمت' },
-  'full-stack': { en: 'Fully Automated Business',  ar: 'عمل مؤتمت بالكامل' },
+  essential:    { en: 'Always Online',           ar: 'خلك أونلاين' },
+  advanced:     { en: 'Always Growing',          ar: 'نمو دايم' },
+  'full-stack': { en: 'Fully Automated',  ar: 'نظام مؤتمت بالكامل' },
 }
 
 function TierCard({
@@ -287,7 +287,7 @@ export default function Bundles() {
               const Icon = ADDON_ICON_MAP[addon.icon] ?? Globe
               const waText = encodeURIComponent(
                 lang === 'ar'
-                  ? `السلام عليكم، أودّ الاستفسار عن ${addon.name.ar}`
+                  ? `السلام عليكم، بغيت استفسر عن ${addon.name.ar}`
                   : `Hi, I'd like to enquire about ${addon.name.en}`
               )
               return (

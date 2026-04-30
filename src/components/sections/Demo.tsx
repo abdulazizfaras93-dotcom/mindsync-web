@@ -23,11 +23,11 @@ const t = {
   eyebrow:  { en: 'Live Demo',    ar: 'تجربة مباشرة' },
   headline: {
     en: 'Watch the system work',
-    ar: 'شاهد النظام يعمل',
+    ar: 'شوف شلون النظام يشتغل',
   },
   sub: {
-    en: 'This is not a bot reading pre-written replies.\nThis is a custom software system, trained on your business, running 24/7.',
-    ar: 'هذا ليس بوت يقرأ من قائمة جاهزة.\nهذا نظام برمجي مخصص، مدرَّب على عملك، يعمل ٢٤ ساعة.',
+    en: 'This is not a bot reading pre-written replies.\nThis is your own AI-powered software system, running 24/7.',
+    ar: 'هذا مو بوت يقرأ من قائمة جاهزة.\n نظام برمجي ذكي، مدرَّب على مشروعك، و يشتغل ٢٤/٧.',
   },
 }
 
