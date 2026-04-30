@@ -6,9 +6,15 @@ import { useLang } from '@/lib/lang'
 const ProcessFlow = dynamic(() => import('@/components/canvas/ProcessFlow'), { ssr: false })
 
 const t = {
-  eyebrow: { en: 'How It Works', ar: 'آلية العمل' },
-  headline:{ en: '7 business days. 4 steps. One live agent.', ar: '٧ أيام عمل. ٤ مراحل. وكيل جاهز.' },
-  sub:     { en: 'The clock starts after the scope is signed and your WhatsApp number is approved.', ar: 'العداد يبدأ بعد توقيع العقد واعتماد رقم واتساب عملك.' },
+  eyebrow:  { en: 'How It Works', ar: 'آلية العمل' },
+  headline: {
+    en: '7 business days. Your system is live.',
+    ar: '٧ أيام عمل. نظامك جاهز.',
+  },
+  sub: {
+    en: "The clock starts after contract signing — we don't stop until you're satisfied.",
+    ar: 'العداد يبدأ بعد توقيع العقد — ولا نتوقف حتى تكون راضياً.',
+  },
 }
 
 const STEPS = [
