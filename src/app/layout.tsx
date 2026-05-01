@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, Noto_Kufi_Arabic, JetBrains_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const grotesk = Space_Grotesk({
@@ -108,6 +109,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
         />
       </head>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=AW-18124307098"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-18124307098');
+        `}
+      </Script>
       <body className="antialiased">{children}</body>
     </html>
   )
