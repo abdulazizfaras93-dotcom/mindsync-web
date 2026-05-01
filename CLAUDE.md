@@ -36,12 +36,18 @@ No test or lint script is configured. ESLint config lives in `eslint.config.mjs`
 - **All CTAs link to `/discovery`** except `WhatsAppButton` (corner icon). `WHATSAPP_URL` is still exported from `data.ts` for that button only — do not add it back to other components.
 - Brand logo PNGs: `public/brand/logo.png` (ivory bg) and `public/brand/logo-transparent.png` (Navbar uses transparent). Integration marquee logos: `public/brand/integrations/*.svg` (recolored to brand green); rest fetched from `cdn.simpleicons.org/{slug}/153E2D` at runtime.
 - `src/lib/lang.tsx` — `LangProvider` client context wrapping the whole page. Toggles `lang` between `'en'|'ar'` and flips the `dir` attribute + `font-arabic` class on a wrapper div. Sections read `useLang()` and switch strings/layout accordingly. Keep all AR/EN strings inline in each section file as `const t = { key: { en: '...', ar: '...' } }`.
-- `src/components/canvas/` — Three.js / WebGL components (`NeuralGlobe`, `KuwaitParticles`, `ChatBubbles`). Always loaded with `dynamic(..., { ssr: false })`.
+- `src/components/canvas/` — Three.js / WebGL components (`NeuralGlobe`, `KuwaitParticles`, `ChatBubbles`, `ProcessFlow`). Always loaded with `dynamic(..., { ssr: false })`.
 - `src/app/api/demo/route.ts` — server-side proxy from `DemoChat.tsx` live phase to n8n. Requires `N8N_BASE` + `N8N_TOKEN` env vars (server-only). Without them it returns a placeholder reply.
 - `ReceptionistChat.tsx` POSTs directly to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` with a 30 s timeout. On failure shows a `FallbackBubble` linking to `/discovery`.
 - `DemoChat.tsx` — two-phase: (1) canned script from `src/lib/demo-scripts.ts` (no network), then (2) live questions proxy via `/api/demo`.
+- `src/components/ui/PortalPreview.tsx` — UI mockup widget (not currently used in `page.tsx`). `TrustCluster.tsx` also exists but is not imported in `page.tsx` yet.
+- `src/app/discovery/page.tsx` — standalone 10-step discovery form. Has its own local `LangCtx` (not using the page-level `LangProvider`) with a full `STRINGS` object for AR/EN. Submits to `https://ifaras911.app.n8n.cloud/webhook/client-discovery`.
 - Path alias `@/*` → `src/*` (see `tsconfig.json`).
-- Industry vertical pages: `/spa` and `/home-businesses` live (redirect to `/#bundles`). Others (`/clinics`, `/salons`, `/gyms`, `/garages`, `/restaurants`, `/real-estate`) not yet built. `IndustryHero.tsx` accepts `industryId` and looks up the matching `Bundle`.
+- `src/app/layout.tsx` — global metadata, fonts, favicon, viewport, and Google Ads tag `AW-18124307098` (injected via `next/script` with `strategy="afterInteractive"`).
+- **Google Ads conversion tracking** — two conversion events wired up:
+  - **Form submit** (`AW-18124307098/gB4kCNjQ3qUcEJr1q8JD`): fires in `discovery/page.tsx` inside `submit()` after `setStatus('success')` via `window.gtag?.('event', 'conversion', ...)`.
+  - **WhatsApp click** (`AW-18124307098/aFj-CNvQ3qUcEJr1q8JD`): fires in `WhatsAppButton.tsx` via `reportConversion()` on click, with `event_callback` opening the URL in a new tab after the hit is sent.
+- **Industry vertical pages** — deleted 2026-05-01. All 8 vertical dirs and `IndustryHero.tsx` removed. Sitemap has only 2 URLs: homepage + `/discovery`.
 
 ## Brand rules (inherited from MindSync)
 
