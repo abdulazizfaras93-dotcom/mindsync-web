@@ -783,6 +783,12 @@ export default function DiscoveryPage() {
       });
       setStatus('success');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).gtag?.('event', 'conversion', {
+        send_to: 'AW-18124307098/gB4kCNjQ3qUcEJr1q8JD',
+        value: 1.0,
+        currency: 'USD',
+      });
     } catch {
       setStatus('error');
     }

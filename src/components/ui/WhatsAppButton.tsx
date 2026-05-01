@@ -2,10 +2,29 @@
 import { useLang } from '@/lib/lang'
 import { WHATSAPP_URL } from '@/lib/data'
 
+function reportConversion(url: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const gtag = (window as any).gtag
+  if (typeof gtag === 'function') {
+    gtag('event', 'conversion', {
+      send_to: 'AW-18124307098/aFj-CNvQ3qUcEJr1q8JD',
+      value: 1.0,
+      currency: 'USD',
+      event_callback: () => { window.open(url, '_blank') },
+    })
+  } else {
+    window.open(url, '_blank')
+  }
+}
+
 export default function WhatsAppButton() {
   const { lang } = useLang()
   return (
-    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={e => { e.preventDefault(); reportConversion(WHATSAPP_URL) }}
        title={lang === 'ar' ? 'راسلنا على واتساب' : 'Message us on WhatsApp'}
        className="wa-pulse fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:bg-[#20bd5a] transition-colors">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
