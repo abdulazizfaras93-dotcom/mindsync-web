@@ -93,14 +93,22 @@ export default function Hero() {
           </video>
         )}
 
+        {/* Semi-transparent overlay — keeps text readable while video shows through */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'rgba(15,46,34,0.55)' }}
+        />
+
+        {/* Left column reinforcement — extra contrast behind text on desktop */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to right, #0F2E22 0%, #0F2E22 28%, rgba(15,46,34,0.82) 44%, rgba(15,46,34,0.35) 62%, transparent 78%)',
+              'linear-gradient(to right, rgba(15,46,34,0.55) 0%, rgba(15,46,34,0.35) 50%, transparent 100%)',
           }}
         />
 
+        {/* Bottom fade into next section */}
         <div
           className="absolute inset-x-0 bottom-0 h-40"
           style={{
