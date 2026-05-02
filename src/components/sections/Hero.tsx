@@ -1,26 +1,29 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
-  const [val, setVal] = useState(0)
   const ref    = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.5 })
 
   useEffect(() => {
-    if (!inView) return
-    const start = performance.now()
-    const tick  = (now: number) => {
-      const p    = Math.min((now - start) / duration, 1)
-      const ease = 1 - Math.pow(1 - p, 3)
-      setVal(Math.round(ease * to))
-      if (p < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
+    if (!inView || !ref.current) return
+    const el = ref.current
+    const proxy = { val: 0 }
+    let anim: { revert: () => void } | null = null
+    import('animejs').then(({ animate }) => {
+      anim = animate(proxy, {
+        val: to,
+        duration,
+        ease: 'outExpo',
+        onUpdate: () => { el.textContent = String(Math.round(proxy.val)) },
+      }) as { revert: () => void }
+    })
+    return () => { anim?.revert() }
   }, [inView, to, duration])
 
-  return <span ref={ref}>{val}</span>
+  return <span ref={ref}>0</span>
 }
 
 const t = {

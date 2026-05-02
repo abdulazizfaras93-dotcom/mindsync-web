@@ -1,5 +1,5 @@
 ﻿'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLang } from '@/lib/lang'
 import {
   BUNDLES, WEBSITE_SERVICES, APP_SERVICES, CUSTOM_BUNDLE, FREE_TRIAL, TIER_ORDER, INDUSTRY_SLUGS,
@@ -218,12 +218,68 @@ export default function Bundles() {
   const [activeId, setActiveId] = useState<string>('clinic')
   const activeBundle = BUNDLES.find((b) => b.id === activeId)!
 
+  const headerRef   = useRef<HTMLDivElement>(null)
+  const gridRef     = useRef<HTMLDivElement>(null)
+  const revealedRef = useRef(false)
+
+  const animateCards = useCallback(() => {
+    if (!gridRef.current) return
+    const wrappers = Array.from(gridRef.current.querySelectorAll<HTMLElement>('.tc-wrap'))
+    import('animejs').then(({ animate, stagger }) => {
+      animate(wrappers, {
+        translateY: [20, 0],
+        opacity: [0, 1],
+        delay: stagger(70),
+        duration: 700,
+        ease: 'spring(1, 90, 14, 0)',
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      obs.disconnect()
+      import('animejs').then(({ animate, stagger }) => {
+        animate(Array.from(el.children) as HTMLElement[], {
+          translateY: [18, 0],
+          opacity: [0, 1],
+          delay: stagger(80),
+          duration: 650,
+          ease: 'spring(1, 80, 14, 0)',
+        })
+      })
+    }, { threshold: 0.3 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const el = gridRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || revealedRef.current) return
+      revealedRef.current = true
+      obs.disconnect()
+      animateCards()
+    }, { threshold: 0.15 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [animateCards])
+
+  useEffect(() => {
+    if (!revealedRef.current) return
+    animateCards()
+  }, [activeId, animateCards])
+
   return (
     <section id="bundles" className="py-24 bg-ms-ivory-0">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* ââ Section header ââ */}
-        <div className="mb-12">
+        <div ref={headerRef} className="mb-12">
           <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-3">
             {t.eyebrow[lang]}
           </p>
@@ -321,11 +377,13 @@ export default function Bundles() {
             </div>
 
             {/* Tier cards â Smart / Pro / Full Auto */}
-            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr_2fr] gap-4">
+            <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-[2fr_3fr_2fr] gap-4">
               {TIER_ORDER.map((tierId) => (
-                <TiltCard key={tierId}>
-                  <TierCard bundle={activeBundle} tierId={tierId} lang={lang} />
-                </TiltCard>
+                <div key={tierId} className="tc-wrap" style={{ opacity: 0, transform: 'translateY(20px)' }}>
+                  <TiltCard>
+                    <TierCard bundle={activeBundle} tierId={tierId} lang={lang} />
+                  </TiltCard>
+                </div>
               ))}
             </div>
 
