@@ -456,7 +456,7 @@ export default function Bundles() {
                       {svc[isAr ? 'ar' : 'en']}
                     </p>
                     <p className="text-[11px] text-ms-ink-400 font-mono">
-                      {svc.deliveryDays[0]}â{svc.deliveryDays[1]}{' '}
+                      {svc.deliveryDays[0]}–{svc.deliveryDays[1]}{' '}
                       {lang === 'ar' ? 'يوم' : 'days'}
                     </p>
                   </div>
@@ -475,7 +475,7 @@ export default function Bundles() {
 
                 <div className="mb-4">
                   <p className="text-[22px] font-bold text-ms-ink-900 leading-none">
-                    {svc.price[0].toLocaleString()}â{svc.price[1].toLocaleString()}{' '}
+                    {svc.price[0].toLocaleString()}–{svc.price[1].toLocaleString()}{' '}
                     <span className="text-[14px] font-medium text-ms-ink-400">{t.kwd[lang]}</span>
                   </p>
                   <p className="text-[11px] text-ms-ink-400 mt-1">
