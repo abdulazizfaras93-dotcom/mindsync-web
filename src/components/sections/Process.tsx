@@ -1,18 +1,24 @@
+// src/components/sections/Process.tsx
 'use client'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
-const ProcessFlow = dynamic(() => import('@/components/canvas/ProcessFlow'), { ssr: false })
+const ProcessMorph = dynamic(() => import('@/components/canvas/ProcessMorph'), { ssr: false })
 
 const t = {
-  eyebrow:  { en: 'How It Works',                          ar: 'كيف يشتغل النظام' },
-  headline: { en: 'From first message to live system.',    ar: 'من أول رسالة لنظام شغّال.' },
+  eyebrow:    { en: 'How It Works',                          ar: 'كيف يشتغل النظام' },
+  headline:   { en: 'From first message to live system.',    ar: 'من أول رسالة لنظام شغّال.' },
   sub: {
     en: 'A clear process, a real timeline, and a free trial so you can see it work before you pay.',
     ar: 'خطوات واضحة، مواعيد حقيقية، وأسبوع تجربة مجانية تشوف فيه النظام يشتغل قبل ما تدفع.',
   },
   trialBadge: { en: 'Free', ar: 'مجانية' },
+  footnote: {
+    en: "We don't start building until tasks and channels are agreed in the discovery call.",
+    ar: 'لا نبدأ بناء النظام إلا بعد الاتفاق على المهام والقنوات في مكالمة الاستكشاف.',
+  },
 }
 
 const STEPS = [
@@ -21,7 +27,7 @@ const STEPS = [
     en: {
       title: 'Discovery Call',
       sub:   'Understanding your business',
-      desc:  'We map your daily tasks, channels, pain points, and goals. You leave the call with a clear picture of exactly what we\'ll build.',
+      desc:  "We map your daily tasks, channels, pain points, and goals. You leave the call with a clear picture of exactly what we'll build.",
     },
     ar: {
       title: 'مكالمة الاستكشاف',
@@ -90,13 +96,14 @@ const STEPS = [
 
 export default function Process() {
   const { lang } = useLang()
+  const [activeStep, setActiveStep] = useState(0)
 
   return (
     <section id="process" className="py-24 bg-ms-green-900 pattern-overlay">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
 
-        {/* Header — staggered reveal */}
-        <div className="mb-14">
+        {/* Header */}
+        <div className="mb-10">
           <motion.p
             initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -127,66 +134,81 @@ export default function Process() {
           </motion.p>
         </div>
 
-        {/* Canvas flow animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full h-20 mb-2 overflow-hidden"
-          aria-hidden
-        >
-          <ProcessFlow />
-        </motion.div>
+        {/* 2-col grid: sticky canvas left, steps right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-        {/* Steps — each row slides in from the side */}
-        <div className="divide-y divide-white/10">
-          {STEPS.map((step, i) => {
-            const s = lang === 'ar' ? step.ar : step.en
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20, y: 8 }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="grid grid-cols-1 md:grid-cols-[72px_220px_1fr] gap-4 md:gap-8 py-8 items-start"
-              >
-                {/* Step number — counter-fade */}
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.12 + i * 0.06 }}
-                  className="font-mono text-[40px] font-bold leading-none text-ms-gold-600/25 tabular-nums"
+          {/* Left: sticky 3D canvas */}
+          <div
+            className="lg:sticky lg:top-[100px] aspect-square rounded-2xl overflow-hidden border border-white/[0.08]"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, rgba(191,141,56,0.08), transparent 65%), #0A1F17',
+            }}
+            aria-hidden
+          >
+            <ProcessMorph activeStep={activeStep} />
+          </div>
+
+          {/* Right: interactive step list */}
+          <div className="divide-y divide-white/10">
+            {STEPS.map((step, i) => {
+              const s = lang === 'ar' ? step.ar : step.en
+              const isActive = activeStep === i
+              return (
+                <div
+                  key={i}
+                  className={`relative py-8 cursor-pointer border-l-[3px] pl-5 transition-all duration-200 ${
+                    isActive ? 'border-ms-gold-600' : 'border-transparent'
+                  }`}
+                  onMouseEnter={() => setActiveStep(i)}
                 >
-                  {step.num}
-                </motion.span>
+                  <div className="flex gap-6 items-start">
+                    <span
+                      className={`font-mono text-[36px] font-bold leading-none tabular-nums shrink-0 transition-colors duration-200 ${
+                        isActive ? 'text-ms-gold-600/50' : 'text-ms-gold-600/20'
+                      }`}
+                    >
+                      {step.num}
+                    </span>
 
-                {/* Title + sub */}
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-ms-ivory-0 font-bold text-[18px]">{s.title}</h3>
-                    {step.trial && (
-                      <span className="inline-block text-[9px] font-mono tracking-[0.15em] uppercase bg-ms-gold-600 text-ms-green-900 px-2 py-0.5 rounded-full font-bold">
-                        {t.trialBadge[lang]}
-                      </span>
-                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3
+                          className={`font-bold text-[18px] transition-colors duration-200 ${
+                            isActive ? 'text-ms-ivory-0' : 'text-white/55'
+                          }`}
+                        >
+                          {s.title}
+                        </h3>
+                        {step.trial && (
+                          <span className="inline-block text-[9px] font-mono tracking-[0.15em] uppercase bg-ms-gold-600 text-ms-green-900 px-2 py-0.5 rounded-full font-bold shrink-0">
+                            {t.trialBadge[lang]}
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-ms-gold-600 text-[11px] font-mono tracking-widest uppercase mb-2">
+                        {s.sub}
+                      </p>
+
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ease-out ${
+                          isActive ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        <p className="text-white/50 text-[14px] leading-relaxed">
+                          {s.desc}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-ms-gold-600 text-[11px] font-mono tracking-widest uppercase">
-                    {s.sub}
-                  </p>
                 </div>
+              )
+            })}
+          </div>
 
-                {/* Description */}
-                <p className="text-white/50 text-[14px] leading-relaxed md:pt-0.5">
-                  {s.desc}
-                </p>
-              </motion.div>
-            )
-          })}
         </div>
 
+        {/* Footnote */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -194,9 +216,7 @@ export default function Process() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white/25 text-[13px] mt-8 border-t border-white/10 pt-6"
         >
-          {lang === 'ar'
-            ? 'لا نبدأ بناء النظام إلا بعد الاتفاق على المهام والقنوات في مكالمة الاستكشاف.'
-            : "We don't start building until tasks and channels are agreed in the discovery call."}
+          {t.footnote[lang]}
         </motion.p>
 
       </div>
