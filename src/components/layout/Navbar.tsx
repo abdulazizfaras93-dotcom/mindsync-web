@@ -5,10 +5,10 @@ import { useLang } from '@/lib/lang'
 
 function MagneticLink({ href, children }: { href: string; children: React.ReactNode }) {
   const ref = useRef<HTMLAnchorElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const sx = useSpring(x, { stiffness: 200, damping: 18 })
-  const sy = useSpring(y, { stiffness: 200, damping: 18 })
+  const x   = useMotionValue(0)
+  const y   = useMotionValue(0)
+  const sx  = useSpring(x, { stiffness: 200, damping: 18 })
+  const sy  = useSpring(y, { stiffness: 200, damping: 18 })
 
   const handleMove = (e: React.MouseEvent) => {
     if (!ref.current) return
@@ -33,18 +33,18 @@ function MagneticLink({ href, children }: { href: string; children: React.ReactN
 }
 
 const t = {
-  demo:     { en: 'Live Demo',   ar: 'تجربة مباشرة' },
-  bundles:  { en: 'Bundles',     ar: 'الباقات' },
-  process:  { en: 'How It Works',ar: 'آلية العمل' },
-  faq:      { en: 'FAQ',         ar: 'الأسئلة' },
-  cta:      { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
-  toggleAr: { en: 'العربية',     ar: 'English' },
+  demo:     { en: 'Live Demo',        ar: 'ØªØ¬Ø±Ø¨Ø© ÙØ¨Ø§Ø´Ø±Ø©' },
+  services: { en: 'Services',         ar: 'Ø§ÙØ®Ø¯ÙØ§Øª' },
+  process:  { en: 'How It Works',     ar: 'ÙÙÙ ÙØ´ØªØºÙ' },
+  faq:      { en: 'FAQ',              ar: 'Ø§ÙØ£Ø³Ø¦ÙØ©' },
+  cta:      { en: 'Get Started',      ar: 'Ø§Ø¨Ø¯Ø£ Ø§ÙØ­ÙÙ' },
+  toggleAr: { en: 'Ø§ÙØ¹Ø±Ø¨ÙØ©',          ar: 'English' },
 }
 
 export default function Navbar() {
   const { lang, toggle } = useLang()
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -54,21 +54,31 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '#demo',    label: t.demo },
-    { href: '#bundles', label: t.bundles },
+    { href: '#bundles', label: t.services },
     { href: '#process', label: t.process },
     { href: '#faq',     label: t.faq },
   ]
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-ms-ivory-0/95 backdrop-blur-md border-b border-ms-ivory-200 shadow-sm' : 'bg-transparent'
+      scrolled
+        ? 'bg-ms-ivory-0/95 backdrop-blur-md border-b border-ms-ivory-200 shadow-sm'
+        : 'bg-transparent'
     }`}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group" aria-label="MindSync">
-          <img src="/brand/logo-transparent.png" alt="" width={44} height={44} className="block" />
-          <span className="text-ms-ink-900 font-grotesk text-[17px] tracking-tight font-bold leading-none">MindSync</span>
+          <img
+            src="/brand/logo-transparent.png"
+            alt=""
+            width={44}
+            height={44}
+            className="block"
+          />
+          <span className="text-ms-ink-900 font-grotesk text-[17px] tracking-tight font-bold leading-none">
+            MindSync
+          </span>
         </a>
 
         {/* Desktop nav */}
@@ -82,39 +92,56 @@ export default function Navbar() {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          <button onClick={toggle}
-            className="hidden md:block text-[13px] text-ms-ink-600 hover:text-ms-green-800 transition-colors border border-ms-ivory-200 rounded-full px-3 py-1">
+          <button
+            onClick={toggle}
+            className="hidden md:block text-[13px] text-ms-ink-600 hover:text-ms-green-800 transition-colors border border-ms-ivory-200 rounded-full px-3 py-1"
+          >
             {t.toggleAr[lang]}
           </button>
-          <a href="/discovery"
-             className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-ms-green-700 transition-colors hidden md:block">
+          <a
+            href="/discovery"
+            className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg hover:bg-ms-green-700 transition-colors hidden md:block"
+          >
             {t.cta[lang]}
           </a>
+
           {/* Mobile menu toggle */}
-          <button className="md:hidden p-2" onClick={() => setMenuOpen(o => !o)}>
-            <div className="w-5 h-0.5 bg-ms-ink-900 mb-1"></div>
-            <div className="w-5 h-0.5 bg-ms-ink-900 mb-1"></div>
-            <div className="w-5 h-0.5 bg-ms-ink-900"></div>
+          <button
+            className="md:hidden p-2 flex flex-col gap-1"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-5 h-0.5 bg-ms-ink-900 transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-ms-ink-900 transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-ms-ink-900 transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-ms-ivory-0 border-t border-ms-ivory-200 px-6 py-4 flex flex-col gap-4">
+        <div className="md:hidden bg-ms-ivory-0 border-t border-ms-ivory-200 px-6 py-5 flex flex-col gap-4">
           {navLinks.map(link => (
-            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
-               className="text-[15px] text-ms-ink-900 font-medium">
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-[15px] text-ms-ink-900 font-medium py-1"
+            >
               {link.label[lang]}
             </a>
           ))}
-          <div className="flex gap-3 pt-2 border-t border-ms-ivory-200">
-            <button onClick={toggle}
-              className="text-[13px] text-ms-ink-600 border border-ms-ivory-200 rounded-full px-3 py-1">
+          <div className="flex gap-3 pt-3 border-t border-ms-ivory-200">
+            <button
+              onClick={toggle}
+              className="text-[13px] text-ms-ink-600 border border-ms-ivory-200 rounded-full px-3 py-1.5"
+            >
               {t.toggleAr[lang]}
             </button>
-            <a href="/discovery"
-               className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg">
+            <a
+              href="/discovery"
+              className="bg-ms-green-800 text-ms-ivory-0 text-[13px] font-semibold px-4 py-2 rounded-lg flex-1 text-center"
+            >
               {t.cta[lang]}
             </a>
           </div>

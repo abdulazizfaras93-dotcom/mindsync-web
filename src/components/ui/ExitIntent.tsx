@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
-const COOKIE_KEY = 'ms_exit_shown'
+const COOKIE_KEY  = 'ms_exit_shown'
 const COOKIE_DAYS = 7
 
 const t = {
-  headline: { en: 'Wait — get a free quote in 24h', ar: 'لحظة — احصل على عرض مجاني خلال ٢٤ ساعة' },
-  sub:      { en: 'Fill in our discovery form and we\'ll send back a fixed-price scope before you sleep.', ar: 'أكمل استبيان الاكتشاف وسنرد بعرض محدد السعر قبل نومك.' },
-  cta:      { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
-  dismiss:  { en: 'No thanks', ar: 'لا شكراً' },
+  badge:    { en: '1-Week Free Trial',                   ar: 'Ø£Ø³Ø¨ÙØ¹ ØªØ¬Ø±Ø¨Ø© ÙØ¬Ø§ÙÙØ©' },
+  headline: { en: 'Try it free before you commit.',     ar: 'Ø¬Ø±ÙØ¨ ÙØ¬Ø§ÙØ§Ù ÙØ¨Ù ÙØ§ ØªÙØ±Ø±.' },
+  sub: {
+    en: "We build your actual AI system and run it live for 7 days â at no cost. If you love it, we activate. If not, no charge.",
+    ar: 'ÙØ¨ÙÙ ÙØ¸Ø§ÙÙ Ø§ÙØ°ÙÙ Ø§ÙÙØ¹ÙÙ ÙÙØ´ØºÙÙÙ Ø£Ø³Ø¨ÙØ¹ ÙØ§ÙÙ â Ø¨Ø¯ÙÙ Ø£Ù ØªÙÙÙØ©. Ø¥Ø°Ø§ Ø¹Ø¬Ø¨Ù ÙÙØ¹ÙÙÙ. ÙØ¥Ø°Ø§ ÙØ§Ø ÙØ§ ÙÙ Ø±Ø³ÙÙ.',
+  },
+  cta:     { en: 'Request Your Free Trial',             ar: 'Ø§Ø·ÙØ¨ ØªØ¬Ø±Ø¨ØªÙ Ø§ÙÙØ¬Ø§ÙÙØ©' },
+  dismiss: { en: 'No thanks',                           ar: 'ÙØ§ Ø´ÙØ±Ø§Ù' },
 }
 
 function setCookie(days: number) {
@@ -64,6 +68,7 @@ export default function ExitIntent() {
             className="fixed inset-0 z-[91] flex items-center justify-center p-4 pointer-events-none"
           >
             <div className="bg-ms-green-900 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-ms-gold-600/20 pointer-events-auto relative">
+
               {/* Close */}
               <button
                 onClick={dismiss}
@@ -75,13 +80,17 @@ export default function ExitIntent() {
                 </svg>
               </button>
 
-              {/* Gold dot */}
-              <div className="w-10 h-10 rounded-full bg-ms-gold-600/20 flex items-center justify-center mb-5">
-                <span className="text-ms-gold-600 text-xl">⚡</span>
-              </div>
+              {/* Badge */}
+              <span className="inline-block text-[10px] font-mono tracking-[0.18em] uppercase bg-ms-gold-600 text-ms-green-900 px-3 py-1 rounded-full font-bold mb-5">
+                {t.badge[lang]}
+              </span>
 
-              <h3 className="text-ms-ivory-0 text-[22px] font-bold leading-tight mb-3">{t.headline[lang]}</h3>
-              <p className="text-white/65 text-[14px] leading-relaxed mb-7">{t.sub[lang]}</p>
+              <h3 className="text-ms-ivory-0 text-[22px] font-bold leading-tight mb-3">
+                {t.headline[lang]}
+              </h3>
+              <p className="text-white/65 text-[14px] leading-relaxed mb-7">
+                {t.sub[lang]}
+              </p>
 
               <a
                 href="/discovery"
@@ -96,6 +105,7 @@ export default function ExitIntent() {
               >
                 {t.dismiss[lang]}
               </button>
+
             </div>
           </motion.div>
         </>

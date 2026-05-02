@@ -6,28 +6,28 @@ import type { IndustryId } from '@/lib/demo-scripts'
 import DemoChat from '@/components/ui/DemoChat'
 import PortalPreview from '@/components/ui/PortalPreview'
 import {
-  Stethoscope, Scissors, Dumbbell, Wrench, UtensilsCrossed, Building2,
+  Stethoscope, Scissors, Sparkles, Dumbbell, Wrench,
+  UtensilsCrossed, Building2, Home,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 const ICON_MAP: Record<string, LucideIcon> = {
-  clinic:        Stethoscope,
-  salon:         Scissors,
-  gym:           Dumbbell,
-  garage:        Wrench,
-  restaurant:    UtensilsCrossed,
-  'real-estate': Building2,
+  clinic:          Stethoscope,
+  salon:           Scissors,
+  spa:             Sparkles,
+  gym:             Dumbbell,
+  garage:          Wrench,
+  restaurant:      UtensilsCrossed,
+  'real-estate':   Building2,
+  'home-business': Home,
 }
 
 const t = {
-  eyebrow:  { en: 'Live Demo',    ar: 'تجربة مباشرة' },
-  headline: {
-    en: 'Watch the system work',
-    ar: 'شوف شلون النظام يشتغل',
-  },
+  eyebrow:  { en: 'Live Demo',                ar: 'ØªØ¬Ø±Ø¨Ø© ÙØ¨Ø§Ø´Ø±Ø©' },
+  headline: { en: 'Watch the system work',    ar: 'Ø´ÙÙ Ø´ÙÙÙ Ø§ÙÙØ¸Ø§Ù ÙØ´ØªØºÙ' },
   sub: {
-    en: 'This is not a bot reading pre-written replies.\nThis is your own AI-powered software system, running 24/7.',
-    ar: 'هذا مو بوت يقرأ من قائمة جاهزة.\n نظام برمجي ذكي، مدرَّب على مشروعك، و يشتغل ٢٤/٧.',
+    en: 'This is not a bot reading pre-written replies.\nThis is a custom AI system, trained on your business, running 24/7.',
+    ar: 'ÙØ°Ø§ ÙÙ Ø¨ÙØª ÙÙØ±Ø£ ÙÙ ÙØ§Ø¦ÙØ© Ø¬Ø§ÙØ²Ø©.\nÙØ¸Ø§Ù Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµØ ÙØ¯Ø±ÙÙØ¨ Ø¹ÙÙ ÙØ´Ø±ÙØ¹ÙØ ÙØ´ØªØºÙ Ù¢Ù¤/Ù§.',
   },
 }
 
@@ -55,10 +55,10 @@ export default function Demo() {
           </p>
         </div>
 
-        {/* Industry picker — with icons */}
+        {/* Industry picker */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {BUNDLES.map((b) => {
-            const Icon = ICON_MAP[b.id] ?? Building2
+            const Icon     = ICON_MAP[b.id] ?? Building2
             const isActive = b.id === selected
             return (
               <button
@@ -77,10 +77,10 @@ export default function Demo() {
           })}
         </div>
 
-        {/* Pain stat banner — swaps per industry */}
+        {/* Pain stat banner */}
         <div className="max-w-2xl mx-auto mb-10">
           <div className="flex items-start gap-3 bg-ms-green-900/5 border border-ms-green-800/12 rounded-xl px-5 py-4">
-            <span className="text-ms-gold-600 text-[18px] mt-0.5 shrink-0">⚠️</span>
+            <span className="text-ms-gold-600 text-[18px] mt-0.5 shrink-0">â ï¸</span>
             <p className="text-ms-ink-700 text-[14px] leading-relaxed font-medium">
               {bundle.painStat[lang]}
             </p>

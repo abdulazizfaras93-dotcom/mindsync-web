@@ -1,4 +1,22 @@
-export type TierId = 'essential' | 'advanced' | 'full-stack'
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// MindSync â data.ts â Single source of truth
+// After ANY pricing change: run `node C:\tmp\update-agent-prompts.js` then push
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export const WHATSAPP_URL = 'https://wa.me/96599539006'
+export const DISCOVERY_URL = '/discovery'
+
+// âââ Types ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export type TierId = 'smart' | 'pro' | 'full-auto'
+
+export type Channel =
+  | 'whatsapp'
+  | 'website'
+  | 'instagram'
+  | 'app'
+  | 'portal'
+  | 'analytics'
 
 export type BundleTier = {
   id: TierId
@@ -7,20 +25,21 @@ export type BundleTier = {
   retainer: number
   badge?: { en: string; ar: string }
   features: { en: string[]; ar: string[] }
+  channels: Channel[]
 }
 
 export type BundleScenario = {
   painHeadline: { en: string; ar: string }
   painSolution: { en: string; ar: string }
   tasksEliminated: {
-    essential:    { en: string[]; ar: string[] }
-    advanced:     { en: string[]; ar: string[] }
-    'full-stack': { en: string[]; ar: string[] }
+    smart:       { en: string[]; ar: string[] }
+    pro:         { en: string[]; ar: string[] }
+    'full-auto': { en: string[]; ar: string[] }
   }
   tierCtas: {
-    essential:    { en: string; ar: string }
-    advanced:     { en: string; ar: string }
-    'full-stack': { en: string; ar: string }
+    smart:       { en: string; ar: string }
+    pro:         { en: string; ar: string }
+    'full-auto': { en: string; ar: string }
   }
 }
 
@@ -37,1109 +56,1291 @@ export type Bundle = {
   scenario: BundleScenario
 }
 
+export type WebsiteService = {
+  id: string
+  en: string
+  ar: string
+  price: number | [number, number]
+  deliveryDays: [number, number]
+  monthlyMaintenance: number
+  features: { en: string[]; ar: string[] }
+}
+
+export type AppService = {
+  id: string
+  en: string
+  ar: string
+  price: [number, number]
+  deliveryDays: [number, number]
+  monthlyMaintenance: number
+  features: { en: string[]; ar: string[] }
+}
+
+// âââ Tier Order âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export const TIER_ORDER: TierId[] = ['smart', 'pro', 'full-auto']
+
+// âââ Shared tier descriptions (used across all bundles) âââââââââââââââââââââââ
+
+export const TIER_LABELS: Record<TierId, { en: string; ar: string; description: { en: string; ar: string } }> = {
+  smart: {
+    en: 'Smart',
+    ar: 'Ø§ÙØ°ÙÙ',
+    description: {
+      en: 'One AI agent, one or two channels, focused tasks',
+      ar: 'ÙÙÙÙ Ø°ÙÙ ÙØ§Ø­Ø¯Ø ÙÙØ§Ø© Ø£Ù ÙÙØ§ØªÙÙØ ÙÙØ§Ù ÙØ­Ø¯Ø¯Ø©',
+    },
+  },
+  pro: {
+    en: 'Pro',
+    ar: 'Ø§ÙÙØªÙØ¯Ù',
+    description: {
+      en: 'One or more agents, multiple channels, wider automation',
+      ar: 'ÙÙÙÙ Ø£Ù Ø£ÙØ«Ø±Ø ÙÙÙØ§Øª ÙØªØ¹Ø¯Ø¯Ø©Ø Ø£ØªÙØªØ© Ø£ÙØ³Ø¹',
+    },
+  },
+  'full-auto': {
+    en: 'Full Auto',
+    ar: 'Ø§ÙÙØ¤ØªÙØª',
+    description: {
+      en: 'Multiple specialized agents, all channels, full operation automation',
+      ar: 'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ ÙØªØ®ØµØµÙÙØ ÙÙ Ø§ÙÙÙÙØ§ØªØ Ø£ØªÙØªØ© ÙØ§ÙÙØ© ÙÙØ¹ÙÙÙØ§Øª',
+    },
+  },
+}
+
+// âââ Bundles ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
 export const BUNDLES: Bundle[] = [
+
+  // ââ CLINIC ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
   {
     id: 'clinic',
     en: 'Clinic AI',
-    ar: 'العيادة الذكية',
-    industry: { en: 'Health & Dental Clinics', ar: 'العيادات الصحية والأسنان' },
-    buildFee: 320,
+    ar: 'Ø§ÙØ¹ÙØ§Ø¯Ø© Ø§ÙØ°ÙÙØ©',
+    industry: { en: 'Health & Dental Clinics', ar: 'Ø§ÙØ¹ÙØ§Ø¯Ø§Øª Ø§ÙØµØ­ÙØ© ÙØ§ÙØ£Ø³ÙØ§Ù' },
+    buildFee: 400,
     painStat: {
-      en: '67% of patient inquiries can be resolved without a single staff member.',
-      ar: '٦٧٪ من استفسارات المرضى يمكن حلها دون أي موظف.',
+      en: 'Clinics lose 30â40% of patients to missed calls and slow follow-ups.',
+      ar: 'Ø§ÙØ¹ÙØ§Ø¯Ø§Øª ØªØ®Ø³Ø± Ù£Ù âÙ¤Ù Ùª ÙÙ Ø§ÙÙØ±Ø¶Ù Ø¨Ø³Ø¨Ø¨ Ø§ÙÙÙØ§ÙÙØ§Øª Ø§ÙÙØ§Ø¦ØªØ© ÙØ§ÙÙØªØ§Ø¨Ø¹Ø© Ø§ÙØ¨Ø·ÙØ¦Ø©.',
     },
-    icon: '🏥',
+    icon: 'clinic',
     color: '#153E2D',
     tiers: [
       {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 240,
-        features: {
-          en: [
-            'WhatsApp AI Receptionist (24/7)',
-            'Appointment Booking & Reminders',
-            'Patient FAQ Bot (pricing, prep, directions)',
-            'CRM Setup & Training',
-            'Client Portal Dashboard',
-            'Monthly Maintenance',
-          ],
-          ar: [
-            'مساعد واتساب ذكي (٢٤/٧)',
-            'حجز المواعيد والتذكيرات',
-            'بوت الأسئلة الشائعة',
-            'إعداد نظام CRM والتدريب',
-            'بوابة العميل',
-            'صيانة شهرية',
-          ],
-        },
-      },
-      {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 380,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
-        features: {
-          en: [
-            'Everything in Essential',
-            'Cancellation Auto-Fill from Waitlist',
-            'Post-Treatment Follow-up Sequence (Day 1 / 7 / 30)',
-            'Google Review Request Automation',
-            'Patient Reactivation Campaigns',
-            'Pre-Visit Prep Checklist via WhatsApp',
-          ],
-          ar: [
-            'كل ما في الأساسية',
-            'ملء الإلغاءات تلقائياً من قائمة الانتظار',
-            'متابعة ما بعد العلاج (اليوم ١ / ٧ / ٣٠)',
-            'أتمتة طلب تقييمات Google',
-            'حملات إعادة تنشيط المرضى',
-            'قائمة تحضير ما قبل الزيارة',
-          ],
-        },
-      },
-      {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 520,
-        features: {
-          en: [
-            'Everything in Advanced',
-            'Seasonal Campaign Broadcasts (Eid, National Day)',
-            'Invoice & Payment Reminder Automation',
-            'Insurance/Payment Info Pre-Screening Bot',
-            'Revenue & No-Show Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
-          ],
-          ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (عيد، اليوم الوطني)',
-            'أتمتة الفواتير وتذكيرات الدفع',
-            'بوت فلترة التأمين والدفع المسبق',
-            'لوحة تحليلات الإيرادات والغيابات',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
-          ],
-        },
-      },
-    ],
-    scenario: {
-      painHeadline: {
-        ar: '٦٧٪ من استفسارات المرضى يمكن حلها بدون موظف واحد.\nموظف الاستقبال عندك يقضي ٣–٤ ساعات يومياً يرد على نفس الأسئلة —\nما يقارب ٢٤٠ دينار شهرياً من وقت الموظف على ردود متكررة.',
-        en: '67% of patient inquiries can be resolved without a single staff member.\nYour receptionist spends 3–4 hours daily answering the same questions —\nroughly 240 KWD/month of staff time on repeated replies.',
-      },
-      painSolution: {
-        ar: 'نظام مايند سينك يتولى كل استفسار — حتى الساعة ١١ بالليل.',
-        en: "MindSync's system handles every inquiry — even at 11pm.",
-      },
-      tasksEliminated: {
-        essential: {
-          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين'],
-          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients'],
-        },
-        advanced: {
-          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين'],
-          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients'],
-        },
-        'full-stack': {
-          ar: ['الرد على "كم سعر التنظيف؟"', 'تأكيد المواعيد يدوياً', 'ملء مواعيد الإلغاء', 'إرسال تعليمات ما قبل الزيارة', 'طلب تقييم Google بعد الزيارة', 'متابعة المرضى غير النشطين', 'متابعة الفواتير غير المدفوعة'],
-          en: ['Answering "how much is a cleaning?"', 'Confirming appointments manually', 'Filling cancelled slots', 'Sending pre-visit instructions', 'Requesting Google reviews', 'Following up inactive patients', 'Chasing unpaid invoices'],
-        },
-      },
-      tierCtas: {
-        essential:    { ar: 'قلّل خسارة المرضى — ابدأ الآن', en: 'Stop Losing Patients — Get Started' },
-        advanced:     { ar: 'استرجع كل موعد ملغى تلقائياً', en: 'Auto-Recover Every Cancelled Slot' },
-        'full-stack': { ar: 'شغّل عيادتك بالكامل', en: 'Run Your Clinic on Autopilot' },
-      },
-    },
-  },
-  {
-    id: 'salon',
-    en: 'Salon AI',
-    ar: 'الصالون الذكي',
-    industry: { en: 'Men & Women Salons', ar: 'صالونات الرجال والنساء' },
-    buildFee: 240,
-    painStat: {
-      en: 'Salons lose up to 15% of revenue every month to no-shows and missed calls.',
-      ar: 'الصالونات تخسر ١٥٪ من إيراداتها شهرياً بسبب الغيابات والمكالمات الفائتة.',
-    },
-    icon: '✂️',
-    color: '#1C5038',
-    tiers: [
-      {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 160,
-        features: {
-          en: [
-            'WhatsApp Booking Bot (24/7)',
-            'Stylist-Specific Scheduling',
-            'Appointment Reminders & Confirmations',
-            'Client Loyalty Visit Tracking',
-            'Client Portal Dashboard',
-            'Monthly Maintenance',
-          ],
-          ar: [
-            'بوت حجز واتساب (٢٤/٧)',
-            'جدولة حسب المختص',
-            'تذكيرات وتأكيدات المواعيد',
-            'تتبع ولاء العملاء',
-            'بوابة العميل',
-            'صيانة شهرية',
-          ],
-        },
-      },
-      {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 260,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
-        features: {
-          en: [
-            'Everything in Essential',
-            'Rebooking Nudge 3 Weeks Post-Visit',
-            'Upsell Suggestion at Booking (add-on treatments)',
-            'Google Review Request Automation',
-            'Missed-Call Auto-Text Response',
-            'Stylist Performance Stats in Dashboard',
-          ],
-          ar: [
-            'كل ما في الأساسية',
-            'تذكير الحجز بعد ٣ أسابيع من الزيارة',
-            'اقتراح خدمات إضافية عند الحجز',
-            'أتمتة طلب تقييمات Google',
-            'رد تلقائي على المكالمات الفائتة',
-            'إحصائيات أداء المختصين',
-          ],
-        },
-      },
-      {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 360,
-        features: {
-          en: [
-            'Everything in Advanced',
-            'Seasonal Promo Broadcasts (Eid, National Day)',
-            'Win-Back Campaign for 30-Day Inactive Clients',
-            'Birthday & Anniversary Automated Offers',
-            'Revenue & Occupancy Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
-          ],
-          ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (عيد، اليوم الوطني)',
-            'حملة استعادة العملاء غير النشطين',
-            'عروض أعياد الميلاد والمناسبات',
-            'لوحة تحليلات الإيرادات والإشغال',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
-          ],
-        },
-      },
-    ],
-    scenario: {
-      painHeadline: {
-        ar: 'الصالونات تخسر ١٥٪ من إيراداتها شهرياً\nبسبب الغيابات والمكالمات الفائتة.\nعلى صالون دخله ٢٠٠٠ دينار — هذا ٣٠٠ دينار ضائعة في الشهر.',
-        en: "Salons lose 15% of monthly revenue to no-shows and missed calls.\nOn a salon earning 2,000 KWD — that's 300 KWD lost every month.",
-      },
-      painSolution: {
-        ar: 'مايند سينك يملأ الجدول ويذكّر — تلقائياً.',
-        en: 'MindSync fills your calendar and sends reminders — automatically.',
-      },
-      tasksEliminated: {
-        essential: {
-          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
-          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
-        },
-        advanced: {
-          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
-          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
-        },
-        'full-stack': {
-          ar: ['كتابة الحجوزات يدوياً', 'الاتصال لتذكير العميلة', 'البحث عن بديل لموعد ملغى', 'إرسال عروض الأعياد', 'متابعة العميلة بعد الزيارة', 'طلب تقييم Google'],
-          en: ['Writing bookings manually', 'Calling to remind clients', 'Finding replacements for cancellations', 'Sending Eid/holiday offers manually', 'Following up post-visit', 'Requesting Google reviews'],
-        },
-      },
-      tierCtas: {
-        essential:    { ar: 'خلّي الجدول يتملأ بنفسه', en: 'Let the Calendar Fill Itself' },
-        advanced:     { ar: 'ارجعي لكل عميلة قبل ما تنساك', en: 'Win Back Every Client Before They Forget' },
-        'full-stack': { ar: 'شغّلي الصالون — أنتِ تركّزين', en: 'Run the Salon — You Focus' },
-      },
-    },
-  },
-  {
-    id: 'spa',
-    en: 'Spa AI',
-    ar: 'السبا الذكي',
-    industry: { en: 'Men & Women Spas', ar: 'سبا الرجال والنساء' },
-    buildFee: 240,
-    painStat: {
-      en: 'Spas lose 20%+ of bookings to unanswered WhatsApps — clients book elsewhere within minutes.',
-      ar: 'السبا يخسر أكثر من ٢٠٪ من الحجوزات بسبب واتساب بلا رد — العميل يحجز عند غيرك خلال دقائق.',
-    },
-    icon: 'spa',
-    color: '#1C5038',
-    tiers: [
-      {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 160,
-        features: {
-          en: [
-            'WhatsApp Booking Bot (24/7)',
-            'Therapist-Specific Scheduling',
-            'Appointment Reminders & Confirmations',
-            'Service Menu FAQ Bot',
-            'Client Portal Dashboard',
-            'Monthly Maintenance',
-          ],
-          ar: [
-            'بوت حجز واتساب (٢٤/٧)',
-            'جدولة حسب المعالج',
-            'تذكيرات وتأكيدات المواعيد',
-            'بوت الأسئلة الشائعة للخدمات',
-            'بوابة العميل',
-            'صيانة شهرية',
-          ],
-        },
-      },
-      {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 260,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
-        features: {
-          en: [
-            'Everything in Essential',
-            'Rebooking Nudge 3 Weeks Post-Visit',
-            'Upsell Add-On Treatments at Booking',
-            'Google Review Request Automation',
-            'Missed-Call Auto-Text Response',
-            'Therapist Utilization Stats in Dashboard',
-          ],
-          ar: [
-            'كل ما في الأساسية',
-            'تذكير الحجز بعد ٣ أسابيع من الزيارة',
-            'اقتراح خدمات إضافية عند الحجز',
-            'أتمتة طلب تقييمات Google',
-            'رد تلقائي على المكالمات الفائتة',
-            'إحصائيات إشغال المعالجين',
-          ],
-        },
-      },
-      {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 360,
-        features: {
-          en: [
-            'Everything in Advanced',
-            'Seasonal Offer Broadcasts (Eid, National Day)',
-            'Win-Back Campaign for 30-Day Inactive Clients',
-            'Birthday & Anniversary Automated Offers',
-            'Revenue & Occupancy Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
-          ],
-          ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (عيد، اليوم الوطني)',
-            'حملة استعادة العملاء غير النشطين',
-            'عروض أعياد الميلاد والمناسبات',
-            'لوحة تحليلات الإيرادات والإشغال',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
-          ],
-        },
-      },
-    ],
-    scenario: {
-      painHeadline: {
-        ar: 'السبا يخسر أكثر من ٢٠٪ من حجوزاته\nلأن واتساب ما اتردّ بسرعة.\nالعميل يقرر خلال ٥ دقائق — إذا ما رددتِ، قرر بحسابك.',
-        en: "Spas lose 20%+ of bookings because WhatsApp went unanswered.\nClients decide in 5 minutes — if you don't reply, they decide without you.",
-      },
-      painSolution: {
-        ar: 'مايند سينك يرد خلال ثوانٍ — في أي وقت.',
-        en: 'MindSync responds in seconds — any time of day.',
-      },
-      tasksEliminated: {
-        essential: {
-          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
-          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
-        },
-        advanced: {
-          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
-          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
-        },
-        'full-stack': {
-          ar: ['الرد على أسئلة الخدمات والأسعار', 'التحقق من جدول المعالجين', 'إرسال تذكيرات الموعد', 'اقتراح ترقية الخدمة', 'متابعة ما بعد الجلسة', 'حملات الأعياد والمناسبات'],
-          en: ['Answering service and pricing questions', 'Checking therapist availability', 'Sending appointment reminders', 'Suggesting service upgrades', 'Post-session follow-up', 'Seasonal offer campaigns'],
-        },
-      },
-      tierCtas: {
-        essential:    { ar: 'ما تخسر حجزاً ثانياً', en: "Don't Lose Another Booking" },
-        advanced:     { ar: 'ارجع لكل عميل قبل ما يُنسى', en: 'Win Back Every Client Before They Go Cold' },
-        'full-stack': { ar: 'شغّل السبا — بنظام كامل', en: 'Run the Spa — With a Full System' },
-      },
-    },
-  },
-  {
-    id: 'gym',
-    en: 'Gym AI',
-    ar: 'الجيم الذكي',
-    industry: { en: 'Men & Women Gyms', ar: 'صالات الرجال والنساء' },
-    buildFee: 280,
-    painStat: {
-      en: 'Most gyms lose 30% of members annually — simply because nobody followed up.',
-      ar: 'معظم الصالات تخسر ٣٠٪ من أعضائها سنوياً — لأن أحداً لم يتابع معهم.',
-    },
-    icon: '💪',
-    color: '#153E2D',
-    tiers: [
-      {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 200,
-        features: {
-          en: [
-            'WhatsApp Membership Bot (24/7)',
-            'Attendance & Check-in Tracking',
-            'Auto Renewal Reminders (Day -14, -7, -1)',
-            'Class Scheduling Assistant',
-            'Client Portal Dashboard',
-            'Monthly Maintenance',
-          ],
-          ar: [
-            'بوت الاشتراكات (٢٤/٧)',
-            'تتبع الحضور',
-            'تذكيرات التجديد التلقائي (١٤، ٧، ١ أيام)',
-            'مساعد جدولة الحصص',
-            'بوابة العميل',
-            'صيانة شهرية',
-          ],
-        },
-      },
-      {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 320,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
-        features: {
-          en: [
-            'Everything in Essential',
-            'Waitlist Auto-Fill for Cancelled Classes',
-            'New Member Onboarding Sequence (Goals + Tips)',
-            'PT Session Rebooking Prompts',
-            'Google Review Request Automation',
-            'Membership FAQ Bot',
-          ],
-          ar: [
-            'كل ما في الأساسية',
-            'ملء الحصص الملغاة من قائمة الانتظار',
-            'تسلسل استقبال الأعضاء الجدد',
-            'تذكير إعادة حجز جلسات المدرب',
-            'أتمتة طلب تقييمات Google',
-            'بوت الأسئلة الشائعة للاشتراكات',
-          ],
-        },
-      },
-      {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 440,
-        features: {
-          en: [
-            'Everything in Advanced',
-            'Win-Back Campaign (30/60/90-day lapsed members)',
-            'Seasonal Offer Broadcasts (Ramadan, Summer)',
-            'Peak Hours Heatmap & Staffing Insights',
-            'Revenue & Churn Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
-          ],
-          ar: [
-            'كل ما في المتقدمة',
-            'حملة استعادة الأعضاء المنقطعين',
-            'حملات موسمية (رمضان، الصيف)',
-            'خريطة أوقات الذروة وتحسين التوظيف',
-            'لوحة تحليلات الإيرادات والتسرب',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
-          ],
-        },
-      },
-    ],
-    scenario: {
-      painHeadline: {
-        ar: 'معظم الجيمات تخسر ٣٠٪ من أعضائها سنوياً.\nالسبب مو السعر — السبب ما تابع أحد.\nعضو بـ٣٥ دينار شهرياً × ١٢ شهر = ٤٢٠ دينار تخسرها\nلأن ما أرسل أحد رسالة واحدة.',
-        en: 'Most gyms lose 30% of members annually.\nNot because of price — because nobody followed up.\nOne member at 35 KWD/mo × 12 months = 420 KWD lost\nbecause nobody sent a single message.',
-      },
-      painSolution: {
-        ar: 'مايند سينك يتابع كل عضو — من أول يوم لآخر تجديد.',
-        en: 'MindSync follows up with every member — from day one to last renewal.',
-      },
-      tasksEliminated: {
-        essential: {
-          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
-          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
-        },
-        advanced: {
-          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
-          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
-        },
-        'full-stack': {
-          ar: ['الاتصال لتذكير تجديد الاشتراك', 'إدارة قوائم انتظار الحصص على واتساب', 'استقبال الأعضاء الجدد وشرح البرنامج', 'متابعة الأعضاء المنقطعين', 'تذكيرات جلسات المدرب الشخصي', 'حملات رمضان والصيف'],
-          en: ['Calling to remind membership renewals', 'Managing class waitlists on WhatsApp', 'Onboarding new members manually', 'Chasing lapsed members', 'PT session rebooking reminders', 'Ramadan/summer campaigns'],
-        },
-      },
-      tierCtas: {
-        essential:    { ar: 'قلّل خسارة الأعضاء', en: 'Stop Losing Members' },
-        advanced:     { ar: 'اجعل كل عضو يجدد تلقائياً', en: 'Make Every Member Renew Automatically' },
-        'full-stack': { ar: 'شغّل الجيم — من عضو، لكل يوم', en: 'Run the Gym — Every Member, Every Day' },
-      },
-    },
-  },
-  {
-    id: 'garage',
-    en: 'Garage AI',
-    ar: 'الورشة الذكية',
-    industry: { en: 'Car Garages & Auto Service', ar: 'ورش السيارات والصيانة' },
-    buildFee: 260,
-    painStat: {
-      en: 'Garages spend 2–3 hours daily answering "is my car ready?" — that\'s revenue time wasted.',
-      ar: 'الورش تقضي ٢-٣ ساعات يومياً تجيب على "السيارة جاهزة؟" — وقت ضائع من الإيرادات.',
-    },
-    icon: '🔧',
-    color: '#1C5038',
-    tiers: [
-      {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 180,
-        features: {
-          en: [
-            'WhatsApp Job Status Bot (24/7)',
-            'Customer Update Automation (Received → In Progress → Ready)',
-            'Service History Tracking',
-            'WhatsApp Invoice Delivery',
-            'Client Portal Dashboard',
-            'Monthly Maintenance',
-          ],
-          ar: [
-            'بوت حالة الطلبات (٢٤/٧)',
-            'تحديثات تلقائية (استلام → تحت التنفيذ → جاهز)',
-            'تتبع سجل الصيانة',
-            'إرسال الفواتير عبر واتساب',
-            'بوابة العميل',
-            'صيانة شهرية',
-          ],
-        },
-      },
-      {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 290,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
-        features: {
-          en: [
-            'Everything in Essential',
-            'Post-Pickup Follow-up (Day 3 Check-in)',
-            'Service Interval Reminders (3/6 months)',
-            'WhatsApp Job Intake Form for New Requests',
-            'Google Review Request After Pickup',
-            'Per-Job Revenue Tracking in Dashboard',
-          ],
-          ar: [
-            'كل ما في الأساسية',
-            'متابعة ما بعد الاستلام (اليوم ٣)',
-            'تذكيرات دورية للصيانة (٣/٦ أشهر)',
-            'نموذج استقبال طلبات جديدة',
-            'طلب تقييم Google بعد الاستلام',
-            'تتبع إيرادات كل طلب في اللوحة',
-          ],
-        },
-      },
-      {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 400,
-        features: {
-          en: [
-            'Everything in Advanced',
-            'Seasonal Campaign Broadcasts (AC Season, Ramadan Rush)',
-            'Auto-Built Customer CRM from WhatsApp',
-            'Payment Reminder Sequences',
-            'Job Volume & Turnaround Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
-          ],
-          ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (موسم التكييف، رمضان)',
-            'CRM تلقائي من واتساب',
-            'تسلسل تذكيرات الدفع',
-            'لوحة تحليلات حجم الطلبات والدوران',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
-          ],
-        },
-      },
-    ],
-    scenario: {
-      painHeadline: {
-        ar: 'فريق الورشة يقضي ٢–٣ ساعات يومياً\nيجيب على سؤال واحد: "السيارة جاهزة؟"\n٣ ساعات × ٢٦ يوم عمل × ٣ دينار/ساعة = ٢٣٤ دينار شهرياً\nتدفعها على ردود متكررة — لا على الصيانة.',
-        en: 'Your team spends 2–3 hours daily\nanswering one question: "Is my car ready?"\n3 hrs × 26 working days × 3 KWD/hr = 234 KWD/month\npaid for repeated answers — not actual work.',
-      },
-      painSolution: {
-        ar: 'مايند سينك يجيب عن هذا السؤال — إلى الأبد.',
-        en: 'MindSync answers that question — permanently.',
-      },
-      tasksEliminated: {
-        essential: {
-          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
-          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
-        },
-        advanced: {
-          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
-          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
-        },
-        'full-stack': {
-          ar: ['الرد على "السيارة جاهزة؟"', 'الاتصال عند انتهاء الإصلاح', 'إرسال الفاتورة عبر واتساب', 'تذكيرات الصيانة الدورية', 'متابعة ما بعد الاستلام', 'استقبال طلبات صيانة جديدة'],
-          en: ['Answering "is my car ready?"', 'Calling when the job is done', 'Sending WhatsApp invoices manually', 'Service interval reminders', 'Post-pickup follow-up', 'Receiving new service requests'],
-        },
-      },
-      tierCtas: {
-        essential:    { ar: 'خلي النظام يجاوب عنك', en: 'Let the System Answer For You' },
-        advanced:     { ar: 'عملاؤك يرجع — قبل ما يفكر بغيرك', en: 'Customers Come Back — Before They Think of Anyone Else' },
-        'full-stack': { ar: 'شغّل الورشة — بنظام كامل', en: 'Run the Garage — With a Full System' },
-      },
-    },
-  },
-  {
-    id: 'restaurant',
-    en: 'Restaurant AI',
-    ar: 'المطعم الذكي',
-    industry: { en: 'F&B, Cafes & Restaurants', ar: 'المطاعم والكافيهات' },
-    buildFee: 280,
-    painStat: {
-      en: '43% of restaurant calls go unanswered — that\'s an estimated $20B in lost revenue globally per year.',
-      ar: '٤٣٪ من مكالمات المطاعم لا يُرد عليها — خسارة تُقدّر بـ ٢٠ مليار دولار سنوياً.',
-    },
-    icon: '🍽️',
-    color: '#153E2D',
-    tiers: [
-      {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
         retainer: 220,
         features: {
           en: [
-            'WhatsApp Menu & FAQ Bot (24/7)',
-            'Reservation Management & Reminders',
-            'Order Status Updates',
-            'After-Hours Booking Capture',
+            'Custom AI Agent trained on your clinic',
+            'Appointment booking & automated reminders',
+            'Patient FAQ (pricing, prep, location, hours)',
+            '24/7 availability on WhatsApp + Website',
             'Client Portal Dashboard',
-            'Monthly Maintenance',
+            'Full monthly maintenance (hosting, API, support)',
           ],
           ar: [
-            'بوت المنيو والأسئلة (٢٤/٧)',
-            'إدارة الحجوزات والتذكيرات',
-            'تحديثات حالة الطلبات',
-            'استقبال الحجوزات خارج أوقات العمل',
-            'بوابة العميل',
-            'صيانة شهرية',
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØ¹ÙØ§Ø¯ØªÙ',
+            'Ø­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯ ÙØ¥Ø±Ø³Ø§Ù Ø§ÙØªØ°ÙÙØ±Ø§Øª ØªÙÙØ§Ø¦ÙØ§Ù',
+            'Ø¥Ø¬Ø§Ø¨Ø© Ø£Ø³Ø¦ÙØ© Ø§ÙÙØ±Ø¶Ù (Ø§ÙØ£Ø³Ø¹Ø§Ø±Ø Ø§ÙØªØ­Ø¶ÙØ±Ø Ø§ÙÙÙÙØ¹Ø Ø§ÙØ£ÙÙØ§Øª)',
+            'ÙØªØ§Ø­ Ù¢Ù¤/Ù§ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙØ§ÙÙÙÙØ¹',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ© (hostingØ APIØ Ø¯Ø¹Ù)',
           ],
         },
+        channels: ['whatsapp', 'website', 'portal'],
       },
       {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 360,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 340,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
         features: {
           en: [
-            'Everything in Essential',
-            'No-Show Confirmation Flow (reduce empty tables)',
-            'Catering Inquiry Capture Bot (high-ticket)',
-            'Google Review Request Post-Visit',
-            '"We Miss You" Campaign for 30-Day Inactive',
-            'Table Utilization Stats in Dashboard',
+            'Everything in Smart',
+            'Post-visit patient follow-up automation',
+            'Google Review requests after each visit',
+            'No-show & cancellation re-booking flow',
+            'Appointment analytics dashboard',
+            'Multi-channel: WhatsApp + Website + Instagram',
           ],
           ar: [
-            'كل ما في الأساسية',
-            'تأكيد الحجوزات لتقليل الطاولات الفارغة',
-            'بوت استقبال طلبات الكاترينج',
-            'طلب تقييم Google بعد الزيارة',
-            'حملة "افتقدناكم" للعملاء غير النشطين',
-            'إحصائيات إشغال الطاولات في اللوحة',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙÙØ±Ø¶Ù ØªÙÙØ§Ø¦ÙØ§Ù Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø©',
+            'Ø·ÙØ¨ ØªÙÙÙÙØ§Øª Google Ø¨Ø¹Ø¯ ÙÙ Ø²ÙØ§Ø±Ø©',
+            'Ø¥Ø¹Ø§Ø¯Ø© Ø­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯ Ø§ÙÙÙØºØ§Ø© ØªÙÙØ§Ø¦ÙØ§Ù',
+            'ÙÙØ­Ø© ØªØ­ÙÙÙØ§Øª Ø§ÙÙÙØ§Ø¹ÙØ¯',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
       },
       {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 500,
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 460,
         features: {
           en: [
-            'Everything in Advanced',
-            'Seasonal Campaign Broadcasts (Eid, National Day, Ramadan)',
-            'Upsell Bot at Reservation (desserts, drinks, upgrades)',
-            'Staff Tip & Peak-Hour Intelligence',
-            'Revenue & Cover Analytics Dashboard',
-            'Priority Support + Monthly Strategy Call',
+            'Everything in Pro',
+            'Multiple specialized AI agents (reception, follow-up, analytics)',
+            'Win-back campaigns for inactive patients',
+            'Seasonal health awareness broadcasts',
+            'Full operations automation across all channels',
+            'Priority support + monthly strategy call',
           ],
           ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (عيد، اليوم الوطني، رمضان)',
-            'بوت البيع الإضافي عند الحجز',
-            'تحليل أوقات الذروة والإيرادات',
-            'لوحة تحليلات الإيرادات والأغطية',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ ÙØªØ®ØµØµÙÙ (Ø§Ø³ØªÙØ¨Ø§ÙØ ÙØªØ§Ø¨Ø¹Ø©Ø ØªØ­ÙÙÙ)',
+            'Ø­ÙÙØ§Øª Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙÙØ±Ø¶Ù Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'Ø¥Ø°Ø§Ø¹Ø§Øª ØªÙØ¹ÙØ© ØµØ­ÙØ© ÙÙØ³ÙÙØ©',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
       },
     ],
     scenario: {
       painHeadline: {
-        ar: '٤٣٪ من مكالمات المطاعم ما يُرد عليها.\nطاولة لـ٤ أشخاص × ٢٠ دينار متوسط = ٨٠ دينار من كل حجز فائت.\nمطعم يخسر ٣–٤ حجوزات أسبوعياً =\nما بين ٩٦٠–١٢٨٠ دينار شهرياً.',
-        en: '43% of restaurant calls go unanswered.\nA table of 4 × 20 KWD average = 80 KWD per missed booking.\nA restaurant losing 3–4 bookings weekly =\n960 to 1,280 KWD lost every month.',
+        en: 'A clinic answering 40 patient messages a day manually\nis spending 3+ hours on repetitive replies.',
+        ar: 'Ø¹ÙØ§Ø¯Ø© ØªØ±Ø¯ Ø¹ÙÙ Ù¤Ù  Ø±Ø³Ø§ÙØ© ÙÙÙÙØ§Ù ÙØ¯ÙÙØ§Ù\nØªØ¶ÙÙØ¹ Ø£ÙØ«Ø± ÙÙ Ù£ Ø³Ø§Ø¹Ø§Øª ÙÙ Ø±Ø¯ÙØ¯ ÙØªÙØ±Ø±Ø©.',
       },
       painSolution: {
-        ar: 'مايند سينك يستقبل الحجوزات — حتى بعد الدوام.',
-        en: 'MindSync takes bookings — even after closing time.',
+        en: 'A custom AI agent handles every inquiry, books appointments, and follows up â your staff focuses on patients, not phones.',
+        ar: 'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØªÙÙÙ ÙÙ Ø§Ø³ØªÙØ³Ø§Ø±Ø ÙØ­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯Ø ÙÙØªØ§Ø¨Ø¹ â ÙØ±ÙÙÙ ÙØ±ÙØ² Ø¹ÙÙ Ø§ÙÙØ±Ø¶Ù ÙÙ Ø¹ÙÙ Ø§ÙØªÙÙÙÙÙ.',
       },
       tasksEliminated: {
-        essential: {
-          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
-          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        smart: {
+          en: ['Answering repetitive patient questions', 'Manual appointment booking', 'Sending reminders by hand'],
+          ar: ['Ø§ÙØ±Ø¯ Ø¹ÙÙ Ø£Ø³Ø¦ÙØ© Ø§ÙÙØ±Ø¶Ù Ø§ÙÙØªÙØ±Ø±Ø©', 'Ø­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯ ÙØ¯ÙÙØ§Ù', 'Ø¥Ø±Ø³Ø§Ù Ø§ÙØªØ°ÙÙØ±Ø§Øª ÙØ¯ÙÙØ§Ù'],
         },
-        advanced: {
-          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
-          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        pro: {
+          en: ['Post-visit follow-up calls', 'Chasing Google Reviews manually', 'Re-booking cancelled appointments'],
+          ar: ['ÙÙØ§ÙÙØ§Øª Ø§ÙÙØªØ§Ø¨Ø¹Ø© Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø©', 'Ø·ÙØ¨ Ø§ÙØªÙÙÙÙØ§Øª ÙØ¯ÙÙØ§Ù', 'Ø¥Ø¹Ø§Ø¯Ø© Ø­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯ Ø§ÙÙÙØºØ§Ø©'],
         },
-        'full-stack': {
-          ar: ['استقبال الحجوزات بعد الدوام', 'تأكيد الحجوزات والتذكير بها', 'متابعة الطاولات الملغية', 'استقبال وتأكيل طلبات الكاتيرينج', 'طلب تقييم Google بعد الزيارة', 'إرسال عروض الأعياد والمناسبات'],
-          en: ['Taking bookings after closing time', 'Confirming reservations and sending reminders', 'Managing cancelled table follow-up', 'Receiving and qualifying catering requests', 'Requesting Google reviews post-visit', 'Sending Eid/National Day offers'],
+        'full-auto': {
+          en: ['All manual patient communication', 'Campaign planning and sending', 'Monthly reporting'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ Ø§ÙÙØ¯ÙÙ ÙØ¹ Ø§ÙÙØ±Ø¶Ù', 'ØªØ®Ø·ÙØ· ÙØ¥Ø±Ø³Ø§Ù Ø§ÙØ­ÙÙØ§Øª', 'Ø§ÙØªÙØ§Ø±ÙØ± Ø§ÙØ´ÙØ±ÙØ©'],
         },
       },
       tierCtas: {
-        essential:    { ar: 'ما تترك طاولة فاضية ثانياً', en: "Don't Leave Another Table Empty" },
-        advanced:     { ar: 'حوّل كل زيارة لزيارة ثانية', en: 'Turn Every Visit Into a Second One' },
-        'full-stack': { ar: 'شغّل المطعم — في كل يوم', en: 'Run the Restaurant — Every Single Day' },
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
       },
     },
   },
+
+  // ââ SALON âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  {
+    id: 'salon',
+    en: 'Salon AI',
+    ar: 'Ø§ÙØµØ§ÙÙÙ Ø§ÙØ°ÙÙ',
+    industry: { en: "Men's & Women's Salons", ar: 'ØµØ§ÙÙÙØ§Øª Ø§ÙØ±Ø¬Ø§Ù ÙØ§ÙØ³ÙØ¯Ø§Øª' },
+    buildFee: 300,
+    painStat: {
+      en: 'Salons lose 25% of bookings to unanswered WhatsApp messages.',
+      ar: 'Ø§ÙØµØ§ÙÙÙØ§Øª ØªØ®Ø³Ø± Ù¢Ù¥Ùª ÙÙ Ø­Ø¬ÙØ²Ø§ØªÙØ§ Ø¨Ø³Ø¨Ø¨ Ø±Ø³Ø§Ø¦Ù ÙØ§ØªØ³Ø§Ø¨ Ø¨Ø¯ÙÙ Ø±Ø¯.',
+    },
+    icon: 'salon',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 160,
+        features: {
+          en: [
+            'Custom AI Agent trained on your salon',
+            'Booking by stylist, service & time slot',
+            'Service menu & pricing automation',
+            '24/7 on WhatsApp + Website',
+            'Client Portal Dashboard',
+            'Full monthly maintenance',
+          ],
+          ar: [
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØµØ§ÙÙÙÙ',
+            'Ø­Ø¬Ø² Ø­Ø³Ø¨ Ø§ÙÙØµÙÙ ÙØ§ÙØ®Ø¯ÙØ© ÙØ§ÙÙÙØª',
+            'Ø£ØªÙØªØ© ÙØ§Ø¦ÙØ© Ø§ÙØ®Ø¯ÙØ§Øª ÙØ§ÙØ£Ø³Ø¹Ø§Ø±',
+            'ÙØªØ§Ø­ Ù¢Ù¤/Ù§ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙØ§ÙÙÙÙØ¹',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'portal'],
+      },
+      {
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 240,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+        features: {
+          en: [
+            'Everything in Smart',
+            'Repeat-client recognition & loyalty tracking',
+            'Upsell at booking confirmation',
+            'Google Review requests post-visit',
+            'No-show follow-up automation',
+            'WhatsApp + Website + Instagram',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'Ø§ÙØªØ¹Ø±Ù Ø¹ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØªÙØ±Ø±ÙÙ ÙØªØªØ¨Ø¹ Ø§ÙÙÙØ§Ø¡',
+            'Ø¹Ø±ÙØ¶ Ø¥Ø¶Ø§ÙÙØ© Ø¹ÙØ¯ ØªØ£ÙÙØ¯ Ø§ÙØ­Ø¬Ø²',
+            'Ø·ÙØ¨ ØªÙÙÙÙØ§Øª Google Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø©',
+            'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙØºØ§Ø¦Ø¨ÙÙ ØªÙÙØ§Ø¦ÙØ§Ù',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
+      },
+      {
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 330,
+        features: {
+          en: [
+            'Everything in Pro',
+            'Multiple AI agents (booking, follow-up, loyalty)',
+            'Seasonal promo broadcasts (Eid, National Day)',
+            'Win-back campaigns for inactive clients',
+            'Full channel automation',
+            'Priority support + monthly strategy call',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (Ø­Ø¬Ø²Ø ÙØªØ§Ø¨Ø¹Ø©Ø ÙÙØ§Ø¡)',
+            'Ø­ÙÙØ§Øª ÙÙØ³ÙÙØ© (Ø¹ÙØ¯Ø Ø§ÙÙÙÙ Ø§ÙÙØ·ÙÙ)',
+            'Ø­ÙÙØ§Øª Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
+      },
+    ],
+    scenario: {
+      painHeadline: {
+        en: 'A busy salon gets 60+ WhatsApp messages daily â\nmost go unanswered for hours.',
+        ar: 'ØµØ§ÙÙÙ ÙØ´ØºÙÙ ÙØ³ØªÙØ¨Ù Ù¦Ù + Ø±Ø³Ø§ÙØ© ÙØ§ØªØ³Ø§Ø¨ ÙÙÙÙØ§Ù â\nØ£ØºÙØ¨ÙØ§ ØªØ¨ÙÙ Ø¨Ø¯ÙÙ Ø±Ø¯ ÙØ³Ø§Ø¹Ø§Øª.',
+      },
+      painSolution: {
+        en: 'Your AI agent books appointments, confirms times, and follows up â instantly, at any hour.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØ­Ø¬Ø² Ø§ÙÙÙØ§Ø¹ÙØ¯Ø ÙØ¤ÙØ¯ Ø§ÙØ£ÙÙØ§ØªØ ÙÙØªØ§Ø¨Ø¹ â ÙÙØ±Ø§ÙØ ÙÙ Ø£Ù ÙÙØª.',
+      },
+      tasksEliminated: {
+        smart: {
+          en: ['Manual booking messages', 'Pricing inquiries', 'Sending reminders'],
+          ar: ['Ø±Ø³Ø§Ø¦Ù Ø§ÙØ­Ø¬Ø² Ø§ÙÙØ¯ÙÙØ©', 'Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§ÙØ£Ø³Ø¹Ø§Ø±', 'Ø¥Ø±Ø³Ø§Ù Ø§ÙØªØ°ÙÙØ±Ø§Øª'],
+        },
+        pro: {
+          en: ['Loyalty tracking spreadsheets', 'Manual review requests', 'No-show follow-ups'],
+          ar: ['Ø¬Ø¯Ø§ÙÙ ØªØªØ¨Ø¹ Ø§ÙÙÙØ§Ø¡', 'Ø·ÙØ¨ Ø§ÙØªÙÙÙÙØ§Øª ÙØ¯ÙÙØ§Ù', 'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙØºØ§Ø¦Ø¨ÙÙ'],
+        },
+        'full-auto': {
+          en: ['All client communication', 'Campaign planning', 'Monthly reporting'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡', 'ØªØ®Ø·ÙØ· Ø§ÙØ­ÙÙØ§Øª', 'Ø§ÙØªÙØ§Ø±ÙØ± Ø§ÙØ´ÙØ±ÙØ©'],
+        },
+      },
+      tierCtas: {
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
+      },
+    },
+  },
+
+  // ââ SPA âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  {
+    id: 'spa',
+    en: 'Spa AI',
+    ar: 'Ø§ÙØ³Ø¨Ø§ Ø§ÙØ°ÙÙ',
+    industry: { en: 'Spas & Wellness Centers', ar: 'Ø§ÙØ³Ø¨Ø§ ÙÙØ±Ø§ÙØ² Ø§ÙØ¹Ø§ÙÙØ©' },
+    buildFee: 300,
+    painStat: {
+      en: 'Spas miss 35% of potential bookings from late-night and off-hour inquiries.',
+      ar: 'Ø§ÙØ³Ø¨Ø§ ÙÙÙØ¯ Ù£Ù¥Ùª ÙÙ Ø­Ø¬ÙØ²Ø§ØªÙ Ø§ÙÙØ­ØªÙÙØ© ÙÙ Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§ÙÙØ³Ø§Ø¡ ÙØ®Ø§Ø±Ø¬ Ø£ÙÙØ§Øª Ø§ÙØ¯ÙØ§Ù.',
+    },
+    icon: 'spa',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 160,
+        features: {
+          en: [
+            'Custom AI Agent trained on your spa',
+            'Session booking by therapist & treatment type',
+            'Treatment menu, duration & pricing automation',
+            '24/7 on WhatsApp + Website',
+            'Client Portal Dashboard',
+            'Full monthly maintenance',
+          ],
+          ar: [
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØ³Ø¨Ø§Ù',
+            'Ø­Ø¬Ø² Ø§ÙØ¬ÙØ³Ø§Øª Ø­Ø³Ø¨ Ø§ÙÙØ¹Ø§ÙØ¬ ÙÙÙØ¹ Ø§ÙØ¹ÙØ§Ø¬',
+            'Ø£ØªÙØªØ© ÙØ§Ø¦ÙØ© Ø§ÙØ¹ÙØ§Ø¬Ø§Øª ÙØ§ÙÙØ¯Ø© ÙØ§ÙØ£Ø³Ø¹Ø§Ø±',
+            'ÙØªØ§Ø­ Ù¢Ù¤/Ù§ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙØ§ÙÙÙÙØ¹',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'portal'],
+      },
+      {
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 240,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+        features: {
+          en: [
+            'Everything in Smart',
+            'Package & membership upsell automation',
+            'Post-session wellness follow-ups',
+            'Google Review requests after visits',
+            'Client preference memory',
+            'WhatsApp + Website + Instagram',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'Ø£ØªÙØªØ© Ø¹Ø±ÙØ¶ Ø§ÙØ¨Ø§ÙØ§Øª ÙØ§ÙØ§Ø´ØªØ±Ø§ÙØ§Øª',
+            'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙØ¹Ø§ÙÙØ© Ø¨Ø¹Ø¯ Ø§ÙØ¬ÙØ³Ø©',
+            'Ø·ÙØ¨ ØªÙÙÙÙØ§Øª Google Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø©',
+            'Ø­ÙØ¸ ØªÙØ¶ÙÙØ§Øª Ø§ÙØ¹ÙÙÙ',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
+      },
+      {
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 330,
+        features: {
+          en: [
+            'Everything in Pro',
+            'Multiple AI agents (booking, wellness coach, loyalty)',
+            'Seasonal wellness campaigns',
+            'Win-back for inactive clients',
+            'Full channel automation',
+            'Priority support + monthly strategy call',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (Ø­Ø¬Ø²Ø ÙØ¯Ø±Ø¨ Ø¹Ø§ÙÙØ©Ø ÙÙØ§Ø¡)',
+            'Ø­ÙÙØ§Øª Ø¹Ø§ÙÙØ© ÙÙØ³ÙÙØ©',
+            'Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
+      },
+    ],
+    scenario: {
+      painHeadline: {
+        en: 'Most spa bookings happen in the evening â\nwhen your staff is off.',
+        ar: 'Ø£ØºÙØ¨ Ø­Ø¬ÙØ²Ø§Øª Ø§ÙØ³Ø¨Ø§ ØªØµÙØ± ÙÙ Ø§ÙÙØ³Ø§Ø¡ â\nÙÙØ§ ÙØ±ÙÙÙ ÙÙØªÙÙ ÙÙ Ø§ÙØ¯ÙØ§Ù.',
+      },
+      painSolution: {
+        en: 'Your AI agent takes bookings and answers questions around the clock â no missed revenue.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØ³ØªÙØ¨Ù Ø§ÙØ­Ø¬ÙØ²Ø§Øª ÙÙØ¬ÙØ¨ Ø§ÙØ£Ø³Ø¦ÙØ© Ø¹ÙÙ ÙØ¯Ø§Ø± Ø§ÙØ³Ø§Ø¹Ø© â Ø¨Ø¯ÙÙ Ø®Ø³Ø§Ø±Ø© Ø­Ø¬Ø².',
+      },
+      tasksEliminated: {
+        smart: {
+          en: ['Off-hour booking messages', 'Treatment pricing questions', 'Manual reminders'],
+          ar: ['Ø±Ø³Ø§Ø¦Ù Ø§ÙØ­Ø¬Ø² Ø®Ø§Ø±Ø¬ Ø£ÙÙØ§Øª Ø§ÙØ¯ÙØ§Ù', 'Ø£Ø³Ø¦ÙØ© Ø£Ø³Ø¹Ø§Ø± Ø§ÙØ¹ÙØ§Ø¬Ø§Øª', 'Ø§ÙØªØ°ÙÙØ±Ø§Øª Ø§ÙÙØ¯ÙÙØ©'],
+        },
+        pro: {
+          en: ['Upsell conversations', 'Post-session follow-ups', 'Review collection'],
+          ar: ['ÙØ­Ø§Ø¯Ø«Ø§Øª Ø§ÙØ¨ÙØ¹ Ø§ÙØ¥Ø¶Ø§ÙÙ', 'Ø§ÙÙØªØ§Ø¨Ø¹Ø© Ø¨Ø¹Ø¯ Ø§ÙØ¬ÙØ³Ø©', 'Ø¬ÙØ¹ Ø§ÙØªÙÙÙÙØ§Øª'],
+        },
+        'full-auto': {
+          en: ['All client communication', 'Campaign management', 'Monthly analysis'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡', 'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ­ÙÙØ§Øª', 'Ø§ÙØªØ­ÙÙÙ Ø§ÙØ´ÙØ±Ù'],
+        },
+      },
+      tierCtas: {
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
+      },
+    },
+  },
+
+  // ââ GYM âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  {
+    id: 'gym',
+    en: 'Gym AI',
+    ar: 'Ø§ÙØ¬ÙÙ Ø§ÙØ°ÙÙ',
+    industry: { en: "Men's & Women's Gyms", ar: 'ØµØ§ÙØ§Øª Ø§ÙØ¬ÙÙ ÙÙØ±Ø¬Ø§Ù ÙØ§ÙØ³ÙØ¯Ø§Øª' },
+    buildFee: 320,
+    painStat: {
+      en: 'Gyms spend 2+ hours daily on membership inquiries that never convert.',
+      ar: 'Ø§ÙØ¬ÙÙ ÙØ¶ÙÙØ¹ Ø£ÙØ«Ø± ÙÙ Ø³Ø§Ø¹ØªÙÙ ÙÙÙÙØ§Ù ÙÙ Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§Ø´ØªØ±Ø§ÙØ§Øª ÙØ§ ØªØªØ­ÙÙ ÙØ¹ÙÙØ§Ø¡.',
+    },
+    icon: 'gym',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 170,
+        features: {
+          en: [
+            'Custom AI Agent trained on your gym',
+            'Membership plan info & pricing automation',
+            'New member registration flow',
+            'Class schedule & trainer availability',
+            'Client Portal Dashboard',
+            'Full monthly maintenance',
+          ],
+          ar: [
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØ¬ÙÙÙ',
+            'ÙØ¹ÙÙÙØ§Øª ÙØ£Ø³Ø¹Ø§Ø± Ø§ÙØ§Ø´ØªØ±Ø§ÙØ§Øª ØªÙÙØ§Ø¦ÙØ§Ù',
+            'ØªØ³Ø¬ÙÙ Ø§ÙØ£Ø¹Ø¶Ø§Ø¡ Ø§ÙØ¬Ø¯Ø¯',
+            'Ø¬Ø¯Ø§ÙÙ Ø§ÙÙÙØ§Ø³Ø§Øª ÙØªÙÙØ± Ø§ÙÙØ¯Ø±Ø¨ÙÙ',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'portal'],
+      },
+      {
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 260,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+        features: {
+          en: [
+            'Everything in Smart',
+            'Membership renewal reminders',
+            'Personal training upsell automation',
+            'Member retention follow-ups',
+            'Progress check-in prompts',
+            'WhatsApp + Website + Instagram',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'ØªØ°ÙÙØ±Ø§Øª ØªØ¬Ø¯ÙØ¯ Ø§ÙØ§Ø´ØªØ±Ø§Ù ØªÙÙØ§Ø¦ÙØ§Ù',
+            'Ø£ØªÙØªØ© Ø¹Ø±ÙØ¶ Ø§ÙØªØ¯Ø±ÙØ¨ Ø§ÙØ´Ø®ØµÙ',
+            'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙØ£Ø¹Ø¶Ø§Ø¡ ÙÙØ­ÙØ§Ø¸ Ø¹ÙÙÙÙ',
+            'ØªØ°ÙÙØ±Ø§Øª ØªØªØ¨Ø¹ Ø§ÙØªÙØ¯Ù',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
+      },
+      {
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 360,
+        features: {
+          en: [
+            'Everything in Pro',
+            'Multiple AI agents (sales, retention, coach assistant)',
+            'Win-back campaigns for churned members',
+            'Seasonal fitness challenge campaigns',
+            'Full automation across all channels',
+            'Priority support + monthly strategy call',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (ÙØ¨ÙØ¹Ø§ØªØ Ø§Ø³ØªØ¨ÙØ§Ø¡Ø ÙØ³Ø§Ø¹Ø¯ ÙØ¯Ø±Ø¨)',
+            'Ø­ÙÙØ§Øª Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙØ£Ø¹Ø¶Ø§Ø¡ Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'Ø­ÙÙØ§Øª ØªØ­Ø¯ÙØ§Øª Ø§ÙÙÙØ§ÙØ© Ø§ÙÙÙØ³ÙÙØ©',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
+      },
+    ],
+    scenario: {
+      painHeadline: {
+        en: 'A gym receptionist spends 3 hours answering\n"how much is the membership?" every single day.',
+        ar: 'ÙÙØ¸Ù Ø§ÙØ§Ø³ØªÙØ¨Ø§Ù ÙÙ Ø§ÙØ¬ÙÙ ÙØ¶ÙÙØ¹ Ù£ Ø³Ø§Ø¹Ø§Øª ÙÙÙÙØ§Ù\nÙØ¬ÙØ¨ "Ø¬Ù Ø§ÙØ§Ø´ØªØ±Ø§ÙØ" ÙÙ ÙÙÙ.',
+      },
+      painSolution: {
+        en: 'Your AI agent handles all inquiries, registers new members, and follows up renewals â automatically.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØªÙÙÙ ÙÙ Ø§ÙØ§Ø³ØªÙØ³Ø§Ø±Ø§ØªØ ÙØ³Ø¬Ù Ø§ÙØ£Ø¹Ø¶Ø§Ø¡ Ø§ÙØ¬Ø¯Ø¯Ø ÙÙØªØ§Ø¨Ø¹ Ø§ÙØªØ¬Ø¯ÙØ¯Ø§Øª â ØªÙÙØ§Ø¦ÙØ§Ù.',
+      },
+      tasksEliminated: {
+        smart: {
+          en: ['Membership price questions', 'Manual registration', 'Class schedule inquiries'],
+          ar: ['Ø£Ø³Ø¦ÙØ© Ø£Ø³Ø¹Ø§Ø± Ø§ÙØ§Ø´ØªØ±Ø§ÙØ§Øª', 'Ø§ÙØªØ³Ø¬ÙÙ Ø§ÙÙØ¯ÙÙ', 'Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø¬Ø¯Ø§ÙÙ Ø§ÙÙÙØ§Ø³Ø§Øª'],
+        },
+        pro: {
+          en: ['Renewal reminder calls', 'PT upsell conversations', 'Retention check-ins'],
+          ar: ['ÙÙØ§ÙÙØ§Øª ØªØ°ÙÙØ± Ø§ÙØªØ¬Ø¯ÙØ¯', 'ÙØ­Ø§Ø¯Ø«Ø§Øª Ø¨ÙØ¹ Ø§ÙØªØ¯Ø±ÙØ¨ Ø§ÙØ´Ø®ØµÙ', 'ÙØªØ§Ø¨Ø¹Ø§Øª Ø§ÙØ§Ø³ØªØ¨ÙØ§Ø¡'],
+        },
+        'full-auto': {
+          en: ['All member communication', 'Campaign execution', 'Monthly performance reports'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ£Ø¹Ø¶Ø§Ø¡', 'ØªÙÙÙØ° Ø§ÙØ­ÙÙØ§Øª', 'ØªÙØ§Ø±ÙØ± Ø§ÙØ£Ø¯Ø§Ø¡ Ø§ÙØ´ÙØ±ÙØ©'],
+        },
+      },
+      tierCtas: {
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
+      },
+    },
+  },
+
+  // ââ GARAGE ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  {
+    id: 'garage',
+    en: 'Garage AI',
+    ar: 'Ø§ÙÙØ±Ø´Ø© Ø§ÙØ°ÙÙØ©',
+    industry: { en: 'Auto Garages & Service Centers', ar: 'ÙØ±Ø´ Ø§ÙØ³ÙØ§Ø±Ø§Øª ÙÙØ±Ø§ÙØ² Ø§ÙØ®Ø¯ÙØ©' },
+    buildFee: 300,
+    painStat: {
+      en: 'Garage owners spend 2+ hours a day on status update calls they could automate.',
+      ar: 'Ø£ØµØ­Ø§Ø¨ Ø§ÙÙØ±Ø´ ÙÙØ¶ÙÙ Ø£ÙØ«Ø± ÙÙ Ø³Ø§Ø¹ØªÙÙ ÙÙÙÙØ§Ù ÙÙ ÙÙØ§ÙÙØ§Øª ØªØ­Ø¯ÙØ«Ø§Øª ÙÙÙÙ Ø£ØªÙØªØªÙØ§.',
+    },
+    icon: 'garage',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 160,
+        features: {
+          en: [
+            'Custom AI Agent trained on your garage',
+            'Automated car status updates to customers',
+            'Service booking & appointment scheduling',
+            'Service menu & pricing info',
+            'Client Portal Dashboard',
+            'Full monthly maintenance',
+          ],
+          ar: [
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙÙØ±Ø´ØªÙ',
+            'ØªØ­Ø¯ÙØ«Ø§Øª Ø­Ø§ÙØ© Ø§ÙØ³ÙØ§Ø±Ø© ØªÙÙØ§Ø¦ÙØ§Ù ÙÙØ¹ÙÙØ§Ø¡',
+            'Ø­Ø¬Ø² Ø§ÙØ®Ø¯ÙØ© ÙØ¬Ø¯ÙÙØ© Ø§ÙÙÙØ§Ø¹ÙØ¯',
+            'ÙØ§Ø¦ÙØ© Ø§ÙØ®Ø¯ÙØ§Øª ÙØ§ÙØ£Ø³Ø¹Ø§Ø±',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'portal'],
+      },
+      {
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 240,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+        features: {
+          en: [
+            'Everything in Smart',
+            'Automated invoice & estimate sending',
+            'Service history tracking per vehicle',
+            'Maintenance reminder by mileage / date',
+            'Google Review requests after service',
+            'WhatsApp + Website + Instagram',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'Ø¥Ø±Ø³Ø§Ù Ø§ÙÙÙØ§ØªÙØ± ÙØ§ÙØªÙØ¯ÙØ±Ø§Øª ØªÙÙØ§Ø¦ÙØ§Ù',
+            'ØªØªØ¨Ø¹ ØªØ§Ø±ÙØ® Ø§ÙØµÙØ§ÙØ© ÙÙÙ Ø³ÙØ§Ø±Ø©',
+            'ØªØ°ÙÙØ± Ø§ÙØµÙØ§ÙØ© Ø­Ø³Ø¨ Ø§ÙÙÙÙÙÙØªØ±Ø§Øª Ø£Ù Ø§ÙØªØ§Ø±ÙØ®',
+            'Ø·ÙØ¨ ØªÙÙÙÙØ§Øª Google Ø¨Ø¹Ø¯ Ø§ÙØ®Ø¯ÙØ©',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
+      },
+      {
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 330,
+        features: {
+          en: [
+            'Everything in Pro',
+            'Multiple AI agents (service advisor, follow-up, analytics)',
+            'Win-back campaigns for inactive customers',
+            'Seasonal service offer broadcasts',
+            'Full automation across all channels',
+            'Priority support + monthly strategy call',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (ÙØ³ØªØ´Ø§Ø± Ø®Ø¯ÙØ©Ø ÙØªØ§Ø¨Ø¹Ø©Ø ØªØ­ÙÙÙ)',
+            'Ø­ÙÙØ§Øª Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'Ø¹Ø±ÙØ¶ Ø®Ø¯ÙØ© ÙÙØ³ÙÙØ©',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
+      },
+    ],
+    scenario: {
+      painHeadline: {
+        en: 'Every garage customer calls at least twice asking\n"is my car ready?" â hours wasted every day.',
+        ar: 'ÙÙ Ø¹ÙÙÙ ÙÙ Ø§ÙÙØ±Ø´Ø© ÙØªØµÙ ÙØ±ØªÙÙ Ø¹ÙÙ Ø§ÙØ£ÙÙ\n"Ø³ÙØ§Ø±ØªÙ Ø®ÙØµØªØ" â Ø³Ø§Ø¹Ø§Øª ØªØ¶ÙØ¹ ÙÙ ÙÙÙ.',
+      },
+      painSolution: {
+        en: 'Your AI agent sends real-time car status updates and handles all inquiries â zero interruptions to your team.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØ±Ø³Ù ØªØ­Ø¯ÙØ«Ø§Øª Ø­Ø§ÙØ© Ø§ÙØ³ÙØ§Ø±Ø© ÙÙØ±ÙØ§Ù ÙÙØªÙÙÙ ÙÙ Ø§ÙØ§Ø³ØªÙØ³Ø§Ø±Ø§Øª â ÙØ±ÙÙÙ Ø¨Ø¯ÙÙ Ø§ÙÙØ·Ø§Ø¹.',
+      },
+      tasksEliminated: {
+        smart: {
+          en: ['Status update calls', 'Service pricing inquiries', 'Manual booking'],
+          ar: ['ÙÙØ§ÙÙØ§Øª ØªØ­Ø¯ÙØ« Ø§ÙØ­Ø§ÙØ©', 'Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø£Ø³Ø¹Ø§Ø± Ø§ÙØ®Ø¯ÙØ©', 'Ø§ÙØ­Ø¬Ø² Ø§ÙÙØ¯ÙÙ'],
+        },
+        pro: {
+          en: ['Invoice sending', 'Maintenance reminder calls', 'Review requests'],
+          ar: ['Ø¥Ø±Ø³Ø§Ù Ø§ÙÙÙØ§ØªÙØ±', 'ÙÙØ§ÙÙØ§Øª ØªØ°ÙÙØ± Ø§ÙØµÙØ§ÙØ©', 'Ø·ÙØ¨ Ø§ÙØªÙÙÙÙØ§Øª'],
+        },
+        'full-auto': {
+          en: ['All customer communication', 'Campaign execution', 'Performance reporting'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡', 'ØªÙÙÙØ° Ø§ÙØ­ÙÙØ§Øª', 'ØªÙØ§Ø±ÙØ± Ø§ÙØ£Ø¯Ø§Ø¡'],
+        },
+      },
+      tierCtas: {
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
+      },
+    },
+  },
+
+  // ââ RESTAURANT ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  {
+    id: 'restaurant',
+    en: 'Restaurant AI',
+    ar: 'Ø§ÙÙØ·Ø¹Ù Ø§ÙØ°ÙÙ',
+    industry: { en: 'Restaurants, Cafes & F&B', ar: 'Ø§ÙÙØ·Ø§Ø¹Ù ÙØ§ÙÙÙØ§ÙÙ ÙØ§ÙÙÙØ¯ Ø¢ÙØ¯ Ø¨ÙÙØ±Ø¬' },
+    buildFee: 380,
+    painStat: {
+      en: 'Restaurants lose 20% of reservation requests during peak hours when staff is too busy to reply.',
+      ar: 'Ø§ÙÙØ·Ø§Ø¹Ù ØªØ®Ø³Ø± Ù¢Ù Ùª ÙÙ Ø·ÙØ¨Ø§Øª Ø§ÙØ­Ø¬Ø² Ø£ÙÙØ§Øª Ø§ÙØ°Ø±ÙØ© ÙÙØ§ Ø§ÙÙØ±ÙÙ ÙØ´ØºÙÙ ÙØ§ ÙÙØ¯Ø± ÙØ±Ø¯.',
+    },
+    icon: 'restaurant',
+    color: '#153E2D',
+    tiers: [
+      {
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 200,
+        features: {
+          en: [
+            'Custom AI Agent trained on your restaurant',
+            'Table reservation & party size handling',
+            'Menu info, dietary options & pricing',
+            '24/7 on WhatsApp + Website',
+            'Client Portal Dashboard',
+            'Full monthly maintenance',
+          ],
+          ar: [
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙÙØ·Ø¹ÙÙ',
+            'Ø­Ø¬Ø² Ø§ÙØ·Ø§ÙÙØ§Øª ÙØ¹Ø¯Ø¯ Ø§ÙØ£Ø´Ø®Ø§Øµ',
+            'ÙØ¹ÙÙÙØ§Øª Ø§ÙÙÙÙÙ ÙØ§ÙØ®ÙØ§Ø±Ø§Øª Ø§ÙØºØ°Ø§Ø¦ÙØ© ÙØ§ÙØ£Ø³Ø¹Ø§Ø±',
+            'ÙØªØ§Ø­ Ù¢Ù¤/Ù§ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙØ§ÙÙÙÙØ¹',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'portal'],
+      },
+      {
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 300,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+        features: {
+          en: [
+            'Everything in Smart',
+            'Pre-arrival upsell (dessert, special occasion setup)',
+            'Post-visit feedback & Google Review requests',
+            'Online order handling automation',
+            'Special event booking flow',
+            'WhatsApp + Website + Instagram',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'Ø¨ÙØ¹ Ø¥Ø¶Ø§ÙÙ ÙØ¨Ù Ø§ÙÙØµÙÙ (Ø­ÙÙÙØ§ØªØ Ø¥Ø¹Ø¯Ø§Ø¯ ÙÙØ§Ø³Ø¨Ø§Øª)',
+            'Ø§Ø³ØªØ·ÙØ§Ø¹ Ø±Ø£Ù ÙØ§ Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø© ÙØ·ÙØ¨ ØªÙÙÙÙØ§Øª Google',
+            'Ø£ØªÙØªØ© ÙØ¹Ø§ÙØ¬Ø© Ø§ÙØ·ÙØ¨Ø§Øª Ø§ÙØ¥ÙÙØªØ±ÙÙÙØ©',
+            'ØªØ¯ÙÙ Ø­Ø¬Ø² Ø§ÙÙÙØ§Ø³Ø¨Ø§Øª Ø§ÙØ®Ø§ØµØ©',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
+      },
+      {
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 420,
+        features: {
+          en: [
+            'Everything in Pro',
+            'Multiple AI agents (host, order, loyalty)',
+            'Regular customer VIP recognition',
+            'Seasonal menu & offer broadcasts',
+            'Full automation across all channels',
+            'Priority support + monthly strategy call',
+          ],
+          ar: [
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (Ø§Ø³ØªÙØ¨Ø§ÙØ Ø·ÙØ¨Ø§ØªØ ÙÙØ§Ø¡)',
+            'Ø§ÙØªØ¹Ø±Ù Ø¹ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙÙØ²ÙÙ',
+            'Ø¥Ø°Ø§Ø¹Ø§Øª Ø§ÙÙÙÙÙ Ø§ÙÙÙØ³ÙÙ ÙØ§ÙØ¹Ø±ÙØ¶',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
+          ],
+        },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
+      },
+    ],
+    scenario: {
+      painHeadline: {
+        en: 'On a busy Friday night, your team misses 15 reservation\nrequests â that\'s real revenue walking out the door.',
+        ar: 'ÙÙÙØ© Ø§ÙØ¬ÙØ¹Ø© Ø§ÙÙØ²Ø¯Ø­ÙØ©Ø ÙØ±ÙÙÙ ÙØ¶ÙÙØ¹ Ù¡Ù¥ Ø·ÙØ¨ Ø­Ø¬Ø² â\nÙØ°Ø§ Ø¥ÙØ±Ø§Ø¯ ÙØ¹ÙÙ ÙØ®Ø±Ø¬ ÙÙ Ø§ÙØ¨Ø§Ø¨.',
+      },
+      painSolution: {
+        en: 'Your AI agent handles reservations, menu questions, and upsells â even during your busiest hours.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØªÙÙÙ Ø§ÙØ­Ø¬ÙØ²Ø§Øª ÙØ§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§ÙÙÙÙÙ ÙØ§ÙØ¨ÙØ¹ Ø§ÙØ¥Ø¶Ø§ÙÙ â Ø­ØªÙ ÙÙ Ø£ÙØ«Ø± Ø£ÙÙØ§ØªÙ Ø§Ø²Ø¯Ø­Ø§ÙØ§Ù.',
+      },
+      tasksEliminated: {
+        smart: {
+          en: ['Reservation calls & messages', 'Menu inquiries', 'Availability checking'],
+          ar: ['ÙÙØ§ÙÙØ§Øª ÙØ±Ø³Ø§Ø¦Ù Ø§ÙØ­Ø¬Ø²', 'Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§ÙÙÙÙÙ', 'ÙØ­Øµ Ø§ÙØªÙÙØ±'],
+        },
+        pro: {
+          en: ['Upsell conversations', 'Post-visit feedback collection', 'Online order management'],
+          ar: ['ÙØ­Ø§Ø¯Ø«Ø§Øª Ø§ÙØ¨ÙØ¹ Ø§ÙØ¥Ø¶Ø§ÙÙ', 'Ø¬ÙØ¹ Ø¢Ø±Ø§Ø¡ ÙØ§ Ø¨Ø¹Ø¯ Ø§ÙØ²ÙØ§Ø±Ø©', 'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ·ÙØ¨Ø§Øª Ø§ÙØ¥ÙÙØªØ±ÙÙÙØ©'],
+        },
+        'full-auto': {
+          en: ['All guest communication', 'Campaign management', 'Monthly revenue analysis'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¶ÙÙÙ', 'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ­ÙÙØ§Øª', 'ØªØ­ÙÙÙ Ø§ÙØ¥ÙØ±Ø§Ø¯Ø§Øª Ø§ÙØ´ÙØ±Ù'],
+        },
+      },
+      tierCtas: {
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
+      },
+    },
+  },
+
+  // ââ REAL ESTATE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
   {
     id: 'real-estate',
     en: 'Real Estate AI',
-    ar: 'العقارات الذكية',
-    industry: { en: 'Brokers & Real Estate Offices', ar: 'مكاتب العقارات والوسطاء' },
-    buildFee: 340,
+    ar: 'Ø§ÙØ¹ÙØ§Ø±Ø§Øª Ø§ÙØ°ÙÙØ©',
+    industry: { en: 'Real Estate Brokers & Agencies', ar: 'ÙØ³Ø·Ø§Ø¡ Ø§ÙØ¹ÙØ§Ø±Ø§Øª ÙØ§ÙØ´Ø±ÙØ§Øª Ø§ÙØ¹ÙØ§Ø±ÙØ©' },
+    buildFee: 450,
     painStat: {
-      en: 'Real estate leads go cold in under 5 minutes — most agents respond in 5 hours.',
-      ar: 'العميل العقاري يبرد في أقل من ٥ دقائق — معظم الوسطاء يردون بعد ٥ ساعات.',
+      en: 'Real estate brokers miss 40% of leads because responses take more than 30 minutes.',
+      ar: 'ÙØ³Ø·Ø§Ø¡ Ø§ÙØ¹ÙØ§Ø±Ø§Øª ÙÙÙØ¯ÙÙ Ù¤Ù Ùª ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØ­ØªÙÙÙÙ ÙØ£Ù Ø§ÙØ±Ø¯ ÙØªØ£Ø®Ø± Ø£ÙØ«Ø± ÙÙ Ù£Ù  Ø¯ÙÙÙØ©.',
     },
-    icon: '🏢',
-    color: '#1C5038',
+    icon: 'real-estate',
+    color: '#153E2D',
     tiers: [
       {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 260,
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 250,
         features: {
           en: [
-            'WhatsApp Listings Bot (24/7)',
-            'Instant Lead Qualification (Budget & Area)',
-            'Viewing Scheduler & Reminders',
-            'New Listing Broadcasts to Buyer List',
+            'Custom AI Agent trained on your listings',
+            'Instant property matching by budget & preferences',
+            'Viewing appointment scheduling',
+            'Property info, photos & location sharing',
             'Client Portal Dashboard',
-            'Monthly Maintenance',
+            'Full monthly maintenance',
           ],
           ar: [
-            'بوت العقارات (٢٤/٧)',
-            'تأهيل العملاء فوراً (الميزانية والمنطقة)',
-            'جدولة المعاينات والتذكيرات',
-            'بث العقارات الجديدة',
-            'بوابة العميل',
-            'صيانة شهرية',
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙØ¹ÙØ§Ø±Ø§ØªÙ',
+            'ÙØ·Ø§Ø¨ÙØ© ÙÙØ±ÙØ© ÙÙØ¹ÙØ§Ø±Ø§Øª Ø­Ø³Ø¨ Ø§ÙÙÙØ²Ø§ÙÙØ© ÙØ§ÙØªÙØ¶ÙÙØ§Øª',
+            'Ø¬Ø¯ÙÙØ© ÙÙØ§Ø¹ÙØ¯ Ø§ÙÙØ¹Ø§ÙÙØ©',
+            'ÙØ¹ÙÙÙØ§Øª Ø§ÙØ¹ÙØ§Ø± ÙØ§ÙØµÙØ± ÙØ§ÙÙÙÙØ¹',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
           ],
         },
+        channels: ['whatsapp', 'website', 'portal'],
       },
       {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
-        retainer: 420,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
+        retainer: 380,
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
         features: {
           en: [
-            'Everything in Essential',
-            'Post-Viewing Follow-up + Next Step Prompt',
-            'Segmented Broadcasts by Area / Budget / Type',
-            'Seller Auto-Update on Inquiry & Offer Activity',
-            'Lead Drip Sequence (New Matching Listings)',
-            'Viewing Show-Up Rate in Dashboard',
+            'Everything in Smart',
+            'Lead qualification & scoring automation',
+            'Post-viewing follow-up sequences',
+            'New listing alerts to interested clients',
+            'Market report automation',
+            'WhatsApp + Website + Instagram',
           ],
           ar: [
-            'كل ما في الأساسية',
-            'متابعة ما بعد المعاينة + الخطوة التالية',
-            'بث مقسّم حسب المنطقة والميزانية والنوع',
-            'تحديث تلقائي للبائع على الاستفسارات',
-            'تسلسل رعاية العملاء المحتملين',
-            'معدل حضور المعاينات في اللوحة',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'ØªØ£ÙÙÙ ÙØªÙÙÙÙ Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØ­ØªÙÙÙÙ ØªÙÙØ§Ø¦ÙØ§Ù',
+            'ØªØ³ÙØ³Ù Ø§ÙÙØªØ§Ø¨Ø¹Ø© Ø¨Ø¹Ø¯ Ø§ÙÙØ¹Ø§ÙÙØ©',
+            'ØªÙØ¨ÙÙØ§Øª Ø§ÙØ¹ÙØ§Ø±Ø§Øª Ø§ÙØ¬Ø¯ÙØ¯Ø© ÙÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙØªÙÙÙ',
+            'Ø£ØªÙØªØ© ØªÙØ§Ø±ÙØ± Ø§ÙØ³ÙÙ',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
       },
       {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
-        retainer: 580,
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
+        retainer: 520,
         features: {
           en: [
-            'Everything in Advanced',
-            'Agent Handoff Logic (qualify → route to human)',
-            'Portfolio Vacancy & Lead Pipeline Dashboard',
-            'Landlord Monthly Performance Report (Auto)',
-            'Market Broadcast Campaigns (seasonal/price drops)',
-            'Priority Support + Monthly Strategy Call',
+            'Everything in Pro',
+            'Multiple AI agents (sales, follow-up, market analyst)',
+            'Long-term lead nurturing sequences',
+            'Investor portfolio update automation',
+            'Full automation across all channels',
+            'Priority support + monthly strategy call',
           ],
           ar: [
-            'كل ما في المتقدمة',
-            'منطق تحويل العملاء للوكيل البشري',
-            'لوحة المحفظة العقارية وخط العملاء',
-            'تقرير أداء شهري تلقائي للملاك',
-            'حملات سوقية (تخفيضات، مواسم)',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø¹Ø¯Ø© ÙÙÙØ§Ø¡ (ÙØ¨ÙØ¹Ø§ØªØ ÙØªØ§Ø¨Ø¹Ø©Ø ÙØ­ÙÙ Ø³ÙÙ)',
+            'ØªØ³ÙØ³ÙØ§Øª Ø±Ø¹Ø§ÙØ© Ø§ÙØ¹ÙÙØ§Ø¡ Ø¹ÙÙ Ø§ÙÙØ¯Ù Ø§ÙØ·ÙÙÙ',
+            'ØªØ­Ø¯ÙØ«Ø§Øª ÙØ­Ø§ÙØ¸ Ø§ÙÙØ³ØªØ«ÙØ±ÙÙ ØªÙÙØ§Ø¦ÙØ§Ù',
+            'Ø£ØªÙØªØ© ÙØ§ÙÙØ© Ø¹Ø¨Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙÙØ§Øª',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'app', 'portal', 'analytics'],
       },
     ],
     scenario: {
       painHeadline: {
-        ar: 'العميل العقاري يبرد في أقل من ٥ دقائق.\nمعظم الوسطاء يردون بعد ٥ ساعات.\nعمولة متوسطة في الكويت: ١٥٠٠–٤٠٠٠ دينار.\nكل استفسار ما رددت عليه فوراً = عمولة محتملة راحت.',
-        en: 'Real estate leads go cold in under 5 minutes.\nMost agents respond in 5 hours.\nAverage commission in Kuwait: 1,500–4,000 KWD.\nEvery unanswered inquiry = a potential commission gone.',
+        en: 'A real estate lead who doesn\'t get a reply in 5 minutes\ngoes to the next broker. Always.',
+        ar: 'Ø¹ÙÙÙ Ø§ÙØ¹ÙØ§Ø±Ø§Øª Ø§ÙÙÙ ÙØ§ ÙØ¬ÙÙ Ø±Ø¯ ÙÙ Ù¥ Ø¯ÙØ§Ø¦Ù\nÙØ±ÙØ­ ÙÙÙØ³ÙØ· Ø§ÙØ«Ø§ÙÙ. Ø¯Ø§Ø¦ÙØ§Ù.',
       },
       painSolution: {
-        ar: 'مايند سينك يرد فوراً ويؤهل العميل — قبل ما يبرد.',
-        en: 'MindSync responds instantly and qualifies the lead — before they go cold.',
+        en: 'Your AI agent responds instantly, qualifies the lead, matches properties, and books viewings â even at midnight.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØ±Ø¯ ÙÙØ±Ø§ÙØ ÙØ¤ÙÙÙ Ø§ÙØ¹ÙÙÙØ ÙØ·Ø§Ø¨Ù Ø§ÙØ¹ÙØ§Ø±Ø§ØªØ ÙÙØ­Ø¬Ø² Ø§ÙÙØ¹Ø§ÙÙØ§Øª â Ø­ØªÙ ÙÙØªØµÙ Ø§ÙÙÙÙ.',
       },
       tasksEliminated: {
-        essential: {
-          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة'],
-          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up'],
+        smart: {
+          en: ['Initial inquiry responses', 'Property matching manually', 'Viewing scheduling'],
+          ar: ['Ø§ÙØ±Ø¯ÙØ¯ Ø§ÙØ£ÙÙÙØ© Ø¹ÙÙ Ø§ÙØ§Ø³ØªÙØ³Ø§Ø±Ø§Øª', 'ÙØ·Ø§Ø¨ÙØ© Ø§ÙØ¹ÙØ§Ø±Ø§Øª ÙØ¯ÙÙØ§Ù', 'Ø¬Ø¯ÙÙØ© Ø§ÙÙØ¹Ø§ÙÙØ§Øª'],
         },
-        advanced: {
-          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة'],
-          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up'],
+        pro: {
+          en: ['Lead qualification calls', 'Post-viewing follow-ups', 'Market report preparation'],
+          ar: ['ÙÙØ§ÙÙØ§Øª ØªØ£ÙÙÙ Ø§ÙØ¹ÙÙØ§Ø¡', 'Ø§ÙÙØªØ§Ø¨Ø¹Ø© Ø¨Ø¹Ø¯ Ø§ÙÙØ¹Ø§ÙÙØ©', 'ØªØ­Ø¶ÙØ± ØªÙØ§Ø±ÙØ± Ø§ÙØ³ÙÙ'],
         },
-        'full-stack': {
-          ar: ['الرد الفوري على استفسارات العقارات', 'تصفية العملاء غير الجادين يدوياً', 'إرسال قوائم عقارات لكل عميل', 'جدولة وتذكير المعاينات', 'متابعة العميل بعد المعاينة', 'تقارير الملاك الشهرية'],
-          en: ['Instantly replying to property inquiries', 'Filtering unserious leads manually', 'Sending property lists to each client', 'Scheduling and reminding viewings', 'Post-viewing follow-up', 'Monthly landlord reports'],
+        'full-auto': {
+          en: ['All client communication', 'Lead nurturing campaigns', 'Portfolio reporting'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡', 'Ø­ÙÙØ§Øª Ø±Ø¹Ø§ÙØ© Ø§ÙØ¹ÙÙØ§Ø¡', 'ØªÙØ§Ø±ÙØ± Ø§ÙÙØ­Ø§ÙØ¸'],
         },
       },
       tierCtas: {
-        essential:    { ar: 'ما تترك استفساراً بدون رد', en: "Don't Leave an Inquiry Unanswered" },
-        advanced:     { ar: 'حوّل كل استفسار لمعاينة', en: 'Convert Every Inquiry Into a Viewing' },
-        'full-stack': { ar: 'شغّل مكتبك — من عميل، لكل عقار', en: 'Run the Office — Every Client, Every Property' },
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
       },
     },
   },
+
+  // ââ HOME BUSINESS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
   {
     id: 'home-business',
     en: 'Home Business AI',
-    ar: 'المشاريع المنزلية الذكية',
-    industry: { en: 'Home-Based Businesses', ar: 'المشاريع المنزلية' },
-    buildFee: 200,
+    ar: 'Ø§ÙÙØ´Ø±ÙØ¹ Ø§ÙÙÙØ²ÙÙ Ø§ÙØ°ÙÙ',
+    industry: { en: 'Home-based Businesses & Micro Brands', ar: 'Ø§ÙÙØ´Ø§Ø±ÙØ¹ Ø§ÙÙÙØ²ÙÙØ© ÙØ§ÙØ¹ÙØ§ÙØ§Øª Ø§ÙØµØºÙØ±Ø©' },
+    buildFee: 250,
     painStat: {
-      en: 'Home businesses answer WhatsApp 16+ hours a day — AI handles it while you focus on your craft.',
-      ar: 'أصحاب المشاريع المنزلية يردون على واتساب أكثر من ١٦ ساعة يومياً — الذكاء الاصطناعي يتولى ذلك.',
+      en: 'Home business owners spend 5â6 hours daily managing WhatsApp orders manually.',
+      ar: 'Ø£ØµØ­Ø§Ø¨ Ø§ÙÙØ´Ø§Ø±ÙØ¹ Ø§ÙÙÙØ²ÙÙØ© ÙÙØ¶ÙÙ Ù¥âÙ¦ Ø³Ø§Ø¹Ø§Øª ÙÙÙÙØ§Ù ÙÙ Ø¥Ø¯Ø§Ø±Ø© Ø·ÙØ¨Ø§Øª ÙØ§ØªØ³Ø§Ø¨ ÙØ¯ÙÙØ§Ù.',
     },
     icon: 'home-business',
     color: '#153E2D',
     tiers: [
       {
-        id: 'essential',
-        en: 'Essential',
-        ar: 'الأساسية',
-        retainer: 120,
+        id: 'smart',
+        en: 'Smart',
+        ar: 'Ø§ÙØ°ÙÙ',
+        retainer: 130,
         features: {
           en: [
-            'WhatsApp Inquiry & Order Bot (24/7)',
-            'Product/Service FAQ Automation',
-            'Order Confirmation & Status Updates',
-            'Custom Pricing & Catalogue Replies',
+            'Custom AI Agent trained on your business',
+            'Order intake & confirmation automation',
+            'Product catalogue & pricing replies',
+            'Delivery info & area coverage',
             'Client Portal Dashboard',
-            'Monthly Maintenance',
+            'Full monthly maintenance',
           ],
           ar: [
-            'بوت الاستفسارات والطلبات (٢٤/٧)',
-            'أتمتة الأسئلة الشائعة',
-            'تأكيد الطلبات وتحديثات الحالة',
-            'ردود أسعار وكتالوج مخصصة',
-            'بوابة العميل',
-            'صيانة شهرية',
+            'ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ ÙÙØ´Ø±ÙØ¹Ù',
+            'Ø§Ø³ØªÙØ¨Ø§Ù Ø§ÙØ·ÙØ¨Ø§Øª ÙØ§ÙØªØ£ÙÙØ¯ ØªÙÙØ§Ø¦ÙØ§Ù',
+            'Ø±Ø¯ÙØ¯ Ø§ÙÙØªØ§ÙÙØ¬ ÙØ§ÙØ£Ø³Ø¹Ø§Ø±',
+            'ÙØ¹ÙÙÙØ§Øª Ø§ÙØªÙØµÙÙ ÙØ§ÙÙÙØ§Ø·Ù',
+            'ÙÙØ­Ø© ØªØ­ÙÙ Ø§ÙØ¹ÙÙÙ',
+            'ØµÙØ§ÙØ© Ø´ÙØ±ÙØ© Ø´Ø§ÙÙØ©',
           ],
         },
+        channels: ['whatsapp', 'portal'],
       },
       {
-        id: 'advanced',
-        en: 'Advanced',
-        ar: 'المتقدمة',
+        id: 'pro',
+        en: 'Pro',
+        ar: 'Ø§ÙÙØªÙØ¯Ù',
         retainer: 200,
-        badge: { en: 'Most Popular', ar: 'الأكثر طلباً' },
+        badge: { en: 'Most Popular', ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
         features: {
           en: [
-            'Everything in Essential',
-            'Repeat-Customer Recognition & Loyalty Tracking',
-            'Upsell at Order Confirmation',
-            'Google Review Request After Delivery',
-            'Abandoned Inquiry Follow-Up',
-            'Revenue & Order Analytics Dashboard',
+            'Everything in Smart',
+            'Repeat-customer recognition & loyalty',
+            'Upsell at order confirmation',
+            'Google Review requests post-delivery',
+            'Abandoned inquiry follow-up',
+            'WhatsApp + Website + Instagram',
           ],
           ar: [
-            'كل ما في الأساسية',
-            'التعرف على العملاء المتكررين وتتبع الولاء',
-            'اقتراح منتجات إضافية عند تأكيد الطلب',
-            'طلب تقييم Google بعد التسليم',
-            'متابعة الاستفسارات غير المكتملة',
-            'لوحة تحليلات الطلبات والإيرادات',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙØ°ÙÙ',
+            'Ø§ÙØªØ¹Ø±Ù Ø¹ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØªÙØ±Ø±ÙÙ ÙØ§ÙÙÙØ§Ø¡',
+            'Ø§ÙØªØ±Ø§Ø­ ÙÙØªØ¬Ø§Øª Ø¥Ø¶Ø§ÙÙØ© Ø¹ÙØ¯ ØªØ£ÙÙØ¯ Ø§ÙØ·ÙØ¨',
+            'Ø·ÙØ¨ ØªÙÙÙÙØ§Øª Google Ø¨Ø¹Ø¯ Ø§ÙØªÙØµÙÙ',
+            'ÙØªØ§Ø¨Ø¹Ø© Ø§ÙØ§Ø³ØªÙØ³Ø§Ø±Ø§Øª ØºÙØ± Ø§ÙÙÙØªÙÙØ©',
+            'ÙØ§ØªØ³Ø§Ø¨ + ÙÙÙØ¹ + Ø§ÙØ³ØªÙØ±Ø§Ù',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
       },
       {
-        id: 'full-stack',
-        en: 'Full-Stack',
-        ar: 'المتكاملة',
+        id: 'full-auto',
+        en: 'Full Auto',
+        ar: 'Ø§ÙÙØ¤ØªÙØª',
         retainer: 280,
         features: {
           en: [
-            'Everything in Advanced',
-            'Seasonal Promo Broadcasts (Eid, National Day)',
-            'Win-Back Campaign for Inactive Customers',
-            'Custom Order Intake Form via WhatsApp',
-            'Bulk Broadcast to Customer List',
-            'Priority Support + Monthly Strategy Call',
+            'Everything in Pro',
+            'Seasonal promo broadcasts (Eid, National Day)',
+            'Win-back campaigns for inactive customers',
+            'Custom order form via WhatsApp',
+            'Bulk broadcast to customer list',
+            'Priority support + monthly strategy call',
           ],
           ar: [
-            'كل ما في المتقدمة',
-            'حملات موسمية (عيد، اليوم الوطني)',
-            'حملة استعادة العملاء المنقطعين',
-            'نموذج استقبال طلبات مخصص عبر واتساب',
-            'بث جماعي لقائمة العملاء',
-            'دعم أولوية + مكالمة استراتيجية شهرية',
+            'ÙÙ ÙØ§ ÙÙ Ø§ÙÙØªÙØ¯Ù',
+            'Ø­ÙÙØ§Øª ÙÙØ³ÙÙØ© (Ø¹ÙØ¯Ø Ø§ÙÙÙÙ Ø§ÙÙØ·ÙÙ)',
+            'Ø­ÙÙØ§Øª Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙÙØ·Ø¹ÙÙ',
+            'ÙÙÙØ°Ø¬ Ø·ÙØ¨ ÙØ®ØµØµ Ø¹Ø¨Ø± ÙØ§ØªØ³Ø§Ø¨',
+            'Ø¨Ø« Ø¬ÙØ§Ø¹Ù ÙÙØ§Ø¦ÙØ© Ø§ÙØ¹ÙÙØ§Ø¡',
+            'Ø¯Ø¹Ù Ø£ÙÙÙÙØ© + ÙÙØ§ÙÙØ© Ø§Ø³ØªØ±Ø§ØªÙØ¬ÙØ© Ø´ÙØ±ÙØ©',
           ],
         },
+        channels: ['whatsapp', 'website', 'instagram', 'portal', 'analytics'],
       },
     ],
     scenario: {
       painHeadline: {
-        ar: 'صاحبة مشروع منزلي تقضي في المتوسط\n٥–٦ ساعات يومياً تدير واتساب.\nبقيمة وقت ٥ دنانير/ساعة —\nهذا ٧٥٠–٩٠٠ دينار شهرياً تذهب على رسائل متكررة.',
-        en: "A home business owner spends an average of\n5–6 hours daily managing WhatsApp.\nAt 5 KWD/hour value of time —\nthat's 750–900 KWD/month spent on repeated messages.",
+        en: 'A home business owner spends her entire morning\nanswering the same 10 WhatsApp questions.',
+        ar: 'ØµØ§Ø­Ø¨Ø© ÙØ´Ø±ÙØ¹ ÙÙØ²ÙÙ ØªÙØ¶Ù ÙÙ ØµØ¨Ø§Ø­ÙØ§\nØªØ±Ø¯ Ø¹ÙÙ ÙÙØ³ Ø§ÙÙÙ¡Ù  Ø£Ø³Ø¦ÙØ© Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨.',
       },
       painSolution: {
-        ar: 'مايند سينك يشيل هالحمل — وأنتِ تركّزين على الإبداع.',
-        en: 'MindSync takes that weight off — so you focus on your craft.',
+        en: 'Your AI agent handles orders, answers questions, and follows up customers â giving you your time back.',
+        ar: 'ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØªÙÙÙ Ø§ÙØ·ÙØ¨Ø§ØªØ ÙØ¬ÙØ¨ Ø§ÙØ£Ø³Ø¦ÙØ©Ø ÙÙØªØ§Ø¨Ø¹ Ø§ÙØ¹ÙÙØ§Ø¡ â ÙØ±Ø¬Ø¹ÙÙ ÙÙØªÙ.',
       },
       tasksEliminated: {
-        essential: {
-          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
-          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        smart: {
+          en: ['Order inquiry replies', 'Pricing & catalogue messages', 'Delivery area questions'],
+          ar: ['Ø±Ø¯ÙØ¯ Ø§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ø§ÙØ·ÙØ¨Ø§Øª', 'Ø±Ø³Ø§Ø¦Ù Ø§ÙØ£Ø³Ø¹Ø§Ø± ÙØ§ÙÙØªØ§ÙÙØ¬', 'Ø£Ø³Ø¦ÙØ© ÙÙØ§Ø·Ù Ø§ÙØªÙØµÙÙ'],
         },
-        advanced: {
-          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
-          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        pro: {
+          en: ['Loyalty tracking', 'Upsell conversations', 'Review collection'],
+          ar: ['ØªØªØ¨Ø¹ Ø§ÙÙÙØ§Ø¡', 'ÙØ­Ø§Ø¯Ø«Ø§Øª Ø§ÙØ¨ÙØ¹ Ø§ÙØ¥Ø¶Ø§ÙÙ', 'Ø¬ÙØ¹ Ø§ÙØªÙÙÙÙØ§Øª'],
         },
-        'full-stack': {
-          ar: ['الرد على "كم السعر؟" كل يوم', 'تتبع الطلبات وحالتها', 'إرسال تأكيد الطلب', 'البحث عن معلومات عميل قديم', 'إرسال عروض الأعياد يدوياً', 'متابعة ما بعد التسليم'],
-          en: ['Answering "how much?" every day', 'Tracking orders and their status', 'Sending order confirmations', 'Looking up old customer info', 'Sending holiday offers manually', 'Post-delivery follow-up'],
+        'full-auto': {
+          en: ['All customer communication', 'Campaign management', 'Monthly order analysis'],
+          ar: ['ÙÙ Ø§ÙØªÙØ§ØµÙ ÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡', 'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ­ÙÙØ§Øª', 'ØªØ­ÙÙÙ Ø§ÙØ·ÙØ¨Ø§Øª Ø§ÙØ´ÙØ±Ù'],
         },
       },
       tierCtas: {
-        essential:    { ar: 'شيلي ثقل الواتساب عن كتفك', en: 'Take WhatsApp Off Your Plate' },
-        advanced:     { ar: 'خلّي مشروعك يكبر بدون ضغط', en: 'Let Your Business Grow Without the Grind' },
-        'full-stack': { ar: 'شغّلي مشروعك — ركّزي على الجودة', en: 'Run Your Business — Focus on Quality' },
+        smart:       { en: 'Start with Smart', ar: 'Ø§Ø¨Ø¯Ø£ Ø¨Ø§ÙØ°ÙÙ' },
+        pro:         { en: 'Go Pro', ar: 'Ø§Ø®ØªØ± Ø§ÙÙØªÙØ¯Ù' },
+        'full-auto': { en: 'Full Automation', ar: 'Ø§ÙØ£ØªÙØªØ© Ø§ÙÙØ§ÙÙØ©' },
       },
     },
   },
 ]
 
-export const WHATSAPP_NUMBER = '96599539006'
-export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`
+// âââ Website Services âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
-export type AddonId = 'website-design' | 'mobile-app'
-
-export type Addon = {
-  id: AddonId
-  name: { en: string; ar: string }
-  description: { en: string; ar: string }
-  features: { en: string[]; ar: string[] }
-  icon: string
-}
-
-export const ADDONS: Addon[] = [
+export const WEBSITE_SERVICES: WebsiteService[] = [
   {
-    id: 'website-design',
-    name: { en: 'Website Design', ar: 'تصميم الموقع' },
-    description: {
-      en: 'A professional, fast website for your business — built to convert visitors into customers.',
-      ar: 'موقع احترافي وسريع لعملك — مصمم لتحويل الزوار إلى عملاء.',
-    },
+    id: 'landing-page',
+    en: 'Landing Page',
+    ar: 'ØµÙØ­Ø© ÙØ¨ÙØ·',
+    price: 300,
+    deliveryDays: [5, 7],
+    monthlyMaintenance: 80,
     features: {
       en: [
-        'Custom design matching your brand',
-        'Mobile-first & SEO-ready',
-        'Arabic + English bilingual support',
-        'WhatsApp & contact form integration',
-        'Delivered in 14 business days',
+        '1â3 pages, bilingual AR/EN',
+        'Mobile-responsive design',
+        'Basic SEO setup',
+        'Contact / WhatsApp CTA',
+        'Hosting & domain setup',
       ],
       ar: [
-        'تصميم مخصص يعكس هويتك التجارية',
-        'متجاوب مع الجوال وجاهز لمحركات البحث',
-        'دعم ثنائي اللغة: عربي وإنجليزي',
-        'تكامل واتساب ونموذج التواصل',
-        'تسليم خلال ١٤ يوم عمل',
+        'Ù¡âÙ£ ØµÙØ­Ø§ØªØ Ø«ÙØ§Ø¦Ù Ø§ÙÙØºØ© AR/EN',
+        'ØªØµÙÙÙ ÙØªØ¬Ø§ÙØ¨ ÙØ¹ Ø§ÙØ¬ÙØ§Ù',
+        'Ø¥Ø¹Ø¯Ø§Ø¯ SEO Ø£Ø³Ø§Ø³Ù',
+        'Ø²Ø± ØªÙØ§ØµÙ / ÙØ§ØªØ³Ø§Ø¨',
+        'Ø¥Ø¹Ø¯Ø§Ø¯ Ø§ÙØ§Ø³ØªØ¶Ø§ÙØ© ÙØ§ÙØ¯ÙÙÙÙ',
       ],
     },
-    icon: 'globe',
   },
   {
-    id: 'mobile-app',
-    name: { en: 'Mobile App (iOS & Android)', ar: 'تطبيق الجوال (iOS & Android)' },
-    description: {
-      en: 'A native mobile app for your business — give your customers a branded experience on their phone.',
-      ar: 'تطبيق جوال أصيل لعملك — امنح عملاءك تجربة احترافية بهويتك التجارية.',
-    },
+    id: 'business-website',
+    en: 'Business Website',
+    ar: 'ÙÙÙØ¹ ØªØ¬Ø§Ø±Ù',
+    price: 550,
+    deliveryDays: [10, 14],
+    monthlyMaintenance: 80,
     features: {
       en: [
-        'iOS & Android from one codebase',
-        'Booking, catalog, or loyalty features',
-        'Push notifications for offers & reminders',
-        'WhatsApp bot integration ready',
-        'Published to App Store & Google Play',
+        '5â8 pages, bilingual AR/EN',
+        'Mobile-responsive design',
+        'Full SEO setup',
+        'Services / portfolio pages',
+        'Hosting & domain setup',
       ],
       ar: [
-        'iOS وأندرويد من كود واحد',
-        'ميزات الحجز أو الكتالوج أو الولاء',
-        'إشعارات فورية للعروض والتذكيرات',
-        'جاهز للتكامل مع بوت واتساب',
-        'نشر على App Store وGoogle Play',
+        'Ù¥âÙ¨ ØµÙØ­Ø§ØªØ Ø«ÙØ§Ø¦Ù Ø§ÙÙØºØ© AR/EN',
+        'ØªØµÙÙÙ ÙØªØ¬Ø§ÙØ¨ ÙØ¹ Ø§ÙØ¬ÙØ§Ù',
+        'Ø¥Ø¹Ø¯Ø§Ø¯ SEO ÙØ§ÙÙ',
+        'ØµÙØ­Ø§Øª Ø®Ø¯ÙØ§Øª / ÙØ¹Ø±Ø¶ Ø£Ø¹ÙØ§Ù',
+        'Ø¥Ø¹Ø¯Ø§Ø¯ Ø§ÙØ§Ø³ØªØ¶Ø§ÙØ© ÙØ§ÙØ¯ÙÙÙÙ',
       ],
     },
-    icon: 'smartphone',
+  },
+  {
+    id: 'advanced-website',
+    en: 'Advanced Website',
+    ar: 'ÙÙÙØ¹ ÙØªÙØ¯Ù',
+    price: [900, 1400],
+    deliveryDays: [14, 21],
+    monthlyMaintenance: 80,
+    features: {
+      en: [
+        'Custom features (store, booking, dashboard)',
+        'Bilingual AR/EN with RTL',
+        'Payment gateway integration',
+        'Advanced SEO & performance',
+        'Hosting & domain setup',
+      ],
+      ar: [
+        'Ø®ØµØ§Ø¦Øµ ÙØ®ØµØµØ© (ÙØªØ¬Ø±Ø Ø­Ø¬Ø²Ø ÙÙØ­Ø© ØªØ­ÙÙ)',
+        'Ø«ÙØ§Ø¦Ù Ø§ÙÙØºØ© AR/EN ÙØ¹ RTL',
+        'Ø±Ø¨Ø· Ø¨ÙØ§Ø¨Ø© Ø§ÙØ¯ÙØ¹',
+        'SEO ÙØªÙØ¯Ù ÙØ£Ø¯Ø§Ø¡ Ø¹Ø§ÙÙ',
+        'Ø¥Ø¹Ø¯Ø§Ø¯ Ø§ÙØ§Ø³ØªØ¶Ø§ÙØ© ÙØ§ÙØ¯ÙÙÙÙ',
+      ],
+    },
   },
 ]
 
-// DEMO_CONVERSATIONS — Kuwaiti dialect, 8 turns per industry
-// Format: { en: [single string], ar: [single string] }
-// Even index = user bubble, Odd index = bot bubble
+// âââ App Services âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export const APP_SERVICES: AppService[] = [
+  {
+    id: 'simple-app',
+    en: 'Simple App',
+    ar: 'ØªØ·Ø¨ÙÙ Ø¨Ø³ÙØ·',
+    price: [2000, 2500],
+    deliveryDays: [21, 30],
+    monthlyMaintenance: 150,
+    features: {
+      en: [
+        'iOS + Android (cross-platform)',
+        'Bilingual AR/EN with RTL',
+        'Core business features',
+        'App Store + Google Play publishing',
+        'Basic push notifications',
+      ],
+      ar: [
+        'iOS + Android (cross-platform)',
+        'Ø«ÙØ§Ø¦Ù Ø§ÙÙØºØ© AR/EN ÙØ¹ RTL',
+        'Ø®ØµØ§Ø¦Øµ Ø§ÙØ£Ø¹ÙØ§Ù Ø§ÙØ£Ø³Ø§Ø³ÙØ©',
+        'ÙØ´Ø± Ø¹ÙÙ App Store + Google Play',
+        'Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø£Ø³Ø§Ø³ÙØ©',
+      ],
+    },
+  },
+  {
+    id: 'advanced-app',
+    en: 'Advanced App',
+    ar: 'ØªØ·Ø¨ÙÙ ÙØªÙØ¯Ù',
+    price: [3500, 6000],
+    deliveryDays: [30, 45],
+    monthlyMaintenance: 150,
+    features: {
+      en: [
+        'iOS + Android (cross-platform)',
+        'Bilingual AR/EN with RTL',
+        'Custom features (booking, payments, orders, loyalty)',
+        'App Store + Google Play publishing',
+        'Advanced push notifications & analytics',
+      ],
+      ar: [
+        'iOS + Android (cross-platform)',
+        'Ø«ÙØ§Ø¦Ù Ø§ÙÙØºØ© AR/EN ÙØ¹ RTL',
+        'Ø®ØµØ§Ø¦Øµ ÙØ®ØµØµØ© (Ø­Ø¬Ø²Ø Ø¯ÙØ¹Ø Ø·ÙØ¨Ø§ØªØ ÙÙØ§Ø¡)',
+        'ÙØ´Ø± Ø¹ÙÙ App Store + Google Play',
+        'Ø¥Ø´Ø¹Ø§Ø±Ø§Øª ÙØªÙØ¯ÙØ© ÙØªØ­ÙÙÙØ§Øª',
+      ],
+    },
+  },
+]
+
+// âââ Free Trial Offer âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export const FREE_TRIAL = {
+  en: {
+    badge: '1-Week Free Trial',
+    headline: 'Not sure yet? Try it first.',
+    body: 'We build your actual AI system based on your business. Run it for 7 days â no payment needed. If you love it, we activate. If not, no charge.',
+    cta: 'Request Your Free Trial',
+  },
+  ar: {
+    badge: 'Ø£Ø³Ø¨ÙØ¹ ØªØ¬Ø±Ø¨Ø© ÙØ¬Ø§ÙÙØ©',
+    headline: 'ÙÙ ÙØªØ£ÙØ¯ Ø¨Ø¹Ø¯Ø Ø¬Ø±ÙØ¨ Ø£ÙÙ.',
+    body: 'ÙØ¨ÙÙ ÙØ¸Ø§ÙÙ Ø§ÙØ°ÙÙ Ø§ÙÙØ¹ÙÙ Ø¨ÙØ§Ø¡Ù Ø¹ÙÙ ÙØ´Ø±ÙØ¹Ù. Ø´ØºÙÙÙ Ø£Ø³Ø¨ÙØ¹ â Ø¨Ø¯ÙÙ Ø£Ù Ø¯ÙØ¹. Ø¥Ø°Ø§ Ø¹Ø¬Ø¨ÙØ ÙÙØ¹ÙÙÙ. Ø¥Ø°Ø§ ÙØ§Ø ÙØ§ ÙÙ Ø£Ù ØªÙÙÙØ©.',
+    cta: 'Ø§Ø·ÙØ¨ ØªØ¬Ø±Ø¨ØªÙ Ø§ÙÙØ¬Ø§ÙÙØ©',
+  },
+}
+
+// âââ Custom Bundle CTA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+export const CUSTOM_BUNDLE = {
+  en: {
+    name: 'Custom AI System',
+    desc: "Your business doesn't fit the 8 industries? No problem â we design and build a fully custom AI agent system after a consultation call.",
+    cta: 'Book a Consultation',
+  },
+  ar: {
+    name: 'ÙØ¸Ø§Ù Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ',
+    desc: 'ÙØ´Ø±ÙØ¹Ù ÙØ§ ÙÙØ§Ø³Ø¨ Ø§ÙÙÙ¨ ÙØ·Ø§Ø¹Ø§ØªØ ÙÙØ§ ÙÙÙÙ â ÙØµÙÙ ÙÙØ¨ÙÙ ÙØ¸Ø§Ù ÙÙÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ Ø¨Ø§ÙÙØ§ÙÙ Ø¨Ø¹Ø¯ ÙÙØ§ÙÙØ© Ø§Ø³ØªØ´Ø§Ø±Ø©.',
+    cta: 'Ø§Ø­Ø¬Ø² Ø§Ø³ØªØ´Ø§Ø±Ø©',
+  },
+}
+
+// âââ Demo Conversations (Kuwaiti dialect) âââââââââââââââââââââââââââââââââââââ
+
 export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]> = {
 
-  // ─── CLINIC ───
   clinic: [
-    { en: ['Hi, I need to book a dental appointment for a cleaning'], ar: ['هلا، أبي أحجز موعد عند دكتور الأسنان، تنظيف أسنان'] },
-    { en: ['Hala! 😊 We have slots available this week. Which day works best for you — weekday or weekend?'], ar: ['هلا وغلا! 😊 عندنا مواعيد متاحة هالأسبوع. متى تحب؟ — يوم دوام ولا عطلة؟'] },
-    { en: ['Wednesday evening if possible, around 6 or 7pm'], ar: ['الأربعاء المساء لو في، حوالي ٦ أو ٧'] },
-    { en: ['Perfect! Wednesday we have 6:00pm and 7:30pm open. Which one works for you?'], ar: ['زين! الأربعاء عندنا الساعة ٦ مساءً و ٧:٣٠. أي وقت يناسبك؟'] },
-    { en: ['6pm is great. Also — how much does a cleaning cost?'], ar: ['الساعة ٦ تمام. وبس — جم سعر التنظيف؟'] },
-    { en: ['Cleaning is 25 KWD. Includes scaling, polishing, and a full checkup. Shall I confirm the 6pm slot for you?'], ar: ['التنظيف بـ ٢٥ دينار. يشمل التنظيف العميق والتلميع وفحص كامل. أأكد لك موعد الساعة ٦؟'] },
-    { en: ['Yes please, my name is Ahmad Al-Rashidi'], ar: ['أكيد، اسمي أحمد الراشدي'] },
-    { en: ['✅ Done, Ahmad! Wednesday 6:00pm confirmed. You\'ll get a WhatsApp reminder 2 hours before. See you then! 🦷'], ar: ['✅ تم يا أحمد! الأربعاء الساعة ٦ مساءً مؤكد. راح يوصلك تذكير على واتساب قبل ساعتين. نشوفك على خير! 🦷'] },
+    { en: ['Hi, I need to book a dental appointment for a cleaning'], ar: ['ÙÙØ§Ø Ø£Ø¨Ù Ø£Ø­Ø¬Ø² ÙÙØ¹Ø¯ Ø¹ÙØ¯ Ø¯ÙØªÙØ± Ø§ÙØ£Ø³ÙØ§ÙØ ØªÙØ¸ÙÙ Ø£Ø³ÙØ§Ù'] },
+    { en: ['Hala! ð We have slots available this week. Which day works best for you â weekday or weekend?'], ar: ['ÙÙØ§ ÙØºÙØ§! ð Ø¹ÙØ¯ÙØ§ ÙÙØ§Ø¹ÙØ¯ ÙØªØ§Ø­Ø© ÙØ§ÙØ£Ø³Ø¨ÙØ¹. ÙØªÙ ØªØ­Ø¨Ø â ÙÙÙ Ø¯ÙØ§Ù ÙÙØ§ Ø¹Ø·ÙØ©Ø'] },
+    { en: ['Wednesday evening if possible, around 6 or 7pm'], ar: ['Ø§ÙØ£Ø±Ø¨Ø¹Ø§Ø¡ Ø§ÙÙØ³Ø§Ø¡ ÙÙ ÙÙØ Ø­ÙØ§ÙÙ Ù¦ Ø£Ù Ù§'] },
+    { en: ['Perfect! Wednesday we have 6:00pm and 7:30pm open. Which one works for you?'], ar: ['Ø²ÙÙ! Ø§ÙØ£Ø±Ø¨Ø¹Ø§Ø¡ Ø¹ÙØ¯ÙØ§ Ø§ÙØ³Ø§Ø¹Ø© Ù¦ ÙØ³Ø§Ø¡Ù Ù Ù§:Ù£Ù . Ø£Ù ÙÙØª ÙÙØ§Ø³Ø¨ÙØ'] },
+    { en: ['6pm is great. Also â how much does a cleaning cost?'], ar: ['Ø§ÙØ³Ø§Ø¹Ø© Ù¦ ØªÙØ§Ù. ÙØ¨Ø³ â Ø¬Ù Ø³Ø¹Ø± Ø§ÙØªÙØ¸ÙÙØ'] },
+    { en: ['Cleaning is 25 KWD. Includes scaling, polishing, and a full checkup. Shall I confirm the 6pm slot for you?'], ar: ['Ø§ÙØªÙØ¸ÙÙ Ø¨Ù Ù¢Ù¥ Ø¯ÙÙØ§Ø±. ÙØ´ÙÙ Ø§ÙØªÙØ¸ÙÙ Ø§ÙØ¹ÙÙÙ ÙØ§ÙØªÙÙÙØ¹ ÙÙØ­Øµ ÙØ§ÙÙ. Ø£Ø£ÙØ¯ ÙÙ ÙÙØ¹Ø¯ Ø§ÙØ³Ø§Ø¹Ø© Ù¦Ø'] },
+    { en: ['Yes please, my name is Ahmad Al-Rashidi'], ar: ['Ø£ÙÙØ¯Ø Ø§Ø³ÙÙ Ø£Ø­ÙØ¯ Ø§ÙØ±Ø§Ø´Ø¯Ù'] },
+    { en: ["â Done, Ahmad! Wednesday 6:00pm confirmed. You'll get a WhatsApp reminder 2 hours before. See you then! ð¦·"], ar: ['â ØªÙ ÙØ§ Ø£Ø­ÙØ¯! Ø§ÙØ£Ø±Ø¨Ø¹Ø§Ø¡ Ø§ÙØ³Ø§Ø¹Ø© Ù¦ ÙØ³Ø§Ø¡Ù ÙØ¤ÙØ¯. Ø±Ø§Ø­ ÙÙØµÙÙ ØªØ°ÙÙØ± Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙØ¨Ù Ø³Ø§Ø¹ØªÙÙ. ÙØ´ÙÙÙ Ø¹ÙÙ Ø®ÙØ±! ð¦·'] },
   ],
 
-  // ─── SALON ───
   salon: [
-    { en: ['Hey, is Fatima available this Saturday for a keratin treatment?'], ar: ['هلا، فاطمة فاضيه يوم السبت؟ أبي أسوي كيراتين'] },
-    { en: ['Hala! Let me check Fatima\'s schedule... ✅ She has Saturday at 11am and 2pm open. Which works?'], ar: ['هلا! ثواني أشوف جدول فاطمة الحين... ✅ عندها السبت الساعة ١١ الصبح و ٢ الظهر. أي وقت يناسب؟'] },
-    { en: ['2pm is better. How long does keratin take?'], ar: ['الساعة ٢ أحسن. وجم ياخذ الكيراتين وقت؟'] },
-    { en: ['Keratin takes around 2.5 to 3 hours depending on hair length. Fatima\'s fully available from 2pm. Want me to book it?'], ar: ['الكيراتين ياخذ تقريباً ٢.٥ إلى ٣ ساعات حسب طول الشعر. فاطمة فاضية من الساعة ٢. أحجز؟'] },
-    { en: ['Yes! And what\'s the price?'], ar: ['أكيد! وجم سعرها؟'] },
-    { en: ['Keratin with Fatima is 45 KWD. Includes blow-dry and style finish. Should I put your name down?'], ar: ['الكيراتين عند فاطمة بـ ٤٥ دينار. يشمل مجفف وتسريحة نهائية. أحط اسمك؟'] },
-    { en: ['Please, it\'s Mariam'], ar: ['لو سمحتي، اسمي مريم'] },
-    { en: ['✅ Booked, Mariam! Saturday 2:00pm with Fatima — Keratin. Reminder coming your way the morning of 💅'], ar: ['✅ تم الحجز يا مريم! السبت الساعة ٢ مع فاطمة — كيراتين. راح يوصل تذكير صباح اليوم 💅'] },
+    { en: ['Hey, is Fatima available this Saturday for a keratin treatment?'], ar: ['ÙÙØ§Ø ÙØ§Ø·ÙØ© ÙØ§Ø¶ÙÙ ÙÙÙ Ø§ÙØ³Ø¨ØªØ Ø£Ø¨Ù Ø£Ø³ÙÙ ÙÙØ±Ø§ØªÙÙ'] },
+    { en: ["Hala! Let me check Fatima's schedule... â She has Saturday at 11am and 2pm open. Which works?"], ar: ['ÙÙØ§! Ø«ÙØ§ÙÙ Ø£Ø´ÙÙ Ø¬Ø¯ÙÙ ÙØ§Ø·ÙØ© Ø§ÙØ­ÙÙ... â Ø¹ÙØ¯ÙØ§ Ø§ÙØ³Ø¨Øª Ø§ÙØ³Ø§Ø¹Ø© Ù¡Ù¡ Ø§ÙØµØ¨Ø­ Ù Ù¢ Ø§ÙØ¸ÙØ±. Ø£Ù ÙÙØª ÙÙØ§Ø³Ø¨Ø'] },
+    { en: ['2pm is better. How long does keratin take?'], ar: ['Ø§ÙØ³Ø§Ø¹Ø© Ù¢ Ø£Ø­Ø³Ù. ÙØ¬Ù ÙØ§Ø®Ø° Ø§ÙÙÙØ±Ø§ØªÙÙ ÙÙØªØ'] },
+    { en: ["Keratin takes around 2.5 to 3 hours depending on hair length. Fatima's fully available from 2pm. Want me to book it?"], ar: ['Ø§ÙÙÙØ±Ø§ØªÙÙ ÙØ§Ø®Ø° ØªÙØ±ÙØ¨Ø§Ù Ù¢.Ù¥ Ø¥ÙÙ Ù£ Ø³Ø§Ø¹Ø§Øª Ø­Ø³Ø¨ Ø·ÙÙ Ø§ÙØ´Ø¹Ø±. ÙØ§Ø·ÙØ© ÙØ§Ø¶ÙØ© ÙÙ Ø§ÙØ³Ø§Ø¹Ø© Ù¢. Ø£Ø­Ø¬Ø²Ø'] },
+    { en: ['Yes! And what\'s the price?'], ar: ['Ø£ÙÙØ¯! ÙØ¬Ù Ø³Ø¹Ø±ÙØ§Ø'] },
+    { en: ['Keratin with Fatima is 45 KWD. Includes blow-dry and style finish. Should I put your name down?'], ar: ['Ø§ÙÙÙØ±Ø§ØªÙÙ Ø¹ÙØ¯ ÙØ§Ø·ÙØ© Ø¨Ù Ù¤Ù¥ Ø¯ÙÙØ§Ø±. ÙØ´ÙÙ ÙØ¬ÙÙ ÙØªØ³Ø±ÙØ­Ø© ÙÙØ§Ø¦ÙØ©. Ø£Ø­Ø· Ø§Ø³ÙÙØ'] },
+    { en: ["Please, it's Mariam"], ar: ['ÙÙ Ø³ÙØ­ØªÙØ Ø§Ø³ÙÙ ÙØ±ÙÙ'] },
+    { en: ['â Booked, Mariam! Saturday 2:00pm with Fatima â Keratin. Reminder coming your way the morning of ð'], ar: ['â ØªÙ Ø§ÙØ­Ø¬Ø² ÙØ§ ÙØ±ÙÙ! Ø§ÙØ³Ø¨Øª Ø§ÙØ³Ø§Ø¹Ø© Ù¢ ÙØ¹ ÙØ§Ø·ÙØ© â ÙÙØ±Ø§ØªÙÙ. Ø±Ø§Ø­ ÙÙØµÙ ØªØ°ÙÙØ± ØµØ¨Ø§Ø­ Ø§ÙÙÙÙ ð'] },
   ],
 
-  // ─── SPA ───
   spa: [
-    { en: ['Hi, I want to book a Swedish massage for this Thursday'], ar: ['هلا، أبي أحجز مساج سويدي يوم الخميس'] },
-    { en: ['Hala! 😊 Thursday we have availability at 3pm, 5pm, and 7pm. Which time works best for you?'], ar: ['هلا وغلا! 😊 الخميس عندنا مواعيد الساعة ٣ وٰ٥ وٰ٧. أي وقت يناسبك؟'] },
-    { en: ['5pm is perfect. How long is the session?'], ar: ['الساعة ٥ تمام. وجم تاخذ الجلسة؟'] },
-    { en: ['Swedish massage is 60 minutes. We also have a 90-minute option with hot stone for 10 KWD more. Interested in the upgrade?'], ar: ['المساج السويدي ٦٠ دقيقة. عندنا كذلك خيار ٩٠ دقيقة مع الحجارة الساخنة بـ ١٠ دنانير إضافية. تحب الترقية؟'] },
-    { en: ['No thanks, 60 minutes is fine. What\'s the price?'], ar: ['لا شكراً، ٦٠ دقيقة كافي. وجم السعر؟'] },
-    { en: ['Swedish massage 60 min is 35 KWD. Includes aromatherapy oils and post-session herbal tea. Shall I book Thursday 5pm for you?'], ar: ['المساج السويدي ٦٠ دقيقة بـ ٣٥ دينار. يشمل زيوت عطرية وشاي أعشاب بعد الجلسة. أحجزلك الخميس الساعة ٥؟'] },
-    { en: ['Yes please, my name is Sara'], ar: ['أكيدي، اسمي سارة'] },
-    { en: ['✅ Booked, Sara! Thursday 5:00pm — Swedish Massage 60 min. You\'ll receive a reminder on WhatsApp the morning of. See you soon! 🌿'], ar: ['✅ تم الحجز يا سارة! الخميس الساعة ٥ مساءً — مساج سويدي ٦٠ دقيقة. راح يوصلك تذكير صباح يوم الخميس. نشوفك! 🌿'] },
+    { en: ['Hi, I want to book a Swedish massage for this Thursday'], ar: ['ÙÙØ§Ø Ø£Ø¨Ù Ø£Ø­Ø¬Ø² ÙØ³Ø§Ø¬ Ø³ÙÙØ¯Ù ÙÙÙ Ø§ÙØ®ÙÙØ³'] },
+    { en: ['Hala! ð Thursday we have availability at 3pm, 5pm, and 7pm. Which time works best for you?'], ar: ['ÙÙØ§ ÙØºÙØ§! ð Ø§ÙØ®ÙÙØ³ Ø¹ÙØ¯ÙØ§ ÙÙØ§Ø¹ÙØ¯ Ø§ÙØ³Ø§Ø¹Ø© Ù£ ÙÙ°Ù¥ ÙÙ°Ù§. Ø£Ù ÙÙØª ÙÙØ§Ø³Ø¨ÙØ'] },
+    { en: ['5pm is perfect. How long is the session?'], ar: ['Ø§ÙØ³Ø§Ø¹Ø© Ù¥ ØªÙØ§Ù. ÙØ¬Ù ØªØ§Ø®Ø° Ø§ÙØ¬ÙØ³Ø©Ø'] },
+    { en: ['Swedish massage is 60 minutes. We also have a 90-minute option with hot stone for 10 KWD more. Interested in the upgrade?'], ar: ['Ø§ÙÙØ³Ø§Ø¬ Ø§ÙØ³ÙÙØ¯Ù Ù¦Ù  Ø¯ÙÙÙØ©. Ø¹ÙØ¯ÙØ§ ÙØ°ÙÙ Ø®ÙØ§Ø± Ù©Ù  Ø¯ÙÙÙØ© ÙØ¹ Ø§ÙØ­Ø¬Ø§Ø±Ø© Ø§ÙØ³Ø§Ø®ÙØ© Ø¨Ù Ù¡Ù  Ø¯ÙØ§ÙÙØ± Ø¥Ø¶Ø§ÙÙØ©. ØªØ­Ø¨ Ø§ÙØªØ±ÙÙØ©Ø'] },
+    { en: ["No thanks, 60 minutes is fine. What's the price?"], ar: ['ÙØ§ Ø´ÙØ±Ø§ÙØ Ù¦Ù  Ø¯ÙÙÙØ© ÙØ§ÙÙ. ÙØ¬Ù Ø§ÙØ³Ø¹Ø±Ø'] },
+    { en: ['Swedish massage 60 min is 35 KWD. Includes aromatherapy oils and post-session herbal tea. Shall I book Thursday 5pm for you?'], ar: ['Ø§ÙÙØ³Ø§Ø¬ Ø§ÙØ³ÙÙØ¯Ù Ù¦Ù  Ø¯ÙÙÙØ© Ø¨Ù Ù£Ù¥ Ø¯ÙÙØ§Ø±. ÙØ´ÙÙ Ø²ÙÙØª Ø¹Ø·Ø±ÙØ© ÙØ´Ø§Ù Ø£Ø¹Ø´Ø§Ø¨ Ø¨Ø¹Ø¯ Ø§ÙØ¬ÙØ³Ø©. Ø£Ø­Ø¬Ø²ÙÙ Ø§ÙØ®ÙÙØ³ Ø§ÙØ³Ø§Ø¹Ø© Ù¥Ø'] },
+    { en: ['Yes please, my name is Sara'], ar: ['Ø£ÙÙØ¯ÙØ Ø§Ø³ÙÙ Ø³Ø§Ø±Ø©'] },
+    { en: ['â Booked, Sara! Thursday 5:00pm â Swedish Massage 60 min. Reminder on WhatsApp the morning of. See you soon! ð¿'], ar: ['â ØªÙ Ø§ÙØ­Ø¬Ø² ÙØ§ Ø³Ø§Ø±Ø©! Ø§ÙØ®ÙÙØ³ Ø§ÙØ³Ø§Ø¹Ø© Ù¥ ÙØ³Ø§Ø¡Ù â ÙØ³Ø§Ø¬ Ø³ÙÙØ¯Ù Ù¦Ù  Ø¯ÙÙÙØ©. Ø±Ø§Ø­ ÙÙØµÙÙ ØªØ°ÙÙØ± ØµØ¨Ø§Ø­ ÙÙÙ Ø§ÙØ®ÙÙØ³. ÙØ´ÙÙÙ! ð¿'] },
   ],
 
-  // ─── GYM ───
   gym: [
-    { en: ['Hi, I want to join the gym. What memberships do you have?'], ar: ['هلا، أبي أشترك بالجيم. شنو عندكم من اشتراكات؟'] },
-    { en: ['Hala, welcome! 💪 We have 3 options:\n• Monthly: 35 KWD\n• 3 Months: 90 KWD\n• 6 Months: 160 KWD\nAll include full access + locker. Which one interests you?'], ar: ['هلا وغلا، حياك! 💪 عندنا ٣ خيارات:\n• شهري: ٣٥ دينار\n• ٣ أشهر: ٩٠ دينار\n• ٦ أشهر: ١٦٠ دينار\nكلها تشمل دخول كامل + خزانة. أي وحدة تبي؟'] },
-    { en: ['The 3 months sounds good. Do you have personal training too?'], ar: ['الثلاثة أشهر زينة. وعندكم تدريب شخصي؟'] },
-    { en: ['Yes! PT sessions are 15 KWD each or 8 sessions for 100 KWD. Our trainers speak Arabic and English. Want to add PT with your membership?'], ar: ['أكيد عندنا! جلسات التدريب الشخصي بـ ١٥ دينار الجلسة، أو ٨ جلسات بـ ١٠٠ دينار. مدربينا يتكلمون عربي وإنجليزي. تبي تضيف تدريب مع الاشتراك؟'] },
-    { en: ['Maybe later. What are the gym hours? And where are you located?'], ar: ['بعدين إن شاء الله. متى ساعات العمل؟ ووين موقعكم؟'] },
-    { en: ['We\'re open 5:30am–11pm weekdays, 7am–10pm weekends. Located in Salmiya, near the co-op. I\'ll send you the location pin on WhatsApp 📍'], ar: ['فاتحين من ٥:٣٠ الصبح إلى ١١ الليل أيام الدوام، و٧ الصبح إلى ١٠ الليل العطل. موقعنا في السالمية، قريب الجمعية. أرسلك اللوكيشن على واتساب 📍'] },
-    { en: ['Perfect. I\'ll take the 3-month membership. My name is Khalid'], ar: ['تمام. أبي اشتراك ٣ أشهر. اسمي خالد'] },
-    { en: ['✅ Khalid, you\'re in! 3-month membership registered. Our team will send payment details on WhatsApp within minutes. See you at the gym! 💪'], ar: ['✅ يا خالد، تم تسجيلك! اشتراك ٣ أشهر محجوز. فريقنا راح يرسللك تفاصيل الدفع على واتساب بدقايق. نشوفك بالجيم! 💪'] },
+    { en: ['Hi, I want to join the gym. What memberships do you have?'], ar: ['ÙÙØ§Ø Ø£Ø¨Ù Ø£Ø´ØªØ±Ù Ø¨Ø§ÙØ¬ÙÙ. Ø´ÙÙ Ø¹ÙØ¯ÙÙ ÙÙ Ø§Ø´ØªØ±Ø§ÙØ§ØªØ'] },
+    { en: ['Hala, welcome! ðª We have 3 options:\nâ¢ Monthly: 35 KWD\nâ¢ 3 Months: 90 KWD\nâ¢ 6 Months: 160 KWD\nAll include full access + locker. Which one interests you?'], ar: ['ÙÙØ§ ÙØºÙØ§Ø Ø­ÙØ§Ù! ðª Ø¹ÙØ¯ÙØ§ Ù£ Ø®ÙØ§Ø±Ø§Øª:\nâ¢ Ø´ÙØ±Ù: Ù£Ù¥ Ø¯ÙÙØ§Ø±\nâ¢ Ù£ Ø£Ø´ÙØ±: Ù©Ù  Ø¯ÙÙØ§Ø±\nâ¢ Ù¦ Ø£Ø´ÙØ±: Ù¡Ù¦Ù  Ø¯ÙÙØ§Ø±\nÙÙÙØ§ ØªØ´ÙÙ Ø¯Ø®ÙÙ ÙØ§ÙÙ + Ø®Ø²Ø§ÙØ©. Ø£Ù ÙØ­Ø¯Ø© ØªØ¨ÙØ'] },
+    { en: ['The 3 months sounds good. Do you have personal training too?'], ar: ['Ø§ÙØ«ÙØ§Ø«Ø© Ø£Ø´ÙØ± Ø²ÙÙØ©. ÙØ¹ÙØ¯ÙÙ ØªØ¯Ø±ÙØ¨ Ø´Ø®ØµÙØ'] },
+    { en: ['Yes! PT sessions are 15 KWD each or 8 sessions for 100 KWD. Our trainers speak Arabic and English. Want to add PT with your membership?'], ar: ['Ø£ÙÙØ¯ Ø¹ÙØ¯ÙØ§! Ø¬ÙØ³Ø§Øª Ø§ÙØªØ¯Ø±ÙØ¨ Ø§ÙØ´Ø®ØµÙ Ø¨Ù Ù¡Ù¥ Ø¯ÙÙØ§Ø± Ø§ÙØ¬ÙØ³Ø©Ø Ø£Ù Ù¨ Ø¬ÙØ³Ø§Øª Ø¨Ù Ù¡Ù Ù  Ø¯ÙÙØ§Ø±. ÙØ¯Ø±Ø¨ÙÙØ§ ÙØªÙÙÙÙÙ Ø¹Ø±Ø¨Ù ÙØ¥ÙØ¬ÙÙØ²Ù. ØªØ¨Ù ØªØ¶ÙÙ ØªØ¯Ø±ÙØ¨ ÙØ¹ Ø§ÙØ§Ø´ØªØ±Ø§ÙØ'] },
+    { en: ["Maybe later. What are the gym hours? And where are you located?"], ar: ['Ø¨Ø¹Ø¯ÙÙ Ø¥Ù Ø´Ø§Ø¡ Ø§ÙÙÙ. ÙØªÙ Ø³Ø§Ø¹Ø§Øª Ø§ÙØ¹ÙÙØ ÙÙÙÙ ÙÙÙØ¹ÙÙØ'] },
+    { en: ["We're open 5:30amâ11pm weekdays, 7amâ10pm weekends. Located in Salmiya, near the co-op. I'll send you the location pin on WhatsApp ð"], ar: ['ÙØ§ØªØ­ÙÙ ÙÙ Ù¥:Ù£Ù  Ø§ÙØµØ¨Ø­ Ø¥ÙÙ Ù¡Ù¡ Ø§ÙÙÙÙ Ø£ÙØ§Ù Ø§ÙØ¯ÙØ§ÙØ ÙÙ§ Ø§ÙØµØ¨Ø­ Ø¥ÙÙ Ù¡Ù  Ø§ÙÙÙÙ Ø§ÙØ¹Ø·Ù. ÙÙÙØ¹ÙØ§ ÙÙ Ø§ÙØ³Ø§ÙÙÙØ©Ø ÙØ±ÙØ¨ Ø§ÙØ¬ÙØ¹ÙØ©. Ø£Ø±Ø³ÙÙ Ø§ÙÙÙÙÙØ´Ù Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ð'] },
+    { en: ["Perfect. I'll take the 3-month membership. My name is Khalid"], ar: ['ØªÙØ§Ù. Ø£Ø¨Ù Ø§Ø´ØªØ±Ø§Ù Ù£ Ø£Ø´ÙØ±. Ø§Ø³ÙÙ Ø®Ø§ÙØ¯'] },
+    { en: ["â Khalid, you're in! 3-month membership registered. Our team will send payment details on WhatsApp within minutes. See you at the gym! ðª"], ar: ['â ÙØ§ Ø®Ø§ÙØ¯Ø ØªÙ ØªØ³Ø¬ÙÙÙ! Ø§Ø´ØªØ±Ø§Ù Ù£ Ø£Ø´ÙØ± ÙØ­Ø¬ÙØ². ÙØ±ÙÙÙØ§ Ø±Ø§Ø­ ÙØ±Ø³ÙÙÙ ØªÙØ§ØµÙÙ Ø§ÙØ¯ÙØ¹ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ Ø¨Ø¯ÙØ§ÙÙ. ÙØ´ÙÙÙ Ø¨Ø§ÙØ¬ÙÙ! ðª'] },
   ],
 
-  // ─── GARAGE ───
   garage: [
-    { en: ['Hi, I left my Camry with you guys yesterday. Any update?'], ar: ['هلا، خليت الكامري عندكم أمس. في أي تحديث؟'] },
-    { en: ['Hala! Let me check... Your Camry (plate: 12345) — engine oil done ✅, AC filter replaced ✅. Currently waiting on a brake pad part, arrives tomorrow morning إن شاء الله.'], ar: ['هلا! أشوف الحين... الكامري (لوحة: ١٢٣٤٥) — تغيير الزيت خلاص ✅، فلتر التكييف اتغير ✅. الحين ننطر قطعة الفرامل، توصل باجر الصبح إن شاء الله.'] },
-    { en: ['Okay good. And roughly how much is the total going to be?'], ar: ['زين. وتقريباً جم يطلع الحساب كامل؟'] },
-    { en: ['Estimated total: 75–85 KWD depending on the brake pad price. We\'ll send the exact invoice on WhatsApp once the part arrives. No surprises 👍'], ar: ['الحساب المتوقع: ٧٥–٨٥ دينار حسب سعر قطعة الفرامل. نرسل الفاتورة الدقيقة على واتساب لما توصل القطعة. ماكو مفاجآت 👍'] },
-    { en: ['Good. And when will it be fully ready for pickup?'], ar: ['حلو. ومتى تكون جاهزة للاستلام بالكامل؟'] },
-    { en: ['If the part arrives on time tomorrow, your Camry will be ready by Thursday afternoon. We\'ll send you a WhatsApp message the moment it\'s done ✅'], ar: ['إذا وصلت القطعة باجر بوقتها، الكامري تكون جاهزة الخميس بعد الظهر. نرسللك رسالة واتساب وقت ما تخلص ✅'] },
-    { en: ['Perfect. And can I pay by knet when I pick it up?'], ar: ['تمام. وأقدر أدفع كي-نت وقت الاستلام؟'] },
-    { en: ['Akeed! We accept Knet, cash, and bank transfer. No problem at all. See you Thursday, and laa tsheel hamm — your car is in good hands 🔧'], ar: ['أكيد! نقبل كي-نت، كاش، وتحويل بنكي. ولا يهمك. نشوفك الخميس، لا تشيل هم — سيارتك بأيدٍ أمينة 🔧'] },
+    { en: ['Hi, I left my Camry with you guys yesterday. Any update?'], ar: ['ÙÙØ§Ø Ø®ÙÙØª Ø§ÙÙØ§ÙØ±Ù Ø¹ÙØ¯ÙÙ Ø£ÙØ³. ÙÙ Ø£Ù ØªØ­Ø¯ÙØ«Ø'] },
+    { en: ['Hala! Let me check... Your Camry (plate: 12345) â engine oil done â, AC filter replaced â. Currently waiting on a brake pad part, arrives tomorrow morning Ø¥Ù Ø´Ø§Ø¡ Ø§ÙÙÙ.'], ar: ['ÙÙØ§! Ø£Ø´ÙÙ Ø§ÙØ­ÙÙ... Ø§ÙÙØ§ÙØ±Ù (ÙÙØ­Ø©: Ù¡Ù¢Ù£Ù¤Ù¥) â ØªØºÙÙØ± Ø§ÙØ²ÙØª Ø®ÙØ§Øµ âØ ÙÙØªØ± Ø§ÙØªÙÙÙÙ Ø§ØªØºÙØ± â. Ø§ÙØ­ÙÙ ÙÙØ·Ø± ÙØ·Ø¹Ø© Ø§ÙÙØ±Ø§ÙÙØ ØªÙØµÙ Ø¨Ø§Ø¬Ø± Ø§ÙØµØ¨Ø­ Ø¥Ù Ø´Ø§Ø¡ Ø§ÙÙÙ.'] },
+    { en: ['Okay good. And roughly how much is the total going to be?'], ar: ['Ø²ÙÙ. ÙØªÙØ±ÙØ¨Ø§Ù Ø¬Ù ÙØ·ÙØ¹ Ø§ÙØ­Ø³Ø§Ø¨ ÙØ§ÙÙØ'] },
+    { en: ["Estimated total: 75â85 KWD depending on the brake pad price. We'll send the exact invoice on WhatsApp once the part arrives. No surprises ð"], ar: ['Ø§ÙØ­Ø³Ø§Ø¨ Ø§ÙÙØªÙÙØ¹: Ù§Ù¥âÙ¨Ù¥ Ø¯ÙÙØ§Ø± Ø­Ø³Ø¨ Ø³Ø¹Ø± ÙØ·Ø¹Ø© Ø§ÙÙØ±Ø§ÙÙ. ÙØ±Ø³Ù Ø§ÙÙØ§ØªÙØ±Ø© Ø§ÙØ¯ÙÙÙØ© Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ÙÙØ§ ØªÙØµÙ Ø§ÙÙØ·Ø¹Ø©. ÙØ§ÙÙ ÙÙØ§Ø¬Ø¢Øª ð'] },
+    { en: ['Good. And when will it be fully ready for pickup?'], ar: ['Ø­ÙÙ. ÙÙØªÙ ØªÙÙÙ Ø¬Ø§ÙØ²Ø© ÙÙØ§Ø³ØªÙØ§Ù Ø¨Ø§ÙÙØ§ÙÙØ'] },
+    { en: ["If the part arrives on time tomorrow, your Camry will be ready by Thursday afternoon. We'll send you a WhatsApp message the moment it's done â"], ar: ['Ø¥Ø°Ø§ ÙØµÙØª Ø§ÙÙØ·Ø¹Ø© Ø¨Ø§Ø¬Ø± Ø¨ÙÙØªÙØ§Ø Ø§ÙÙØ§ÙØ±Ù ØªÙÙÙ Ø¬Ø§ÙØ²Ø© Ø§ÙØ®ÙÙØ³ Ø¨Ø¹Ø¯ Ø§ÙØ¸ÙØ±. ÙØ±Ø³ÙÙÙ Ø±Ø³Ø§ÙØ© ÙØ§ØªØ³Ø§Ø¨ ÙÙØª ÙØ§ ØªØ®ÙØµ â'] },
+    { en: ['Perfect. And can I pay by knet when I pick it up?'], ar: ['ØªÙØ§Ù. ÙØ£ÙØ¯Ø± Ø£Ø¯ÙØ¹ ÙÙ-ÙØª ÙÙØª Ø§ÙØ§Ø³ØªÙØ§ÙØ'] },
+    { en: ["Akeed! We accept Knet, cash, and bank transfer. No problem at all. See you Thursday, and laa tsheel hamm â your car is in good hands ð§"], ar: ['Ø£ÙÙØ¯! ÙÙØ¨Ù ÙÙ-ÙØªØ ÙØ§Ø´Ø ÙØªØ­ÙÙÙ Ø¨ÙÙÙ. ÙÙØ§ ÙÙÙÙ. ÙØ´ÙÙÙ Ø§ÙØ®ÙÙØ³Ø ÙØ§ ØªØ´ÙÙ ÙÙ â Ø³ÙØ§Ø±ØªÙ Ø¨Ø£ÙØ¯Ù Ø£ÙÙÙØ© ð§'] },
   ],
 
-  // ─── RESTAURANT ───
   restaurant: [
-    { en: ['Hey, do you have a table for 5 this Friday evening?'], ar: ['هلا، عندكم طاولة لـ٥ أشخاص يوم الجمعة المساء؟'] },
-    { en: ['Hala! Friday evening we have availability at 7:30pm and 9:00pm for 5 guests. Any preference?'], ar: ['هلا وغلا! الجمعة المساء عندنا طاولة متاحة الساعة ٧:٣٠ والساعة ٩ لـ٥ أشخاص. أي وقت يناسبكم؟'] },
-    { en: ['7:30pm works. Is it indoors or outdoors? We prefer outside'], ar: ['الساعة ٧:٣٠ تمام. هل الطاولة داخلية ولا خارجية؟ نبي برّة'] },
-    { en: ['Great choice! We have outdoor seating available at 7:30pm. Should I reserve an outdoor table for 5 in your name?'], ar: ['خيار ممتاز! عندنا جلوس خارجي متاح الساعة ٧:٣٠. أحجزلكم طاولة برّة لـ٥ بإسمك؟'] },
-    { en: ['Yes please. Also, do you have a set menu or à la carte?'], ar: ['اي لو سمحت. وهل عندكم مينيو ثابت ولا بوفيه؟'] },
-    { en: ['Both! Full à la carte menu plus a weekend set menu at 12 KWD per person (3 courses). I\'ll send the full menu link on WhatsApp 🍽️ What\'s the name for the reservation?'], ar: ['الثنين! قائمة مينيو كاملة وكذلك البوفيه للعطلة بـ ١٢ دينار للشخص (٣ أطباق). أرسللك رابط المنيو الكامل على واتساب 🍽️ شنو الاسم للحجز؟'] },
-    { en: ['Nasser Al-Mutairi'], ar: ['ناصر المطيري'] },
-    { en: ['✅ Reserved, Nasser! Friday 7:30pm, outdoor table for 5. Reminder + menu link coming to you on WhatsApp. See you then! 🌟'], ar: ['✅ تم الحجز يا ناصر! الجمعة الساعة ٧:٣٠، طاولة برّة لـ٥. تذكير ورابط المنيو يوصلك على واتساب. نشوفكم! 🌟'] },
+    { en: ['Hey, do you have a table for 5 this Friday evening?'], ar: ['ÙÙØ§Ø Ø¹ÙØ¯ÙÙ Ø·Ø§ÙÙØ© ÙÙÙ¥ Ø£Ø´Ø®Ø§Øµ ÙÙÙ Ø§ÙØ¬ÙØ¹Ø© Ø§ÙÙØ³Ø§Ø¡Ø'] },
+    { en: ['Hala! Friday evening we have availability at 7:30pm and 9:00pm for 5 guests. Any preference?'], ar: ['ÙÙØ§ ÙØºÙØ§! Ø§ÙØ¬ÙØ¹Ø© Ø§ÙÙØ³Ø§Ø¡ Ø¹ÙØ¯ÙØ§ Ø·Ø§ÙÙØ© ÙØªØ§Ø­Ø© Ø§ÙØ³Ø§Ø¹Ø© Ù§:Ù£Ù  ÙØ§ÙØ³Ø§Ø¹Ø© Ù© ÙÙÙ¥ Ø£Ø´Ø®Ø§Øµ. Ø£Ù ÙÙØª ÙÙØ§Ø³Ø¨ÙÙØ'] },
+    { en: ['7:30pm works. Is it indoors or outdoors? We prefer outside'], ar: ['Ø§ÙØ³Ø§Ø¹Ø© Ù§:Ù£Ù  ØªÙØ§Ù. ÙÙ Ø§ÙØ·Ø§ÙÙØ© Ø¯Ø§Ø®ÙÙØ© ÙÙØ§ Ø®Ø§Ø±Ø¬ÙØ©Ø ÙØ¨Ù Ø¨Ø±ÙØ©'] },
+    { en: ['Great choice! We have outdoor seating available at 7:30pm. Should I reserve an outdoor table for 5 in your name?'], ar: ['Ø®ÙØ§Ø± ÙÙØªØ§Ø²! Ø¹ÙØ¯ÙØ§ Ø¬ÙÙØ³ Ø®Ø§Ø±Ø¬Ù ÙØªØ§Ø­ Ø§ÙØ³Ø§Ø¹Ø© Ù§:Ù£Ù . Ø£Ø­Ø¬Ø²ÙÙÙ Ø·Ø§ÙÙØ© Ø¨Ø±ÙØ© ÙÙÙ¥ Ø¨Ø¥Ø³ÙÙØ'] },
+    { en: ['Yes please. Also, do you have a set menu or Ã  la carte?'], ar: ['Ø§Ù ÙÙ Ø³ÙØ­Øª. ÙÙÙ Ø¹ÙØ¯ÙÙ ÙÙÙÙÙ Ø«Ø§Ø¨Øª ÙÙØ§ Ø¨ÙÙÙÙØ'] },
+    { en: ["Both! Full Ã  la carte menu plus a weekend set menu at 12 KWD per person (3 courses). I'll send the full menu link on WhatsApp ð½ï¸ What's the name for the reservation?"], ar: ['Ø§ÙØ«ÙÙÙ! ÙØ§Ø¦ÙØ© ÙÙÙÙÙ ÙØ§ÙÙØ© ÙÙØ°ÙÙ Ø§ÙØ¨ÙÙÙÙ ÙÙØ¹Ø·ÙØ© Ø¨Ù Ù¡Ù¢ Ø¯ÙÙØ§Ø± ÙÙØ´Ø®Øµ (Ù£ Ø£Ø·Ø¨Ø§Ù). Ø£Ø±Ø³ÙÙÙ Ø±Ø§Ø¨Ø· Ø§ÙÙÙÙÙ Ø§ÙÙØ§ÙÙ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ ð½ï¸ Ø´ÙÙ Ø§ÙØ§Ø³Ù ÙÙØ­Ø¬Ø²Ø'] },
+    { en: ['Nasser Al-Mutairi'], ar: ['ÙØ§ØµØ± Ø§ÙÙØ·ÙØ±Ù'] },
+    { en: ['â Reserved, Nasser! Friday 7:30pm, outdoor table for 5. Reminder + menu link coming to you on WhatsApp. See you then! ð'], ar: ['â ØªÙ Ø§ÙØ­Ø¬Ø² ÙØ§ ÙØ§ØµØ±! Ø§ÙØ¬ÙØ¹Ø© Ø§ÙØ³Ø§Ø¹Ø© Ù§:Ù£Ù Ø Ø·Ø§ÙÙØ© Ø¨Ø±ÙØ© ÙÙÙ¥. ØªØ°ÙÙØ± ÙØ±Ø§Ø¨Ø· Ø§ÙÙÙÙÙ ÙÙØµÙÙ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨. ÙØ´ÙÙÙÙ! ð'] },
   ],
 
-  // ─── REAL ESTATE ───
   'real-estate': [
-    { en: ['Hi, I\'m looking for an apartment to buy in Salmiya, budget around 120K'], ar: ['هلا، أبي أشتري شقة في السالمية، ميزانيتي حوالي ١٢٠ ألف'] },
-    { en: ['Hala, welcome! Great area. Quick question — is this for personal residence or investment?'], ar: ['هلا وغلا، حياك! منطقة زينة. سؤال سريع — للسكن الشخصي ولا استثمار؟'] },
-    { en: ['Personal residence. I need at least 3 bedrooms, prefer a high floor'], ar: ['للسكن. أبي على الأقل ٣ غرف، وأفضل طابق عالي'] },
-    { en: ['Perfect. I have 2 matching listings right now:\n• 110K — 3BR, 8th floor, sea view, 180m²\n• 118K — 3BR, 12th floor, city view, 165m²\nShall I send photos and full details on WhatsApp?'], ar: ['ممتاز. عندي الحين ٢ عقارات تناسبك:\n• ١١٠ ألف — ٣ غرف، طابق ٨، إطلالة بحر، ١٨٠م²\n• ١١٨ ألف — ٣ غرف، طابق ١٢، إطلالة مدينة، ١٦٥م²\nأرسللك الصور والتفاصيل الكاملة على واتساب؟'] },
-    { en: ['Yes send them. The sea view one sounds interesting'], ar: ['أرسل. اللي فيها إطلالة على البحر'] },
-    { en: ['Sent! 📲 The 110K unit is on the 8th floor, direct sea view, 2 parking spots included, building has a pool and gym. Available for viewing anytime this week. When\'s good for you?'], ar: ['أرسلت! 📲 الوحدة بـ ١١٠ ألف في الطابق الثامن، إطلالة بحر مباشرة، مواقفين سيارات، في البناية مسبح وجيم. جاهزة للمعاينة أي وقت هالأسبوع. متى يناسبك؟'] },
-    { en: ['How about tomorrow evening, around 6?'], ar: ['باجر المساء، حوالي الساعة ٦؟'] },
-    { en: ['✅ Viewing confirmed! Tomorrow 6:00pm — Salmiya, 8th floor sea view unit. I\'ll send you the exact location and our agent\'s number on WhatsApp. Yalla, see you there! 🏢'], ar: ['✅ تمت جدولة المعاينة! باجر الساعة ٦ مساءً — السالمية، الطابق الثامن، إطلالة البحر. أرسللك الموقع الدقيق ورقم الوكيل على واتساب. يالله نشوفك هناك! 🏢'] },
+    { en: ["Hi, I'm looking for an apartment to buy in Salmiya, budget around 120K"], ar: ['ÙÙØ§Ø Ø£Ø¨Ù Ø£Ø´ØªØ±Ù Ø´ÙØ© ÙÙ Ø§ÙØ³Ø§ÙÙÙØ©Ø ÙÙØ²Ø§ÙÙØªÙ Ø­ÙØ§ÙÙ Ù¡Ù¢Ù  Ø£ÙÙ'] },
+    { en: ['Hala, welcome! Great area. Quick question â is this for personal residence or investment?'], ar: ['ÙÙØ§ ÙØºÙØ§Ø Ø­ÙØ§Ù! ÙÙØ·ÙØ© Ø²ÙÙØ©. Ø³Ø¤Ø§Ù Ø³Ø±ÙØ¹ â ÙÙØ³ÙÙ Ø§ÙØ´Ø®ØµÙ ÙÙØ§ Ø§Ø³ØªØ«ÙØ§Ø±Ø'] },
+    { en: ['Personal residence. I need at least 3 bedrooms, prefer a high floor'], ar: ['ÙÙØ³ÙÙ. Ø£Ø¨Ù Ø¹ÙÙ Ø§ÙØ£ÙÙ Ù£ ØºØ±ÙØ ÙØ£ÙØ¶Ù Ø·Ø§Ø¨Ù Ø¹Ø§ÙÙ'] },
+    { en: ['Perfect. I have 2 matching listings right now:\nâ¢ 110K â 3BR, 8th floor, sea view, 180mÂ²\nâ¢ 118K â 3BR, 12th floor, city view, 165mÂ²\nShall I send photos and full details on WhatsApp?'], ar: ['ÙÙØªØ§Ø². Ø¹ÙØ¯Ù Ø§ÙØ­ÙÙ Ù¢ Ø¹ÙØ§Ø±Ø§Øª ØªÙØ§Ø³Ø¨Ù:\nâ¢ Ù¡Ù¡Ù  Ø£ÙÙ â Ù£ ØºØ±ÙØ Ø·Ø§Ø¨Ù Ù¨Ø Ø¥Ø·ÙØ§ÙØ© Ø¨Ø­Ø±Ø Ù¡Ù¨Ù ÙÂ²\nâ¢ Ù¡Ù¡Ù¨ Ø£ÙÙ â Ù£ ØºØ±ÙØ Ø·Ø§Ø¨Ù Ù¡Ù¢Ø Ø¥Ø·ÙØ§ÙØ© ÙØ¯ÙÙØ©Ø Ù¡Ù¦Ù¥ÙÂ²\nØ£Ø±Ø³ÙÙÙ Ø§ÙØµÙØ± ÙØ§ÙØªÙØ§ØµÙÙ Ø§ÙÙØ§ÙÙØ© Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨Ø'] },
+    { en: ['Yes send them. The sea view one sounds interesting'], ar: ['Ø£Ø±Ø³Ù. Ø§ÙÙÙ ÙÙÙØ§ Ø¥Ø·ÙØ§ÙØ© Ø¹ÙÙ Ø§ÙØ¨Ø­Ø±'] },
+    { en: ["Sent! ð² The 110K unit is on the 8th floor, direct sea view, 2 parking spots included, building has a pool and gym. Available for viewing anytime this week. When's good for you?"], ar: ['Ø£Ø±Ø³ÙØª! ð² Ø§ÙÙØ­Ø¯Ø© Ø¨Ù Ù¡Ù¡Ù  Ø£ÙÙ ÙÙ Ø§ÙØ·Ø§Ø¨Ù Ø§ÙØ«Ø§ÙÙØ Ø¥Ø·ÙØ§ÙØ© Ø¨Ø­Ø± ÙØ¨Ø§Ø´Ø±Ø©Ø ÙÙØ§ÙÙÙÙ Ø³ÙØ§Ø±Ø§ØªØ ÙÙ Ø§ÙØ¨ÙØ§ÙØ© ÙØ³Ø¨Ø­ ÙØ¬ÙÙ. Ø¬Ø§ÙØ²Ø© ÙÙÙØ¹Ø§ÙÙØ© Ø£Ù ÙÙØª ÙØ§ÙØ£Ø³Ø¨ÙØ¹. ÙØªÙ ÙÙØ§Ø³Ø¨ÙØ'] },
+    { en: ['How about tomorrow evening, around 6?'], ar: ['Ø¨Ø§Ø¬Ø± Ø§ÙÙØ³Ø§Ø¡Ø Ø­ÙØ§ÙÙ Ø§ÙØ³Ø§Ø¹Ø© Ù¦Ø'] },
+    { en: ["â Viewing confirmed! Tomorrow 6:00pm â Salmiya, 8th floor sea view unit. I'll send you the exact location and our agent's number on WhatsApp. Yalla, see you there! ð¢"], ar: ['â ØªÙØª Ø¬Ø¯ÙÙØ© Ø§ÙÙØ¹Ø§ÙÙØ©! Ø¨Ø§Ø¬Ø± Ø§ÙØ³Ø§Ø¹Ø© Ù¦ ÙØ³Ø§Ø¡Ù â Ø§ÙØ³Ø§ÙÙÙØ©Ø Ø§ÙØ·Ø§Ø¨Ù Ø§ÙØ«Ø§ÙÙØ Ø¥Ø·ÙØ§ÙØ© Ø§ÙØ¨Ø­Ø±. Ø£Ø±Ø³ÙÙÙ Ø§ÙÙÙÙØ¹ Ø§ÙØ¯ÙÙÙ ÙØ±ÙÙ Ø§ÙÙÙÙÙ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨. ÙØ§ÙÙÙ ÙØ´ÙÙÙ ÙÙØ§Ù! ð¢'] },
   ],
 
-  // ─── HOME BUSINESS ───
   'home-business': [
-    { en: ['Hi, I saw your page on Instagram. Do you take custom cake orders?'], ar: ['هلا، شفت صفحتك على انستغرام. تقبلين طلبات كيكات مخصصة؟'] },
-    { en: ['Hala, welcome! 😊 Yes, I take custom cake orders. What\'s the occasion — birthday, wedding, or something else?'], ar: ['هلا وغلا! 😊 أكيد أقبل طلبات مخصصة. شنو المناسبة — عيد ميلاد، أفراح، ولا شي ثاني؟'] },
-    { en: ['Birthday cake for 20 people, this Friday. Is that possible?'], ar: ['كيكة عيد ميلاد لـ٢٠ شخص، يوم الجمعة هذا. ممكن؟'] },
-    { en: ['Friday is doable! I need the order by Wednesday to start prep. What flavor and design are you thinking?'], ar: ['الجمعة ممكن! أحتاج الطلب يوم الأربعاء لأبدأ التحضير. شنو النكهة والتصميم اللي تبيه؟'] },
-    { en: ['Vanilla sponge with strawberry cream. And can you write a name on it?'], ar: ['إسفنجية فانيلا بكريمة فراولة. وتقدرين تكتبين اسم عليها؟'] },
-    { en: ['Absolutely! Name writing is included. A custom cake for 20 people is 28 KWD. Delivery to Kuwait City areas is 3 KWD extra. Shall I confirm your order?'], ar: ['أكيدي! كتابة الاسم مشمولة. كيكة مخصصة لـ٢٠ شخص بـ ٢٨ دينار. التوصيل لمناطق مدينة الكويت ٣ دنانير إضافية. أأكد طلبك؟'] },
-    { en: ['Yes please! My name is Dalal, delivery to Rumaithiya'], ar: ['أكيدي! اسمي دلال، توصيل الرميثية'] },
-    { en: ['✅ Order confirmed, Dalal! Vanilla sponge + strawberry cream for 20, Friday delivery to Rumaithiya — total 31 KWD. I\'ll send payment details on WhatsApp now 🎂'], ar: ['✅ تم تأكيد الطلب يا دلال! فانيلا بفراولة لـ٢٠، توصيل الجمعة الرميثية — المجموع ٣١ دينار. أرسللك تفاصيل الدفع على واتساب الحين 🎂'] },
+    { en: ['Hi, I saw your page on Instagram. Do you take custom cake orders?'], ar: ['ÙÙØ§Ø Ø´ÙØª ØµÙØ­ØªÙ Ø¹ÙÙ Ø§ÙØ³ØªØºØ±Ø§Ù. ØªÙØ¨ÙÙÙ Ø·ÙØ¨Ø§Øª ÙÙÙØ§Øª ÙØ®ØµØµØ©Ø'] },
+    { en: ['Hala, welcome! ð Yes, I take custom cake orders. What\'s the occasion â birthday, wedding, or something else?'], ar: ['ÙÙØ§ ÙØºÙØ§! ð Ø£ÙÙØ¯ Ø£ÙØ¨Ù Ø·ÙØ¨Ø§Øª ÙØ®ØµØµØ©. Ø´ÙÙ Ø§ÙÙÙØ§Ø³Ø¨Ø© â Ø¹ÙØ¯ ÙÙÙØ§Ø¯Ø Ø£ÙØ±Ø§Ø­Ø ÙÙØ§ Ø´Ù Ø«Ø§ÙÙØ'] },
+    { en: ['Birthday cake for 20 people, this Friday. Is that possible?'], ar: ['ÙÙÙØ© Ø¹ÙØ¯ ÙÙÙØ§Ø¯ ÙÙÙ¢Ù  Ø´Ø®ØµØ ÙÙÙ Ø§ÙØ¬ÙØ¹Ø© ÙØ°Ø§. ÙÙÙÙØ'] },
+    { en: ["Friday is doable! I need the order by Wednesday to start prep. What flavor and design are you thinking?"], ar: ['Ø§ÙØ¬ÙØ¹Ø© ÙÙÙÙ! Ø£Ø­ØªØ§Ø¬ Ø§ÙØ·ÙØ¨ ÙÙÙ Ø§ÙØ£Ø±Ø¨Ø¹Ø§Ø¡ ÙØ£Ø¨Ø¯Ø£ Ø§ÙØªØ­Ø¶ÙØ±. Ø´ÙÙ Ø§ÙÙÙÙØ© ÙØ§ÙØªØµÙÙÙ Ø§ÙÙÙ ØªØ¨ÙÙØ'] },
+    { en: ['Vanilla sponge with strawberry cream. And can you write a name on it?'], ar: ['Ø¥Ø³ÙÙØ¬ÙØ© ÙØ§ÙÙÙØ§ Ø¨ÙØ±ÙÙØ© ÙØ±Ø§ÙÙØ©. ÙØªÙØ¯Ø±ÙÙ ØªÙØªØ¨ÙÙ Ø§Ø³Ù Ø¹ÙÙÙØ§Ø'] },
+    { en: ['Absolutely! Name writing is included. A custom cake for 20 people is 28 KWD. Delivery to Kuwait City areas is 3 KWD extra. Shall I confirm your order?'], ar: ['Ø£ÙÙØ¯Ù! ÙØªØ§Ø¨Ø© Ø§ÙØ§Ø³Ù ÙØ´ÙÙÙØ©. ÙÙÙØ© ÙØ®ØµØµØ© ÙÙÙ¢Ù  Ø´Ø®Øµ Ø¨Ù Ù¢Ù¨ Ø¯ÙÙØ§Ø±. Ø§ÙØªÙØµÙÙ ÙÙÙØ§Ø·Ù ÙØ¯ÙÙØ© Ø§ÙÙÙÙØª Ù£ Ø¯ÙØ§ÙÙØ± Ø¥Ø¶Ø§ÙÙØ©. Ø£Ø£ÙØ¯ Ø·ÙØ¨ÙØ'] },
+    { en: ["Yes please! My name is Dalal, delivery to Rumaithiya"], ar: ['Ø£ÙÙØ¯Ù! Ø§Ø³ÙÙ Ø¯ÙØ§ÙØ ØªÙØµÙÙ Ø§ÙØ±ÙÙØ«ÙØ©'] },
+    { en: ['â Order confirmed, Dalal! Vanilla sponge + strawberry cream for 20, Friday delivery to Rumaithiya â total 31 KWD. I\'ll send payment details on WhatsApp now ð'], ar: ['â ØªÙ ØªØ£ÙÙØ¯ Ø§ÙØ·ÙØ¨ ÙØ§ Ø¯ÙØ§Ù! ÙØ§ÙÙÙØ§ Ø¨ÙØ±Ø§ÙÙØ© ÙÙÙ¢Ù Ø ØªÙØµÙÙ Ø§ÙØ¬ÙØ¹Ø© Ø§ÙØ±ÙÙØ«ÙØ© â Ø§ÙÙØ¬ÙÙØ¹ Ù£Ù¡ Ø¯ÙÙØ§Ø±. Ø£Ø±Ø³ÙÙÙ ØªÙØ§ØµÙÙ Ø§ÙØ¯ÙØ¹ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨ Ø§ÙØ­ÙÙ ð'] },
   ],
 }
