@@ -52,7 +52,7 @@ const t = {
   kwd:          { en: 'KWD',                                                               ar: 'د.ك' },
   delivery:     { en: '7-day delivery',                                                    ar: 'جاهز في ٧ أيام' },
   problem:      { en: 'The Problem',                                                       ar: 'المشكلة' },
-  gone:         { en: 'Ã Gone',                                                            ar: '× انتهى' },
+  gone:         { en: '× Gone',                                                            ar: '× انتهى' },
   popular:      { en: 'Most Popular',                                                      ar: 'الأكثر طلباً' },
 
   // Free trial

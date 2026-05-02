@@ -9,7 +9,7 @@ const t = {
   eyebrow:  { en: "Let's build",      ar: 'يالله نبني' },
   headline: {
     en: "What task are you tired of doing manually? We'll automate it.",
-    ar: 'شنو الشغل اللي تعبت تسويه يدوياً؟ احنا نأتمتة.',
+    ar: 'شنو الشغل اللي تعبت تسويه يدوياً؟ احنا نأتمته.',
   },
   sub: {
     en: 'Tell us your business name and your daily problem. We\'ll reply with a clear plan in under 24 hours.',

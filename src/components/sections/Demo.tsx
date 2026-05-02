@@ -80,7 +80,7 @@ export default function Demo() {
         {/* Pain stat banner */}
         <div className="max-w-2xl mx-auto mb-10">
           <div className="flex items-start gap-3 bg-ms-green-900/5 border border-ms-green-800/12 rounded-xl px-5 py-4">
-            <span className="text-ms-gold-600 text-[18px] mt-0.5 shrink-0">â ï¸</span>
+            <span className="text-ms-gold-600 text-[18px] mt-0.5 shrink-0">⚠️</span>
             <p className="text-ms-ink-700 text-[14px] leading-relaxed font-medium">
               {bundle.painStat[lang]}
             </p>

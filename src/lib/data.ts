@@ -1,5 +1,5 @@
 // âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// MindSync â data.ts â Single source of truth
+// MindSync — data.ts — Single source of truth
 // After ANY pricing change: run `node C:\tmp\update-agent-prompts.js` then push
 // âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
@@ -694,7 +694,7 @@ export const BUNDLES: Bundle[] = [
     ],
     scenario: {
       painHeadline: {
-        en: 'Every garage customer calls at least twice asking\n"is my car ready?" â hours wasted every day.',
+        en: 'Every garage customer calls at least twice asking\n"is my car ready?" — hours wasted every day.',
         ar: 'كل عميل في الورشة يتصل مرتين على الأقل\n"سيارتي خلصت؟" — ساعات تضيع كل يوم.',
       },
       painSolution: {
@@ -1242,7 +1242,7 @@ export const FREE_TRIAL = {
 export const CUSTOM_BUNDLE = {
   en: {
     name: 'Custom AI System',
-    desc: "Your business doesn't fit the 8 industries? No problem â we design and build a fully custom AI agent system after a consultation call.",
+    desc: "Your business doesn't fit the 8 industries? No problem — we design and build a fully custom AI agent system after a consultation call.",
     cta: 'Book a Consultation',
   },
   ar: {
@@ -1264,12 +1264,12 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['6pm is great. Also — how much does a cleaning cost?'], ar: ['الساعة ٦ تمام. وبس — جم سعر التنظيف؟'] },
     { en: ['Cleaning is 25 KWD. Includes scaling, polishing, and a full checkup. Shall I confirm the 6pm slot for you?'], ar: ['التنظيف بـ ٢٥ دينار. يشمل التنظيف العميق والتلميع وفحص كامل. أأكد لك موعد الساعة ٦؟'] },
     { en: ['Yes please, my name is Ahmad Al-Rashidi'], ar: ['أكيد، اسمي أحمد الراشدي'] },
-    { en: ["â Done, Ahmad! Wednesday 6:00pm confirmed. You'll get a WhatsApp reminder 2 hours before. See you then! ð¦·"], ar: ['✅ تم يا أحمد! الأربعاء الساعة ٦ مساءً مؤكد. راح يوصلك تذكير على واتساب قبل ساعتين. نشوفك على خير! 🦷'] },
+    { en: ["✅ Done, Ahmad! Wednesday 6:00pm confirmed. You'll get a WhatsApp reminder 2 hours before. See you then! 🦷"], ar: ['✅ تم يا أحمد! الأربعاء الساعة ٦ مساءً مؤكد. راح يوصلك تذكير على واتساب قبل ساعتين. نشوفك على خير! 🦷'] },
   ],
 
   salon: [
     { en: ['Hey, is Fatima available this Saturday for a keratin treatment?'], ar: ['هلا، فاطمة فاضيه يوم السبت؟ أبي أسوي كيراتين'] },
-    { en: ["Hala! Let me check Fatima's schedule... â She has Saturday at 11am and 2pm open. Which works?"], ar: ['هلا! ثواني أشوف جدول فاطمة الحين... ✅ عندها السبت الساعة ١١ الصبح و ٢ الظهر. أي وقت يناسب؟'] },
+    { en: ["Hala! Let me check Fatima's schedule... ✅ She has Saturday at 11am and 2pm open. Which works?"], ar: ['هلا! ثواني أشوف جدول فاطمة الحين... ✅ عندها السبت الساعة ١١ الصبح و ٢ الظهر. أي وقت يناسب؟'] },
     { en: ['2pm is better. How long does keratin take?'], ar: ['الساعة ٢ أحسن. وجم ياخذ الكيراتين وقت؟'] },
     { en: ["Keratin takes around 2.5 to 3 hours depending on hair length. Fatima's fully available from 2pm. Want me to book it?"], ar: ['الكيراتين ياخذ تقريباً ٢.٥ إلى ٣ ساعات حسب طول الشعر. فاطمة فاضية من الساعة ٢. أحجز؟'] },
     { en: ['Yes! And what\'s the price?'], ar: ['أكيد! وجم سعرها؟'] },
@@ -1280,7 +1280,7 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
 
   spa: [
     { en: ['Hi, I want to book a Swedish massage for this Thursday'], ar: ['هلا، أبي أحجز مساج سويدي يوم الخميس'] },
-    { en: ['Hala! 😊 Thursday we have availability at 3pm, 5pm, and 7pm. Which time works best for you?'], ar: ['هلا وغلا! 😊 الخميس عندنا مواعيد الساعة ٣ وٰ٥ وٰ٧. أي وقت يناسبك؟'] },
+    { en: ['Hala! 😊 Thursday we have availability at 3pm, 5pm, and 7pm. Which time works best for you?'], ar: ['هلا وغلا! 😊 الخميس عندنا مواعيد الساعة ٣ و٥ و٧. أي وقت يناسبك؟'] },
     { en: ['5pm is perfect. How long is the session?'], ar: ['الساعة ٥ تمام. وجم تاخذ الجلسة؟'] },
     { en: ['Swedish massage is 60 minutes. We also have a 90-minute option with hot stone for 10 KWD more. Interested in the upgrade?'], ar: ['المساج السويدي ٦٠ دقيقة. عندنا كذلك خيار ٩٠ دقيقة مع الحجارة الساخنة بـ ١٠ دنانير إضافية. تحب الترقية؟'] },
     { en: ["No thanks, 60 minutes is fine. What's the price?"], ar: ['لا شكراً، ٦٠ دقيقة كافي. وجم السعر؟'] },
@@ -1297,16 +1297,16 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ["Maybe later. What are the gym hours? And where are you located?"], ar: ['بعدين إن شاء الله. متى ساعات العمل؟ ووين موقعكم؟'] },
     { en: ["We're open 5:30am–11pm weekdays, 7am–10pm weekends. Located in Salmiya, near the co-op. I'll send you the location pin on WhatsApp ð"], ar: ['فاتحين من ٥:٣٠ الصبح إلى ١١ الليل أيام الدوام، و٧ الصبح إلى ١٠ الليل العطل. موقعنا في السالمية، قريب الجمعية. أرسلك اللوكيشن على واتساب 📍'] },
     { en: ["Perfect. I'll take the 3-month membership. My name is Khalid"], ar: ['تمام. أبي اشتراك ٣ أشهر. اسمي خالد'] },
-    { en: ["â Khalid, you're in! 3-month membership registered. Our team will send payment details on WhatsApp within minutes. See you at the gym! ðª"], ar: ['✅ يا خالد، تم تسجيلك! اشتراك ٣ أشهر محجوز. فريقنا راح يرسللك تفاصيل الدفع على واتساب بدقايق. نشوفك بالجيم! 💪'] },
+    { en: ["✅ Khalid, you're in! 3-month membership registered. Our team will send payment details on WhatsApp within minutes. See you at the gym! ðª"], ar: ['✅ يا خالد، تم تسجيلك! اشتراك ٣ أشهر محجوز. فريقنا راح يرسللك تفاصيل الدفع على واتساب بدقايق. نشوفك بالجيم! 💪'] },
   ],
 
   garage: [
     { en: ['Hi, I left my Camry with you guys yesterday. Any update?'], ar: ['هلا، خليت الكامري عندكم أمس. في أي تحديث؟'] },
     { en: ['Hala! Let me check... Your Camry (plate: 12345) — engine oil done ✅, AC filter replaced ✅. Currently waiting on a brake pad part, arrives tomorrow morning إن شاء الله.'], ar: ['هلا! أشوف الحين... الكامري (لوحة: ١٢٣٤٥) — تغيير الزيت خلاص ✅، فلتر التكييف اتغير ✅. الحين ننطر قطعة الفرامل، توصل باجر الصبح إن شاء الله.'] },
     { en: ['Okay good. And roughly how much is the total going to be?'], ar: ['زين. وتقريباً جم يطلع الحساب كامل؟'] },
-    { en: ["Estimated total: 75â85 KWD depending on the brake pad price. We'll send the exact invoice on WhatsApp once the part arrives. No surprises ð"], ar: ['الحساب المتوقع: ٧٥–٨٥ دينار حسب سعر قطعة الفرامل. نرسل الفاتورة الدقيقة على واتساب لما توصل القطعة. ماكو مفاجآت 👍'] },
+    { en: ["Estimated total: 75–85 KWD depending on the brake pad price. We'll send the exact invoice on WhatsApp once the part arrives. No surprises ð"], ar: ['الحساب المتوقع: ٧٥–٨٥ دينار حسب سعر قطعة الفرامل. نرسل الفاتورة الدقيقة على واتساب لما توصل القطعة. ماكو مفاجآت 👍'] },
     { en: ['Good. And when will it be fully ready for pickup?'], ar: ['حلو. ومتى تكون جاهزة للاستلام بالكامل؟'] },
-    { en: ["If the part arrives on time tomorrow, your Camry will be ready by Thursday afternoon. We'll send you a WhatsApp message the moment it's done â"], ar: ['إذا وصلت القطعة باجر بوقتها، الكامري تكون جاهزة الخميس بعد الظهر. نرسللك رسالة واتساب وقت ما تخلص ✅'] },
+    { en: ["If the part arrives on time tomorrow, your Camry will be ready by Thursday afternoon. We'll send you a WhatsApp message the moment it's done ✅"], ar: ['إذا وصلت القطعة باجر بوقتها، الكامري تكون جاهزة الخميس بعد الظهر. نرسللك رسالة واتساب وقت ما تخلص ✅'] },
     { en: ['Perfect. And can I pay by knet when I pick it up?'], ar: ['تمام. وأقدر أدفع كي-نت وقت الاستلام؟'] },
     { en: ["Akeed! We accept Knet, cash, and bank transfer. No problem at all. See you Thursday, and laa tsheel hamm — your car is in good hands 🔧"], ar: ['أكيد! نقبل كي-نت، كاش، وتحويل بنكي. ولا يهمك. نشوفك الخميس، لا تشيل هم — سيارتك بأيدٍ أمينة 🔧'] },
   ],
@@ -1316,8 +1316,8 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['Hala! Friday evening we have availability at 7:30pm and 9:00pm for 5 guests. Any preference?'], ar: ['هلا وغلا! الجمعة المساء عندنا طاولة متاحة الساعة ٧:٣٠ والساعة ٩ لـ٥ أشخاص. أي وقت يناسبكم؟'] },
     { en: ['7:30pm works. Is it indoors or outdoors? We prefer outside'], ar: ['الساعة ٧:٣٠ تمام. هل الطاولة داخلية ولا خارجية؟ نبي برّة'] },
     { en: ['Great choice! We have outdoor seating available at 7:30pm. Should I reserve an outdoor table for 5 in your name?'], ar: ['خيار ممتاز! عندنا جلوس خارجي متاح الساعة ٧:٣٠. أحجزلكم طاولة برّة لـ٥ بإسمك؟'] },
-    { en: ['Yes please. Also, do you have a set menu or Ã  la carte?'], ar: ['اي لو سمحت. وهل عندكم مينيو ثابت ولا بوفيه؟'] },
-    { en: ["Both! Full Ã  la carte menu plus a weekend set menu at 12 KWD per person (3 courses). I'll send the full menu link on WhatsApp 🍽️ What's the name for the reservation?"], ar: ['الثنين! قائمة مينيو كاملة وكذلك البوفيه للعطلة بـ ١٢ دينار للشخص (٣ أطباق). أرسللك رابط المنيو الكامل على واتساب 🍽️ شنو الاسم للحجز؟'] },
+    { en: ['Yes please. Also, do you have a set menu or à la carte?'], ar: ['اي لو سمحت. وهل عندكم مينيو ثابت ولا بوفيه؟'] },
+    { en: ["Both! Full à la carte menu plus a weekend set menu at 12 KWD per person (3 courses). I'll send the full menu link on WhatsApp 🍽️ What's the name for the reservation?"], ar: ['الثنين! قائمة مينيو كاملة وكذلك البوفيه للعطلة بـ ١٢ دينار للشخص (٣ أطباق). أرسللك رابط المنيو الكامل على واتساب 🍽️ شنو الاسم للحجز؟'] },
     { en: ['Nasser Al-Mutairi'], ar: ['ناصر المطيري'] },
     { en: ['✅ Reserved, Nasser! Friday 7:30pm, outdoor table for 5. Reminder + menu link coming to you on WhatsApp. See you then! 🌟'], ar: ['✅ تم الحجز يا ناصر! الجمعة الساعة ٧:٣٠، طاولة برّة لـ٥. تذكير ورابط المنيو يوصلك على واتساب. نشوفكم! 🌟'] },
   ],
@@ -1330,12 +1330,12 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['Yes send them. The sea view one sounds interesting'], ar: ['أرسل. اللي فيها إطلالة على البحر'] },
     { en: ["Sent! ð² The 110K unit is on the 8th floor, direct sea view, 2 parking spots included, building has a pool and gym. Available for viewing anytime this week. When's good for you?"], ar: ['أرسلت! 📲 الوحدة بـ ١١٠ ألف في الطابق الثامن، إطلالة بحر مباشرة، مواقفين سيارات، في البناية مسبح وجيم. جاهزة للمعاينة أي وقت هالأسبوع. متى يناسبك؟'] },
     { en: ['How about tomorrow evening, around 6?'], ar: ['باجر المساء، حوالي الساعة ٦؟'] },
-    { en: ["â Viewing confirmed! Tomorrow 6:00pm â Salmiya, 8th floor sea view unit. I'll send you the exact location and our agent's number on WhatsApp. Yalla, see you there! ð¢"], ar: ['✅ تمت جدولة المعاينة! باجر الساعة ٦ مساءً — السالمية، الطابق الثامن، إطلالة البحر. أرسللك الموقع الدقيق ورقم الوكيل على واتساب. يالله نشوفك هناك! 🏢'] },
+    { en: ["✅ Viewing confirmed! Tomorrow 6:00pm — Salmiya, 8th floor sea view unit. I'll send you the exact location and our agent's number on WhatsApp. Yalla, see you there! ð¢"], ar: ['✅ تمت جدولة المعاينة! باجر الساعة ٦ مساءً — السالمية، الطابق الثامن، إطلالة البحر. أرسللك الموقع الدقيق ورقم الوكيل على واتساب. يالله نشوفك هناك! 🏢'] },
   ],
 
   'home-business': [
     { en: ['Hi, I saw your page on Instagram. Do you take custom cake orders?'], ar: ['هلا، شفت صفحتك على انستغرام. تقبلين طلبات كيكات مخصصة؟'] },
-    { en: ['Hala, welcome! 😊 Yes, I take custom cake orders. What\'s the occasion â birthday, wedding, or something else?'], ar: ['هلا وغلا! 😊 أكيد أقبل طلبات مخصصة. شنو المناسبة — عيد ميلاد، أفراح، ولا شي ثاني؟'] },
+    { en: ['Hala, welcome! 😊 Yes, I take custom cake orders. What\'s the occasion — birthday, wedding, or something else?'], ar: ['هلا وغلا! 😊 أكيد أقبل طلبات مخصصة. شنو المناسبة — عيد ميلاد، أفراح، ولا شي ثاني؟'] },
     { en: ['Birthday cake for 20 people, this Friday. Is that possible?'], ar: ['كيكة عيد ميلاد لـ٢٠ شخص، يوم الجمعة هذا. ممكن؟'] },
     { en: ["Friday is doable! I need the order by Wednesday to start prep. What flavor and design are you thinking?"], ar: ['الجمعة ممكن! أحتاج الطلب يوم الأربعاء لأبدأ التحضير. شنو النكهة والتصميم اللي تبيه؟'] },
     { en: ['Vanilla sponge with strawberry cream. And can you write a name on it?'], ar: ['إسفنجية فانيلا بكريمة فراولة. وتقدرين تكتبين اسم عليها؟'] },

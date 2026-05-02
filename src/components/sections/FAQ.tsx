@@ -72,7 +72,7 @@ const FAQS = [
   {
     en: {
       q: 'Who owns the data and the system?',
-      a: "You do. Everything â the agent, the data, the portal â is yours as long as you're paying the monthly retainer. If you ever stop, we export everything and hand it over.",
+      a: "You do. Everything — the agent, the data, the portal — is yours as long as you're paying the monthly retainer. If you ever stop, we export everything and hand it over.",
     },
     ar: {
       q: 'منو يملك البيانات والنظام؟',
