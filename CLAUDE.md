@@ -12,7 +12,7 @@ MindSync public landing page — Kuwait's first AI automation agency for SMBs. B
 - **GitHub:** https://github.com/abdulazizfaras93-dotcom/mindsync-web (private, `main`)
 - **Netlify site:** `mindsync-web` — auto-deploys on push to `main`, Node 20
 - **Admin dashboard:** https://admin.mindsynckw.com (separate Vite repo)
-- **Business doc:** `mindsync-business.md` in repo root — source of truth for all business logic
+- **Business doc:** `docs/mindsync-business.md` — source of truth for all business logic
 
 ---
 
@@ -20,8 +20,10 @@ MindSync public landing page — Kuwait's first AI automation agency for SMBs. B
 
 - Next.js 14 App Router + React 18 + TypeScript
 - Tailwind CSS 3 (brand tokens in `tailwind.config.ts` under `colors.ms.*`)
-- Framer Motion, lucide-react
-- `@react-three/fiber` + `@react-three/drei` + `three@0.170` — 3D canvas components
+- Framer Motion — animations, `useScroll`/`useTransform` parallax, `useReducedMotion`
+- Lenis — smooth scroll provider (`src/components/providers/SmoothScroll.tsx`)
+- lucide-react
+- `@react-three/fiber` + `@react-three/drei` + `three@0.170` — canvas components (not Hero)
 - Deployed on Netlify via `@netlify/plugin-nextjs` (`netlify.toml`, Node 20)
 
 ---
@@ -46,7 +48,7 @@ npx eslint .       # lint (no test script configured)
 Section order (top → bottom):
 ```
 Navbar
-Hero               — full-section 3D brain background (BrainBackground)
+Hero               — mindsync.mp4 looping video background (autoPlay muted loop)
 Demo               — canned + live chat, 8 industries
 WhyNotBot          — comparison table (dark green plate)
 Bundles            — 8 industries × 3 tiers + website/app services + free trial
@@ -54,7 +56,7 @@ ROICalculator      — interactive sliders
 ReceptionistChat   — live n8n webhook chat
 Process            — 5-step flow (includes free trial step)
 BuiltOn            — integration marquee
-TrustCluster       — trust badges (imported since v2)
+TrustCluster       — trust badges
 FAQ                — 8 Q&As including free trial + website-without-AI
 CTA                — final CTA with KuwaitParticles
 Footer
@@ -106,16 +108,24 @@ Exports:
 
 ---
 
-#### `src/lib/demo-scripts.ts`
-
-Re-exports `DEMO_CONVERSATIONS` from `data.ts`. `IndustryId` covers all 8 industries:
-```typescript
-type IndustryId = 'clinic' | 'salon' | 'spa' | 'gym' | 'garage' | 'restaurant' | 'real-estate' | 'home-business'
-```
-
 #### `src/lib/lang.tsx`
 
 `LangProvider` client context. Toggles `lang` between `'en'|'ar'`, flips `dir` attribute + `font-arabic` class on `<html>`. Sections read `useLang()`. Keep all AR/EN strings inline per section: `const t = { key: { en: '...', ar: '...' } }`.
+
+---
+
+### Animation system
+
+Lenis initializes in `SmoothScroll.tsx` and drives a `requestAnimationFrame` loop — all Framer Motion `useScroll` hooks feed off this. Pattern used in parallax sections:
+
+```tsx
+const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+const y = useTransform(scrollYProgress, [0, 1], prefersReduced ? ['0%', '0%'] : ['-8%', '8%'])
+```
+
+Always guard parallax values with `const prefersReduced = useReducedMotion()` and return `['0%','0%']` when true.
+
+**Navbar** (`src/components/layout/Navbar.tsx`) hides on scroll-down past 120 px, reappears on scroll-up — uses `lastScrollY` ref + `motion.nav animate={{ y: visible ? 0 : -80 }}`.
 
 ---
 
@@ -123,19 +133,23 @@ type IndustryId = 'clinic' | 'salon' | 'spa' | 'gym' | 'garage' | 'restaurant' |
 
 #### `src/components/sections/`
 One file per section. Key notes:
-- `Bundles.tsx` — renders `TIER_ORDER` (`smart/pro/full-auto`). The `isPro` flag (was `isAdvanced`) highlights the middle card. Do not recreate old `BundleCard.tsx`. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids below the AI bundles.
-- `Process.tsx` — 5 steps. Step 02 has `trial: true` — gold "Free" badge.
-- `TrustCluster.tsx` — imported in `page.tsx` since v2. Placed between `BuiltOn` and `FAQ`.
+- `Hero.tsx` — video background: `<video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">`. Two gradient overlays (`left fade` + `bottom fade`) keep text readable. `brainY` parallax still applied to video container. Falls back to solid `bg-ms-green-900` when `useReducedMotion()` is true.
+- `Bundles.tsx` — renders `TIER_ORDER` (`smart/pro/full-auto`). The `isPro` flag highlights the middle card. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids below the AI bundles.
+- `Process.tsx` — 5 steps. Step 02 has `trial: true` — gold "Free" badge. Steps alternate slide-in direction (`x: i % 2 === 0 ? -20 : 20`).
+- `WhyNotBot.tsx` — parallax background pattern via `useScroll`/`useTransform`. `fadeUp` variant with custom delay drives staggered reveals.
+- `TrustCluster.tsx` — placed between `BuiltOn` and `FAQ`.
 - `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Fallback bubble links to `/discovery`.
 
 #### `src/components/canvas/`
 All loaded with `dynamic(..., { ssr: false })`:
-- `BrainBackground.tsx` — **NEW v2.** Full-hero 3D brain (poly-art left, neural network right). Mouse parallax. `dpr` capped at 1.5. Replaces `NeuralGlobe` in the Hero.
+- `BrainBackground.tsx` — 3D brain canvas. **No longer used in Hero** (replaced by video). Do not delete — may be reused.
 - `KuwaitParticles.tsx` — used in CTA section background.
 - `ChatBubbles.tsx` — floating bubbles behind `ReceptionistChat`.
 - `ProcessFlow.tsx` — animated flow line in `Process`.
+- `NeuralGlobe.tsx` — legacy, not used. Do not delete.
 
-> `NeuralGlobe.tsx` — kept in repo but no longer used. Do not delete (may be reused in admin).
+#### `src/components/providers/`
+- `SmoothScroll.tsx` — Lenis smooth scroll client component. Wraps all children in `layout.tsx`. Initializes with `duration: 1.15`, exponential easing. Cleans up on unmount.
 
 #### `src/components/ui/`
 - `DemoChat.tsx` — Phase 1: canned script (no network). Phase 2: live input → `/api/demo` proxy → n8n.
