@@ -138,12 +138,12 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://instagram.com/mindsync.kw"
+                  href="https://instagram.com/MindSyncKW"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/50 text-[13px] hover:text-ms-gold-600 transition-colors duration-150"
                 >
-                  @mindsync.kw
+                  @MindSyncKW
                 </a>
               </li>
               <li>

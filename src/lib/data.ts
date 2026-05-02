@@ -573,7 +573,7 @@ export const BUNDLES: Bundle[] = [
     scenario: {
       painHeadline: {
         en: 'A gym receptionist spends 3 hours answering\n"how much is the membership?" every single day.',
-        ar: 'ÙÙØ¸Ù Ø§ÙØ§Ø³ØªÙØ¨Ø§Ù ÙÙ Ø§ÙØ¬ÙÙ ÙØ¶ÙÙØ¹ Ù£ Ø³Ø§Ø¹Ø§Øª ÙÙÙÙØ§Ù\nÙØ¬ÙØ¨ "جم الاشتراك؟" ÙÙ ÙÙÙ.',
+        ar: 'موظف الاستقبال في الجيم يضيّع ٣ ساعات يومياً\nيجيب "جم الاشتراك؟" كل يوم.',
       },
       painSolution: {
         en: 'Your AI agent handles all inquiries, registers new members, and follows up renewals — automatically.',
@@ -695,7 +695,7 @@ export const BUNDLES: Bundle[] = [
     scenario: {
       painHeadline: {
         en: 'Every garage customer calls at least twice asking\n"is my car ready?" â hours wasted every day.',
-        ar: 'ÙÙ Ø¹ÙÙÙ ÙÙ Ø§ÙÙØ±Ø´Ø© ÙØªØµÙ ÙØ±ØªÙÙ Ø¹ÙÙ Ø§ÙØ£ÙÙ\n"سيارتي خلصت؟" â Ø³Ø§Ø¹Ø§Øª ØªØ¶ÙØ¹ ÙÙ ÙÙÙ.',
+        ar: 'كل عميل في الورشة يتصل مرتين على الأقل\n"سيارتي خلصت؟" — ساعات تضيع كل يوم.',
       },
       painSolution: {
         en: 'Your AI agent sends real-time car status updates and handles all inquiries — zero interruptions to your team.',

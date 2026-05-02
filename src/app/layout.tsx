@@ -110,7 +110,7 @@ const JSON_LD = {
     'Claude AI',
   ],
   sameAs: [
-    'https://www.instagram.com/mindsync.kw',
+    'https://www.instagram.com/MindSyncKW',
     'https://wa.me/96599539006',
   ],
 }
