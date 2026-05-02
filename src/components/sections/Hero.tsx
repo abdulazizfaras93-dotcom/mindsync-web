@@ -1,13 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
 import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-
-const BrainBackground = dynamic(
-  () => import('@/components/canvas/BrainBackground'),
-  { ssr: false }
-)
 
 function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
   const [val, setVal] = useState(0)
@@ -84,7 +78,20 @@ export default function Hero() {
         className="absolute inset-0 z-0 pointer-events-none"
         aria-hidden="true"
       >
-        <BrainBackground />
+        {prefersReduced ? (
+          <div className="absolute inset-0 bg-ms-green-900" />
+        ) : (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            aria-hidden="true"
+          >
+            <source src="/mindsync.mp4" type="video/mp4" />
+          </video>
+        )}
 
         <div
           className="absolute inset-0"
