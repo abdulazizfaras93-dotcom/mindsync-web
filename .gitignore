@@ -46,3 +46,4 @@ next-env.d.ts
 # Sensitive files — must never be committed
 *.pdf
 mindsync-*.md
+.superpowers/
