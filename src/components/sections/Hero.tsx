@@ -4,40 +4,45 @@ import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
-const NeuralGlobe = dynamic(() => import('@/components/canvas/NeuralGlobe'), { ssr: false })
+const BrainBackground = dynamic(
+  () => import('@/components/canvas/BrainBackground'),
+  { ssr: false }
+)
 
 function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
   const [val, setVal] = useState(0)
-  const ref = useRef<HTMLSpanElement>(null)
+  const ref    = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.5 })
+
   useEffect(() => {
     if (!inView) return
     const start = performance.now()
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / duration, 1)
+    const tick  = (now: number) => {
+      const p    = Math.min((now - start) / duration, 1)
       const ease = 1 - Math.pow(1 - p, 3)
       setVal(Math.round(ease * to))
       if (p < 1) requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
   }, [inView, to, duration])
+
   return <span ref={ref}>{val}</span>
 }
 
 const t = {
-  eyebrow:        { en: 'AI Software Agency · Kuwait', ar: 'شركة برمجيات وذكاء اصطناعي · الكويت' },
-  headline:       { en: 'Your business deserves',      ar: 'مشروعك يستاهل' },
-  headlineAccent: { en: 'to run without you.',         ar: 'يشتغل بدونك.' },
+  eyebrow:        { en: 'AI Software Agency · Kuwait',   ar: 'شركة برمجيات وذكاء اصطناعي · الكويت' },
+  headline:       { en: 'Your business deserves',        ar: 'مشروعك يستاهل' },
+  headlineAccent: { en: 'to run without you.',           ar: 'يشتغل بدونك.' },
   sub: {
     en: 'We build your business a custom software system with AI agents — responding, booking, following up, and analyzing.\nFrom WhatsApp to your dashboard in 7 business days.',
     ar: 'نبني ونعلم نظاماً خصصناه ببرمجيات وذكاء اصطناعي —\nيرد، يحجز، يتابع، ويحلل.\nمن واتساب للوحة تحكم في ٧ أيام عمل.',
   },
-  cta1:   { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
-  cta2:   { en: 'See the Bundles',  ar: 'شوف الباقات' },
-  stat1l: { en: 'Days to go live',  ar: 'أيام ونخلص الإعداد' },
-  stat2l: { en: 'Industry bundles', ar: 'باقات متخصصة' },
-  stat3l: { en: 'Agent uptime',     ar: 'وقت التشغيل' },
-  stat4l: { en: 'Data stays yours', ar: 'البيانات محفوظة عندك' },
+  cta1:   { en: 'Fill in Discovery Form',  ar: 'استبيان لفهم طبيعة مشروعك' },
+  cta2:   { en: 'See the Bundles',         ar: 'شوف الباقات' },
+  stat1l: { en: 'Days to go live',         ar: 'أيام ونخلص الإعداد' },
+  stat2l: { en: 'Industry bundles',        ar: 'باقات متخصصة' },
+  stat3l: { en: 'Agent uptime',            ar: 'وقت التشغيل' },
+  stat4l: { en: 'Data stays yours',        ar: 'البيانات محفوظة عندك' },
 }
 
 export default function Hero() {
@@ -52,11 +57,36 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-[calc(100dvh-4rem)] items-center">
 
-          {/* LEFT: Content */}
-          <div className="py-20 lg:py-0 lg:pr-16 flex flex-col justify-center">
+      {/* 3-D Brain — full-bleed background, fades left so text stays readable */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        aria-hidden="true"
+      >
+        <BrainBackground />
+
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to right, #0F2E22 0%, #0F2E22 28%, rgba(15,46,34,0.82) 44%, rgba(15,46,34,0.35) 62%, transparent 78%)',
+          }}
+        />
+
+        <div
+          className="absolute inset-x-0 bottom-0 h-40"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, #0F2E22 100%)',
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="min-h-[calc(100dvh-4rem)] flex items-center">
+
+          {/* Text column — max 52% wide on desktop so brain shows on right */}
+          <div className="w-full lg:max-w-[52%] py-20 lg:py-0 flex flex-col justify-center">
 
             <motion.div
               initial={{ opacity: 0, x: -10 }}
@@ -114,7 +144,6 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Stats — horizontal rule with dividers */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -132,17 +161,11 @@ export default function Hero() {
                 </div>
               ))}
             </motion.div>
-          </div>
 
-          {/* RIGHT: Globe (desktop only) */}
-          <div className="hidden lg:block relative self-stretch">
-            <div className="sticky top-16 h-[calc(100dvh-4rem)] w-full">
-              <NeuralGlobe />
-            </div>
           </div>
-
         </div>
       </div>
+
     </section>
   )
 }
