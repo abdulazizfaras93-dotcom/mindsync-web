@@ -24,8 +24,8 @@ const t = {
     ar: 'أول شركة برمجيات وأتمتة ذكاء اصطناعي في الكويت للشركات الصغيرة والمتوسطة.',
   },
   legal:   {
-    en: 'MindSync Â· Software Design and Development Company',
-    ar: 'مايند سينك · شركة تصميم وتطوير البرمجيات',
+    en: 'MindSync · Software Design and Development Company · CR 546511',
+    ar: 'مايند سينك · شركة تصميم وتطوير البرمجيات · س.ت 546511',
   },
   copy:    { en: '© 2026 MindSync · Kuwait City', ar: '© 2026 مايندسينك · مدينة الكويت' },
   links:   {
