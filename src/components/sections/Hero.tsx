@@ -72,39 +72,34 @@ export default function Hero() {
   return (
     <section ref={heroRef} className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
 
-      {/* 3-D Brain — full-bleed background, fades left so text stays readable */}
+      {/* Video background — always rendered; parallax disabled for reduced-motion users */}
       <motion.div
         style={{ y: brainY }}
         className="absolute inset-0 z-0 pointer-events-none"
         aria-hidden="true"
       >
-        {prefersReduced ? (
-          <div className="absolute inset-0 bg-ms-green-900" />
-        ) : (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            aria-hidden="true"
-          >
-            <source src="/mindsync.mp4" type="video/mp4" />
-          </video>
-        )}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/mindsync.mp4" type="video/mp4" />
+        </video>
 
-        {/* Semi-transparent overlay — keeps text readable while video shows through */}
+        {/* Dark overlay — keeps text readable over the video */}
         <div
           className="absolute inset-0"
-          style={{ background: 'rgba(15,46,34,0.55)' }}
+          style={{ background: 'rgba(15,46,34,0.52)' }}
         />
 
-        {/* Left column reinforcement — extra contrast behind text on desktop */}
+        {/* Left reinforcement — extra contrast behind text column */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,46,34,0.55) 0%, rgba(15,46,34,0.35) 50%, transparent 100%)',
+              'linear-gradient(to right, rgba(15,46,34,0.5) 0%, rgba(15,46,34,0.25) 55%, transparent 100%)',
           }}
         />
 
