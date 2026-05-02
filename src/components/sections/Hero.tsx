@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const BrainBackground = dynamic(
@@ -47,6 +47,26 @@ const t = {
 
 export default function Hero() {
   const { lang } = useLang()
+  const prefersReduced = useReducedMotion()
+  const heroRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  // Brain scrolls at 0.4x speed — stays visible longer, creates depth
+  const brainY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['0%', '22%']
+  )
+  // Text drifts slightly upward, reinforcing the depth separation
+  const textY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['0%', '-8%']
+  )
 
   const stats = [
     { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
@@ -56,10 +76,11 @@ export default function Hero() {
   ]
 
   return (
-    <section className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
+    <section ref={heroRef} className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
 
       {/* 3-D Brain — full-bleed background, fades left so text stays readable */}
-      <div
+      <motion.div
+        style={{ y: brainY }}
         className="absolute inset-0 z-0 pointer-events-none"
         aria-hidden="true"
       >
@@ -79,10 +100,13 @@ export default function Hero() {
             background: 'linear-gradient(to bottom, transparent 0%, #0F2E22 100%)',
           }}
         />
-      </div>
+      </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+      <motion.div
+        style={{ y: textY }}
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10"
+      >
         <div className="min-h-[calc(100dvh-4rem)] flex items-center">
 
           {/* Text column — max 52% wide on desktop so brain shows on right */}
@@ -101,19 +125,26 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               className="text-[58px] md:text-[72px] lg:text-[82px] font-bold tracking-[-0.02em] leading-[0.93] mb-6"
             >
               <span className="text-ms-ivory-0 block">{t.headline[lang]}</span>
-              <span className="text-ms-gold-600 block">{t.headlineAccent[lang]}</span>
+              <motion.span
+                className="text-ms-gold-600 block"
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.38 }}
+              >
+                {t.headlineAccent[lang]}
+              </motion.span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.38 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
               className="text-white/65 text-[16px] leading-relaxed max-w-[480px] mb-10"
             >
               {t.sub[lang].split('\n').map((line, i) => (
@@ -124,7 +155,7 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.48 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
               className="flex flex-wrap gap-3 mb-14"
             >
               <a
@@ -147,24 +178,30 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.62 }}
+              transition={{ duration: 0.6, delay: 0.72 }}
               className="grid grid-cols-4 border-t border-white/10 pt-8"
             >
               {stats.map((s, i) => (
-                <div key={i} className={`${i > 0 ? 'pl-5 border-l border-white/10' : ''}`}>
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.74 + i * 0.07 }}
+                  className={`${i > 0 ? 'pl-5 border-l border-white/10' : ''}`}
+                >
                   <p className="text-ms-gold-600 text-[24px] font-bold leading-none mb-1.5 font-mono tabular-nums">
                     {s.count !== null && s.count !== undefined
                       ? <><CountUp to={s.count} />{s.suffix}</>
                       : s.display}
                   </p>
                   <p className="text-white/40 text-[11px] leading-tight">{s.label}</p>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
 
           </div>
         </div>
-      </div>
+      </motion.div>
 
     </section>
   )

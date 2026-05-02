@@ -1,4 +1,6 @@
 'use client'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
@@ -67,31 +69,90 @@ function cellColor(val: string): string {
   return 'text-white/60'
 }
 
+const fadeUp = {
+  hidden:  { opacity: 0, y: 28 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay },
+  }),
+}
+
 export default function WhyNotBot() {
   const { lang, isAr } = useLang()
+  const prefersReduced = useReducedMotion()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+
+  // Background pattern slides at a slower rate than content — depth effect
+  const bgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['-8%', '8%']
+  )
 
   return (
-    <section className="py-24 bg-ms-green-900 pattern-overlay">
-      <div className="max-w-6xl mx-auto px-6 lg:px-10">
+    <section ref={sectionRef} className="relative py-24 bg-ms-green-900 overflow-hidden">
+
+      {/* Parallax background pattern */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute inset-0 pattern-overlay pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-10">
 
         {/* Eyebrow */}
-        <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-mono font-medium mb-5 flex items-center gap-3">
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          custom={0}
+          viewport={{ once: true, amount: 0.5 }}
+          className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-mono font-medium mb-5 flex items-center gap-3"
+        >
           <span className="w-6 h-px bg-ms-gold-600 shrink-0" />
           {t.eyebrow[lang]}
-        </p>
+        </motion.p>
 
         {/* Headline */}
-        <h2 className="text-[38px] md:text-[52px] font-bold text-ms-ivory-0 tracking-[-0.02em] leading-[0.95] mb-6 whitespace-pre-line">
+        <motion.h2
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          custom={0.08}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-[38px] md:text-[52px] font-bold text-ms-ivory-0 tracking-[-0.02em] leading-[0.95] mb-6 whitespace-pre-line"
+        >
           {t.headline[lang]}
-        </h2>
+        </motion.h2>
 
         {/* Body */}
-        <p className="text-white/55 text-[16px] leading-relaxed max-w-2xl mb-14 whitespace-pre-line">
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          custom={0.16}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-white/55 text-[16px] leading-relaxed max-w-2xl mb-14 whitespace-pre-line"
+        >
           {t.body[lang]}
-        </p>
+        </motion.p>
 
         {/* Comparison Table */}
-        <div className="overflow-x-auto mb-16">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          custom={0.2}
+          viewport={{ once: true, amount: 0.2 }}
+          className="overflow-x-auto mb-16"
+        >
           <table className="w-full min-w-[580px] text-sm border-collapse">
             <thead>
               <tr className="border-b border-ms-gold-600/40">
@@ -112,7 +173,14 @@ export default function WhyNotBot() {
             </thead>
             <tbody>
               {TABLE_ROWS.map((row, i) => (
-                <tr key={i} className="border-b border-white/8 last:border-0 hover:bg-white/3">
+                <motion.tr
+                  key={i}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.35, delay: i * 0.04 }}
+                  className="border-b border-white/8 last:border-0 hover:bg-white/3"
+                >
                   <td className="py-3 pr-4 text-white/60 text-[13px]">{row.feature[lang]}</td>
                   {(['bot', 'freelancer', 'enterprise', 'ms'] as const).map((col) => {
                     const rawVal = row[col]
@@ -131,19 +199,26 @@ export default function WhyNotBot() {
                       </td>
                     )
                   })}
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
 
         {/* 3 Differentiator Cards */}
         <div className="grid md:grid-cols-3 gap-5">
           {t.cards.map((card, i) => (
-            <div key={i} className="border border-ms-gold-600/30 bg-ms-green-800 rounded-xl p-6">
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 32, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="border border-ms-gold-600/30 bg-ms-green-800 rounded-xl p-6"
+            >
               <h3 className="text-ms-gold-600 font-bold text-[16px] mb-3">{card.title[lang]}</h3>
               <p className="text-white/55 text-[14px] leading-relaxed">{card.body[lang]}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
 

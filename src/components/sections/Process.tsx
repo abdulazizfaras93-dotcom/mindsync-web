@@ -95,42 +95,73 @@ export default function Process() {
     <section id="process" className="py-24 bg-ms-green-900 pattern-overlay">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
 
-        {/* Header */}
+        {/* Header — staggered reveal */}
         <div className="mb-14">
-          <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-3 flex items-center gap-3">
+          <motion.p
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
+            className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-3 flex items-center gap-3"
+          >
             <span className="w-6 h-px bg-ms-gold-600 shrink-0" />
             {t.eyebrow[lang]}
-          </p>
-          <h2 className="text-[40px] md:text-[52px] font-bold text-ms-ivory-0 tracking-[-0.02em] leading-[0.95] mb-4">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[40px] md:text-[52px] font-bold text-ms-ivory-0 tracking-[-0.02em] leading-[0.95] mb-4"
+          >
             {t.headline[lang]}
-          </h2>
-          <p className="text-white/50 text-[16px] max-w-lg leading-relaxed">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.16 }}
+            className="text-white/50 text-[16px] max-w-lg leading-relaxed"
+          >
             {t.sub[lang]}
-          </p>
+          </motion.p>
         </div>
 
         {/* Canvas flow animation */}
-        <div className="w-full h-20 mb-2 overflow-hidden" aria-hidden>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full h-20 mb-2 overflow-hidden"
+          aria-hidden
+        >
           <ProcessFlow />
-        </div>
+        </motion.div>
 
-        {/* Steps */}
+        {/* Steps — each row slides in from the side */}
         <div className="divide-y divide-white/10">
           {STEPS.map((step, i) => {
             const s = lang === 'ar' ? step.ar : step.en
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20, y: 8 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
                 className="grid grid-cols-1 md:grid-cols-[72px_220px_1fr] gap-4 md:gap-8 py-8 items-start"
               >
-                {/* Step number */}
-                <span className="font-mono text-[40px] font-bold leading-none text-ms-gold-600/25 tabular-nums">
+                {/* Step number — counter-fade */}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.12 + i * 0.06 }}
+                  className="font-mono text-[40px] font-bold leading-none text-ms-gold-600/25 tabular-nums"
+                >
                   {step.num}
-                </span>
+                </motion.span>
 
                 {/* Title + sub */}
                 <div>
@@ -156,11 +187,17 @@ export default function Process() {
           })}
         </div>
 
-        <p className="text-white/25 text-[13px] mt-8 border-t border-white/10 pt-6">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-white/25 text-[13px] mt-8 border-t border-white/10 pt-6"
+        >
           {lang === 'ar'
             ? 'لا نبدأ بناء النظام إلا بعد الاتفاق على المهام والقنوات في مكالمة الاستكشاف.'
             : "We don't start building until tasks and channels are agreed in the discovery call."}
-        </p>
+        </motion.p>
 
       </div>
     </section>

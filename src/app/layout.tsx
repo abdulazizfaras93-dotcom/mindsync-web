@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, Noto_Kufi_Arabic, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
+import SmoothScroll from '@/components/providers/SmoothScroll'
 import './globals.css'
 
 const grotesk = Space_Grotesk({
@@ -143,7 +144,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('config', 'AW-18124307098');
         `}
       </Script>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><SmoothScroll>{children}</SmoothScroll></body>
     </html>
   )
 }

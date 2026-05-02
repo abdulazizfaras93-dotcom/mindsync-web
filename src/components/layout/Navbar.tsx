@@ -44,11 +44,24 @@ const t = {
 export default function Navbar() {
   const { lang, toggle } = useLang()
   const [scrolled,  setScrolled]  = useState(false)
+  const [visible,   setVisible]   = useState(true)
   const [menuOpen,  setMenuOpen]  = useState(false)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      const currentY = window.scrollY
+      setScrolled(currentY > 40)
+
+      if (currentY > 120) {
+        // Hide when scrolling down, show when scrolling up
+        setVisible(currentY < lastScrollY.current)
+      } else {
+        setVisible(true)
+      }
+      lastScrollY.current = currentY
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -60,11 +73,15 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled
-        ? 'bg-ms-ivory-0/95 backdrop-blur-md border-b border-ms-ivory-200 shadow-sm'
-        : 'bg-transparent'
-    }`}>
+    <motion.nav
+      animate={{ y: visible ? 0 : -80 }}
+      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background,border,box-shadow] duration-300 ${
+        scrolled
+          ? 'bg-ms-ivory-0/95 backdrop-blur-md border-b border-ms-ivory-200 shadow-sm'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
@@ -147,6 +164,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   )
 }
