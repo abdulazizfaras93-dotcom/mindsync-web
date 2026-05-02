@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 import { useState } from 'react'
 import { useLang } from '@/lib/lang'
 import {
-  BUNDLES, WEBSITE_SERVICES, APP_SERVICES, CUSTOM_BUNDLE, FREE_TRIAL, TIER_ORDER,
+  BUNDLES, WEBSITE_SERVICES, APP_SERVICES, CUSTOM_BUNDLE, FREE_TRIAL, TIER_ORDER, INDUSTRY_SLUGS,
 } from '@/lib/data'
 import { TiltCard } from '@/components/ui/TiltCard'
 import type { Bundle, TierId, Channel } from '@/lib/data'
@@ -68,6 +68,7 @@ const t = {
   appLabel:     { en: 'Mobile Apps',                                                       ar: 'تطبيقات الجوال' },
   appSub:       { en: 'iOS + Android apps — with or without AI.',                          ar: 'تطبيقات iOS + Android — مع أو بدون ذكاء اصطناعي.' },
 
+
   // Price helpers
   from:         { en: 'from',                                                              ar: 'يبدأ من' },
   startFrom:    { en: 'Starting from',                                                     ar: 'يبدأ من' },
@@ -77,6 +78,10 @@ const t = {
   customName:   { en: 'Custom AI System',                                                  ar: 'نظام ذكاء اصطناعي مخصص' },
   customLabel:  { en: 'Priced after a free consultation call',                             ar: 'السعر يُحدد بعد مكالمة استشارة مجانية' },
 }
+
+const ID_TO_SLUG = Object.fromEntries(
+  Object.entries(INDUSTRY_SLUGS).map(([slug, id]) => [id, slug])
+)
 
 // âââ Helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
@@ -264,6 +269,12 @@ export default function Bundles() {
               <p className="text-ms-ink-600 text-[12px] leading-relaxed">
                 {activeBundle.painStat[lang]}
               </p>
+              <a
+                href={`/${ID_TO_SLUG[activeBundle.id] ?? ''}`}
+                className="inline-flex items-center gap-1 mt-4 text-[11px] text-ms-green-800 font-medium hover:underline"
+              >
+                {lang === 'ar' ? 'الصفحة الكاملة' : 'Full details page'}
+              </a>
             </div>
           </div>
 

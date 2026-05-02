@@ -1344,3 +1344,21 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['✅ Order confirmed, Dalal! Vanilla sponge + strawberry cream for 20, Friday delivery to Rumaithiya — total 31 KWD. I\'ll send payment details on WhatsApp now ð'], ar: ['✅ تم تأكيد الطلب يا دلال! فانيلا بفراولة لـ٢٠، توصيل الجمعة الرميثية — المجموع ٣١ دينار. أرسللك تفاصيل الدفع على واتساب الحين 🎂'] },
   ],
 }
+
+// --- Industry Slug Mapping ---
+
+export const INDUSTRY_SLUGS: Record<string, string> = {
+  'clinics':         'clinic',
+  'salons':          'salon',
+  'spas':            'spa',
+  'gyms':            'gym',
+  'garages':         'garage',
+  'restaurants':     'restaurant',
+  'real-estate':     'real-estate',
+  'home-businesses': 'home-business',
+}
+
+export function getBundleBySlug(slug: string): Bundle | undefined {
+  const id = INDUSTRY_SLUGS[slug]
+  return id ? BUNDLES.find(b => b.id === id) : undefined
+}
