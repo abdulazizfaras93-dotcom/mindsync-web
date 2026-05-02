@@ -6,34 +6,34 @@ import { useLang } from '@/lib/lang'
 const KuwaitParticles = dynamic(() => import('@/components/canvas/KuwaitParticles'), { ssr: false })
 
 const t = {
-  eyebrow:  { en: "Let's build",      ar: 'ÙØ§ÙÙÙ ÙØ¨ÙÙ' },
+  eyebrow:  { en: "Let's build",      ar: 'يالله نبني' },
   headline: {
     en: "What task are you tired of doing manually? We'll automate it.",
-    ar: 'Ø´ÙÙ Ø§ÙØ´ØºÙ Ø§ÙÙÙ ØªØ¹Ø¨Øª ØªØ³ÙÙÙ ÙØ¯ÙÙØ§ÙØ Ø§Ø­ÙØ§ ÙØ£ØªÙØªØ©.',
+    ar: 'شنو الشغل اللي تعبت تسويه يدوياً؟ احنا نأتمتة.',
   },
   sub: {
     en: 'Tell us your business name and your daily problem. We\'ll reply with a clear plan in under 24 hours.',
-    ar: 'Ø£Ø®Ø¨Ø±ÙØ§ Ø¨Ø§Ø³Ù ÙØ´Ø±ÙØ¹Ù ÙØ§ÙÙØ´ÙÙØ© Ø§ÙÙÙÙÙØ©. ÙØ±Ø¯ Ø¹ÙÙÙ Ø¨Ø®Ø·Ø© ÙØ§Ø¶Ø­Ø© Ø¨Ø£ÙÙ ÙÙ Ù¢Ù¤ Ø³Ø§Ø¹Ø©.',
+    ar: 'أخبرنا باسم مشروعك والمشكلة اليومية. نرد عليك بخطة واضحة بأقل من ٢٤ ساعة.',
   },
-  cta1:    { en: 'Fill in Discovery Form', ar: 'Ø§Ø³ØªØ¨ÙØ§Ù ÙÙÙÙ Ø·Ø¨ÙØ¹Ø© ÙØ´Ø±ÙØ¹Ù' },
-  cta2:    { en: 'Try the Live Demo',      ar: 'Ø¹Ø±Ø¶ ØªÙØ¶ÙØ­Ù ÙØ¨Ø§Ø´Ø±' },
+  cta1:    { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
+  cta2:    { en: 'Try the Live Demo',      ar: 'عرض توضيحي مباشر' },
 
   // Footer
   tagline: {
-    en: 'Kuwait\'s first AI automation agency â systems, websites & apps for SMBs.',
-    ar: 'Ø£ÙÙ Ø´Ø±ÙØ© Ø¨Ø±ÙØ¬ÙØ§Øª ÙØ£ØªÙØªØ© Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙÙ Ø§ÙÙÙÙØª ÙÙØ´Ø±ÙØ§Øª Ø§ÙØµØºÙØ±Ø© ÙØ§ÙÙØªÙØ³Ø·Ø©.',
+    en: 'Kuwait\'s first AI automation agency — systems, websites & apps for SMBs.',
+    ar: 'أول شركة برمجيات وأتمتة ذكاء اصطناعي في الكويت للشركات الصغيرة والمتوسطة.',
   },
   legal:   {
     en: 'MindSync Â· Software Design and Development Company',
-    ar: 'ÙØ§ÙÙØ¯ Ø³ÙÙÙ Â· Ø´Ø±ÙØ© ØªØµÙÙÙ ÙØªØ·ÙÙØ± Ø§ÙØ¨Ø±ÙØ¬ÙØ§Øª',
+    ar: 'مايند سينك · شركة تصميم وتطوير البرمجيات',
   },
-  copy:    { en: 'Â© 2026 MindSync Â· Kuwait City', ar: 'Â© 2026 ÙØ§ÙÙØ¯Ø³ÙÙÙ Â· ÙØ¯ÙÙØ© Ø§ÙÙÙÙØª' },
+  copy:    { en: '© 2026 MindSync · Kuwait City', ar: '© 2026 مايندسينك · مدينة الكويت' },
   links:   {
     en: ['Bundles', 'How It Works', 'FAQ', 'Fill in Discovery Form'],
-    ar: ['Ø§ÙØ¨Ø§ÙØ§Øª', 'ÙÙÙ ÙØ´ØªØºÙ', 'Ø§ÙØ£Ø³Ø¦ÙØ©', 'Ø§Ø³ØªØ¨ÙØ§Ù ÙÙÙÙ Ø·Ø¨ÙØ¹Ø© ÙØ´Ø±ÙØ¹Ù'],
+    ar: ['الباقات', 'كيف يشتغل', 'الأسئلة', 'استبيان لفهم طبيعة مشروعك'],
   },
-  navLabel: { en: 'Navigation', ar: 'Ø§ÙØªÙÙÙ' },
-  contact:  { en: 'Contact',    ar: 'ØªÙØ§ØµÙ' },
+  navLabel: { en: 'Navigation', ar: 'التنقل' },
+  contact:  { en: 'Contact',    ar: 'تواصل' },
 }
 
 const NAV_HREFS = ['#bundles', '#process', '#faq', '/discovery']

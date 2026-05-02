@@ -9,27 +9,27 @@ const STAFF_COST_PER_HR = 5 // KWD/hr â realistic Kuwait SMB rate
 const AUTOMATION_RATE = 0.70 // 70% of messages automatable
 
 const t = {
-  eyebrow:    { en: 'ROI Calculator',                                ar: 'Ø­Ø§Ø³Ø¨Ø© Ø§ÙØ¹Ø§Ø¦Ø¯ Ø§ÙÙØ§Ø¯Ù' },
-  headline:   { en: 'How much is manual messaging costing you?',    ar: 'Ø´ÙØ«Ø± ØªÙÙÙÙÙ Ø§ÙØ±Ø³Ø§Ø¦Ù Ø§ÙÙØ¯ÙÙØ©Ø' },
-  sub:        { en: 'Move the sliders â see your real monthly savings.', ar: 'Ø­Ø±ÙÙ Ø§ÙØ£Ø´Ø±Ø·Ø© â Ø´ÙÙ ØªÙÙÙØ±Ù Ø§ÙØ´ÙØ±Ù Ø§ÙØ­ÙÙÙÙ.' },
-  inquiries:  { en: 'Customer messages per week',                    ar: 'Ø±Ø³Ø§Ø¦Ù Ø§ÙØ¹ÙÙØ§Ø¡ Ø£Ø³Ø¨ÙØ¹ÙØ§Ù' },
-  hours:      { en: 'Hours spent on messages per week',              ar: 'Ø³Ø§Ø¹Ø§Øª ØªÙØ¶ÙÙØ§ Ø¹ÙÙ Ø§ÙØ±Ø³Ø§Ø¦Ù Ø£Ø³Ø¨ÙØ¹ÙØ§Ù' },
-  savedHrs:   { en: 'Hours saved / month',                          ar: 'Ø³Ø§Ø¹Ø© ØªÙÙÙØ± / Ø´ÙØ±' },
-  savedKwd:   { en: 'Staff cost saved / month',                      ar: 'ØªÙÙÙØ± ØªÙÙÙØ© ÙÙØ¸Ù / Ø´ÙØ±' },
-  roiLabel:   { en: 'Annual ROI vs. average build fee',             ar: 'Ø§ÙØ¹Ø§Ø¦Ø¯ Ø§ÙØ³ÙÙÙ ÙÙØ§Ø¨Ù ÙØªÙØ³Ø· Ø±Ø³ÙÙ Ø§ÙØ¨ÙØ§Ø¡' },
+  eyebrow:    { en: 'ROI Calculator',                                ar: 'حاسبة العائد المادي' },
+  headline:   { en: 'How much is manual messaging costing you?',    ar: 'شكثر تكلّفك الرسائل اليدوية؟' },
+  sub:        { en: 'Move the sliders — see your real monthly savings.', ar: 'حرّك الأشرطة — شوف توفيرك الشهري الحقيقي.' },
+  inquiries:  { en: 'Customer messages per week',                    ar: 'رسائل العملاء أسبوعياً' },
+  hours:      { en: 'Hours spent on messages per week',              ar: 'ساعات تقضيها على الرسائل أسبوعياً' },
+  savedHrs:   { en: 'Hours saved / month',                          ar: 'ساعة توفير / شهر' },
+  savedKwd:   { en: 'Staff cost saved / month',                      ar: 'توفير تكلفة موظف / شهر' },
+  roiLabel:   { en: 'Annual ROI vs. average build fee',             ar: 'العائد السنوي مقابل متوسط رسوم البناء' },
   disclaimer: {
     en: `Based on ${Math.round(AUTOMATION_RATE * 100)}% automation rate and ${STAFF_COST_PER_HR} KWD/hr staff cost.`,
-    ar: `Ø¨ÙØ§Ø¡Ù Ø¹ÙÙ ÙØ¹Ø¯Ù Ø£ØªÙØªØ© ${Math.round(AUTOMATION_RATE * 100)}Ùª ÙØªÙÙÙØ© ÙÙØ¸Ù ${STAFF_COST_PER_HR} Ø¯.Ù/Ø³Ø§Ø¹Ø©.`,
+    ar: `بناءً على معدل أتمتة ${Math.round(AUTOMATION_RATE * 100)}٪ وتكلفة موظف ${STAFF_COST_PER_HR} د.ك/ساعة.`,
   },
   autoHandled: {
     en: (n: number) => `${n} msgs handled by AI / week`,
-    ar: (n: number) => `${n} Ø±Ø³Ø§ÙØ© ÙØªÙÙØ§ÙØ§ Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù / Ø£Ø³Ø¨ÙØ¹`,
+    ar: (n: number) => `${n} رسالة يتولاها الذكاء الاصطناعي / أسبوع`,
   },
   annualSavings: {
     en: (n: number) => `${n} KWD saved / year`,
-    ar: (n: number) => `${n} Ø¯.Ù ØªÙÙÙØ± / Ø³ÙØ©`,
+    ar: (n: number) => `${n} د.ك توفير / سنة`,
   },
-  yearOne: { en: 'in year one', ar: 'Ø®ÙØ§Ù Ø§ÙØ³ÙØ© Ø§ÙØ£ÙÙÙ' },
+  yearOne: { en: 'in year one', ar: 'خلال السنة الأولى' },
 }
 
 export default function ROICalculator() {
@@ -176,7 +176,7 @@ export default function ROICalculator() {
               href="/discovery"
               className="block w-full bg-ms-gold-600 text-ms-green-900 font-bold text-[15px] py-4 rounded-xl text-center hover:bg-ms-gold-500 transition-colors"
             >
-              {lang === 'ar' ? 'Ø§Ø³ØªØ¨ÙØ§Ù ÙÙÙÙ Ø·Ø¨ÙØ¹Ø© ÙØ´Ø±ÙØ¹Ù' : 'Fill in Discovery Form'}
+              {lang === 'ar' ? 'استبيان لفهم طبيعة مشروعك' : 'Fill in Discovery Form'}
             </a>
           </motion.div>
 

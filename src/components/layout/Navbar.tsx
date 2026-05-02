@@ -33,12 +33,12 @@ function MagneticLink({ href, children }: { href: string; children: React.ReactN
 }
 
 const t = {
-  demo:     { en: 'Live Demo',        ar: 'ØªØ¬Ø±Ø¨Ø© ÙØ¨Ø§Ø´Ø±Ø©' },
-  services: { en: 'Services',         ar: 'Ø§ÙØ®Ø¯ÙØ§Øª' },
-  process:  { en: 'How It Works',     ar: 'ÙÙÙ ÙØ´ØªØºÙ' },
-  faq:      { en: 'FAQ',              ar: 'Ø§ÙØ£Ø³Ø¦ÙØ©' },
-  cta:      { en: 'Get Started',      ar: 'Ø§Ø¨Ø¯Ø£ Ø§ÙØ­ÙÙ' },
-  toggleAr: { en: 'Ø§ÙØ¹Ø±Ø¨ÙØ©',          ar: 'English' },
+  demo:     { en: 'Live Demo',        ar: 'تجربة مباشرة' },
+  services: { en: 'Services',         ar: 'الخدمات' },
+  process:  { en: 'How It Works',     ar: 'كيف يشتغل' },
+  faq:      { en: 'FAQ',              ar: 'الأسئلة' },
+  cta:      { en: 'Get Started',      ar: 'ابدأ الحين' },
+  toggleAr: { en: 'العربية',          ar: 'English' },
 }
 
 export default function Navbar() {

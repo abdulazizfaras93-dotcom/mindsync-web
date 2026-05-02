@@ -7,14 +7,14 @@ const COOKIE_KEY  = 'ms_exit_shown'
 const COOKIE_DAYS = 7
 
 const t = {
-  badge:    { en: '1-Week Free Trial',                   ar: 'Ø£Ø³Ø¨ÙØ¹ ØªØ¬Ø±Ø¨Ø© ÙØ¬Ø§ÙÙØ©' },
-  headline: { en: 'Try it free before you commit.',     ar: 'Ø¬Ø±ÙØ¨ ÙØ¬Ø§ÙØ§Ù ÙØ¨Ù ÙØ§ ØªÙØ±Ø±.' },
+  badge:    { en: '1-Week Free Trial',                   ar: 'أسبوع تجربة مجانية' },
+  headline: { en: 'Try it free before you commit.',     ar: 'جرّب مجاناً قبل ما تقرر.' },
   sub: {
-    en: "We build your actual AI system and run it live for 7 days â at no cost. If you love it, we activate. If not, no charge.",
-    ar: 'ÙØ¨ÙÙ ÙØ¸Ø§ÙÙ Ø§ÙØ°ÙÙ Ø§ÙÙØ¹ÙÙ ÙÙØ´ØºÙÙÙ Ø£Ø³Ø¨ÙØ¹ ÙØ§ÙÙ â Ø¨Ø¯ÙÙ Ø£Ù ØªÙÙÙØ©. Ø¥Ø°Ø§ Ø¹Ø¬Ø¨Ù ÙÙØ¹ÙÙÙ. ÙØ¥Ø°Ø§ ÙØ§Ø ÙØ§ ÙÙ Ø±Ø³ÙÙ.',
+    en: "We build your actual AI system and run it live for 7 days — at no cost. If you love it, we activate. If not, no charge.",
+    ar: 'نبني نظامك الذكي الفعلي ونشغّله أسبوع كامل — بدون أي تكلفة. إذا عجبك نفعّله. وإذا لا، ما في رسوم.',
   },
-  cta:     { en: 'Request Your Free Trial',             ar: 'Ø§Ø·ÙØ¨ ØªØ¬Ø±Ø¨ØªÙ Ø§ÙÙØ¬Ø§ÙÙØ©' },
-  dismiss: { en: 'No thanks',                           ar: 'ÙØ§ Ø´ÙØ±Ø§Ù' },
+  cta:     { en: 'Request Your Free Trial',             ar: 'اطلب تجربتك المجانية' },
+  dismiss: { en: 'No thanks',                           ar: 'لا شكراً' },
 }
 
 function setCookie(days: number) {

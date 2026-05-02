@@ -27,62 +27,62 @@ const ICON_MAP: Record<string, LucideIcon> = {
 }
 
 const CHANNEL_META: Record<Channel, { icon: React.ReactNode; label: { en: string; ar: string } }> = {
-  whatsapp:  { icon: <MessageCircle size={11} />,   label: { en: 'WhatsApp',      ar: 'ÙØ§ØªØ³Ø§Ø¨' } },
-  portal:    { icon: <LayoutDashboard size={11} />, label: { en: 'Client Portal', ar: 'Ø¨ÙØ§Ø¨Ø© Ø§ÙØ¹ÙÙÙ' } },
-  website:   { icon: <Globe size={11} />,           label: { en: 'Website',       ar: 'Ø§ÙÙÙÙØ¹' } },
-  instagram: { icon: <AtSign size={11} />,          label: { en: 'Instagram',     ar: 'Ø§ÙØ³ØªÙØ±Ø§Ù' } },
-  app:       { icon: <AppWindow size={11} />,       label: { en: 'Mobile App',    ar: 'Ø§ÙØªØ·Ø¨ÙÙ' } },
-  analytics: { icon: <BarChart2 size={11} />,       label: { en: 'Analytics',     ar: 'ØªÙØ§Ø±ÙØ±' } },
+  whatsapp:  { icon: <MessageCircle size={11} />,   label: { en: 'WhatsApp',      ar: 'واتساب' } },
+  portal:    { icon: <LayoutDashboard size={11} />, label: { en: 'Client Portal', ar: 'بوابة العميل' } },
+  website:   { icon: <Globe size={11} />,           label: { en: 'Website',       ar: 'الموقع' } },
+  instagram: { icon: <AtSign size={11} />,          label: { en: 'Instagram',     ar: 'انستقرام' } },
+  app:       { icon: <AppWindow size={11} />,       label: { en: 'Mobile App',    ar: 'التطبيق' } },
+  analytics: { icon: <BarChart2 size={11} />,       label: { en: 'Analytics',     ar: 'تقارير' } },
 }
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
-  'smart':      { en: 'Smart',     ar: 'Ø§ÙØ°ÙÙ' },
-  'pro':        { en: 'Pro',       ar: 'Ø§ÙÙØªÙØ¯Ù' },
-  'full-auto':  { en: 'Full Auto', ar: 'Ø§ÙÙØ¤ØªÙØª' },
+  'smart':      { en: 'Smart',     ar: 'الذكي' },
+  'pro':        { en: 'Pro',       ar: 'المتقدم' },
+  'full-auto':  { en: 'Full Auto', ar: 'المؤتمت' },
 }
 
 // âââ Copy âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const t = {
-  eyebrow:      { en: 'Services & Pricing',                                                ar: 'Ø§ÙØ®Ø¯ÙØ§Øª ÙØ§ÙØªØ³Ø¹ÙØ±' },
-  headline:     { en: 'Your business, automated from day one',                             ar: 'ÙØ´Ø±ÙØ¹ÙØ ÙØ¤ØªÙØª ÙÙ Ø§ÙÙÙÙ Ø§ÙØ£ÙÙ' },
-  sub:          { en: '8 industries â any other business built custom after a call',       ar: 'Ù¨ ÙØ·Ø§Ø¹Ø§Øª â Ø£Ù ÙØ´Ø±ÙØ¹ Ø«Ø§ÙÙ ÙØ¨ÙÙÙ ÙØ®ØµØµ Ø¨Ø¹Ø¯ Ø§Ø³ØªØ´Ø§Ø±Ø©' },
-  build:        { en: 'Build fee',                                                         ar: 'Ø±Ø³ÙÙ Ø¨ÙØ§Ø¡ Ø§ÙÙØ¸Ø§Ù' },
-  retainer:     { en: '/mo',                                                               ar: '/Ø´ÙØ±' },
-  kwd:          { en: 'KWD',                                                               ar: 'Ø¯.Ù' },
-  delivery:     { en: '7-day delivery',                                                    ar: 'Ø¬Ø§ÙØ² ÙÙ Ù§ Ø£ÙØ§Ù' },
-  problem:      { en: 'The Problem',                                                       ar: 'Ø§ÙÙØ´ÙÙØ©' },
-  gone:         { en: 'Ã Gone',                                                            ar: 'Ã Ø§ÙØªÙÙ' },
-  popular:      { en: 'Most Popular',                                                      ar: 'Ø§ÙØ£ÙØ«Ø± Ø·ÙØ¨Ø§Ù' },
+  eyebrow:      { en: 'Services & Pricing',                                                ar: 'الخدمات والتسعير' },
+  headline:     { en: 'Your business, automated from day one',                             ar: 'مشروعك، مؤتمت من اليوم الأول' },
+  sub:          { en: '8 industries — any other business built custom after a call',       ar: '٨ قطاعات — أي مشروع ثاني نبنيه مخصص بعد استشارة' },
+  build:        { en: 'Build fee',                                                         ar: 'رسوم بناء النظام' },
+  retainer:     { en: '/mo',                                                               ar: '/شهر' },
+  kwd:          { en: 'KWD',                                                               ar: 'د.ك' },
+  delivery:     { en: '7-day delivery',                                                    ar: 'جاهز في ٧ أيام' },
+  problem:      { en: 'The Problem',                                                       ar: 'المشكلة' },
+  gone:         { en: 'Ã Gone',                                                            ar: '× انتهى' },
+  popular:      { en: 'Most Popular',                                                      ar: 'الأكثر طلباً' },
 
   // Free trial
-  trialSection: { en: 'Not sure yet?',                                                     ar: 'ÙÙ ÙØªØ£ÙØ¯ Ø¨Ø¹Ø¯Ø' },
+  trialSection: { en: 'Not sure yet?',                                                     ar: 'مو متأكد بعد؟' },
 
   // Websites section
-  webLabel:     { en: 'Website Design',                                                    ar: 'ØªØµÙÙÙ Ø§ÙÙÙØ§ÙØ¹' },
-  webSub:       { en: 'Professional bilingual websites â with or without AI.',             ar: 'ÙÙØ§ÙØ¹ Ø§Ø­ØªØ±Ø§ÙÙØ© Ø«ÙØ§Ø¦ÙØ© Ø§ÙÙØºØ© â ÙØ¹ Ø£Ù Ø¨Ø¯ÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù.' },
-  webDays:      { en: (n: [number, number]) => `${n[0]}â${n[1]} days`,                    ar: (n: [number, number]) => `${n[0]}â${n[1]} ÙÙÙ` },
-  webMaint:     { en: (n: number) => `+${n} KWD/mo maintenance (optional)`,               ar: (n: number) => `+${n} Ø¯.Ù/Ø´ÙØ± ØµÙØ§ÙØ© (Ø§Ø®ØªÙØ§Ø±Ù)` },
+  webLabel:     { en: 'Website Design',                                                    ar: 'تصميم المواقع' },
+  webSub:       { en: 'Professional bilingual websites — with or without AI.',             ar: 'مواقع احترافية ثنائية اللغة — مع أو بدون ذكاء اصطناعي.' },
+  webDays:      { en: (n: [number, number]) => `${n[0]}–${n[1]} days`,                    ar: (n: [number, number]) => `${n[0]}–${n[1]} يوم` },
+  webMaint:     { en: (n: number) => `+${n} KWD/mo maintenance (optional)`,               ar: (n: number) => `+${n} د.ك/شهر صيانة (اختياري)` },
 
   // Apps section
-  appLabel:     { en: 'Mobile Apps',                                                       ar: 'ØªØ·Ø¨ÙÙØ§Øª Ø§ÙØ¬ÙØ§Ù' },
-  appSub:       { en: 'iOS + Android apps â with or without AI.',                          ar: 'ØªØ·Ø¨ÙÙØ§Øª iOS + Android â ÙØ¹ Ø£Ù Ø¨Ø¯ÙÙ Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù.' },
+  appLabel:     { en: 'Mobile Apps',                                                       ar: 'تطبيقات الجوال' },
+  appSub:       { en: 'iOS + Android apps — with or without AI.',                          ar: 'تطبيقات iOS + Android — مع أو بدون ذكاء اصطناعي.' },
 
   // Price helpers
-  from:         { en: 'from',                                                              ar: 'ÙØ¨Ø¯Ø£ ÙÙ' },
-  startFrom:    { en: 'Starting from',                                                     ar: 'ÙØ¨Ø¯Ø£ ÙÙ' },
-  getStarted:   { en: 'Fill in Discovery Form',                                            ar: 'Ø§Ø³ØªØ¨ÙØ§Ù ÙÙÙÙ Ø·Ø¨ÙØ¹Ø© ÙØ´Ø±ÙØ¹Ù' },
+  from:         { en: 'from',                                                              ar: 'يبدأ من' },
+  startFrom:    { en: 'Starting from',                                                     ar: 'يبدأ من' },
+  getStarted:   { en: 'Fill in Discovery Form',                                            ar: 'استبيان لفهم طبيعة مشروعك' },
 
   // Custom bundle
-  customName:   { en: 'Custom AI System',                                                  ar: 'ÙØ¸Ø§Ù Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµ' },
-  customLabel:  { en: 'Priced after a free consultation call',                             ar: 'Ø§ÙØ³Ø¹Ø± ÙÙØ­Ø¯Ø¯ Ø¨Ø¹Ø¯ ÙÙØ§ÙÙØ© Ø§Ø³ØªØ´Ø§Ø±Ø© ÙØ¬Ø§ÙÙØ©' },
+  customName:   { en: 'Custom AI System',                                                  ar: 'نظام ذكاء اصطناعي مخصص' },
+  customLabel:  { en: 'Priced after a free consultation call',                             ar: 'السعر يُحدد بعد مكالمة استشارة مجانية' },
 }
 
 // âââ Helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const formatPrice = (price: number | [number, number], kwd: string) =>
   Array.isArray(price)
-    ? `${price[0].toLocaleString()}â${price[1].toLocaleString()} ${kwd}`
+    ? `${price[0].toLocaleString()}–${price[1].toLocaleString()} ${kwd}`
     : `${price.toLocaleString()} ${kwd}`
 
 // âââ Tier Card ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
@@ -457,7 +457,7 @@ export default function Bundles() {
                     </p>
                     <p className="text-[11px] text-ms-ink-400 font-mono">
                       {svc.deliveryDays[0]}â{svc.deliveryDays[1]}{' '}
-                      {lang === 'ar' ? 'ÙÙÙ' : 'days'}
+                      {lang === 'ar' ? 'يوم' : 'days'}
                     </p>
                   </div>
                 </div>
@@ -479,7 +479,7 @@ export default function Bundles() {
                     <span className="text-[14px] font-medium text-ms-ink-400">{t.kwd[lang]}</span>
                   </p>
                   <p className="text-[11px] text-ms-ink-400 mt-1">
-                    +{svc.monthlyMaintenance} {t.kwd[lang]}/{lang === 'ar' ? 'Ø´ÙØ± ØµÙØ§ÙØ©' : 'mo maintenance'}
+                    +{svc.monthlyMaintenance} {t.kwd[lang]}/{lang === 'ar' ? 'شهر صيانة' : 'mo maintenance'}
                   </p>
                 </div>
 

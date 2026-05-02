@@ -22,11 +22,11 @@ const mono = JetBrains_Mono({
 })
 
 const SITE_URL   = 'https://www.mindsynckw.com'
-const TITLE      = 'MindSync â Your Business, Automated | Ø£Ø¹ÙØ§ÙÙ ÙØ¤ØªÙØªØ©'
+const TITLE      = 'MindSync — Your Business, Automated | أعمالك مؤتمتة'
 const DESCRIPTION =
   "Kuwait's first AI automation agency for SMBs â custom AI systems, websites & apps. From first message to live system in 7 business days."
 const DESCRIPTION_AR =
-  'Ø£ÙÙ Ø´Ø±ÙØ© Ø¨Ø±ÙØ¬ÙØ§Øª ÙØ£ØªÙØªØ© Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙÙ Ø§ÙÙÙÙØª ÙÙØ´Ø±ÙØ§Øª Ø§ÙØµØºÙØ±Ø© ÙØ§ÙÙØªÙØ³Ø·Ø© â Ø£ÙØ¸ÙØ© Ø°ÙÙØ© ÙØ®ØµØµØ©Ø ÙÙØ§ÙØ¹Ø ÙØªØ·Ø¨ÙÙØ§Øª.'
+  'أول شركة برمجيات وأتمتة ذكاء اصطناعي في الكويت للشركات الصغيرة والمتوسطة — أنظمة ذكية مخصصة، مواقع، وتطبيقات.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   keywords: [
     'AI automation Kuwait',
-    'Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù Ø§ÙÙÙÙØª',
-    'ÙØ¸Ø§Ù ÙØ¤ØªÙØª Ø§ÙÙÙÙØª',
+    'ذكاء اصطناعي الكويت',
+    'نظام مؤتمت الكويت',
     'AI agency Kuwait',
     'business automation Kuwait',
     'MindSync',
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     'automation SMB Gulf',
     'website design Kuwait',
     'mobile app Kuwait',
-    'ÙØ§ØªØ³Ø§Ø¨ Ø¨ÙØª Ø§ÙÙÙÙØª',
-    'Ø£ØªÙØªØ© ÙØ´Ø§Ø±ÙØ¹ Ø§ÙÙÙÙØª',
+    'واتساب بوت الكويت',
+    'أتمتة مشاريع الكويت',
   ],
   alternates: {
     canonical: SITE_URL,
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     locale:          'ar_KW',
     alternateLocale: ['en_US'],
     images: [
-      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync â Ø£Ø¹ÙØ§ÙÙØ ÙØ¤ØªÙØªØ©' },
-      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync â Your Business, Automated' },
+      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — أعمالك، مؤتمتة' },
+      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — Your Business, Automated' },
     ],
   },
   twitter: {
@@ -81,7 +81,7 @@ const JSON_LD = {
   '@context': 'https://schema.org',
   '@type':    'LocalBusiness',
   name:            'MindSync',
-  alternateName:   'ÙØ§ÙÙØ¯ Ø³ÙÙÙ',
+  alternateName:   'مايند سينك',
   description:     "Kuwait's first AI automation agency for SMBs â custom AI systems, websites & apps. Your business, automated.",
   url:             'https://www.mindsynckw.com',
   logo:            'https://www.mindsynckw.com/brand/logo-transparent.png',

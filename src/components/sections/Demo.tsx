@@ -23,11 +23,11 @@ const ICON_MAP: Record<string, LucideIcon> = {
 }
 
 const t = {
-  eyebrow:  { en: 'Live Demo',                ar: 'ØªØ¬Ø±Ø¨Ø© ÙØ¨Ø§Ø´Ø±Ø©' },
-  headline: { en: 'Watch the system work',    ar: 'Ø´ÙÙ Ø´ÙÙÙ Ø§ÙÙØ¸Ø§Ù ÙØ´ØªØºÙ' },
+  eyebrow:  { en: 'Live Demo',                ar: 'تجربة مباشرة' },
+  headline: { en: 'Watch the system work',    ar: 'شوف شلون النظام يشتغل' },
   sub: {
     en: 'This is not a bot reading pre-written replies.\nThis is a custom AI system, trained on your business, running 24/7.',
-    ar: 'ÙØ°Ø§ ÙÙ Ø¨ÙØª ÙÙØ±Ø£ ÙÙ ÙØ§Ø¦ÙØ© Ø¬Ø§ÙØ²Ø©.\nÙØ¸Ø§Ù Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù ÙØ®ØµØµØ ÙØ¯Ø±ÙÙØ¨ Ø¹ÙÙ ÙØ´Ø±ÙØ¹ÙØ ÙØ´ØªØºÙ Ù¢Ù¤/Ù§.',
+    ar: 'هذا مو بوت يقرأ من قائمة جاهزة.\nنظام ذكاء اصطناعي مخصص، مدرَّب على مشروعك، يشتغل ٢٤/٧.',
   },
 }
 

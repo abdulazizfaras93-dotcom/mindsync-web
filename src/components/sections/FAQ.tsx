@@ -4,49 +4,49 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
-  eyebrow:  { en: 'FAQ',                        ar: 'Ø§ÙØ£Ø³Ø¦ÙØ© Ø§ÙÙØªÙØ±Ø±Ø©' },
-  headline: { en: 'Questions we hear often.',   ar: 'Ø£Ø³Ø¦ÙØ© Ø¯Ø§ÙÙ ÙØ³ÙØ¹ÙØ§' },
+  eyebrow:  { en: 'FAQ',                        ar: 'الأسئلة المتكررة' },
+  headline: { en: 'Questions we hear often.',   ar: 'أسئلة دايم نسمعها' },
 }
 
 const FAQS = [
   {
     en: {
       q: 'What exactly does MindSync build?',
-      a: 'We build custom AI automation systems â AI agents trained on your business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
+      a: 'We build custom AI automation systems — AI agents trained on your business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
     },
     ar: {
-      q: 'Ø´ÙÙ Ø¨Ø§ÙØ¶Ø¨Ø· ØªØ¨ÙÙ ÙØ§ÙÙØ¯ Ø³ÙÙÙØ',
-      a: 'ÙØ¨ÙÙ Ø£ÙØ¸ÙØ© ÙØ¤ØªÙØªØ© Ø¨Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù â ÙÙÙØ§Ø¡ ÙØ¯Ø±ÙØ¨ÙÙ Ø¹ÙÙ ÙØ´Ø±ÙØ¹Ù ÙØªÙÙÙÙ ÙÙØ§Ù ÙØ­Ø¯Ø¯Ø© (Ø­Ø¬Ø²Ø ÙØªØ§Ø¨Ø¹Ø©Ø Ø§Ø³ØªÙØ³Ø§Ø±Ø§ØªØ ØªØ­ÙÙÙ) Ø¹ÙÙ Ø£Ù ÙÙØ§Ø© ØªØ­ØªØ§Ø¬ÙØ§ (ÙØ§ØªØ³Ø§Ø¨Ø ÙÙÙØ¹Ø Ø§ÙØ³ØªÙØ±Ø§ÙØ ØªØ·Ø¨ÙÙ). ÙØ°ÙÙ ÙØµÙÙ ÙÙØ§ÙØ¹ ÙØªØ·Ø¨ÙÙØ§Øª Ø¨Ø´ÙÙ ÙÙÙØµÙ.',
+      q: 'شنو بالضبط تبني مايند سينك؟',
+      a: 'نبني أنظمة مؤتمتة بالذكاء الاصطناعي — وكلاء مدرّبين على مشروعك يتولون مهام محددة (حجز، متابعة، استفسارات، تحليل) على أي قناة تحتاجها (واتساب، موقع، انستقرام، تطبيق). كذلك نصمم مواقع وتطبيقات بشكل منفصل.',
     },
   },
   {
     en: {
       q: 'Do you offer a free trial?',
-      a: 'Yes. For clients who want to see the system in action first, we build your actual AI system based on your real business data and run it live for 7 days â at no cost. If you love it, you pay the build fee and choose your plan. If not, no charge.',
+      a: 'Yes. For clients who want to see the system in action first, we build your actual AI system based on your real business data and run it live for 7 days — at no cost. If you love it, you pay the build fee and choose your plan. If not, no charge.',
     },
     ar: {
-      q: 'ÙÙ ØªÙØ¯ÙÙÙ ØªØ¬Ø±Ø¨Ø© ÙØ¬Ø§ÙÙØ©Ø',
-      a: 'Ø£ÙÙØ¯. Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙÙ ÙØ¨ÙÙ ÙØ´ÙÙÙÙ Ø§ÙÙØ¸Ø§Ù ÙØ´ØªØºÙ Ø£ÙÙ â ÙØ¨ÙÙ ÙØ¸Ø§ÙÙ Ø§ÙØ°ÙÙ Ø§ÙÙØ¹ÙÙ Ø¨ÙØ§Ø¡Ù Ø¹ÙÙ Ø¨ÙØ§ÙØ§Øª ÙØ´Ø±ÙØ¹Ù Ø§ÙØ­ÙÙÙÙØ© ÙÙØ´ØºÙÙÙ Ø£Ø³Ø¨ÙØ¹ ÙØ§ÙÙ Ø¨Ø¯ÙÙ ØªÙÙÙØ©. Ø¥Ø°Ø§ Ø¹Ø¬Ø¨Ù ØªØ¯ÙØ¹ Ø±Ø³ÙÙ Ø§ÙØ¨ÙØ§Ø¡ ÙØªØ®ØªØ§Ø± Ø§ÙØ¨Ø§ÙØ©. ÙØ¥Ø°Ø§ ÙØ§Ø ÙØ§ ÙÙ Ø£Ù Ø±Ø³ÙÙ.',
+      q: 'هل تقدمون تجربة مجانية؟',
+      a: 'أكيد. العملاء اللي يبون يشوفون النظام يشتغل أول — نبني نظامك الذكي الفعلي بناءً على بيانات مشروعك الحقيقية ونشغّله أسبوع كامل بدون تكلفة. إذا عجبك تدفع رسوم البناء وتختار الباقة. وإذا لا، ما في أي رسوم.',
     },
   },
   {
     en: {
       q: 'Can I get a website or app without the AI system?',
-      a: 'Yes. Website design and mobile app development are standalone services â you can order them with or without an AI automation system. Prices and timelines are shown in the pricing section.',
+      a: 'Yes. Website design and mobile app development are standalone services — you can order them with or without an AI automation system. Prices and timelines are shown in the pricing section.',
     },
     ar: {
-      q: 'Ø£ÙØ¯Ø± Ø£Ø·ÙØ¨ ÙÙÙØ¹ Ø£Ù ØªØ·Ø¨ÙÙ Ø¨Ø¯ÙÙ ÙØ¸Ø§Ù Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹ÙØ',
-      a: 'Ø£ÙÙØ¯. ØªØµÙÙÙ Ø§ÙÙÙØ§ÙØ¹ ÙØªØ·ÙÙØ± Ø§ÙØªØ·Ø¨ÙÙØ§Øª Ø®Ø¯ÙØ§Øª ÙÙÙØµÙØ© â ØªÙØ¯Ø± ØªØ·ÙØ¨ÙØ§ ÙØ¹ Ø£Ù Ø¨Ø¯ÙÙ ÙØ¸Ø§Ù Ø£ØªÙØªØ©. Ø§ÙØ£Ø³Ø¹Ø§Ø± ÙØ§ÙÙØ¯Ø¯ ÙÙØ¶Ø­Ø© ÙÙ ÙØ³Ù Ø§ÙØªØ³Ø¹ÙØ±.',
+      q: 'أقدر أطلب موقع أو تطبيق بدون نظام ذكاء اصطناعي؟',
+      a: 'أكيد. تصميم المواقع وتطوير التطبيقات خدمات منفصلة — تقدر تطلبها مع أو بدون نظام أتمتة. الأسعار والمدد موضحة في قسم التسعير.',
     },
   },
   {
     en: {
       q: 'What does the monthly retainer cover?',
-      a: 'Everything â hosting, API costs, agent monitoring, updates, bug fixes, and support. The retainer is not just a maintenance fee, it\'s the guarantee your system keeps running and improving every month without you asking.',
+      a: 'Everything — hosting, API costs, agent monitoring, updates, bug fixes, and support. The retainer is not just a maintenance fee, it\'s the guarantee your system keeps running and improving every month without you asking.',
     },
     ar: {
-      q: 'Ø´ÙÙ ÙØ´ÙÙ Ø§ÙØ§Ø´ØªØ±Ø§Ù Ø§ÙØ´ÙØ±ÙØ',
-      a: 'ÙÙ Ø´Ù â Ø§ÙØ§Ø³ØªØ¶Ø§ÙØ©Ø ØªÙØ§ÙÙÙ APIØ ÙØ±Ø§ÙØ¨Ø© Ø§ÙÙÙÙÙØ Ø§ÙØªØ­Ø¯ÙØ«Ø§ØªØ Ø¥ØµÙØ§Ø­ Ø§ÙØ£Ø®Ø·Ø§Ø¡Ø ÙØ§ÙØ¯Ø¹Ù. Ø§ÙØ§Ø´ØªØ±Ø§Ù ÙÙ Ø¨Ø³ Ø±Ø³ÙÙ ØµÙØ§ÙØ© â ÙÙ Ø¶ÙØ§Ù Ø¥Ù ÙØ¸Ø§ÙÙ ÙØ´ØªØºÙ ÙÙØªØ·ÙØ± ÙÙ Ø´ÙØ± Ø¨Ø¯ÙÙ ÙØ§ ØªØ·ÙØ¨.',
+      q: 'شنو يشمل الاشتراك الشهري؟',
+      a: 'كل شي — الاستضافة، تكاليف API، مراقبة الوكيل، التحديثات، إصلاح الأخطاء، والدعم. الاشتراك مو بس رسوم صيانة — هو ضمان إن نظامك يشتغل ويتطور كل شهر بدون ما تطلب.',
     },
   },
   {
@@ -55,18 +55,18 @@ const FAQS = [
       a: "No. We connect your existing business number through the Meta WhatsApp Business API. Your customers keep texting the number they already know.",
     },
     ar: {
-      q: 'ÙÙ ÙØ­ØªØ§Ø¬ Ø§ØºÙØ± Ø±ÙÙ Ø§ÙÙØ§ØªØ³Ø§Ø¨ ÙÙØ´Ø±ÙØ¹ÙØ',
-      a: 'ÙØ§. ÙØ±Ø¨Ø· Ø±ÙÙÙ Ø§ÙØ­Ø§ÙÙ Ø¨ÙØ§ØªØ³Ø§Ø¨ Ø¨ÙØ²ÙØ³ API. Ø¹ÙÙØ§Ø¤Ù ÙØ³ØªÙØ±ÙÙ ÙÙ ÙØ±Ø§Ø³ÙØ© ÙÙØ³ Ø§ÙØ±ÙÙ.',
+      q: 'هل محتاج اغير رقم الواتساب لمشروعي؟',
+      a: 'لا. نربط رقمك الحالي بواتساب بيزنس API. عملاؤك يستمرون في مراسلة نفس الرقم.',
     },
   },
   {
     en: {
       q: "What if the agent doesn't know the answer?",
-      a: "It escalates gracefully. We train a polite handoff that pulls you into the conversation only for cases worth your time â everything routine is handled automatically.",
+      a: "It escalates gracefully. We train a polite handoff that pulls you into the conversation only for cases worth your time — everything routine is handled automatically.",
     },
     ar: {
-      q: 'Ø´ÙÙ ÙØµÙØ± ÙÙ Ø§ÙÙÙÙÙ Ø§ÙØ°ÙÙ ÙØ§ Ø¹Ø±Ù ÙØ±Ø¯ Ø¹ÙÙ Ø³Ø¤Ø§ÙØ',
-      a: 'ÙØ­ÙÙÙ Ø§ÙÙØ­Ø§Ø¯Ø«Ø© Ø¨Ø£Ø¯Ø¨. ÙØ¯Ø±ÙØ¨Ù Ø¹ÙÙ ÙÙÙ Ø§ÙÙØ­Ø§Ø¯Ø«Ø© ÙÙ ÙÙØ· ÙÙ Ø§ÙØ­Ø§ÙØ§Øª Ø§ÙÙÙ ØªØ³ØªØ§ÙÙ â ÙÙ Ø´Ù Ø±ÙØªÙÙÙ ÙØªÙÙØ§Ù ØªÙÙØ§Ø¦ÙØ§Ù.',
+      q: 'شنو يصير لو الوكيل الذكي ما عرف يرد على سؤال؟',
+      a: 'يحوّل المحادثة بأدب. ندرّبه على نقل المحادثة لك فقط في الحالات اللي تستاهل — كل شي روتيني يتولاه تلقائياً.',
     },
   },
   {
@@ -75,8 +75,8 @@ const FAQS = [
       a: "You do. Everything â the agent, the data, the portal â is yours as long as you're paying the monthly retainer. If you ever stop, we export everything and hand it over.",
     },
     ar: {
-      q: 'ÙÙÙ ÙÙÙÙ Ø§ÙØ¨ÙØ§ÙØ§Øª ÙØ§ÙÙØ¸Ø§ÙØ',
-      a: 'Ø£ÙØª. ÙÙ Ø´Ù â Ø§ÙÙÙÙÙØ Ø§ÙØ¨ÙØ§ÙØ§ØªØ ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ â ÙÙÙÙ Ø·Ø§ÙÙØ§ Ø§ÙØ§Ø´ØªØ±Ø§Ù Ø§ÙØ´ÙØ±Ù ÙÙØ¹ÙÙ. ÙÙ ÙØ±Ø±Øª ØªÙÙÙØ ÙØµØ¯ÙØ± ÙÙ Ø´Ù ÙÙØ³ÙÙÙÙ ÙÙ.',
+      q: 'منو يملك البيانات والنظام؟',
+      a: 'أنت. كل شي — الوكيل، البيانات، لوحة التحكم — ملكك طالما الاشتراك الشهري مفعّل. لو قررت توقف، نصدّر كل شي ونسلّمه لك.',
     },
   },
   {
@@ -85,8 +85,8 @@ const FAQS = [
       a: "You message us on WhatsApp. We have monitoring alerts on all active systems and respond within the SLA window included in your plan.",
     },
     ar: {
-      q: 'Ø´ÙÙÙ ÙÙ Ø®Ø±Ø¨Øª ÙØ´ÙÙØ© Ø¨Ø§ÙÙÙÙØ',
-      a: 'ØªØ±Ø§Ø³ÙÙØ§ Ø¹ÙÙ ÙØ§ØªØ³Ø§Ø¨. Ø¹ÙØ¯ÙØ§ ØªÙØ¨ÙÙØ§Øª ÙØ±Ø§ÙØ¨Ø© Ø¹ÙÙ ÙÙ Ø§ÙØ£ÙØ¸ÙØ© Ø§ÙØ´ØºÙØ§ÙØ© ÙÙØ±Ø¯ Ø¶ÙÙ ÙÙØª Ø§ÙØ§Ø³ØªØ¬Ø§Ø¨Ø© Ø§ÙÙØ­Ø¯Ø¯ ÙÙ Ø®Ø·ØªÙ.',
+      q: 'شلون لو خربت مشكلة بالليل؟',
+      a: 'تراسلنا على واتساب. عندنا تنبيهات مراقبة على كل الأنظمة الشغّالة ونرد ضمن وقت الاستجابة المحدد في خطتك.',
     },
   },
 ]
