@@ -112,7 +112,6 @@ function MorphScene({ activeStep }: { activeStep: number }) {
 
       <points ref={dustRef}>
         <bufferGeometry>
-          {/* @ts-expect-error -- r3f bufferAttribute typing */}
           <bufferAttribute
             attach="attributes-position"
             array={dustPos}
