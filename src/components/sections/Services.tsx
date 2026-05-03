@@ -1,6 +1,4 @@
-// src/components/sections/Services.tsx
 'use client'
-import { motion, useReducedMotion, type MotionProps } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { BUNDLES, WEBSITE_SERVICES } from '@/lib/data'
 
@@ -28,13 +26,13 @@ const t = {
     build:     { en: 'Build', ar: 'بناء' },
     run:       { en: 'Run',   ar: 'تشغيل' },
     fromLabel: { en: 'from',  ar: 'من' },
-    currency:  { en: 'KWD',  ar: 'د.ك' },
-    perMonth:  { en: '/ mo', ar: '/ شهر' },
+    currency:  { en: 'KWD',   ar: 'د.ك' },
+    perMonth:  { en: '/ mo',  ar: '/ شهر' },
   },
   cards: [
     {
       num: '02',
-      title: { en: 'Client Dashboard',       ar: 'لوحة التحكم' },
+      title: { en: 'Client Dashboard',     ar: 'لوحة التحكم' },
       desc: {
         en: 'See bookings, messages, and revenue at a glance. We host, secure, and maintain it.',
         ar: 'شوف حجوزاتك، رسائلك، وإيراداتك بلمحة. نحن نستضيفها ونؤمّنها.',
@@ -43,7 +41,7 @@ const t = {
     },
     {
       num: '03',
-      title: { en: 'Workflow Automations',   ar: 'أتمتة سير العمل' },
+      title: { en: 'Workflow Automations', ar: 'أتمتة سير العمل' },
       desc: {
         en: 'Reminders, follow-ups, review requests, no-show recovery — all triggered automatically.',
         ar: 'تذكيرات، متابعات، طلبات تقييم، واسترداد الغائبين — كلها تشتغل تلقائياً.',
@@ -52,7 +50,7 @@ const t = {
     },
     {
       num: '04',
-      title: { en: 'Website & App Builds',   ar: 'المواقع والتطبيقات' },
+      title: { en: 'Website & App Builds', ar: 'المواقع والتطبيقات' },
       desc: {
         en: 'Bilingual marketing sites and apps that plug straight into your automation stack.',
         ar: 'مواقع وتطبيقات ثنائية اللغة تتكامل مباشرة مع منظومة الأتمتة.',
@@ -61,7 +59,7 @@ const t = {
     },
     {
       num: '05',
-      title: { en: 'Monthly Maintenance',    ar: 'الصيانة الشهرية' },
+      title: { en: 'Monthly Maintenance',  ar: 'الصيانة الشهرية' },
       desc: {
         en: 'We monitor, debug, retrain, and grow the system every month. One account manager, not a ticket queue.',
         ar: 'نراقب، نصلح، نعيد التدريب، وننمّي النظام كل شهر. مسؤول حساب واحد، لا قائمة انتظار.',
@@ -71,26 +69,15 @@ const t = {
   ] as const,
 }
 
-function fadeUp(delay = 0): MotionProps {
-  return {
-    initial:     { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport:    { once: true, amount: 0.2 },
-    transition:  { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
-  }
-}
-
 export default function Services() {
   const { lang } = useLang()
-  const prefersReduced = useReducedMotion()
-  const fm = (delay: number): MotionProps => prefersReduced ? {} : fadeUp(delay)
 
   return (
     <section id="services" className="py-24 bg-ms-ivory-0">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
 
         {/* Header */}
-        <motion.div {...fm(0)} className="mb-12">
+        <div className="mb-12">
           <p className="text-ms-gold-600 text-[11px] tracking-[0.2em] uppercase font-medium mb-3 flex items-center gap-3">
             <span className="w-6 h-px bg-ms-gold-600 shrink-0" />
             {t.eyebrow[lang]}
@@ -101,13 +88,10 @@ export default function Services() {
           <p className="text-ms-ink-600 text-[17px] max-w-lg leading-relaxed">
             {t.sub[lang]}
           </p>
-        </motion.div>
+        </div>
 
         {/* Flagship banner */}
-        <motion.div
-          {...fm(0.1)}
-          className="w-full bg-ms-green-900 rounded-2xl p-8 mb-4 border border-ms-green-900 hover:border-ms-gold-600 transition-colors duration-300"
-        >
+        <div className="w-full bg-ms-green-900 rounded-2xl p-8 mb-4 border border-ms-green-900 hover:border-ms-gold-600 transition-colors duration-300">
           <p className="font-mono text-[11px] tracking-[0.18em] text-white/45 uppercase mb-3">
             {t.flagship.eyebrow[lang]}
           </p>
@@ -125,14 +109,13 @@ export default function Services() {
               {t.flagship.run[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minSmart} {t.flagship.currency[lang]} {t.flagship.perMonth[lang]}</span>
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* 2×2 grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {t.cards.map((card, i) => (
-            <motion.div
+          {t.cards.map((card) => (
+            <div
               key={card.num}
-              {...fm(0.2 + i * 0.08)}
               className="bg-white border border-ms-ink-200 rounded-2xl p-7 flex flex-col hover:border-ms-green-800 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
             >
               <p className="font-mono text-[11px] tracking-[0.16em] text-ms-ink-400 uppercase mb-3">
@@ -144,10 +127,10 @@ export default function Services() {
               <p className="text-ms-ink-600 text-[14px] leading-relaxed flex-1 mb-5">
                 {card.desc[lang]}
               </p>
-              <p className="font-mono text-[11px] tracking-[0.06em] text-ms-gold-700 border-t border-ms-ink-100 pt-4">
+              <p className="font-mono text-[11px] tracking-[0.06em] text-ms-gold-600 border-t border-ms-ink-100 pt-4">
                 {card.meta[lang]}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
 
