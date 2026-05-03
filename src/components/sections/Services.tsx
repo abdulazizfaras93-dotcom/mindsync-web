@@ -11,17 +11,17 @@ const minWebsite  = (() => {
 
 const t = {
   eyebrow: { en: 'What We Build', ar: 'ما نبنيه' },
-  h2:      { en: 'Four systems. One retainer.', ar: 'أربعة أنظمة. راتب واحد.' },
+  h2:      { en: 'Custom AI. Built for you. Run by us.', ar: 'ذكاء اصطناعي مخصص. يُبنى لك. ندير.' },
   sub: {
     en: 'We design, ship, and run the operational layer your business is missing.',
     ar: 'نصمّم، نبني، وندير الطبقة التشغيلية التي يفتقدها مشروعك.',
   },
   flagship: {
     eyebrow: { en: '01 / FLAGSHIP', ar: '01 / الرائد' },
-    title:   { en: 'WhatsApp AI Receptionist', ar: 'المساعد الذكي على واتساب' },
+    title:   { en: 'Custom-Built AI Agent', ar: 'وكيل ذكاء اصطناعي مخصص البناء' },
     desc: {
-      en: 'Books appointments, answers FAQs, qualifies leads, and escalates real ones to your phone. Speaks fluent Kuwaiti dialect and English — handles your whole inbox, never sleeps.',
-      ar: 'يحجز المواعيد، يجيب على الأسئلة، يصفّي العملاء، ويحوّل المهم منهم لهاتفك. يتكلم الكويتي والإنجليزي — يدير صندوق الرسائل كله، 24/7.',
+      en: 'Not a chatbot template. A fully programmed agent built for your industry and trained on your business. Deploy it on WhatsApp, your website, Instagram — or all three. It handles your entire customer communication layer.',
+      ar: 'ليس نموذجاً جاهزاً. وكيل مبرمج بالكامل لقطاعك ومُدرَّب على أعمالك تحديداً. نشره على واتساب، موقعك، إنستغرام — أو الثلاثة معاً. يتولى طبقة التواصل مع عملائك بالكامل.',
     },
     build:     { en: 'Build', ar: 'بناء' },
     run:       { en: 'Run',   ar: 'تشغيل' },
