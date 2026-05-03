@@ -85,7 +85,7 @@ export default function Navbar() {
   }, [])
 
   const navLinks = [
-    { href: '/#services', label: t.services },
+    { href: '/services', label: t.services },
     { href: '/#process', label: t.process },
     { href: '/#faq',     label: t.faq },
   ]
@@ -118,7 +118,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <MagneticLink href="/#services">{t.services[lang]}</MagneticLink>
+          <MagneticLink href="/services">{t.services[lang]}</MagneticLink>
 
           {/* Industries dropdown */}
           <div
@@ -199,7 +199,7 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-ms-ivory-0 border-t border-ms-ivory-200 px-6 py-5 flex flex-col gap-4">
           <a
-            href="/#services"
+            href="/services"
             onClick={() => setMenuOpen(false)}
             className="text-[15px] text-ms-ink-900 font-medium py-1"
           >
