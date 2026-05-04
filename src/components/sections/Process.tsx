@@ -160,6 +160,7 @@ export default function Process() {
                     isActive ? 'border-ms-gold-600' : 'border-transparent'
                   }`}
                   onMouseEnter={() => setActiveStep(i)}
+                  onClick={() => setActiveStep(i)}
                 >
                   <div className="flex gap-6 items-start">
                     <span

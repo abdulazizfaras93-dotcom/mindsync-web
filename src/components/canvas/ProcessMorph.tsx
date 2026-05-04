@@ -114,9 +114,7 @@ function MorphScene({ activeStep }: { activeStep: number }) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            array={dustPos}
-            count={200}
-            itemSize={3}
+            args={[dustPos, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
