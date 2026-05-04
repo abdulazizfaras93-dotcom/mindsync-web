@@ -1,6 +1,6 @@
 // src/components/canvas/ProcessMorph.tsx
 'use client'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -17,9 +17,9 @@ function easeOut(t: number) {
 }
 
 function MorphScene({ activeStep }: { activeStep: number }) {
-  const meshRef  = useRef<THREE.Mesh>(null)
-  const haloRef  = useRef<THREE.Mesh>(null)
-  const dustRef  = useRef<THREE.Points>(null)
+  const meshRef = useRef<THREE.Mesh>(null)
+  const haloRef = useRef<THREE.Mesh>(null)
+  const dustRef = useRef<THREE.Points>(null)
 
   const geos = useMemo(() => GEO_FACTORIES.map(f => f()), [])
 
@@ -41,31 +41,24 @@ function MorphScene({ activeStep }: { activeStep: number }) {
     return pos
   }, [])
 
-  useEffect(() => {
-    if (!meshRef.current || !haloRef.current) return
-    meshRef.current.geometry = geos[0]
-    haloRef.current.geometry = geos[0]
-  }, [geos])
-
-  useEffect(() => {
-    if (activeStep === prevStep.current) return
-    prevStep.current      = activeStep
-    targetStep.current    = activeStep
-    morphPhase.current    = 'out'
-    morphProgress.current = 0
-  }, [activeStep])
-
+  // Set geometry on first frame to guarantee refs are ready
+  const initialized = useRef(false)
   useFrame((_, delta) => {
     const mesh = meshRef.current
     const halo = haloRef.current
     if (!mesh || !halo) return
+
+    if (!initialized.current) {
+      mesh.geometry = geos[0]
+      halo.geometry = geos[0]
+      initialized.current = true
+    }
 
     if (morphPhase.current === 'out') {
       morphProgress.current = Math.min(1, morphProgress.current + delta / 0.32)
       const s = easeOut(1 - morphProgress.current)
       mesh.scale.setScalar(s)
       halo.scale.setScalar(s * 1.08)
-
       if (morphProgress.current >= 1) {
         mesh.geometry = geos[targetStep.current]
         halo.geometry = geos[targetStep.current]
@@ -89,6 +82,14 @@ function MorphScene({ activeStep }: { activeStep: number }) {
       dustRef.current.rotation.x += delta * 0.03
     }
   })
+
+  useEffect(() => {
+    if (activeStep === prevStep.current) return
+    prevStep.current      = activeStep
+    targetStep.current    = activeStep
+    morphPhase.current    = 'out'
+    morphProgress.current = 0
+  }, [activeStep])
 
   return (
     <>
@@ -130,17 +131,11 @@ function MorphScene({ activeStep }: { activeStep: number }) {
 }
 
 export default function ProcessMorph({ activeStep }: { activeStep: number }) {
-  const [ok, setOk] = useState(false)
-  useEffect(() => {
-    setOk(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  }, [])
-  if (!ok) return null
-
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 35 }}
       gl={{ alpha: true, antialias: true }}
-      style={{ background: 'transparent', width: '100%', height: '100%' }}
+      style={{ display: 'block', width: '100%', height: '100%' }}
     >
       <MorphScene activeStep={activeStep} />
     </Canvas>
