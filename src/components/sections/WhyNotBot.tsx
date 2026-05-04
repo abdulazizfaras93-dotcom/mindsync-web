@@ -205,21 +205,44 @@ export default function WhyNotBot() {
           </table>
         </motion.div>
 
-        {/* 3 Differentiator Cards */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {t.cards.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 32, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="border border-ms-gold-600/30 bg-ms-green-800 rounded-xl p-6"
-            >
-              <h3 className="text-ms-gold-600 font-bold text-[16px] mb-3">{card.title[lang]}</h3>
-              <p className="text-white/55 text-[14px] leading-relaxed">{card.body[lang]}</p>
-            </motion.div>
-          ))}
+        {/* 3 Differentiator Cards — asymmetric: 1 featured + 2 stacked */}
+        <div className="grid md:grid-cols-[3fr_2fr] gap-5">
+
+          {/* Featured card — first differentiator */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="border border-ms-gold-600/30 bg-ms-green-800 rounded-xl p-8 flex flex-col justify-between"
+          >
+            <span className="font-mono text-[11px] tracking-[0.18em] text-ms-gold-600/50 uppercase mb-6 block">01</span>
+            <div>
+              <h3 className="text-ms-ivory-0 font-bold text-[20px] leading-snug mb-4">{t.cards[0].title[lang]}</h3>
+              <p className="text-white/55 text-[14px] leading-relaxed">{t.cards[0].body[lang]}</p>
+            </div>
+          </motion.div>
+
+          {/* Right column — two smaller cards stacked */}
+          <div className="flex flex-col gap-5">
+            {t.cards.slice(1).map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="border border-ms-gold-600/20 bg-ms-green-800/60 rounded-xl p-6 flex-1"
+              >
+                <span className="font-mono text-[11px] tracking-[0.18em] text-ms-gold-600/50 uppercase mb-3 block">
+                  {String(i + 2).padStart(2, '0')}
+                </span>
+                <h3 className="text-ms-gold-600 font-bold text-[15px] leading-snug mb-2">{card.title[lang]}</h3>
+                <p className="text-white/50 text-[13px] leading-relaxed">{card.body[lang]}</p>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
 
       </div>

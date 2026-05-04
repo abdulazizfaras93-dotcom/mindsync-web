@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { usePathname } from 'next/navigation'
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useLang } from '@/lib/lang'
 import { BUNDLES, INDUSTRY_SLUGS } from '@/lib/data'
@@ -50,6 +51,7 @@ const t = {
 
 export default function Navbar() {
   const { lang, toggle } = useLang()
+  const pathname = usePathname()
   const [scrolled,        setScrolled]        = useState(false)
   const [visible,         setVisible]         = useState(true)
   const [menuOpen,        setMenuOpen]        = useState(false)
@@ -118,7 +120,16 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <MagneticLink href="/services">{t.services[lang]}</MagneticLink>
+          <a
+            href="/services"
+            className={`text-[14px] font-medium transition-colors ${
+              pathname === '/services'
+                ? 'text-ms-green-800 font-semibold'
+                : 'text-ms-ink-600 hover:text-ms-green-800'
+            }`}
+          >
+            {t.services[lang]}
+          </a>
 
           {/* Industries dropdown */}
           <div
@@ -129,7 +140,14 @@ export default function Navbar() {
           >
             <button
               onClick={() => setIndustriesOpen(o => !o)}
-              className="flex items-center gap-1 text-[14px] text-ms-ink-600 hover:text-ms-green-800 transition-colors font-medium"
+              className={`flex items-center gap-1 text-[14px] font-medium transition-colors ${
+                pathname?.startsWith('/clinics') || pathname?.startsWith('/salons') ||
+                pathname?.startsWith('/spas') || pathname?.startsWith('/gyms') ||
+                pathname?.startsWith('/garages') || pathname?.startsWith('/restaurants') ||
+                pathname?.startsWith('/real-estate') || pathname?.startsWith('/home-businesses')
+                  ? 'text-ms-green-800 font-semibold'
+                  : 'text-ms-ink-600 hover:text-ms-green-800'
+              }`}
             >
               {t.industries[lang]}
               <ChevronDown
@@ -139,25 +157,38 @@ export default function Navbar() {
               />
             </button>
 
-            {industriesOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-ms-ivory-0 border border-ms-ivory-200 rounded-xl shadow-xl overflow-hidden z-50">
-                <div className="py-1.5">
-                  {BUNDLES.map(b => {
-                    const slug = ID_TO_SLUG[b.id]
-                    if (!slug) return null
-                    return (
-                      <a
-                        key={b.id}
-                        href={`/${slug}`}
-                        className="flex items-center px-4 py-2 text-[13px] text-ms-ink-700 hover:bg-ms-green-800 hover:text-ms-ivory-0 transition-colors"
-                      >
-                        {b[lang === 'ar' ? 'ar' : 'en']}
-                      </a>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+            <AnimatePresence>
+              {industriesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-ms-ivory-0 border border-ms-ivory-200 rounded-xl shadow-xl overflow-hidden z-50"
+                >
+                  <div className="py-1.5">
+                    {BUNDLES.map(b => {
+                      const slug = ID_TO_SLUG[b.id]
+                      if (!slug) return null
+                      const isActive = pathname === `/${slug}`
+                      return (
+                        <a
+                          key={b.id}
+                          href={`/${slug}`}
+                          className={`flex items-center px-4 py-2 text-[13px] transition-colors ${
+                            isActive
+                              ? 'bg-ms-green-800 text-ms-ivory-0 font-medium'
+                              : 'text-ms-ink-700 hover:bg-ms-green-800 hover:text-ms-ivory-0'
+                          }`}
+                        >
+                          {b[lang === 'ar' ? 'ar' : 'en']}
+                        </a>
+                      )
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {navLinks.slice(1).map(link => (
@@ -196,8 +227,16 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
+      <AnimatePresence>
       {menuOpen && (
-        <div className="md:hidden bg-ms-ivory-0 border-t border-ms-ivory-200 px-6 py-5 flex flex-col gap-4">
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
+          className="md:hidden overflow-hidden bg-ms-ivory-0 border-t border-ms-ivory-200"
+        >
+        <div className="px-6 py-5 flex flex-col gap-4">
           <a
             href="/services"
             onClick={() => setMenuOpen(false)}
@@ -269,7 +308,9 @@ export default function Navbar() {
             </a>
           </div>
         </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </motion.nav>
   )
 }

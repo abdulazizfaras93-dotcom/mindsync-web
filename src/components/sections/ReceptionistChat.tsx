@@ -178,7 +178,7 @@ export default function ReceptionistChat() {
   }
 
   return (
-    <section ref={sectionRef} className="relative bg-ms-green-900 py-24 px-6">
+    <section id="chat" ref={sectionRef} className="relative bg-ms-green-900 py-24 px-6">
       {/* Floating bubble background */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-35 overflow-hidden" aria-hidden>
         <ChatBubbles />

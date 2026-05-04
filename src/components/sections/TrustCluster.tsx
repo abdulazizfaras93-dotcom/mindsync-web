@@ -45,10 +45,14 @@ export default function TrustCluster() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
 
           {/* Made in Kuwait — primary chrome */}
-          <div className="md:col-span-2 rounded-2xl bg-gradient-to-br from-ms-green-900 via-ms-green-800 to-ms-green-700 p-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-ms-gold-600 flex items-center justify-center shrink-0" aria-hidden>
-              <span className="text-ms-green-900 text-[20px] font-bold">KW</span>
-            </div>
+          <div className="md:col-span-2 rounded-2xl bg-gradient-to-br from-ms-green-900 via-ms-green-800 to-ms-green-700 p-6 flex items-center gap-5">
+            <img
+              src="/brand/logo-transparent.png"
+              alt="MindSync"
+              width={52}
+              height={52}
+              className="shrink-0 object-contain"
+            />
             <div>
               <p className="text-ms-gold-600 text-[10px] tracking-widest uppercase mb-1">
                 {isAr ? 'الهوية المحلية' : 'Local identity'}

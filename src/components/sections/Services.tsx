@@ -116,7 +116,7 @@ export default function Services() {
           {t.cards.map((card) => (
             <div
               key={card.num}
-              className="bg-white border border-ms-ink-200 rounded-2xl p-7 flex flex-col hover:border-ms-green-800 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
+              className="bg-white border border-ms-ivory-200 rounded-2xl p-7 flex flex-col hover:border-ms-green-800 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
             >
               <p className="font-mono text-[11px] tracking-[0.16em] text-ms-ink-400 uppercase mb-3">
                 {card.num}

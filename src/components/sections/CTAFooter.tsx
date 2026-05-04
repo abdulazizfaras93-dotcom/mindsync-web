@@ -71,7 +71,7 @@ export function CTA() {
               {t.cta1[lang]}
             </a>
             <a
-              href="#demo"
+              href="#chat"
               className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
             >
               {t.cta2[lang]}
@@ -170,7 +170,15 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-white/20 text-[12px]">{t.copy[lang]}</p>
-          <p className="text-white/20 text-[12px] text-center">{t.legal[lang]}</p>
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <p className="text-white/20 text-[12px]">{t.legal[lang]}</p>
+            <a href="/privacy" className="text-white/20 text-[12px] hover:text-white/40 transition-colors">
+              {lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}
+            </a>
+            <a href="/terms" className="text-white/20 text-[12px] hover:text-white/40 transition-colors">
+              {lang === 'ar' ? 'الشروط والأحكام' : 'Terms of Service'}
+            </a>
+          </div>
         </div>
       </div>
     </footer>
