@@ -49,12 +49,12 @@ Section order (top → bottom):
 ```
 Navbar
 Hero               — mindsync.mp4 looping video background (autoPlay muted loop)
-Demo               — canned + live chat, 8 industries
+Services           — 5-card "what we build" overview with prices (replaces Demo)
 WhyNotBot          — comparison table (dark green plate)
 Bundles            — 8 industries × 3 tiers + website/app services + free trial
 ROICalculator      — interactive sliders
 ReceptionistChat   — live n8n webhook chat
-Process            — 5-step flow (includes free trial step)
+Process            — 5-step flow, two-column layout with sticky ProcessMorph canvas
 BuiltOn            — integration marquee
 TrustCluster       — trust badges
 FAQ                — 8 Q&As including free trial + website-without-AI
@@ -63,6 +63,8 @@ Footer
 ```
 
 Global overlays: `WhatsAppButton` (floating corner) + `ExitIntent` (free trial offer on exit).
+
+> `Demo.tsx`, `DemoChat.tsx`, `PortalPreview.tsx` remain in the codebase but are **not imported in `page.tsx`**.
 
 ---
 
@@ -134,18 +136,20 @@ Always guard parallax values with `const prefersReduced = useReducedMotion()` an
 #### `src/components/sections/`
 One file per section. Key notes:
 - `Hero.tsx` — video background: `<video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">`. Two gradient overlays (`left fade` + `bottom fade`) keep text readable. `brainY` parallax still applied to video container. Falls back to solid `bg-ms-green-900` when `useReducedMotion()` is true.
+- `Services.tsx` — 5-card "what we build" section. Full-width banner (WhatsApp AI Receptionist) + 2×2 grid (Dashboard, Automations, Website/App, Maintenance). Prices read from `data.ts`. Framer Motion staggered fadeUp.
 - `Bundles.tsx` — renders `TIER_ORDER` (`smart/pro/full-auto`). The `isPro` flag highlights the middle card. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids below the AI bundles.
-- `Process.tsx` — 5 steps. Step 02 has `trial: true` — gold "Free" badge. Steps alternate slide-in direction (`x: i % 2 === 0 ? -20 : 20`).
+- `Process.tsx` — 5 steps, two-column layout: sticky `ProcessMorph` canvas (left) + interactive step list (right). `useState(0)` → `activeStep` drives morph + step expansion. Step 02 has gold "Free" badge. `ProcessFlow` strip removed.
 - `WhyNotBot.tsx` — parallax background pattern via `useScroll`/`useTransform`. `fadeUp` variant with custom delay drives staggered reveals.
 - `TrustCluster.tsx` — placed between `BuiltOn` and `FAQ`.
-- `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Fallback bubble links to `/discovery`.
+- `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Fallback bubble links to `/discovery`. Has `id="chat"` on the section element — the CTAFooter "Try the Live Demo" button anchors to `#chat`.
 
 #### `src/components/canvas/`
 All loaded with `dynamic(..., { ssr: false })`:
-- `BrainBackground.tsx` — 3D brain canvas. **No longer used in Hero** (replaced by video). Do not delete — may be reused.
+- `ProcessMorph.tsx` — sticky 3D morphing canvas in `Process`. 5 geometries (TorusKnot → Octahedron → Icosahedron → Torus → Sphere), one per step. `MeshPhysicalMaterial` green + wireframe gold halo + particle dust. Receives `activeStep` prop from `Process.tsx`.
+- `BrainBackground.tsx` — 3D brain canvas. **No longer used** (Hero uses video; do not delete — may be reused).
 - `KuwaitParticles.tsx` — used in CTA section background.
 - `ChatBubbles.tsx` — floating bubbles behind `ReceptionistChat`.
-- `ProcessFlow.tsx` — animated flow line in `Process`.
+- `ProcessFlow.tsx` — legacy horizontal flow strip. **Removed from `Process.tsx`**. Do not delete.
 - `NeuralGlobe.tsx` — legacy, not used. Do not delete.
 
 #### `src/components/providers/`
@@ -169,8 +173,14 @@ Server-side proxy from `DemoChat` live phase to n8n. Requires env vars:
 
 Without them returns a placeholder reply (graceful degradation).
 
+#### `src/app/services/page.tsx`
+Standalone services overview page. Linked from Navbar as `/services`. Active nav state detected via `usePathname() === '/services'`.
+
 #### `src/app/discovery/page.tsx`
 Standalone 10-step discovery form. Has its own `LangCtx` (not page-level `LangProvider`). Submits to `https://ifaras911.app.n8n.cloud/webhook/client-discovery`. Google Ads conversion fires on submit: `AW-18124307098/gB4kCNjQ3qUcEJr1q8JD`.
+
+#### Missing pages (linked but not built)
+Footer links to `/privacy` and `/terms` — these routes do not exist yet. Visiting them returns a Next.js 404.
 
 ---
 
@@ -210,6 +220,8 @@ Gulf Premium palette — **never** introduce navy, teal, indigo, or purple.
 | Ink | `#0E1512` | `text-ms-ink-900` |
 
 Fonts: Space Grotesk (EN) · Noto Kufi Arabic (AR) · JetBrains Mono (mono/data).
+
+**Tailwind token gotcha:** `ms-ink-*` scale only goes down to `ink-400` (`#8C9590`). There is no `ink-200` or lighter ink token. For light borders on ivory backgrounds use `ms-ivory-200`, not `ms-ink-200`.
 
 Arabic-first bilingual with full RTL. All CTAs link to `/discovery` except `WhatsAppButton`.
 
