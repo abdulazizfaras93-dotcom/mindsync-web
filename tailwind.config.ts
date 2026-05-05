@@ -33,6 +33,8 @@ const config: Config = {
         'pulse-dot':       'pulseDot 2s infinite',
         'marquee':         'marquee 34s linear infinite',
         'marquee-reverse': 'marqueeReverse 34s linear infinite',
+        'float':           'float 6s ease-in-out infinite',
+        'word-reveal':     'wordReveal 0.5s cubic-bezier(0.16,1,0.3,1) forwards',
       },
       keyframes: {
         fadeUp:         { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
@@ -40,6 +42,8 @@ const config: Config = {
         pulseDot:       { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.4' } },
         marquee:        { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         marqueeReverse: { '0%': { transform: 'translateX(-50%)' }, '100%': { transform: 'translateX(0)' } },
+        float:          { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+        wordReveal:     { '0%': { transform: 'translateY(110%)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
       },
     },
   },
