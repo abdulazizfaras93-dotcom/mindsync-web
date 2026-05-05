@@ -1,7 +1,6 @@
 import { LangProvider } from '@/lib/lang'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/sections/Hero'
-import ProductReveal from '@/components/sections/ProductReveal'
 import StatsBar from '@/components/sections/StatsBar'
 import Services from '@/components/sections/Services'
 import IndustryResults from '@/components/sections/IndustryResults'
@@ -26,8 +25,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <ProductReveal />
-        <StatsBar />
+<StatsBar />
         <Services />
         <IndustryResults />
         <WhyNotBot />
