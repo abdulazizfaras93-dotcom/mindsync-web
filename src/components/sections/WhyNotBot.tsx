@@ -16,10 +16,58 @@ const t = {
     ar: 'البوت يقرأ من قائمة أجوبة جاهزة.\nالنظام اللي نبنيه يفكر — يعرف اللي تبيه، يقرر متى يحجز،\nمتى يتابع، ومتى يحيلك لنا. مبني خصوصاً لك،\nما نستخدم قوالب جاهزة.',
     en: "A bot reads from a prepared answer list.\nThe system we build thinks — it knows what you want,\ndecides when to book, when to follow up, and when to escalate.\nBuilt specifically for you. No two MindSync systems are identical.",
   },
-  tableHeaders: {
-    ar: ['شركات البوت', 'فريلانسر', 'Enterprise AI', 'مايند سينك'],
-    en: ['Bot Company', 'Freelancer', 'Enterprise AI', 'MindSync'],
+  withoutTitle: {
+    ar: 'بدون ذكاء اصطناعي',
+    en: 'Without AI',
   },
+  withTitle: {
+    ar: 'مع MindSync AI',
+    en: 'With MindSync AI',
+  },
+  painPoints: [
+    {
+      ar: 'فرص ضائعة — عملاء يسألون ولا أحد يرد',
+      en: 'Missed leads — customers ask, no one responds',
+    },
+    {
+      ar: 'متابعة يدوية لكل عميل بعد الزيارة',
+      en: 'Manual follow-ups after every visit',
+    },
+    {
+      ar: '+4 ساعات يومياً على المهام الإدارية',
+      en: '4+ hours daily on admin tasks',
+    },
+    {
+      ar: 'نسيان المواعيد وارتفاع معدل الغياب',
+      en: 'Appointment no-shows with no reminders',
+    },
+    {
+      ar: 'الفريق يضيع وقته على أسئلة متكررة',
+      en: 'Staff stuck answering repetitive questions',
+    },
+  ],
+  solutions: [
+    {
+      ar: 'رد فوري من الذكاء الاصطناعي — 24/7 في 3 ثوانٍ',
+      en: '3-second AI response 24/7, zero missed leads',
+    },
+    {
+      ar: 'حجز تلقائي ومتابعة بعد كل زيارة',
+      en: 'Automated booking & post-visit follow-up',
+    },
+    {
+      ar: '30 دقيقة فقط للمهام الإدارية يومياً',
+      en: '30 min admin/day — AI handles the rest',
+    },
+    {
+      ar: 'تذكيرات ذكية تخفض الغياب 60٪',
+      en: 'Smart reminders cut no-shows by 60%',
+    },
+    {
+      ar: 'الفريق يركز على العملاء لا على الردود',
+      en: 'Staff focused on customers, not messages',
+    },
+  ],
   cards: [
     {
       title: { ar: 'مبنيّ لك، مو نسخة من قالب', en: 'Built for you, not copied from a template' },
@@ -34,39 +82,6 @@ const t = {
       body:  { ar: 'الاشتراك الشهري يشمل كل شي — hosting، API، تحديثات، دعم. شخص يراقب نظامك ويطوّره كل شهر بدون ما تطلب.', en: "The monthly retainer covers everything — hosting, API, updates, support. Someone watching, fixing, and improving your system every month. Without you asking." },
     },
   ],
-}
-
-type TableRow = {
-  feature: { ar: string; en: string }
-  bot: string | { ar: string; en: string }
-  freelancer: string | { ar: string; en: string }
-  enterprise: string | { ar: string; en: string }
-  ms: string | { ar: string; en: string }
-}
-
-const TABLE_ROWS: TableRow[] = [
-  { feature: { ar: 'رد تلقائي',              en: 'Auto-reply' },               bot: '✓', freelancer: '✓', enterprise: '✓', ms: '✓' },
-  { feature: { ar: 'وكيل ذكاء اصطناعي',      en: 'AI agent (not a script)' },  bot: '✗', freelancer: '✗', enterprise: '✓', ms: '✓' },
-  { feature: { ar: 'متابعة بعد الزيارة',      en: 'Post-visit follow-up' },     bot: '✗', freelancer: '~', enterprise: '✓', ms: '✓' },
-  { feature: { ar: 'موقع أو تطبيق مخصص',     en: 'Custom website or app' },    bot: '✗', freelancer: '~', enterprise: '✓', ms: '✓' },
-  { feature: { ar: 'صيانة شهرية شاملة',       en: 'Full monthly maintenance' }, bot: '✗', freelancer: '✗', enterprise: '✓', ms: '✓' },
-  { feature: { ar: 'مبني لسوق الكويت',        en: 'Built for Kuwait market' },  bot: '✗', freelancer: '~', enterprise: '✗', ms: '✓' },
-  { feature: { ar: 'أسبوع تجربة مجانية',      en: 'Free 1-week trial' },        bot: '✗', freelancer: '✗', enterprise: '✗', ms: '✓' },
-  { feature: { ar: 'شركة برمجيات مرخصة',     en: 'Licensed software company'}, bot: '✗', freelancer: '✗', enterprise: '✓', ms: '✓' },
-  {
-    feature: { ar: 'السعر', en: 'Price' },
-    bot:        { ar: 'منخفض', en: 'Low' },
-    freelancer: { ar: 'منخفض', en: 'Low' },
-    enterprise: '+10,000 KWD',
-    ms:         '130–520 KWD/شهر',
-  },
-]
-
-function cellColor(val: string): string {
-  if (val === '✓') return 'text-ms-gold-600'
-  if (val === '✗') return 'text-red-400'
-  if (val === '~') return 'text-yellow-400'
-  return 'text-white/60'
 }
 
 const fadeUp = {
@@ -88,7 +103,6 @@ export default function WhyNotBot() {
     offset: ['start end', 'end start'],
   })
 
-  // Background pattern slides at a slower rate than content — depth effect
   const bgY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -144,66 +158,95 @@ export default function WhyNotBot() {
           {t.body[lang]}
         </motion.p>
 
-        {/* Comparison Table */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          custom={0.2}
-          viewport={{ once: true, amount: 0.2 }}
-          className="overflow-x-auto mb-16"
-        >
-          <table className="w-full min-w-[580px] text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-ms-gold-600/40">
-                <th className="text-left py-3 pr-4 text-white/40 font-mono text-[11px] tracking-widest uppercase w-[32%]">
-                  {isAr ? 'الميزة' : 'Feature'}
-                </th>
-                {t.tableHeaders[lang].map((h, i) => (
-                  <th
-                    key={i}
-                    className={`py-3 px-3 font-mono text-[11px] tracking-widest uppercase text-center ${
-                      i === 3 ? 'text-ms-gold-600' : 'text-white/40'
-                    }`}
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {TABLE_ROWS.map((row, i) => (
-                <motion.tr
+        {/* Two-panel split reveal */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 mb-16">
+
+          {/* Left panel — Without AI */}
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-red-950/20 border border-red-200/20 rounded-2xl p-8"
+          >
+            {/* Panel header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-9 h-9 rounded-full bg-red-500/15 flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+              <h3 className="font-grotesk font-bold text-xl text-ms-ivory-0">
+                {t.withoutTitle[lang]}
+              </h3>
+            </div>
+
+            {/* Pain points list */}
+            <ul className="space-y-3">
+              {t.painPoints.map((point, i) => (
+                <motion.li
                   key={i}
-                  initial={{ opacity: 0, x: -12 }}
+                  initial={prefersReduced ? false : { opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.35, delay: i * 0.04 }}
-                  className="border-b border-white/8 last:border-0 hover:bg-white/3"
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-start gap-3"
                 >
-                  <td className="py-3 pr-4 text-white/60 text-[13px]">{row.feature[lang]}</td>
-                  {(['bot', 'freelancer', 'enterprise', 'ms'] as const).map((col) => {
-                    const rawVal = row[col]
-                    const val =
-                      typeof rawVal === 'object' && rawVal !== null && ('ar' in rawVal || 'en' in rawVal)
-                        ? (rawVal as { ar: string; en: string })[lang]
-                        : (rawVal as string)
-                    return (
-                      <td
-                        key={col}
-                        className={`py-3 px-3 text-center font-mono text-[13px] font-semibold ${
-                          col === 'ms' ? 'text-ms-gold-600' : cellColor(val)
-                        }`}
-                      >
-                        {val}
-                      </td>
-                    )
-                  })}
-                </motion.tr>
+                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </span>
+                  <span className="text-white/65 text-[14px] leading-snug">{point[lang]}</span>
+                </motion.li>
               ))}
-            </tbody>
-          </table>
-        </motion.div>
+            </ul>
+          </motion.div>
+
+          {/* Right panel — With MindSync AI */}
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-ms-green-800/8 border border-ms-green-800/20 rounded-2xl p-8"
+            style={{ background: 'rgba(21,62,45,0.15)' }}
+          >
+            {/* Panel header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-9 h-9 rounded-full bg-ms-gold-600/15 flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-ms-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="font-grotesk font-bold text-xl text-ms-ivory-0">
+                {t.withTitle[lang]}
+              </h3>
+            </div>
+
+            {/* Solutions list */}
+            <ul className="space-y-3">
+              {t.solutions.map((solution, i) => (
+                <motion.li
+                  key={i}
+                  initial={prefersReduced ? false : { opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-start gap-3"
+                >
+                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-ms-gold-600/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-ms-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span className="text-white/80 text-[14px] leading-snug">{solution[lang]}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+        </div>
 
         {/* 3 Differentiator Cards — asymmetric: 1 featured + 2 stacked */}
         <div className="grid md:grid-cols-[3fr_2fr] gap-5">
