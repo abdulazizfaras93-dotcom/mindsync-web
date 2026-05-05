@@ -1,7 +1,11 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useLang } from '@/lib/lang'
+import { KineticText, MagneticButton } from '@/components/motion'
+
+const NeuralMesh = dynamic(() => import('@/components/canvas/NeuralMesh'), { ssr: false })
 
 function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
   const ref    = useRef<HTMLSpanElement>(null)
@@ -115,6 +119,11 @@ export default function Hero() {
         />
       </motion.div>
 
+      {/* Neural mesh overlay — desktop only, hidden on mobile */}
+      <div className="absolute inset-0 hidden md:block opacity-60 pointer-events-none">
+        <NeuralMesh />
+      </div>
+
       {/* Content */}
       <motion.div
         style={{ y: textY }}
@@ -137,22 +146,20 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-[58px] md:text-[72px] lg:text-[82px] font-bold tracking-[-0.02em] leading-[0.93] mb-6"
-            >
-              <span className="text-ms-ivory-0 block">{t.headline[lang]}</span>
-              <motion.span
+            <div className="text-[58px] md:text-[72px] lg:text-[82px] font-bold tracking-[-0.02em] leading-[0.93] mb-6">
+              <KineticText
+                as="h1"
+                text={t.headline[lang]}
+                className="text-ms-ivory-0 block"
+                delay={0.2}
+              />
+              <KineticText
+                as="h1"
+                text={t.headlineAccent[lang]}
                 className="text-ms-gold-600 block"
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.38 }}
-              >
-                {t.headlineAccent[lang]}
-              </motion.span>
-            </motion.h1>
+                delay={0.38}
+              />
+            </div>
 
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -171,15 +178,14 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="flex flex-wrap gap-3 mb-14"
             >
-              <a
-                href="/discovery"
-                className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]"
-              >
-                {t.cta1[lang]}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
+              <MagneticButton href="/discovery">
+                <span className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]">
+                  {t.cta1[lang]}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </MagneticButton>
               <a
                 href="#bundles"
                 className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
