@@ -13,7 +13,6 @@ import ReceptionistChat from '@/components/sections/ReceptionistChat'
 import Process from '@/components/sections/Process'
 import FreeTrialSpotlight from '@/components/sections/FreeTrialSpotlight'
 import BuiltOn from '@/components/sections/BuiltOn'
-import TrustCluster from '@/components/sections/TrustCluster'
 import Testimonials from '@/components/sections/Testimonials'
 import FAQ from '@/components/sections/FAQ'
 import { CTA, Footer } from '@/components/sections/CTAFooter'
@@ -38,7 +37,6 @@ export default function Home() {
         <Process />
         <FreeTrialSpotlight />
         <BuiltOn />
-        <TrustCluster />
         <Testimonials />
         <FAQ />
         <CTA />
