@@ -1,5 +1,6 @@
 'use client'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const COPY = {
@@ -61,15 +62,52 @@ function LogoTile({ logo }: { logo: Logo }) {
 
 export default function BuiltOn() {
   const { lang } = useLang()
+  const sectionRef = useRef<HTMLElement>(null)
+  const inView = useInView(sectionRef, { once: true, margin: '-100px' })
+  const prefersReduced = useReducedMotion()
 
   return (
-    <section id="built-on" className="py-24 bg-ms-ivory-100">
+    <section id="built-on" ref={sectionRef} className="py-24 bg-ms-ivory-100">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <p className="text-ms-gold-600 text-[11px] tracking-[0.18em] uppercase font-medium mb-3">{COPY.eyebrow[lang]}</p>
           <h2 className="text-[36px] md:text-[44px] font-bold text-ms-ink-900 tracking-tight mb-4">{COPY.headline[lang]}</h2>
           <p className="text-ms-ink-600 text-[16px] max-w-xl mx-auto leading-relaxed">{COPY.sub[lang]}</p>
         </div>
+      </div>
+
+      {/* Gold connecting filament */}
+      <div className="max-w-6xl mx-auto px-6 mb-2">
+        <svg
+          viewBox="0 0 1200 40"
+          width="100%"
+          height="40"
+          className="overflow-visible"
+          aria-hidden
+        >
+          <defs>
+            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="#BF8D38" opacity="0.5" />
+            </marker>
+          </defs>
+          <motion.path
+            d="M 0,20 C 200,20 400,5 600,20 C 800,35 1000,20 1200,20"
+            fill="none"
+            stroke="#BF8D38"
+            strokeWidth="1"
+            strokeOpacity="0.4"
+            markerEnd="url(#arrowhead)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={
+              prefersReduced
+                ? { pathLength: 1, opacity: 1 }
+                : inView
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+            }
+            transition={{ duration: 1.8, ease: 'easeInOut', delay: 0.3 }}
+          />
+        </svg>
       </div>
 
       {/* Row 1 — scrolls left */}

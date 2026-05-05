@@ -2,8 +2,9 @@
 'use client'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
+import { KineticText } from '@/components/motion'
 
 const ProcessMorph = dynamic(() => import('@/components/canvas/ProcessMorph'), { ssr: false })
 
@@ -97,6 +98,7 @@ const STEPS = [
 export default function Process() {
   const { lang } = useLang()
   const [activeStep, setActiveStep] = useState(0)
+  const prefersReduced = useReducedMotion()
 
   return (
     <section id="process" className="py-24 bg-ms-green-900 pattern-overlay">
@@ -114,15 +116,14 @@ export default function Process() {
             <span className="w-6 h-px bg-ms-gold-600 shrink-0" />
             {t.eyebrow[lang]}
           </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+
+          <KineticText
+            text={t.headline[lang]}
+            as="h2"
+            delay={0.08}
             className="text-[40px] md:text-[52px] font-bold text-ms-ivory-0 tracking-[-0.02em] leading-[0.95] mb-4"
-          >
-            {t.headline[lang]}
-          </motion.h2>
+          />
+
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -154,21 +155,36 @@ export default function Process() {
               const s = lang === 'ar' ? step.ar : step.en
               const isActive = activeStep === i
               return (
-                <div
+                <motion.div
                   key={i}
-                  className={`relative py-8 cursor-pointer border-l-[3px] pl-5 transition-all duration-200 ${
-                    isActive ? 'border-ms-gold-600' : 'border-transparent'
+                  initial={prefersReduced ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  className={`relative py-8 cursor-pointer pl-6 transition-all duration-200 rounded-sm ${
+                    isActive
+                      ? 'bg-ms-green-800/[0.06] border border-ms-green-800/[0.12]'
+                      : 'border border-transparent'
                   }`}
                   onMouseEnter={() => setActiveStep(i)}
                   onClick={() => setActiveStep(i)}
                 >
-                  <div className="flex gap-6 items-start">
+                  {/* Left gold accent bar */}
+                  <span
+                    className={`absolute left-0 top-0 bottom-0 w-[3px] rounded-full transition-colors duration-200 ${
+                      isActive ? 'bg-ms-gold-600' : 'bg-transparent'
+                    }`}
+                    aria-hidden
+                  />
+
+                  <div className="flex gap-5 items-start">
+                    {/* Step number label */}
                     <span
-                      className={`font-mono text-[36px] font-bold leading-none tabular-nums shrink-0 transition-colors duration-200 ${
-                        isActive ? 'text-ms-gold-600/50' : 'text-ms-gold-600/20'
+                      className={`font-mono text-[10px] uppercase tracking-widest shrink-0 mt-1.5 transition-colors duration-200 ${
+                        isActive ? 'text-ms-gold-600' : 'text-ms-gold-600/35'
                       }`}
                     >
-                      {step.num}
+                      STEP {step.num}
                     </span>
 
                     <div className="flex-1 min-w-0">
@@ -202,7 +218,7 @@ export default function Process() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )
             })}
           </div>
