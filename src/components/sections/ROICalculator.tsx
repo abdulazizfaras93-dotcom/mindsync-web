@@ -39,6 +39,9 @@ const t = {
 const GOLD = '#BF8D38'
 const GREEN_800 = '#153E2D'
 
+const callFn = (fn: unknown, arg: number): string =>
+  typeof fn === 'function' ? (fn as (n: number) => string)(arg) : ''
+
 export default function ROICalculator() {
   const { lang } = useLang()
   const prefersReduced = useReducedMotion()
@@ -169,7 +172,7 @@ export default function ROICalculator() {
                 <span className="text-[20px]">{t.hrsUnit[lang]}</span>
               </p>
               <p className="text-[13px] text-ms-ink-500">
-                {(t.autoHandled[lang] as (n: number) => string)(autoHandled)}
+                {callFn(t.autoHandled[lang], autoHandled)}
               </p>
             </motion.div>
 
@@ -192,7 +195,7 @@ export default function ROICalculator() {
                 <span className="text-[16px] font-mono ml-1">{t.kwdUnit[lang]}</span>
               </p>
               <p className="text-[13px] text-ms-ink-500">
-                {(t.annualSavings[lang] as (n: number) => string)(annualSavings)}
+                {callFn(t.annualSavings[lang], annualSavings)}
               </p>
             </motion.div>
 

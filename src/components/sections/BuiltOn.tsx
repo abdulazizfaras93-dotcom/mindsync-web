@@ -86,7 +86,7 @@ export default function BuiltOn() {
           aria-hidden
         >
           <defs>
-            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <marker id="builton-filament-arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
               <path d="M0,0 L0,6 L6,3 z" fill="#BF8D38" opacity="0.5" />
             </marker>
           </defs>
@@ -96,16 +96,10 @@ export default function BuiltOn() {
             stroke="#BF8D38"
             strokeWidth="1"
             strokeOpacity="0.4"
-            markerEnd="url(#arrowhead)"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={
-              prefersReduced
-                ? { pathLength: 1, opacity: 1 }
-                : inView
-                  ? { pathLength: 1, opacity: 1 }
-                  : { pathLength: 0, opacity: 0 }
-            }
-            transition={{ duration: 1.8, ease: 'easeInOut', delay: 0.3 }}
+            markerEnd="url(#builton-filament-arrow)"
+            initial={prefersReduced ? false : { pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={prefersReduced ? { duration: 0 } : { duration: 1.8, ease: 'easeInOut', delay: 0.3 }}
           />
         </svg>
       </div>

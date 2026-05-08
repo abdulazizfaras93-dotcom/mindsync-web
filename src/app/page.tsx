@@ -25,7 +25,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-<StatsBar />
+        <StatsBar />
         <Services />
         <IndustryResults />
         <WhyNotBot />

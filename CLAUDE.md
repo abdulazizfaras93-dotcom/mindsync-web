@@ -48,23 +48,29 @@ npx eslint .       # lint (no test script configured)
 Section order (top → bottom):
 ```
 Navbar
-Hero               — mindsync.mp4 looping video background (autoPlay muted loop)
-Services           — 5-card "what we build" overview with prices (replaces Demo)
-WhyNotBot          — comparison table (dark green plate)
-Bundles            — 8 industries × 3 tiers + website/app services + free trial
-ROICalculator      — interactive sliders
+Hero               — herobackground.mp4 looping video + NeuralMesh R3F overlay + KineticText headline
+StatsBar           — animated count-up grid
+Services           — 5-card "what we build" overview with prices
+IndustryResults    — staggered cards per industry
+WhyNotBot          — two-panel split (Without AI / With MindSync AI) + 3 differentiator cards
+BeforeAfter        — side-by-side comparison
+Bundles            — bento grid (8 tiles) → AnimatePresence expand → 3 InlineTierCards per selection
+ROICalculator      — interactive sliders + NumberFlow animated counters
+WhatsAppMockup     — sequential WhatsApp chat animation
 ReceptionistChat   — live n8n webhook chat
 Process            — 5-step flow, two-column layout with sticky ProcessMorph canvas
-BuiltOn            — integration marquee
+FreeTrialSpotlight — 7-day free trial offer with animated "7" background
+BuiltOn            — integration marquee + animated SVG filament
+Testimonials       — CSS marquee of client testimonial cards
 TrustCluster       — trust badges
-FAQ                — 8 Q&As including free trial + website-without-AI
+FAQ                — accordion Q&As including free trial + website-without-AI
 CTA                — final CTA with KuwaitParticles
 Footer
 ```
 
 Global overlays: `WhatsAppButton` (floating corner) + `ExitIntent` (free trial offer on exit).
 
-> `Demo.tsx`, `DemoChat.tsx`, `PortalPreview.tsx` remain in the codebase but are **not imported in `page.tsx`**.
+> `Demo.tsx`, `DemoChat.tsx`, `PortalPreview.tsx`, `ProductReveal.tsx` remain in the codebase but are **not imported in `page.tsx`**. Do not delete.
 
 ---
 
@@ -135,13 +141,14 @@ Always guard parallax values with `const prefersReduced = useReducedMotion()` an
 
 #### `src/components/sections/`
 One file per section. Key notes:
-- `Hero.tsx` — video background: `<video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">`. Two gradient overlays (`left fade` + `bottom fade`) keep text readable. `brainY` parallax still applied to video container. Falls back to solid `bg-ms-green-900` when `useReducedMotion()` is true.
-- `Services.tsx` — 5-card "what we build" section. Full-width banner (WhatsApp AI Receptionist) + 2×2 grid (Dashboard, Automations, Website/App, Maintenance). Prices read from `data.ts`. Framer Motion staggered fadeUp.
-- `Bundles.tsx` — renders `TIER_ORDER` (`smart/pro/full-auto`). The `isPro` flag highlights the middle card. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids below the AI bundles.
-- `Process.tsx` — 5 steps, two-column layout: sticky `ProcessMorph` canvas (left) + interactive step list (right). `useState(0)` → `activeStep` drives morph + step expansion. Step 02 has gold "Free" badge. `ProcessFlow` strip removed.
-- `WhyNotBot.tsx` — parallax background pattern via `useScroll`/`useTransform`. `fadeUp` variant with custom delay drives staggered reveals.
-- `TrustCluster.tsx` — placed between `BuiltOn` and `FAQ`.
+- `Hero.tsx` — `herobackground.mp4` looping video background + `NeuralMesh` R3F canvas overlay. Two gradient overlays keep text readable. Falls back to solid `bg-ms-green-900` when `useReducedMotion()` is true. `KineticText` used for the headline.
+- `Services.tsx` — 5-card "what we build" section. Full-width banner (WhatsApp AI Receptionist) + 2×2 grid. Prices read from `data.ts`. **No Framer Motion** — hover states only. Candidate for animation upgrade.
+- `Bundles.tsx` — **bento grid pattern**: 8 `BentoTile` buttons in a 2×4 / 4×2 grid. Click toggles `selectedId`; `AnimatePresence` expands 3 `InlineTierCard` components below with `mode="wait"`. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids at the bottom. `TiltCard` is no longer used here.
+- `WhyNotBot.tsx` — parallax background via `useScroll`/`useTransform`. Two-panel split layout: red "Without AI" panel (pain points) + green "With MindSync AI" panel (solutions). Comparison table removed.
+- `Process.tsx` — 5 steps, two-column layout: sticky `ProcessMorph` canvas (left) + interactive step list (right). `useState(0)` → `activeStep` drives morph + step expansion. `KineticText` used for the headline.
+- `TrustCluster.tsx` — placed between `Testimonials` and `FAQ`.
 - `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Fallback bubble links to `/discovery`. Has `id="chat"` on the section element — the CTAFooter "Try the Live Demo" button anchors to `#chat`.
+- `Testimonials.tsx` — **CSS marquee only**, no Framer Motion. Candidate for animation upgrade.
 
 #### `src/components/canvas/`
 All loaded with `dynamic(..., { ssr: false })`:
@@ -160,7 +167,14 @@ All loaded with `dynamic(..., { ssr: false })`:
 - `PortalPreview.tsx` — UI mockup panel shown next to DemoChat.
 - `WhatsAppButton.tsx` — floating corner button. Uses `WHATSAPP_URL` from `data.ts` only.
 - `ExitIntent.tsx` — exit-intent modal. Offers **1-week free trial** (v2 copy). Cookie: `ms_exit_shown`, 7-day expiry.
-- `TiltCard.tsx` — 3D tilt wrapper used in `Bundles.tsx`.
+- `TiltCard.tsx` — 3D tilt wrapper (no longer used by `Bundles.tsx` after bento-grid redesign).
+
+#### `src/components/motion/`
+Motion utility components — all handle `useReducedMotion()` internally:
+- `KineticText.tsx` — word-by-word staggered reveal (`whileInView`). Used in Hero + Process headlines. Renders a plain `<Tag>` when reduced motion is on.
+- `MagneticButton.tsx` — cursor-following magnetic CTA button. Used in Hero.
+- `AuroraPlate.tsx` — animated green aurora background plate.
+- `NumberFlow.tsx` — re-export of `@number-flow/react` for animated number transitions. Used in ROICalculator.
 
 ---
 

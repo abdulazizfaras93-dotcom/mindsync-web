@@ -1,5 +1,5 @@
 # MindSync — Brand Identity
-**Date:** 2026-04-24 | **Status:** Active | **Version:** 2.0
+**Date:** 2026-05-03 | **Status:** Active | **Version:** 3.0
 
 ---
 
@@ -8,6 +8,7 @@
 - **Registered name:** مايند سينك لتصميم وبرمجة البرمجيات الخاصة
 - **Use registered name on:** contracts, invoices, official documents only
 - **Use trading name on:** website, social media, all marketing
+- **Commercial registration:** 546511
 
 ---
 
@@ -38,14 +39,13 @@
 
 ## Logo Mark
 
-### Concept — Hybrid Arabic-Tech Mark
-The mark abstracts the Arabic letter **م (meem)** — the opening letterform of مايند — into a double-arch. The inner loop reads simultaneously as a sync symbol and a circuit trace. Gold terminal nodes anchor both ends.
+### Concept — Polygonal Brain Mark
+Low-poly geometric brain in deep green `#153E2D` and desert gold `#BF8D38` triangulated faces on the left, dissolving into a thin-line node/network graph on the right. Arabic wordmark "مايند سينك" set in dark green below, warm ivory `#FBFAF5` background. Square composition.
 
-### Variants
-- **Primary:** Mark + wordmark (EN) + Arabic sub-mark (مايند سينك)
-- **Dark background:** Ivory/gold gradient wordmark on deep green
-- **Favicon / App icon:** Mark only, on deep green rounded square
-- **Monochrome:** Single-color mark for embossing, stamps, contracts
+### Canonical Files
+- **Light surfaces (emails, print, light backgrounds):** `public/brand/logo.png` — ivory background
+- **Dark surfaces (Navbar, hero overlays):** `public/brand/logo-transparent.png` — no background
+- **Deprecated — do not use:** `assets/logo-mark.svg`, `assets/logo-wordmark.svg`, `assets/logo-lockup-bilingual.svg` (old M-letter mark)
 
 ### Usage Rules
 - Minimum size: 120px wide for primary, 32px for favicon variant
@@ -86,7 +86,7 @@ The mark abstracts the Arabic letter **م (meem)** — the opening letterform of
 | Gold accent | Space Grotesk | 500 uppercase | Eyebrows, labels, step numbers |
 | Arabic display | Noto Kufi Arabic | 700 | Arabic headlines |
 | Arabic body | Noto Kufi Arabic | 400 | Arabic body copy |
-| Data / mono | Space Grotesk mono | 500 | Prices, stats, step numbers |
+| Data / mono | JetBrains Mono | 500 | Prices, stats, step numbers, eyebrows |
 
 **Type scale:**
 - Display: 40–64px, tracking -0.03em
@@ -101,7 +101,7 @@ The mark abstracts the Arabic letter **م (meem)** — the opening letterform of
 ## Brand Voice
 
 ### Say This
-- "10 business days"
+- "7 business days"
 - "We build it, you run it"
 - Fixed KWD prices — always show the number
 - "WhatsApp-first"
@@ -140,14 +140,41 @@ The mark abstracts the Arabic letter **م (meem)** — the opening letterform of
 
 ## Bundle Identity
 
-| # | English | Arabic | Industry |
-|---|---|---|---|
-| 1 | Clinic AI Bundle | باقة العيادة الذكية | Health & dental clinics |
-| 2 | Salon AI Bundle | باقة الصالون الذكي | Men & women salons |
-| 3 | Gym AI Bundle | باقة الجيم الذكي | Men & women gyms |
-| 4 | Garage AI Bundle | باقة الورشة الذكية | Car garages & auto service |
-| 5 | Restaurant AI Bundle | باقة المطعم الذكي | F&B, cafes, restaurants |
-| 6 | Retail AI Bundle | باقة المتجر الذكي | Boutiques & retail shops |
+### Tier Definitions
+
+| Tier | Arabic | Description |
+|---|---|---|
+| **Smart** | الذكي | 1 agent, 1–2 channels, focused tasks |
+| **Pro** *(Most Popular)* | المتقدم | 1+ agents, multiple channels |
+| **Full Auto** | المؤتمت | Multiple agents, all channels, full automation |
+
+### AI Bundles — Pricing (KWD)
+
+| # | English | Arabic | Build Fee | Smart/mo | Pro/mo | Full Auto/mo |
+|---|---|---|---|---|---|---|
+| 1 | Clinic AI | العيادة الذكية | 400 | 220 | 340 | 460 |
+| 2 | Salon AI | الصالون الذكي | 300 | 160 | 240 | 330 |
+| 3 | Spa AI | السبا الذكي | 300 | 160 | 240 | 330 |
+| 4 | Gym AI | الجيم الذكي | 320 | 170 | 260 | 360 |
+| 5 | Garage AI | الورشة الذكية | 300 | 160 | 240 | 330 |
+| 6 | Restaurant AI | المطعم الذكي | 380 | 200 | 300 | 420 |
+| 7 | Real Estate AI | العقارات الذكية | 450 | 250 | 380 | 520 |
+| 8 | Home Business AI | المشاريع المنزلية الذكية | 250 | 130 | 200 | 280 |
+
+> Source of truth: `src/lib/data.ts`. After pricing changes, run `node C:\tmp\update-agent-prompts.js`.
+
+### Website & App Services (Add-ons)
+
+**Websites:**
+- Landing Page — 300 KWD
+- Business Website — 550 KWD
+- Advanced — 900–1,400 KWD
+- Monthly maintenance — 80 KWD/mo
+
+**Apps:**
+- Simple App — 2,000–2,500 KWD
+- Advanced App — 3,500–6,000 KWD
+- Monthly maintenance — 150 KWD/mo
 
 ---
 
@@ -164,7 +191,7 @@ The mark abstracts the Arabic letter **م (meem)** — the opening letterform of
 
 ## Social Media
 
-**Handle:** @mindsync.kw (Instagram) · @MindSyncKW (X/Twitter)
+**Handle:** @mindsynckw (Instagram) · @MindSyncKW (X/Twitter)
 **Grid aesthetic:** Warm ivory cards with deep green headlines and gold accents
 **Post types:** Automation demos, client results, bilingual education, behind-the-scenes
 **Captions:** Arabic first, English subtitle — always bilingual

@@ -11,40 +11,40 @@ const INDUSTRIES: Industry[] = [
     id: 'clinic',
     label: { en: 'Dental Clinic', ar: 'عيادة أسنان' },
     msgs: [
-      { from: 'user', text: 'كم انتظر لحجز موعد؟',                                                          delay: 600  },
-      { from: 'bot',  text: 'أهلاً! عندنا مواعيد اليوم الساعة 4 أو 6 مساءً — أي وقت يناسبك؟ 😊',           delay: 1600 },
-      { from: 'user', text: 'الساعة 4 تمام',                                                                 delay: 2800 },
-      { from: 'bot',  text: 'تم الحجز ✅ مع د. سارة، اليوم 4:00 م. نرسل لك تذكير قبل ساعة.',               delay: 4000 },
+      { from: 'user', text: 'متى اقرب وقت لحجز موعد؟', delay: 600 },
+      { from: 'bot', text: 'أهلاً! عندنا مواعيد اليوم الساعة 4 أو 6 مساءً — أي وقت يناسبك؟ 😊', delay: 1600 },
+      { from: 'user', text: 'الساعة 4 تمام', delay: 2800 },
+      { from: 'bot', text: 'تم الحجز ✅ مع د. سارة، اليوم 4:00 م. راح نرسل لك تذكير قبلها بساعة.', delay: 4000 },
     ],
   },
   {
     id: 'salon',
     label: { en: 'Beauty Salon', ar: 'صالون تجميل' },
     msgs: [
-      { from: 'user', text: 'هل فيه مواعيد بكرة؟',                                                          delay: 600  },
-      { from: 'bot',  text: 'بكرة عندنا 3 مواعيد — 10 صباح، 2 ظهر، 5 مساء. أي وقت؟',                     delay: 1600 },
-      { from: 'user', text: '2 ظهر',                                                                          delay: 2800 },
-      { from: 'bot',  text: '✅ محجوز! أمل — الثلاثاء 2:00 ظهراً. نراكِ قريباً 💛',                         delay: 4000 },
+      { from: 'user', text: 'فيه مواعيد باجر؟', delay: 600 },
+      { from: 'bot', text: 'باجر عندنا 3 مواعيد — 10 الصبح، 2 الظهر، 5 المساء. أي وقت؟', delay: 1600 },
+      { from: 'user', text: '2 الظهر', delay: 2800 },
+      { from: 'bot', text: '✅ محجوز! أمل — الثلاثاء 2:00 الظهر. نشوفك قريب 💛', delay: 4000 },
     ],
   },
   {
     id: 'gym',
     label: { en: 'Gym', ar: 'صالة رياضية' },
     msgs: [
-      { from: 'user', text: 'عندكم كلاسات yoga؟',                                                            delay: 600  },
-      { from: 'bot',  text: 'نعم! كل ثلاثاء وخميس الساعة 7 مساء. تبي أسجّلك؟',                            delay: 1600 },
-      { from: 'user', text: 'نعم',                                                                            delay: 2800 },
-      { from: 'bot',  text: 'تمام 💪 مسجّل. تذكير ينزل قبل الكلاس بساعة.',                                 delay: 4000 },
+      { from: 'user', text: 'عندكم كلاسات yoga؟', delay: 600 },
+      { from: 'bot', text: 'اي نعم! كل ثلاثاء وخميس الساعة 7 مساء. تبي أسجّلك؟', delay: 1600 },
+      { from: 'user', text: 'اي', delay: 2800 },
+      { from: 'bot', text: 'تمام 💪 مسجّل. راح يوصلك تذكير قبل الكلاس بساعة.', delay: 4000 },
     ],
   },
   {
     id: 'restaurant',
     label: { en: 'Restaurant', ar: 'مطعم' },
     msgs: [
-      { from: 'user', text: 'ودي أحجز طاولة 4 أشخاص الجمعة',                                               delay: 600  },
-      { from: 'bot',  text: 'أهلاً! الجمعة عندنا أماكن الساعة 7 أو 9 ليلاً. تختار؟',                      delay: 1600 },
-      { from: 'user', text: 'الساعة 7',                                                                       delay: 2800 },
-      { from: 'bot',  text: '✅ محجوز 4 أشخاص، الجمعة 7:00 م. شكراً لاختيارك! 🌿',                        delay: 4000 },
+      { from: 'user', text: 'ودي أحجز طاولة 4 أشخاص الجمعة', delay: 600 },
+      { from: 'bot', text: 'هلا والله! الجمعة عندنا أماكن الساعة 7 أو 9 بالليل. متى تحب تختار؟', delay: 1600 },
+      { from: 'user', text: 'الساعة 7', delay: 2800 },
+      { from: 'bot', text: '✅ محجوز 4 أشخاص، الجمعة 7:00 م. شكراً لاختيارك! 🌿', delay: 4000 },
     ],
   },
 ]
@@ -105,7 +105,7 @@ export default function WhatsAppMockup() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-14">
           <p className="font-mono text-[10px] uppercase tracking-widest text-ms-gold-600 mb-3">
-            {isAr ? 'مساعد واتساب الذكي' : 'WhatsApp AI Receptionist'}
+            {isAr ? 'مساعد الواتساب الذكي' : 'WhatsApp AI Receptionist'}
           </p>
           <h2 className="font-grotesk text-3xl md:text-4xl font-bold text-ms-ivory-0">
             {isAr ? 'يرد في ثوانٍ، على مدار الساعة' : 'Responds in Seconds, 24/7'}
@@ -153,11 +153,10 @@ export default function WhatsAppMockup() {
                       initial={{ opacity: 0, y: 8, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ duration: 0.18 }}
-                      className={`max-w-[82%] px-3 py-1.5 rounded-xl text-[11px] leading-relaxed text-ms-ink-900 dir-rtl ${
-                        msg.from === 'user'
+                      className={`max-w-[82%] px-3 py-1.5 rounded-xl text-[11px] leading-relaxed text-ms-ink-900 dir-rtl ${msg.from === 'user'
                           ? 'self-end bg-[#DCF8C6] rounded-br-sm'
                           : 'self-start bg-white rounded-bl-sm shadow-sm'
-                      }`}
+                        }`}
                     >
                       {msg.text}
                     </motion.div>
