@@ -1,6 +1,8 @@
 'use client'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { BUNDLES, WEBSITE_SERVICES } from '@/lib/data'
+import { GlassCard } from '@/components/motion'
 
 const minBuildFee = Math.min(...BUNDLES.map(b => b.buildFee))
 const minSmart    = Math.min(...BUNDLES.map(b => b.tiers.find(t => t.id === 'smart')!.retainer))
@@ -71,6 +73,7 @@ const t = {
 
 export default function Services() {
   const { lang } = useLang()
+  const prefersReduced = useReducedMotion()
 
   return (
     <section id="services" className="py-24 bg-ms-ivory-0">
@@ -90,47 +93,64 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Flagship banner */}
-        <div className="w-full bg-ms-green-900 rounded-2xl p-8 mb-4 border border-ms-green-900 hover:border-ms-gold-600 transition-colors duration-300">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-white/45 uppercase mb-3">
-            {t.flagship.eyebrow[lang]}
-          </p>
-          <h3 className="text-ms-ivory-0 text-[28px] md:text-[34px] font-bold tracking-[-0.02em] leading-tight mb-3">
-            {t.flagship.title[lang]}
-          </h3>
-          <p className="text-white/65 text-[15px] leading-relaxed max-w-2xl mb-8">
-            {t.flagship.desc[lang]}
-          </p>
-          <div className="flex flex-wrap gap-6 pt-5 border-t border-white/[0.12] font-mono text-[12px] text-white/50">
-            <span>
-              {t.flagship.build[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minBuildFee} {t.flagship.currency[lang]}</span>
-            </span>
-            <span>
-              {t.flagship.run[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minSmart} {t.flagship.currency[lang]} {t.flagship.perMonth[lang]}</span>
-            </span>
-          </div>
-        </div>
+        {/* Flagship banner — depth 1, no tilt (full-width) */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5 }}
+          className="mb-4"
+        >
+          <GlassCard depth={1} className="w-full bg-ms-green-900 rounded-2xl p-8 border border-ms-green-900/80">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-white/45 uppercase mb-3">
+              {t.flagship.eyebrow[lang]}
+            </p>
+            <h3 className="text-ms-ivory-0 text-[28px] md:text-[34px] font-bold tracking-[-0.02em] leading-tight mb-3">
+              {t.flagship.title[lang]}
+            </h3>
+            <p className="text-white/65 text-[15px] leading-relaxed max-w-2xl mb-8">
+              {t.flagship.desc[lang]}
+            </p>
+            <div className="flex flex-wrap gap-6 pt-5 border-t border-white/[0.12] font-mono text-[12px] text-white/50">
+              <span>
+                {t.flagship.build[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minBuildFee} {t.flagship.currency[lang]}</span>
+              </span>
+              <span>
+                {t.flagship.run[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minSmart} {t.flagship.currency[lang]} {t.flagship.perMonth[lang]}</span>
+              </span>
+            </div>
+          </GlassCard>
+        </motion.div>
 
         {/* 2×2 grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {t.cards.map((card) => (
-            <div
+          {t.cards.map((card, i) => (
+            <motion.div
               key={card.num}
-              className="bg-white border border-ms-ivory-200 rounded-2xl p-7 flex flex-col hover:border-ms-green-800 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
+              initial={prefersReduced ? { opacity: 1 } : { opacity: 0, y: 40, rotateX: '8deg' }}
+              whileInView={{ opacity: 1, y: 0, rotateX: '0deg' }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.45, delay: prefersReduced ? 0 : i * 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="font-mono text-[11px] tracking-[0.16em] text-ms-ink-400 uppercase mb-3">
-                {card.num}
-              </p>
-              <h3 className="text-ms-ink-900 text-[18px] font-bold leading-snug mb-2">
-                {card.title[lang]}
-              </h3>
-              <p className="text-ms-ink-600 text-[14px] leading-relaxed flex-1 mb-5">
-                {card.desc[lang]}
-              </p>
-              <p className="font-mono text-[11px] tracking-[0.06em] text-ms-gold-600 border-t border-ms-ink-100 pt-4">
-                {card.meta[lang]}
-              </p>
-            </div>
+              <GlassCard
+                depth={2}
+                tilt
+                className="bg-white/80 border border-ms-ivory-200/70 rounded-2xl p-7 flex flex-col h-full"
+              >
+                <p className="font-mono text-[11px] tracking-[0.16em] text-ms-ink-400 uppercase mb-3" style={{ transform: 'translateZ(4px)' }}>
+                  {card.num}
+                </p>
+                <h3 className="text-ms-ink-900 text-[18px] font-bold leading-snug mb-2" style={{ transform: 'translateZ(8px)' }}>
+                  {card.title[lang]}
+                </h3>
+                <p className="text-ms-ink-600 text-[14px] leading-relaxed flex-1 mb-5">
+                  {card.desc[lang]}
+                </p>
+                <p className="font-mono text-[11px] tracking-[0.06em] text-ms-gold-600 border-t border-ms-ink-100 pt-4">
+                  {card.meta[lang]}
+                </p>
+              </GlassCard>
+            </motion.div>
           ))}
         </div>
 

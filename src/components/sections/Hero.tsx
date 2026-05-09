@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useReducedMotion, useMotionValue, useSpring } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useLang } from '@/lib/lang'
 import { KineticText, MagneticButton } from '@/components/motion'
@@ -56,18 +56,36 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  // Brain scrolls at 0.4x speed — stays visible longer, creates depth
   const brainY = useTransform(
     scrollYProgress,
     [0, 1],
     prefersReduced ? ['0%', '0%'] : ['0%', '22%']
   )
-  // Text drifts slightly upward, reinforcing the depth separation
   const textY = useTransform(
     scrollYProgress,
     [0, 1],
     prefersReduced ? ['0%', '0%'] : ['0%', '-8%']
   )
+
+  // Mouse parallax values
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const smoothX = useSpring(mouseX, { stiffness: 60, damping: 20 })
+  const smoothY = useSpring(mouseY, { stiffness: 60, damping: 20 })
+
+  const meshX = useTransform(smoothX, v => v * -18)
+  const meshY = useTransform(smoothY, v => v * -12)
+  const textMX = useTransform(smoothX, v => v * 8)
+  const textMY = useTransform(smoothY, v => v * 6)
+  const ctaX = useTransform(smoothX, v => v * 14)
+  const ctaY = useTransform(smoothY, v => v * 10)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (prefersReduced || !heroRef.current) return
+    const rect = heroRef.current.getBoundingClientRect()
+    mouseX.set((e.clientX - rect.left - rect.width / 2) / rect.width)
+    mouseY.set((e.clientY - rect.top - rect.height / 2) / rect.height)
+  }
 
   const stats = [
     { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
@@ -77,9 +95,13 @@ export default function Hero() {
   ]
 
   return (
-    <section ref={heroRef} className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden">
+    <section
+      ref={heroRef}
+      className="relative min-h-[100dvh] hero-bg pattern-overlay pt-16 overflow-hidden"
+      onMouseMove={handleMouseMove}
+    >
 
-      {/* Video background — always rendered; parallax disabled for reduced-motion users */}
+      {/* Video background with scroll parallax */}
       <motion.div
         style={{ y: brainY }}
         className="absolute inset-0 z-0 pointer-events-none"
@@ -95,13 +117,11 @@ export default function Hero() {
           <source src="/herobackground.mp4" type="video/mp4" />
         </video>
 
-        {/* Dark overlay — keeps text readable over the video */}
         <div
           className="absolute inset-0"
           style={{ background: 'rgba(15,46,34,0.52)' }}
         />
 
-        {/* Left reinforcement — extra contrast behind text column */}
         <div
           className="absolute inset-0"
           style={{
@@ -110,7 +130,6 @@ export default function Hero() {
           }}
         />
 
-        {/* Bottom fade into next section */}
         <div
           className="absolute inset-x-0 bottom-0 h-40"
           style={{
@@ -119,20 +138,26 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Neural mesh overlay — desktop only, hidden on mobile */}
-      <div className="absolute inset-0 hidden md:block opacity-60 pointer-events-none">
+      {/* Neural mesh — mouse parallax Layer 1 (deepest, slowest) */}
+      <motion.div
+        style={{ x: meshX, y: meshY }}
+        className="absolute inset-0 hidden md:block opacity-60 pointer-events-none"
+      >
         <NeuralMesh />
-      </div>
+      </motion.div>
 
-      {/* Content */}
+      {/* Content — scroll parallax + mouse parallax Layer 2 (mid) */}
       <motion.div
         style={{ y: textY }}
         className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10"
       >
         <div className="min-h-[calc(100dvh-4rem)] flex items-center">
 
-          {/* Text column — max 52% wide on desktop so brain shows on right */}
-          <div className="w-full lg:max-w-[52%] py-20 lg:py-0 flex flex-col justify-center">
+          {/* Text column */}
+          <motion.div
+            style={{ x: textMX, y: textMY }}
+            className="w-full lg:max-w-[52%] py-20 lg:py-0 flex flex-col justify-center"
+          >
 
             <motion.div
               initial={{ opacity: 0, x: -10 }}
@@ -172,26 +197,32 @@ export default function Hero() {
               ))}
             </motion.p>
 
+            {/* CTA — mouse parallax Layer 3 (fastest, closest) */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex flex-wrap gap-3 mb-14"
+              style={{ x: ctaX, y: ctaY }}
+              className="mb-14"
             >
-              <MagneticButton href="/discovery">
-                <span className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]">
-                  {t.cta1[lang]}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </span>
-              </MagneticButton>
-              <a
-                href="#bundles"
-                className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex flex-wrap gap-3"
               >
-                {t.cta2[lang]}
-              </a>
+                <MagneticButton href="/discovery">
+                  <span className="bg-ms-gold-600 text-ms-green-900 font-bold text-[14px] px-7 py-3.5 rounded-lg hover:bg-ms-gold-400 transition-all duration-200 inline-flex items-center gap-2 active:scale-[0.98]">
+                    {t.cta1[lang]}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </MagneticButton>
+                <a
+                  href="#bundles"
+                  className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
+                >
+                  {t.cta2[lang]}
+                </a>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -218,7 +249,7 @@ export default function Hero() {
               ))}
             </motion.div>
 
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 

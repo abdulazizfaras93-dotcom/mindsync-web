@@ -115,7 +115,7 @@ export default function FAQ() {
           {/* LEFT: Question list */}
           <div className="space-y-1">
             {FAQS.map((faq, i) => {
-              const f       = lang === 'ar' ? faq.ar : faq.en
+              const f        = lang === 'ar' ? faq.ar : faq.en
               const isActive = open === i
               return (
                 <motion.button
@@ -125,12 +125,16 @@ export default function FAQ() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.35, delay: i * 0.04 }}
-                  className={`w-full text-left px-4 py-4 rounded-xl transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 ${
+                  className={`w-full text-left px-4 py-4 rounded-xl transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 relative ${
                     isActive
                       ? 'bg-ms-green-900 text-ms-ivory-0'
                       : 'text-ms-ink-700 hover:bg-ms-ivory-100'
                   }`}
                 >
+                  {/* Active gold left bar */}
+                  {isActive && (
+                    <span className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-ms-gold-600" aria-hidden />
+                  )}
                   <div className="flex items-start gap-4">
                     <span className={`font-mono text-[11px] tracking-wider pt-0.5 shrink-0 transition-colors ${
                       isActive ? 'text-ms-gold-600' : 'text-ms-ink-300 group-hover:text-ms-ink-400'
@@ -148,7 +152,7 @@ export default function FAQ() {
             })}
           </div>
 
-          {/* RIGHT: Answer panel */}
+          {/* RIGHT: Glass answer panel */}
           <div className="lg:sticky lg:top-8 lg:self-start">
             <AnimatePresence mode="wait">
               <motion.div
@@ -157,7 +161,10 @@ export default function FAQ() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.28 }}
-                className="bg-ms-green-900 rounded-2xl p-8"
+                className="bg-ms-green-900/85 backdrop-blur-[12px] border border-ms-gold-600/[0.15] rounded-2xl p-8"
+                style={{
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 40px rgba(15,46,34,0.2)',
+                }}
               >
                 <p className="text-ms-gold-600 font-mono text-[11px] tracking-widest uppercase mb-4">
                   {String(open + 1).padStart(2, '0')} / {String(FAQS.length).padStart(2, '0')}

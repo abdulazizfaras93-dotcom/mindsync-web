@@ -1,5 +1,7 @@
 'use client'
+import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
+import { GlassCard } from '@/components/motion'
 
 const TESTIMONIALS = [
   {
@@ -76,14 +78,23 @@ type TItem = typeof TESTIMONIALS[0]
 function Card({ item }: { item: TItem }) {
   const { lang } = useLang()
   return (
-    <div className="flex-shrink-0 w-72 md:w-80 bg-ms-ivory-0 border border-ms-ivory-200 rounded-2xl p-5 mx-3">
-      <div className="text-ms-gold-600 font-serif text-4xl leading-none mb-2 select-none">"</div>
-      <p className="text-ms-ink-600 text-sm leading-relaxed mb-4 line-clamp-4">{item.quote[lang]}</p>
-      <div className="pt-3 border-t border-ms-ivory-200">
-        <p className="font-grotesk font-semibold text-ms-ink-900 text-sm">{item.name}</p>
-        <p className="font-mono text-[10px] uppercase tracking-wider text-ms-ink-400 mt-0.5">{item.role[lang]}</p>
-      </div>
-    </div>
+    <motion.div
+      whileHover={{ boxShadow: '0 0 24px rgba(191,141,56,0.18)' }}
+      transition={{ duration: 0.3 }}
+      className="flex-shrink-0 w-72 md:w-80 mx-3 rounded-2xl"
+    >
+      <GlassCard
+        depth={2}
+        className="bg-ms-green-900/30 border border-ms-gold-600/[0.12] rounded-2xl p-5"
+      >
+        <div className="text-ms-gold-600 font-serif text-4xl leading-none mb-2 select-none">"</div>
+        <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-4">{item.quote[lang]}</p>
+        <div className="pt-3 border-t border-white/[0.08]">
+          <p className="font-grotesk font-semibold text-ms-ivory-0 text-sm">{item.name}</p>
+          <p className="font-mono text-[10px] uppercase tracking-wider text-white/40 mt-0.5">{item.role[lang]}</p>
+        </div>
+      </GlassCard>
+    </motion.div>
   )
 }
 
@@ -92,12 +103,12 @@ export default function Testimonials() {
   const isAr = lang === 'ar'
 
   return (
-    <section className="bg-ms-ivory-100 py-20">
+    <section className="bg-ms-green-900 py-20">
       <div className="max-w-5xl mx-auto px-6 mb-12 text-center">
         <p className="font-mono text-[10px] uppercase tracking-widest text-ms-gold-600 mb-3">
           {isAr ? 'آراء العملاء' : 'Client Stories'}
         </p>
-        <h2 className="font-grotesk text-3xl md:text-4xl font-bold text-ms-ink-900">
+        <h2 className="font-grotesk text-3xl md:text-4xl font-bold text-ms-ivory-0">
           {isAr ? 'يقولون عنّا' : 'What Our Clients Say'}
         </h2>
       </div>

@@ -1,8 +1,8 @@
 // src/components/sections/Process.tsx
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { KineticText } from '@/components/motion'
 
@@ -99,9 +99,16 @@ export default function Process() {
   const { lang } = useLang()
   const [activeStep, setActiveStep] = useState(0)
   const prefersReduced = useReducedMotion()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, prefersReduced ? 0 : 1])
 
   return (
-    <section id="process" className="py-24 bg-ms-green-900 pattern-overlay">
+    <section id="process" ref={sectionRef} className="py-24 bg-ms-green-900 pattern-overlay">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
 
         {/* Header */}
@@ -146,7 +153,7 @@ export default function Process() {
             }}
             aria-hidden
           >
-            <ProcessMorph activeStep={activeStep} />
+            <ProcessMorph activeStep={activeStep} scrollProgress={scrollProgress} />
           </div>
 
           {/* Right: interactive step list */}

@@ -1,6 +1,8 @@
 'use client'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useLang } from '@/lib/lang'
+import { GlassCard } from '@/components/motion'
 
 const RESULTS = [
   {
@@ -59,9 +61,52 @@ const RESULTS = [
   },
 ]
 
-export default function IndustryResults() {
+function ParallaxCard({ r, i }: { r: typeof RESULTS[0]; i: number }) {
   const { lang } = useLang()
   const prefersReduced = useReducedMotion()
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+
+  const yRaw = useTransform(scrollYProgress, [0, 1], [0, prefersReduced ? 0 : -(20 + i * 12)])
+  const y = useSpring(yRaw, { stiffness: 80, damping: 20 })
+
+  return (
+    <motion.div
+      ref={sectionRef}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: prefersReduced ? 0 : i * 0.07, duration: 0.35 }}
+      style={{ y }}
+    >
+      <GlassCard
+        depth={2}
+        tilt
+        className="bg-ms-ivory-0/80 border border-ms-ivory-200/60 rounded-2xl p-5 h-full"
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-2xl leading-none">{r.icon}</span>
+          <h3 className="font-grotesk font-semibold text-ms-ink-900 text-sm">{r.industry[lang]}</h3>
+        </div>
+        <div className="grid grid-cols-3 gap-2 pt-2 border-t border-ms-ivory-200">
+          {r.metrics.map((m) => (
+            <div key={m.label.en} className="text-center" style={{ transform: 'translateZ(10px)' }}>
+              <p className="font-mono font-bold text-ms-green-800 text-lg leading-none">{m.value}</p>
+              <p className="font-mono text-[9px] uppercase tracking-wide text-ms-ink-400 mt-1 leading-tight">{m.label[lang]}</p>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+    </motion.div>
+  )
+}
+
+export default function IndustryResults() {
+  const { lang } = useLang()
   const isAr = lang === 'ar'
 
   return (
@@ -78,27 +123,7 @@ export default function IndustryResults() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {RESULTS.map((r, i) => (
-            <motion.div
-              key={r.industry.en}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ delay: prefersReduced ? 0 : i * 0.07, duration: 0.35 }}
-              className="bg-ms-ivory-0 border border-ms-ivory-200 rounded-2xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl leading-none">{r.icon}</span>
-                <h3 className="font-grotesk font-semibold text-ms-ink-900 text-sm">{r.industry[lang]}</h3>
-              </div>
-              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-ms-ivory-200">
-                {r.metrics.map((m) => (
-                  <div key={m.label.en} className="text-center">
-                    <p className="font-mono font-bold text-ms-green-800 text-lg leading-none">{m.value}</p>
-                    <p className="font-mono text-[9px] uppercase tracking-wide text-ms-ink-400 mt-1 leading-tight">{m.label[lang]}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            <ParallaxCard key={r.industry.en} r={r} i={i} />
           ))}
         </div>
       </div>

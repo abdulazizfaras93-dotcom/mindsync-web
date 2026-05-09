@@ -2,6 +2,7 @@
 'use client'
 import { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { MotionValue } from 'framer-motion'
 import * as THREE from 'three'
 
 const GEO_FACTORIES = [
@@ -16,7 +17,7 @@ function easeOut(t: number) {
   return 1 - Math.pow(1 - t, 3)
 }
 
-function MorphScene({ activeStep }: { activeStep: number }) {
+function MorphScene({ activeStep, scrollProgress }: { activeStep: number; scrollProgress: MotionValue<number> | number }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const haloRef = useRef<THREE.Mesh>(null)
   const dustRef = useRef<THREE.Points>(null)
@@ -41,7 +42,6 @@ function MorphScene({ activeStep }: { activeStep: number }) {
     return pos
   }, [])
 
-  // Set geometry on first frame to guarantee refs are ready
   const initialized = useRef(false)
   useFrame((_, delta) => {
     const mesh = meshRef.current
@@ -73,10 +73,15 @@ function MorphScene({ activeStep }: { activeStep: number }) {
       if (morphProgress.current >= 1) morphPhase.current = 'idle'
     }
 
-    mesh.rotation.x += delta * 0.4
-    mesh.rotation.y += delta * 0.6
+    // Mesh: scroll-driven tilt (lerp toward target angle based on scroll position)
+    const sp = typeof scrollProgress === 'number' ? scrollProgress : scrollProgress.get()
+    mesh.rotation.x += (sp * Math.PI * 0.4 - mesh.rotation.x) * 0.06
+    mesh.rotation.y += (sp * Math.PI * 0.6 - mesh.rotation.y) * 0.06
+
+    // Halo: free auto-rotation for visual interest
     halo.rotation.x -= delta * 0.3
     halo.rotation.y += delta * 0.4
+
     if (dustRef.current) {
       dustRef.current.rotation.y += delta * 0.05
       dustRef.current.rotation.x += delta * 0.03
@@ -130,14 +135,14 @@ function MorphScene({ activeStep }: { activeStep: number }) {
   )
 }
 
-export default function ProcessMorph({ activeStep }: { activeStep: number }) {
+export default function ProcessMorph({ activeStep, scrollProgress = 0 }: { activeStep: number; scrollProgress?: MotionValue<number> | number }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 35 }}
       gl={{ alpha: true, antialias: true }}
       style={{ display: 'block', width: '100%', height: '100%' }}
     >
-      <MorphScene activeStep={activeStep} />
+      <MorphScene activeStep={activeStep} scrollProgress={scrollProgress} />
     </Canvas>
   )
 }
