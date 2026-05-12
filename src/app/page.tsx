@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/sections/Hero'
 import StatsBar from '@/components/sections/StatsBar'
 import Services from '@/components/sections/Services'
+import DashboardPreview from '@/components/sections/DashboardPreview'
 import IndustryResults from '@/components/sections/IndustryResults'
 import Bundles from '@/components/sections/Bundles'
 import WhatsAppMockup from '@/components/sections/WhatsAppMockup'
@@ -24,6 +25,7 @@ export default function Home() {
         <Hero />
         <StatsBar />
         <Services />
+        <DashboardPreview />
         <IndustryResults />
         <Bundles />
 <WhatsAppMockup />
