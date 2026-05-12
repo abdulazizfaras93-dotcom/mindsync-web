@@ -4,8 +4,6 @@ import Hero from '@/components/sections/Hero'
 import StatsBar from '@/components/sections/StatsBar'
 import Services from '@/components/sections/Services'
 import IndustryResults from '@/components/sections/IndustryResults'
-import WhyNotBot from '@/components/sections/WhyNotBot'
-import BeforeAfter from '@/components/sections/BeforeAfter'
 import Bundles from '@/components/sections/Bundles'
 import ROICalculator from '@/components/sections/ROICalculator'
 import WhatsAppMockup from '@/components/sections/WhatsAppMockup'
@@ -28,8 +26,6 @@ export default function Home() {
         <StatsBar />
         <Services />
         <IndustryResults />
-        <WhyNotBot />
-        <BeforeAfter />
         <Bundles />
         <ROICalculator />
         <WhatsAppMockup />
