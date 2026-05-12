@@ -8,11 +8,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MindSync public landing page — Kuwait's first AI automation agency for SMBs. Bilingual AR/EN marketing site driving discovery form submissions and free trial requests.
 
-- **Live:** https://www.mindsynckw.com (since 2026-04-25)
-- **GitHub:** https://github.com/abdulazizfaras93-dotcom/mindsync-web (private, `main`)
+- **Live:** https://www.mindsynckw.com
+- **GitHub:** `abdulazizfaras93-dotcom/mindsync-web` (private, `main`)
 - **Netlify site:** `mindsync-web` — auto-deploys on push to `main`, Node 20
 - **Admin dashboard:** https://admin.mindsynckw.com (separate Vite repo)
-- **Business doc:** `docs/mindsync-business.md` — source of truth for all business logic
 
 ---
 
@@ -22,8 +21,8 @@ MindSync public landing page — Kuwait's first AI automation agency for SMBs. B
 - Tailwind CSS 3 (brand tokens in `tailwind.config.ts` under `colors.ms.*`)
 - Framer Motion — animations, `useScroll`/`useTransform` parallax, `useReducedMotion`
 - Lenis — smooth scroll provider (`src/components/providers/SmoothScroll.tsx`)
-- lucide-react
-- `@react-three/fiber` + `@react-three/drei` + `three@0.170` — canvas components (not Hero)
+- lucide-react, clsx, tailwind-merge (`src/lib/utils.ts` exports `cn()`)
+- `@react-three/fiber` + `@react-three/drei` + `three@0.170` — canvas components
 - Deployed on Netlify via `@netlify/plugin-nextjs` (`netlify.toml`, Node 20)
 
 ---
@@ -33,7 +32,6 @@ MindSync public landing page — Kuwait's first AI automation agency for SMBs. B
 ```bash
 npm install
 npm run dev        # Next dev server on :3000
-npm run start      # serve built app
 npx eslint .       # lint (no test script configured)
 ```
 
@@ -49,28 +47,56 @@ Section order (top → bottom):
 ```
 Navbar
 Hero               — herobackground.mp4 looping video + NeuralMesh R3F overlay + KineticText headline
-StatsBar           — animated count-up grid
-Services           — 5-card "what we build" overview with prices
-IndustryResults    — staggered cards per industry
-WhyNotBot          — two-panel split (Without AI / With MindSync AI) + 3 differentiator cards
-BeforeAfter        — side-by-side comparison
+StatsBar           — animated count-up stats grid
+Services           — full-width flagship banner + 2×2 neo-brutalist card grid
+IndustryResults    — scroll-parallax neo-brutalist cards (per-card Y spring offset)
 Bundles            — bento grid (8 tiles) → AnimatePresence expand → 3 InlineTierCards per selection
-ROICalculator      — interactive sliders + NumberFlow animated counters
 WhatsAppMockup     — sequential WhatsApp chat animation
-ReceptionistChat   — live n8n webhook chat
-Process            — 5-step flow, two-column layout with sticky ProcessMorph canvas
-FreeTrialSpotlight — 7-day free trial offer with animated "7" background
-BuiltOn            — integration marquee + animated SVG filament
-Testimonials       — CSS marquee of client testimonial cards
-TrustCluster       — trust badges
-FAQ                — accordion Q&As including free trial + website-without-AI
+ReceptionistChat   — live n8n webhook chat (id="chat" — CTAFooter anchors here)
+Process            — 5-step flow, sticky ProcessMorph canvas + interactive step list
+FreeTrialSpotlight — 7-day free trial offer
+BuiltOn            — integration marquee (dark green bg, frosted glass logo tiles)
+Testimonials       — CSS marquee of neo-brutalist cards (dark green bg, gold shadow)
+FAQ                — accordion Q&As
 CTA                — final CTA with KuwaitParticles
 Footer
 ```
 
 Global overlays: `WhatsAppButton` (floating corner) + `ExitIntent` (free trial offer on exit).
 
-> `Demo.tsx`, `DemoChat.tsx`, `PortalPreview.tsx`, `ProductReveal.tsx` remain in the codebase but are **not imported in `page.tsx`**. Do not delete.
+**Dormant section files** (exist in `sections/` but NOT imported in `page.tsx` — do not delete):
+`WhyNotBot.tsx`, `BeforeAfter.tsx`, `ROICalculator.tsx`, `TrustCluster.tsx`, `Demo.tsx`, `ProductReveal.tsx`
+
+---
+
+### Neo-brutalist card pattern
+
+All card grids across the site use this consistent style:
+
+```tsx
+// Wrapper
+<div className="relative group transition-all duration-300">
+  {/* Shadow layer — animates on hover */}
+  <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl
+    shadow-[4px_4px_0px_0px] shadow-ms-ink-900
+    transition-all duration-300
+    group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+  {/* Content sits on top */}
+  <div className="relative p-6">...</div>
+</div>
+```
+
+For cards on **dark backgrounds** (e.g. Testimonials on `bg-ms-green-900`), use gold shadow instead:
+`shadow-[4px_4px_0px_0px_rgba(191,141,56,0.4)]` / `group-hover:shadow-[8px_8px_0px_0px_rgba(191,141,56,0.4)]`
+
+Check icons inside cards use circular bordered badges, not plain tick marks:
+```tsx
+<span className="inline-flex items-center justify-center w-4 h-4 rounded-full border-2 border-ms-ink-900">
+  <Check size={9} strokeWidth={2.5} className="text-ms-green-800" />
+</span>
+```
+
+Popular/badge pills: absolute positioned, `rotate-12`, `border-2 border-ms-ink-900`, gold bg.
 
 ---
 
@@ -80,21 +106,11 @@ Global overlays: `WhatsAppButton` (floating corner) + `ExitIntent` (free trial o
 
 Exports:
 - `BUNDLES: Bundle[]` — 8 industries, each with `tiers: BundleTier[]`
-- `WEBSITE_SERVICES: WebsiteService[]` — 3 website tiers with real prices
-- `APP_SERVICES: AppService[]` — 2 app tiers with real prices
-- `FREE_TRIAL` — 1-week free trial copy (AR/EN)
-- `CUSTOM_BUNDLE` — custom AI system CTA (AR/EN)
+- `WEBSITE_SERVICES`, `APP_SERVICES` — prices in data.ts; UI shows "Quote on request" (do not display raw prices)
+- `FREE_TRIAL`, `CUSTOM_BUNDLE` — AR/EN copy
 - `TIER_ORDER: TierId[]` — `['smart', 'pro', 'full-auto']`
-- `TIER_LABELS` — display names per tier (AR/EN + description)
-- `DEMO_CONVERSATIONS` — 8-turn canned scripts per industry (Kuwaiti dialect)
-- `WHATSAPP_URL` — used only by `WhatsAppButton`, do not add to other components
-
-**Tiers (v2):**
-| ID | EN | AR | Description |
-|---|---|---|---|
-| `smart` | Smart | الذكي | 1 agent, 1–2 channels, focused tasks |
-| `pro` | Pro | المتقدم | 1+ agents, multiple channels |
-| `full-auto` | Full Auto | المؤتمت | Multiple agents, all channels, full automation |
+- `WHATSAPP_URL` — used **only** by `WhatsAppButton`; do not add to other components
+- `DEMO_CONVERSATIONS` — canned scripts per industry (Kuwaiti dialect)
 
 **Bundle pricing (Build Fee / Smart / Pro / Full Auto — KWD/mo):**
 | Industry | Build | Smart | Pro | Full Auto |
@@ -108,116 +124,98 @@ Exports:
 | Clinic | 400 | 220 | 340 | 460 |
 | Real Estate | 450 | 250 | 380 | 520 |
 
-**Website prices:** Landing Page 300 KWD · Business Website 550 KWD · Advanced 900–1,400 KWD · maintenance 80 KWD/mo
-
-**App prices:** Simple App 2,000–2,500 KWD · Advanced App 3,500–6,000 KWD · maintenance 150 KWD/mo
-
-> After any pricing change: `node C:\tmp\update-agent-prompts.js` to sync n8n agents.
+> After any pricing change: `node C:\tmp\update-agent-prompts.js` to sync n8n agent prompts.
 
 ---
 
 #### `src/lib/lang.tsx`
 
-`LangProvider` client context. Toggles `lang` between `'en'|'ar'`, flips `dir` attribute + `font-arabic` class on `<html>`. Sections read `useLang()`. Keep all AR/EN strings inline per section: `const t = { key: { en: '...', ar: '...' } }`.
+`LangProvider` client context. Toggles `lang` between `'en'|'ar'`, flips `dir` + `font-arabic` class on `<html>`. Sections read `useLang()`. Keep all AR/EN strings inline per section as `const t = { key: { en: '...', ar: '...' } }`.
 
----
+#### `src/lib/utils.ts`
 
-### Animation system
-
-Lenis initializes in `SmoothScroll.tsx` and drives a `requestAnimationFrame` loop — all Framer Motion `useScroll` hooks feed off this. Pattern used in parallax sections:
-
-```tsx
-const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-const y = useTransform(scrollYProgress, [0, 1], prefersReduced ? ['0%', '0%'] : ['-8%', '8%'])
-```
-
-Always guard parallax values with `const prefersReduced = useReducedMotion()` and return `['0%','0%']` when true.
-
-**Navbar** (`src/components/layout/Navbar.tsx`) hides on scroll-down past 120 px, reappears on scroll-up — uses `lastScrollY` ref + `motion.nav animate={{ y: visible ? 0 : -80 }}`.
+Exports `cn(...inputs)` — clsx + tailwind-merge. Required by shadcn components.
 
 ---
 
 ### Component directories
 
 #### `src/components/sections/`
-One file per section. Key notes:
-- `Hero.tsx` — `herobackground.mp4` looping video background + `NeuralMesh` R3F canvas overlay. Two gradient overlays keep text readable. Falls back to solid `bg-ms-green-900` when `useReducedMotion()` is true. `KineticText` used for the headline.
-- `Services.tsx` — 5-card "what we build" section. Full-width banner (WhatsApp AI Receptionist) + 2×2 grid. Prices read from `data.ts`. **No Framer Motion** — hover states only. Candidate for animation upgrade.
-- `Bundles.tsx` — **bento grid pattern**: 8 `BentoTile` buttons in a 2×4 / 4×2 grid. Click toggles `selectedId`; `AnimatePresence` expands 3 `InlineTierCard` components below with `mode="wait"`. `WEBSITE_SERVICES` and `APP_SERVICES` render as separate grids at the bottom. `TiltCard` is no longer used here.
-- `WhyNotBot.tsx` — parallax background via `useScroll`/`useTransform`. Two-panel split layout: red "Without AI" panel (pain points) + green "With MindSync AI" panel (solutions). Comparison table removed.
-- `Process.tsx` — 5 steps, two-column layout: sticky `ProcessMorph` canvas (left) + interactive step list (right). `useState(0)` → `activeStep` drives morph + step expansion. `KineticText` used for the headline.
-- `TrustCluster.tsx` — placed between `Testimonials` and `FAQ`.
-- `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Fallback bubble links to `/discovery`. Has `id="chat"` on the section element — the CTAFooter "Try the Live Demo" button anchors to `#chat`.
-- `Testimonials.tsx` — **CSS marquee only**, no Framer Motion. Candidate for animation upgrade.
+
+- `Hero.tsx` — `herobackground.mp4` looping video + `NeuralMesh` R3F overlay. Mouse parallax: 3 layers driven by `useMotionValue + useSpring`. `KineticText` headline. Falls back to solid bg when `useReducedMotion()`.
+- `Services.tsx` — Full-width flagship banner (dark green, `border-2 border-ms-ink-900 shadow-[6px_6px_0px_0px]`, no hover) + 2×2 neo-brutalist card grid with scroll-entrance stagger.
+- `Bundles.tsx` — **Bento grid pattern**: 8 `BentoTile` buttons (2×4). Click toggles `selectedId`; `AnimatePresence` expands 3 `InlineTierCard` components (neo-brutalist, rotate per index). `WEBSITE_SERVICES` and `APP_SERVICES` render as separate neo-brutalist grids at the bottom.
+- `IndustryResults.tsx` — 6 neo-brutalist cards with per-card scroll-driven Y parallax (`useScroll` + `useSpring`). Section bg `bg-ms-ivory-100`.
+- `Testimonials.tsx` — **CSS marquee on `bg-ms-green-900`**. Cards use neo-brutalist style with gold-tinted border + shadow (ink shadow is invisible on dark bg). No hover interaction (marquee).
+- `Process.tsx` — 5 steps, `useState(0)` drives `activeStep`. Sticky `ProcessMorph` canvas left + interactive step list right. `KineticText` headline. `scrollProgress` MotionValue passed to canvas.
+- `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Has `id="chat"` — CTAFooter "Try the Live Demo" anchors here.
+- `FAQ.tsx` — Answer panel: `bg-ms-green-900/85 backdrop-blur-[12px] border border-ms-gold-600/[0.15]` + inset glow shadow. Active question: `w-[3px]` gold absolute left bar.
+- `BuiltOn.tsx` — Dark green surface. Frosted glass logo tiles: `bg-white/[0.06] backdrop-blur-[6px] border border-white/[0.10]`. SimpleIcons CDN color `FBFAF5` for visibility on dark bg.
+- `IndustryBundles.tsx` — Tier cards for **industry vertical pages** (not `page.tsx`). Uses same neo-brutalist TierCard style with rotation per tier (`smart`→−1°, `pro`→+1°, `full-auto`→−1.5°).
+- `IndustryHero.tsx` — Hero for industry vertical pages.
 
 #### `src/components/canvas/`
 All loaded with `dynamic(..., { ssr: false })`:
-- `ProcessMorph.tsx` — sticky 3D morphing canvas in `Process`. 5 geometries (TorusKnot → Octahedron → Icosahedron → Torus → Sphere), one per step. `MeshPhysicalMaterial` green + wireframe gold halo + particle dust. Receives `activeStep` prop from `Process.tsx`.
-- `BrainBackground.tsx` — 3D brain canvas. **No longer used** (Hero uses video; do not delete — may be reused).
-- `KuwaitParticles.tsx` — used in CTA section background.
-- `ChatBubbles.tsx` — floating bubbles behind `ReceptionistChat`.
-- `ProcessFlow.tsx` — legacy horizontal flow strip. **Removed from `Process.tsx`**. Do not delete.
-- `NeuralGlobe.tsx` — legacy, not used. Do not delete.
-
-#### `src/components/providers/`
-- `SmoothScroll.tsx` — Lenis smooth scroll client component. Wraps all children in `layout.tsx`. Initializes with `duration: 1.15`, exponential easing. Cleans up on unmount.
-
-#### `src/components/ui/`
-- `DemoChat.tsx` — Phase 1: canned script (no network). Phase 2: live input → `/api/demo` proxy → n8n.
-- `PortalPreview.tsx` — UI mockup panel shown next to DemoChat.
-- `WhatsAppButton.tsx` — floating corner button. Uses `WHATSAPP_URL` from `data.ts` only.
-- `ExitIntent.tsx` — exit-intent modal. Offers **1-week free trial** (v2 copy). Cookie: `ms_exit_shown`, 7-day expiry.
-- `TiltCard.tsx` — 3D tilt wrapper (no longer used by `Bundles.tsx` after bento-grid redesign).
+- `ProcessMorph.tsx` — sticky 3D canvas, 5 geometries per step. Read `scrollProgress.get()` inside `useFrame` only.
+- `KuwaitParticles.tsx` — CTA section background.
+- `ChatBubbles.tsx` — behind `ReceptionistChat`.
+- `BrainBackground.tsx`, `NeuralGlobe.tsx`, `ProcessFlow.tsx` — dormant, do not delete.
 
 #### `src/components/motion/`
-Motion utility components — all handle `useReducedMotion()` internally:
-- `KineticText.tsx` — word-by-word staggered reveal (`whileInView`). Used in Hero + Process headlines. Renders a plain `<Tag>` when reduced motion is on.
-- `MagneticButton.tsx` — cursor-following magnetic CTA button. Used in Hero.
-- `AuroraPlate.tsx` — animated green aurora background plate.
-- `NumberFlow.tsx` — re-export of `@number-flow/react` for animated number transitions. Used in ROICalculator.
+- `GlassCard.tsx` — glassmorphism + cursor-tilt wrapper. **No active section currently imports it** (replaced by neo-brutalist pattern). Kept for potential reuse.
+- `KineticText.tsx` — word-by-word staggered reveal (`whileInView`). Used in Hero + Process. Plain `<Tag>` when `useReducedMotion()`. Note: headless IntersectionObserver won't fire for in-viewport elements at mount — opacity stays 0 in headless tests; works in real browsers.
+- `MagneticButton.tsx` — cursor-following magnetic CTA. Used in Hero.
+- `NumberFlow.tsx` — re-export of `@number-flow/react`. Used in ROICalculator (dormant).
+
+#### `src/components/ui/`
+- `button.tsx` — shadcn Button (requires `@radix-ui/react-slot`, `class-variance-authority`)
+- `creative-pricing.tsx` — neo-brutalist pricing card component (bilingual, KWD)
+- `WhatsAppButton.tsx` — floating corner button. Uses `WHATSAPP_URL` from `data.ts` only.
+- `ExitIntent.tsx` — exit-intent modal, 1-week free trial offer. Cookie: `ms_exit_shown`, 7-day expiry.
+- `DemoChat.tsx`, `PortalPreview.tsx`, `TiltCard.tsx` — dormant, do not delete.
+
+#### `src/components/providers/`
+- `SmoothScroll.tsx` — Lenis smooth scroll. `duration: 1.15`, exponential easing. All Framer Motion `useScroll` hooks feed off this loop.
 
 ---
 
-### API routes
+### Animation system
 
-#### `src/app/api/demo/route.ts`
-Server-side proxy from `DemoChat` live phase to n8n. Requires env vars:
-- `N8N_BASE` — n8n instance base URL
-- `N8N_TOKEN` — n8n API token
+Always guard parallax with `const prefersReduced = useReducedMotion()` and fall back to `['0%','0%']`.
 
-Without them returns a placeholder reply (graceful degradation).
+```tsx
+const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+const y = useTransform(scrollYProgress, [0, 1], prefersReduced ? ['0%', '0%'] : ['-8%', '8%'])
+```
 
-#### `src/app/services/page.tsx`
-Standalone services overview page. Linked from Navbar as `/services`. Active nav state detected via `usePathname() === '/services'`.
+**Navbar** hides on scroll-down past 120 px, reappears on scroll-up — `lastScrollY` ref + `motion.nav animate={{ y: visible ? 0 : -80 }}`.
 
-#### `src/app/discovery/page.tsx`
-Standalone 10-step discovery form. Has its own `LangCtx` (not page-level `LangProvider`). Submits to `https://ifaras911.app.n8n.cloud/webhook/client-discovery`. Google Ads conversion fires on submit: `AW-18124307098/gB4kCNjQ3qUcEJr1q8JD`.
+---
 
-#### Missing pages (linked but not built)
-Footer links to `/privacy` and `/terms` — these routes do not exist yet. Visiting them returns a Next.js 404.
+### Pages
+
+| Route | File | Notes |
+|---|---|---|
+| `/` | `src/app/page.tsx` | Main landing |
+| `/[industry]` | `src/app/[industry]/page.tsx` | 8 industry verticals via `INDUSTRY_SLUGS` |
+| `/services` | `src/app/services/page.tsx` | Services overview |
+| `/discovery` | `src/app/discovery/page.tsx` | 10-step form → n8n webhook. Has own `LangCtx`. Google Ads conversion on submit. |
+| `/privacy` | `src/app/privacy/page.tsx` | Bilingual AR/EN privacy policy |
+| `/terms` | `src/app/terms/page.tsx` | Bilingual AR/EN terms of service |
+
+Sitemap auto-generates via `src/app/sitemap.ts`. Covers `/`, `/discovery`, `/services`, `/privacy`, `/terms`, all 8 industry slugs.
 
 ---
 
 ### n8n Agents
 
-| Agent | Workflow ID | Status |
+| Agent | Webhook | Status |
 |---|---|---|
-| Receptionist Agent | FCHNxYk7OOGdJypu | ✅ Live |
-| Manager Agent | MxaAZGBQNw7D6osB | ✅ Live |
-| PDF Generator | 9TI7ugHc06xfnUQA | ✅ Live |
-| Discovery Form | u6J8mUam8Jy3UCju | ✅ Live |
+| Receptionist Agent | `/webhook/receptionist-website` | ✅ Live |
+| Discovery Form | `/webhook/client-discovery` | ✅ Live |
+| PDF Generator | `/webhook/generate-pdf` | ✅ Live |
 
 > **Never edit n8n workflows via MCP `update_workflow`.** Always GET → mutate → PUT via REST API.
-> After pricing changes, run `node C:\tmp\update-agent-prompts.js` to patch agent system prompts.
-
----
-
-### SEO & tracking (`src/app/layout.tsx`)
-
-- Meta description: references "AI automation systems, websites & apps" — not "WhatsApp bots"
-- JSON-LD: `LocalBusiness`, phone `+96599539006`, Instagram `mindsync.kw`
-- Google Ads tag: `AW-18124307098` (via `next/script`, `afterInteractive`)
-- WhatsApp click conversion: `AW-18124307098/aFj-CNvQ3qUcEJr1q8JD` in `WhatsAppButton.tsx`
 
 ---
 
@@ -228,19 +226,19 @@ Gulf Premium palette — **never** introduce navy, teal, indigo, or purple.
 | Token | Hex | Tailwind |
 |---|---|---|
 | Deep Green (primary) | `#153E2D` | `bg-ms-green-800` |
-| Dark Green (hero bg) | `#0F2E22` | `bg-ms-green-900` |
+| Dark Green (hero/section bg) | `#0F2E22` | `bg-ms-green-900` |
 | Gold (accent) | `#BF8D38` | `text-ms-gold-600` |
 | Ivory (canvas) | `#FBFAF5` | `bg-ms-ivory-0` |
-| Ink | `#0E1512` | `text-ms-ink-900` |
+| Ink (borders/text) | `#0E1512` | `text-ms-ink-900` |
 
-Fonts: Space Grotesk (EN) · Noto Kufi Arabic (AR) · JetBrains Mono (mono/data).
+Fonts: Space Grotesk (EN, `font-grotesk`) · Noto Kufi Arabic (AR, `font-arabic`) · JetBrains Mono (`font-mono`).
 
-**Tailwind token gotcha:** `ms-ink-*` scale only goes down to `ink-400` (`#8C9590`). There is no `ink-200` or lighter ink token. For light borders on ivory backgrounds use `ms-ivory-200`, not `ms-ink-200`.
+**Tailwind token gotcha:** `ms-ink-*` only goes down to `ink-400` (`#8C9590`). No `ink-200` or lighter. For light borders on ivory backgrounds use `ms-ivory-200`, not `ms-ink-200`.
 
 Arabic-first bilingual with full RTL. All CTAs link to `/discovery` except `WhatsAppButton`.
 
-Logos: `public/brand/logo.png` (ivory bg) · `public/brand/logo-transparent.png` (Navbar).
-Integration logos: `public/brand/integrations/*.svg` · runtime: `cdn.simpleicons.org/{slug}/153E2D`.
+Logos: `public/brand/logo.png` (ivory bg) · `public/brand/logo-transparent.png` (Navbar + favicon).
+Integration logos: `public/brand/integrations/*.svg` or runtime `cdn.simpleicons.org/{slug}/FBFAF5`.
 
 ---
 
@@ -254,13 +252,12 @@ git commit -m "feat: ..."
 git push origin main   # Netlify auto-builds
 ```
 
-> OneDrive can surface MindSync parent directory files inside the repo. `-A` will accidentally stage them.
-> Never run `npm run build` locally on Node 25 — push to `main` and let Netlify CI handle it.
+> OneDrive can surface MindSync parent directory files inside the repo — `-A` will accidentally stage them (happened in Apr 2026, leaked PDFs to public repo).
 
 ---
 
 ## Pricing change workflow
 
 1. Edit prices in `src/lib/data.ts`
-2. Run `node C:\tmp\update-agent-prompts.js` (requires `N8N_API_KEY` env var)
+2. Run `node C:\tmp\update-agent-prompts.js`
 3. `git add src/lib/data.ts` → commit → push
