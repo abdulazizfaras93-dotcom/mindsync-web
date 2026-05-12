@@ -500,12 +500,11 @@ export default function Bundles() {
                 </ul>
 
                 <div className="mb-4">
-                  <p className="text-[22px] font-bold text-ms-ink-900 leading-none">
-                    {svc.price[0].toLocaleString()}–{svc.price[1].toLocaleString()}{' '}
-                    <span className="text-[14px] font-medium text-ms-ink-400">{t.kwd[lang]}</span>
+                  <p className="text-[15px] font-semibold text-ms-ink-900">
+                    {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
                   </p>
-                  <p className="text-[11px] text-ms-ink-400 mt-1">
-                    +{svc.monthlyMaintenance} {t.kwd[lang]}/{lang === 'ar' ? 'شهر صيانة' : 'mo maintenance'}
+                  <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
+                    {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
                   </p>
                 </div>
 
