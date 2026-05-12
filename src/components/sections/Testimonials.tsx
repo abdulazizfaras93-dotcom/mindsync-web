@@ -1,7 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { GlassCard } from '@/components/motion'
 
 const TESTIMONIALS = [
   {
@@ -78,23 +76,17 @@ type TItem = typeof TESTIMONIALS[0]
 function Card({ item }: { item: TItem }) {
   const { lang } = useLang()
   return (
-    <motion.div
-      whileHover={{ boxShadow: '0 0 24px rgba(191,141,56,0.18)' }}
-      transition={{ duration: 0.3 }}
-      className="flex-shrink-0 w-72 md:w-80 mx-3 rounded-2xl"
-    >
-      <GlassCard
-        depth={2}
-        className="bg-ms-green-900/30 border border-ms-gold-600/[0.12] rounded-2xl p-5"
-      >
+    <div className="relative group flex-shrink-0 w-72 md:w-80 mx-3 transition-all duration-300">
+      <div className="absolute inset-0 bg-ms-green-800 border-2 border-ms-gold-600/60 rounded-2xl shadow-[4px_4px_0px_0px_rgba(191,141,56,0.4)] transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px_rgba(191,141,56,0.4)] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+      <div className="relative p-5">
         <div className="text-ms-gold-600 font-serif text-4xl leading-none mb-2 select-none">"</div>
         <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-4">{item.quote[lang]}</p>
         <div className="pt-3 border-t border-white/[0.08]">
           <p className="font-grotesk font-semibold text-ms-ivory-0 text-sm">{item.name}</p>
           <p className="font-mono text-[10px] uppercase tracking-wider text-white/40 mt-0.5">{item.role[lang]}</p>
         </div>
-      </GlassCard>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 

@@ -404,55 +404,55 @@ export default function Bundles() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {WEBSITE_SERVICES.map((svc) => (
-              <div
-                key={svc.id}
-                className="bg-white border border-ms-ivory-200 rounded-2xl p-6 flex flex-col hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-              >
-                <div className="flex items-start gap-3 mb-4">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-ms-green-800/[0.08] text-ms-green-800 shrink-0">
-                    <Globe size={18} strokeWidth={1.75} />
-                  </span>
-                  <div>
-                    <p className="text-[15px] font-semibold text-ms-ink-900 mb-0.5">
-                      {svc[isAr ? 'ar' : 'en']}
+              <div key={svc.id} className="relative group transition-all duration-300">
+                <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+                <div className="relative p-6 flex flex-col">
+                  <div className="flex items-start gap-3 mb-4">
+                    <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-ms-ink-900 text-ms-green-800 shrink-0">
+                      <Globe size={16} strokeWidth={1.75} />
+                    </span>
+                    <div>
+                      <p className="text-[15px] font-semibold text-ms-ink-900 mb-0.5">
+                        {svc[isAr ? 'ar' : 'en']}
+                      </p>
+                      <p className="text-[11px] text-ms-ink-400 font-mono">
+                        {typeof t.webDays[lang] === 'function'
+                          ? (t.webDays[lang] as (n: [number, number]) => string)(svc.deliveryDays)
+                          : ''}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 mb-5 flex-1">
+                    {svc.features[lang].map((f, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full border-2 border-ms-ink-900">
+                          <Check size={9} strokeWidth={2.5} className="text-ms-green-800" />
+                        </span>
+                        <span className="text-[13px] leading-snug text-ms-ink-600">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mb-4">
+                    <p className="text-[15px] font-semibold text-ms-ink-900">
+                      {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
                     </p>
-                    <p className="text-[11px] text-ms-ink-400 font-mono">
-                      {typeof t.webDays[lang] === 'function'
-                        ? (t.webDays[lang] as (n: [number, number]) => string)(svc.deliveryDays)
-                        : ''}
+                    <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
+                      {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
                     </p>
                   </div>
+
+                  <a
+                    href="/discovery"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold border-2 border-ms-ink-900 bg-ms-ivory-0 text-ms-ink-900 shadow-[4px_4px_0px_0px] shadow-ms-ink-900 hover:shadow-[6px_6px_0px_0px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98]"
+                  >
+                    {t.discovery[lang]}
+                    <ArrowRight size={13} strokeWidth={2} />
+                  </a>
                 </div>
-
-                <ul className="space-y-2 mb-5 flex-1">
-                  {svc.features[lang].map((f, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-ms-green-800/10">
-                        <Check size={10} strokeWidth={2.5} className="text-ms-green-800" />
-                      </span>
-                      <span className="text-[13px] leading-snug text-ms-ink-600">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mb-4">
-                  <p className="text-[15px] font-semibold text-ms-ink-900">
-                    {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
-                  </p>
-                  <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
-                    {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
-                  </p>
-                </div>
-
-                <a
-                  href="/discovery"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold border border-ms-green-800 text-ms-green-800 hover:bg-ms-green-800 hover:text-ms-ivory-0 transition-all duration-150 active:scale-[0.98]"
-                >
-                  {t.discovery[lang]}
-                  <ArrowRight size={13} strokeWidth={2} />
-                </a>
               </div>
             ))}
           </div>
@@ -469,54 +469,54 @@ export default function Bundles() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
             {APP_SERVICES.map((svc) => (
-              <div
-                key={svc.id}
-                className="bg-white border border-ms-ivory-200 rounded-2xl p-6 flex flex-col hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-              >
-                <div className="flex items-start gap-3 mb-4">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-ms-green-800/[0.08] text-ms-green-800 shrink-0">
-                    <Smartphone size={18} strokeWidth={1.75} />
-                  </span>
-                  <div>
-                    <p className="text-[15px] font-semibold text-ms-ink-900 mb-0.5">
-                      {svc[isAr ? 'ar' : 'en']}
+              <div key={svc.id} className="relative group transition-all duration-300">
+                <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+                <div className="relative p-6 flex flex-col">
+                  <div className="flex items-start gap-3 mb-4">
+                    <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-ms-ink-900 text-ms-green-800 shrink-0">
+                      <Smartphone size={16} strokeWidth={1.75} />
+                    </span>
+                    <div>
+                      <p className="text-[15px] font-semibold text-ms-ink-900 mb-0.5">
+                        {svc[isAr ? 'ar' : 'en']}
+                      </p>
+                      <p className="text-[11px] text-ms-ink-400 font-mono">
+                        {svc.deliveryDays[0]}–{svc.deliveryDays[1]}{' '}
+                        {lang === 'ar' ? 'يوم' : 'days'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 mb-5 flex-1">
+                    {svc.features[lang].map((f, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full border-2 border-ms-ink-900">
+                          <Check size={9} strokeWidth={2.5} className="text-ms-green-800" />
+                        </span>
+                        <span className="text-[13px] leading-snug text-ms-ink-600">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mb-4">
+                    <p className="text-[15px] font-semibold text-ms-ink-900">
+                      {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
                     </p>
-                    <p className="text-[11px] text-ms-ink-400 font-mono">
-                      {svc.deliveryDays[0]}–{svc.deliveryDays[1]}{' '}
-                      {lang === 'ar' ? 'يوم' : 'days'}
+                    <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
+                      {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
                     </p>
                   </div>
+
+                  <a
+                    href="/discovery"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold border-2 border-ms-ink-900 bg-ms-ivory-0 text-ms-ink-900 shadow-[4px_4px_0px_0px] shadow-ms-ink-900 hover:shadow-[6px_6px_0px_0px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98]"
+                  >
+                    {t.discovery[lang]}
+                    <ArrowRight size={13} strokeWidth={2} />
+                  </a>
                 </div>
-
-                <ul className="space-y-2 mb-5 flex-1">
-                  {svc.features[lang].map((f, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-ms-green-800/10">
-                        <Check size={10} strokeWidth={2.5} className="text-ms-green-800" />
-                      </span>
-                      <span className="text-[13px] leading-snug text-ms-ink-600">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mb-4">
-                  <p className="text-[15px] font-semibold text-ms-ink-900">
-                    {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
-                  </p>
-                  <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
-                    {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
-                  </p>
-                </div>
-
-                <a
-                  href="/discovery"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-[13px] font-semibold border border-ms-green-800 text-ms-green-800 hover:bg-ms-green-800 hover:text-ms-ivory-0 transition-all duration-150 active:scale-[0.98]"
-                >
-                  {t.discovery[lang]}
-                  <ArrowRight size={13} strokeWidth={2} />
-                </a>
               </div>
             ))}
           </div>

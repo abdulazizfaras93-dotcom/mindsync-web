@@ -2,7 +2,6 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { GlassCard } from '@/components/motion'
 
 const RESULTS = [
   {
@@ -82,25 +81,23 @@ function ParallaxCard({ r, i }: { r: typeof RESULTS[0]; i: number }) {
       viewport={{ once: true, margin: '-40px' }}
       transition={{ delay: prefersReduced ? 0 : i * 0.07, duration: 0.35 }}
       style={{ y }}
+      className="relative group transition-all duration-300"
     >
-      <GlassCard
-        depth={2}
-        tilt
-        className="bg-ms-ivory-0/80 border border-ms-ivory-200/60 rounded-2xl p-5 h-full"
-      >
+      <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+      <div className="relative p-5 h-full">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-2xl leading-none">{r.icon}</span>
           <h3 className="font-grotesk font-semibold text-ms-ink-900 text-sm">{r.industry[lang]}</h3>
         </div>
         <div className="grid grid-cols-3 gap-2 pt-2 border-t border-ms-ivory-200">
           {r.metrics.map((m) => (
-            <div key={m.label.en} className="text-center" style={{ transform: 'translateZ(10px)' }}>
+            <div key={m.label.en} className="text-center">
               <p className="font-mono font-bold text-ms-green-800 text-lg leading-none">{m.value}</p>
               <p className="font-mono text-[9px] uppercase tracking-wide text-ms-ink-400 mt-1 leading-tight">{m.label[lang]}</p>
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
     </motion.div>
   )
 }

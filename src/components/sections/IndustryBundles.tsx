@@ -35,49 +35,54 @@ const t = {
   solution:  { en: 'The Solution',          ar: 'الحل' },
 }
 
+const TIER_ROTATIONS: Record<TierId, string> = {
+  'smart':     'md:-rotate-1',
+  'pro':       'md:rotate-1',
+  'full-auto': 'md:-rotate-[1.5deg]',
+}
+
 function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; lang: 'en' | 'ar' }) {
   const tier  = bundle.tiers.find(t => t.id === tierId)!
   const isPro = tierId === 'pro'
 
   return (
-    <div
-      className={`relative flex flex-col rounded-2xl overflow-hidden h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
-        isPro
-          ? 'bg-ms-green-900 border border-ms-gold-600/40 shadow-lg'
-          : 'bg-white border border-ms-ivory-200'
-      }`}
-    >
+    <div className={`relative group transition-all duration-300 ${TIER_ROTATIONS[tierId]}`}>
+
+      {/* Popular badge */}
       {tier.badge && (
-        <div className="bg-ms-gold-600 text-ms-green-900 text-[10px] font-mono tracking-[0.15em] uppercase text-center py-1.5 font-semibold">
+        <div className="absolute -top-2 -end-2 z-10 bg-ms-gold-600 text-ms-green-900 font-mono text-[9px] tracking-[0.15em] uppercase px-3 py-1 rounded-full rotate-12 border-2 border-ms-ink-900 font-semibold">
           {tier.badge[lang]}
         </div>
       )}
 
-      <div className="p-6 flex flex-col flex-1">
+      {/* Shadow card layer */}
+      <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
+
+      <div className="relative p-6 flex flex-col flex-1">
 
         {/* Tier label */}
         <div className="mb-5">
-          <p className={`text-[10px] tracking-[0.18em] uppercase font-medium mb-1 ${isPro ? 'text-ms-gold-600' : 'text-ms-ink-500'}`}>
+          <p className="text-[10px] tracking-[0.18em] uppercase font-mono mb-1 text-ms-ink-500">
             {TIER_LABELS[tierId][lang]}
           </p>
-          <p className={`text-[15px] font-semibold ${isPro ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>
+          <p className="text-[15px] font-semibold text-ms-ink-900">
             {bundle[lang === 'ar' ? 'ar' : 'en']}
           </p>
         </div>
 
         {/* Pricing */}
-        <div className={`rounded-xl p-4 mb-4 ${isPro ? 'bg-white/6 border border-white/10' : 'bg-ms-ivory-100'}`}>
-          <p className={`text-[10px] uppercase tracking-wider mb-1 ${isPro ? 'text-white/50' : 'text-ms-ink-500'}`}>
+        <div className="rounded-xl p-4 mb-4 bg-ms-ivory-100 border border-ms-ivory-200">
+          <p className="text-[10px] uppercase tracking-wider mb-1 text-ms-ink-500">
             {t.build[lang]}
           </p>
-          <p className={`text-[30px] font-bold leading-none mb-1 ${isPro ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>
+          <p className="text-[30px] font-bold leading-none mb-1 text-ms-ink-900">
             {bundle.buildFee}
-            <span className={`text-[13px] font-medium ms-1 ${isPro ? 'text-white/50' : 'text-ms-ink-400'}`}> {t.kwd[lang]}</span>
+            <span className="text-[13px] font-medium ms-1 text-ms-ink-400"> {t.kwd[lang]}</span>
           </p>
-          <div className={`h-px mb-3 ${isPro ? 'bg-white/10' : 'bg-ms-ivory-200'}`} />
-          <p className={`text-[22px] font-bold leading-none ${isPro ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>
+          <div className="h-px mb-3 bg-ms-ivory-200" />
+          <p className="text-[22px] font-bold leading-none text-ms-green-800">
             {tier.retainer}
-            <span className={`text-[12px] font-normal ms-0.5 ${isPro ? 'text-white/50' : 'text-ms-ink-400'}`}>
+            <span className="text-[12px] font-normal ms-0.5 text-ms-ink-400">
               {' '}{t.kwd[lang]}{t.retainer[lang]}
             </span>
           </p>
@@ -88,11 +93,7 @@ function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; la
           {tier.channels.map(ch => (
             <span
               key={ch}
-              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${
-                isPro
-                  ? 'bg-ms-gold-600/10 border-ms-gold-600/20 text-ms-gold-400'
-                  : 'bg-ms-green-800/8 border-ms-green-800/15 text-ms-green-800'
-              }`}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border border-ms-green-800/20 bg-ms-green-800/6 text-ms-green-800"
             >
               {CHANNEL_META[ch].icon}
               {CHANNEL_META[ch].label[lang]}
@@ -101,19 +102,19 @@ function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; la
         </div>
 
         {/* Features */}
-        <ul className="space-y-2 mb-4 flex-1">
+        <ul className="space-y-2.5 mb-4 flex-1">
           {tier.features[lang].map((feat, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <Check size={12} strokeWidth={2.5} className={`mt-0.5 shrink-0 ${isPro ? 'text-ms-gold-600' : 'text-ms-green-800'}`} />
-              <span className={`text-[12px] leading-snug ${isPro ? 'text-white/70' : 'text-ms-ink-600'}`}>{feat}</span>
+            <li key={i} className="flex items-start gap-2.5">
+              <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full border-2 border-ms-ink-900">
+                <Check size={9} strokeWidth={2.5} className="text-ms-green-800" />
+              </span>
+              <span className="text-[12px] leading-snug text-ms-ink-600">{feat}</span>
             </li>
           ))}
         </ul>
 
         {/* Delivery */}
-        <div className={`text-[11px] font-mono tracking-wider text-center mb-3 flex items-center justify-center gap-1.5 ${
-          isPro ? 'text-ms-gold-600/60' : 'text-ms-ink-400'
-        }`}>
+        <div className="text-[11px] font-mono tracking-wider text-center mb-3 flex items-center justify-center gap-1.5 text-ms-ink-400">
           <Clock size={10} strokeWidth={2} />
           {t.delivery[lang]}
         </div>
@@ -121,10 +122,10 @@ function TierCard({ bundle, tierId, lang }: { bundle: Bundle; tierId: TierId; la
         {/* CTA */}
         <a
           href="/discovery"
-          className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-[13px] font-semibold tracking-wide transition-all duration-150 active:scale-[0.98] ${
+          className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-[13px] font-semibold tracking-wide border-2 border-ms-ink-900 shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-200 active:scale-[0.98] hover:shadow-[6px_6px_0px_0px] hover:-translate-x-0.5 hover:-translate-y-0.5 ${
             isPro
-              ? 'bg-ms-gold-600 text-ms-green-900 hover:bg-ms-gold-500'
-              : 'bg-ms-green-800 text-ms-ivory-0 hover:bg-ms-green-700'
+              ? 'bg-ms-green-800 text-ms-ivory-0 hover:bg-ms-green-700'
+              : 'bg-ms-ivory-0 text-ms-ink-900 hover:bg-ms-ivory-100'
           }`}
         >
           {bundle.scenario.tierCtas[tierId][lang]}

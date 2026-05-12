@@ -380,26 +380,23 @@ function Step4({ f, set }: { f: F; set: (k: keyof F, v: unknown) => void }) {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
       <div className="mb-5">
         <FieldLabel>{t.tier}</FieldLabel>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {tiers.map(tier => (
-            <button key={tier.v} type="button" onClick={() => set('tier', tier.v)}
-              className={`relative text-left p-4 rounded-xl border transition
-                ${f.tier === tier.v
-                  ? 'bg-ms-green-800 border-ms-green-800 text-ms-ivory-0'
-                  : tier.popular
-                    ? 'bg-white border-ms-gold-600/60 text-ms-ink-900 hover:border-ms-green-800/40'
-                    : 'bg-white border-ms-ivory-200 text-ms-ink-900 hover:border-ms-green-800/40'
-                }`}>
+            <div key={tier.v} className="relative group transition-all duration-200">
               {tier.popular && (
-                <span className={`absolute -top-2.5 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-full font-bold
-                  ${f.tier === tier.v ? 'bg-ms-gold-600 text-ms-green-900' : 'bg-ms-gold-600 text-ms-green-900'}`}>
+                <span className="absolute -top-2 -right-2 z-10 text-[9px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-full font-bold bg-ms-gold-600 text-ms-green-900 border-2 border-ms-ink-900 rotate-12">
                   {t.mostPopular}
                 </span>
               )}
-              <p className={`font-bold text-[15px] mb-1 ${f.tier === tier.v ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>{tier.name}</p>
-              <p className={`text-[12px] mb-2 ${f.tier === tier.v ? 'text-ms-ivory-0/70' : 'text-ms-ink-400'}`}>{tier.desc}</p>
-              <p className={`text-[12px] font-mono font-semibold ${f.tier === tier.v ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>{tier.price}</p>
-            </button>
+              <div className={`absolute inset-0 border-2 border-ms-ink-900 rounded-xl transition-all duration-200 shadow-[4px_4px_0px_0px] shadow-ms-ink-900 group-hover:shadow-[6px_6px_0px_0px] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 ${
+                f.tier === tier.v ? 'bg-ms-green-800' : 'bg-ms-ivory-0'
+              }`} />
+              <button type="button" onClick={() => set('tier', tier.v)} className="relative w-full text-left p-4">
+                <p className={`font-bold text-[15px] mb-1 ${f.tier === tier.v ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>{tier.name}</p>
+                <p className={`text-[12px] mb-2 ${f.tier === tier.v ? 'text-ms-ivory-0/70' : 'text-ms-ink-400'}`}>{tier.desc}</p>
+                <p className={`text-[12px] font-mono font-semibold ${f.tier === tier.v ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>{tier.price}</p>
+              </button>
+            </div>
           ))}
         </div>
       </div>
