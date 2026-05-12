@@ -141,7 +141,7 @@ function BentoTile({
   )
 }
 
-// ─── Tier Card (inline expand) ────────────────────────────────────────────────
+// ─── Tier Card (inline expand — neo-brutalist style) ─────────────────────────
 
 function InlineTierCard({
   tier,
@@ -161,62 +161,61 @@ function InlineTierCard({
   const Icon = ICON_MAP[bundle.id] ?? Building2
   const features = tier.features[lang].slice(0, 4)
 
+  const rotations = ['md:-rotate-1', 'md:rotate-1', 'md:-rotate-[1.5deg]']
+
   return (
     <motion.div
       initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       exit={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
       transition={{ delay: index * 0.08, duration: 0.35, ease: 'easeOut' }}
-      className={`
-        relative flex flex-col rounded-2xl overflow-hidden h-full
-        ${isPro
-          ? 'bg-ms-green-800 text-ms-ivory-0 border border-ms-gold-600/40 shadow-lg'
-          : 'bg-ms-ivory-0 border border-ms-ivory-200'
-        }
-      `}
+      className={`relative group transition-all duration-300 ${rotations[index] ?? ''}`}
     >
-      {/* Most Popular badge */}
+      {/* Popular badge — outside the card, rotated */}
       {isPro && (
-        <div className="bg-ms-gold-600 text-ms-green-900 font-mono text-[9px] tracking-[0.15em] uppercase text-center py-1.5 font-semibold">
+        <div className="absolute -top-2 -end-2 z-10 bg-ms-gold-600 text-ms-green-900 font-mono text-[9px] tracking-[0.15em] uppercase px-3 py-1 rounded-full rotate-12 border-2 border-ms-ink-900 font-semibold">
           {t.popular[lang]}
         </div>
       )}
 
-      <div className="p-5 flex flex-col flex-1 gap-4">
+      {/* Shadow card layer */}
+      <div className="absolute inset-0 bg-ms-ivory-0 border-2 border-ms-ink-900 rounded-2xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900 transition-all duration-300 group-hover:shadow-[8px_8px_0px_0px] group-hover:-translate-x-1 group-hover:-translate-y-1" />
 
-        {/* Header: tier label + icon */}
+      <div className="relative p-5 flex flex-col flex-1 gap-4 h-full">
+
+        {/* Header: icon + tier label */}
         <div className="flex items-center justify-between">
           <div>
-            <p className={`text-[10px] tracking-[0.18em] uppercase font-mono mb-0.5 ${isPro ? 'text-ms-gold-600' : 'text-ms-ink-500'}`}>
+            <p className="text-[10px] tracking-[0.18em] uppercase font-mono mb-0.5 text-ms-ink-500">
               {TIER_LABELS[tier.id][lang]}
             </p>
-            <p className={`text-[14px] font-semibold font-grotesk ${isPro ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>
+            <p className="text-[14px] font-semibold font-grotesk text-ms-ink-900">
               {isAr ? bundle.ar : bundle.en}
             </p>
           </div>
-          <span className={`inline-flex items-center justify-center w-9 h-9 rounded-xl shrink-0 ${
-            isPro ? 'bg-ms-gold-600/15 text-ms-gold-600' : 'bg-ms-green-800/[0.08] text-ms-green-800'
-          }`}>
-            <Icon size={18} strokeWidth={1.75} />
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-ms-ink-900 text-ms-green-800 shrink-0">
+            <Icon size={16} strokeWidth={1.75} />
           </span>
         </div>
 
         {/* Retainer price */}
         <div>
-          <span className={`font-mono text-3xl font-bold leading-none ${isPro ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>
+          <span className="font-mono text-3xl font-bold leading-none text-ms-ink-900">
             {tier.retainer}
           </span>
-          <span className={`text-[12px] font-normal ms-1 ${isPro ? 'text-white/50' : 'text-ms-ink-400'}`}>
+          <span className="text-[12px] font-normal ms-1 text-ms-ink-400">
             {' '}{t.kwd[lang]}{t.retainer[lang]}
           </span>
         </div>
 
         {/* Features list */}
-        <ul className="flex-1 space-y-2">
+        <ul className="flex-1 space-y-2.5">
           {features.map((f, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className={`mt-0.5 shrink-0 text-[11px] font-mono font-semibold ${isPro ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>✓</span>
-              <span className={`text-[12px] leading-snug ${isPro ? 'text-white/80' : 'text-ms-ink-600'}`}>{f}</span>
+            <li key={i} className="flex items-start gap-2.5">
+              <span className="mt-0.5 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full border-2 border-ms-ink-900">
+                <Check size={9} strokeWidth={2.5} className="text-ms-green-800" />
+              </span>
+              <span className="text-[12px] leading-snug text-ms-ink-600">{f}</span>
             </li>
           ))}
         </ul>
@@ -226,10 +225,13 @@ function InlineTierCard({
           href="/discovery"
           className={`
             flex items-center justify-center gap-2 w-full py-2.5 rounded-xl
-            text-[13px] font-semibold tracking-wide transition-all duration-150 active:scale-[0.98]
+            text-[13px] font-semibold tracking-wide border-2 border-ms-ink-900
+            shadow-[4px_4px_0px_0px] shadow-ms-ink-900
+            transition-all duration-200 active:scale-[0.98]
+            hover:shadow-[6px_6px_0px_0px] hover:-translate-x-0.5 hover:-translate-y-0.5
             ${isPro
-              ? 'bg-ms-gold-600 text-ms-green-900 hover:bg-ms-gold-500'
-              : 'border border-ms-green-800 text-ms-green-800 hover:bg-ms-green-800 hover:text-ms-ivory-0'
+              ? 'bg-ms-green-800 text-ms-ivory-0 hover:bg-ms-green-700'
+              : 'bg-ms-ivory-0 text-ms-ink-900 hover:bg-ms-ivory-100'
             }
           `}
         >
