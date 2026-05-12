@@ -5,11 +5,10 @@ import { useLang } from '@/lib/lang'
 import {
   BUNDLES, WEBSITE_SERVICES, APP_SERVICES, CUSTOM_BUNDLE, FREE_TRIAL, TIER_ORDER, INDUSTRY_SLUGS,
 } from '@/lib/data'
-import type { Bundle, TierId, BundleTier, Channel } from '@/lib/data'
+import type { Bundle, TierId, BundleTier } from '@/lib/data'
 import {
   Stethoscope, Scissors, Dumbbell, Wrench, UtensilsCrossed, Building2,
   Sparkles, Home, Check, ArrowRight, Globe, Smartphone,
-  MessageCircle, LayoutDashboard, AtSign, BarChart2, AppWindow,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -38,14 +37,6 @@ const EMOJI_MAP: Record<string, string> = {
   'home-business': '🏠',
 }
 
-const CHANNEL_META: Record<Channel, { icon: React.ReactNode; label: { en: string; ar: string } }> = {
-  whatsapp:  { icon: <MessageCircle size={11} />,   label: { en: 'WhatsApp',      ar: 'واتساب' } },
-  portal:    { icon: <LayoutDashboard size={11} />, label: { en: 'Client Portal', ar: 'بوابة العميل' } },
-  website:   { icon: <Globe size={11} />,           label: { en: 'Website',       ar: 'الموقع' } },
-  instagram: { icon: <AtSign size={11} />,          label: { en: 'Instagram',     ar: 'انستقرام' } },
-  app:       { icon: <AppWindow size={11} />,       label: { en: 'Mobile App',    ar: 'التطبيق' } },
-  analytics: { icon: <BarChart2 size={11} />,       label: { en: 'Analytics',     ar: 'تقارير' } },
-}
 
 const TIER_LABELS: Record<TierId, { en: string; ar: string }> = {
   'smart':      { en: 'Smart',     ar: 'الذكي' },
@@ -70,8 +61,6 @@ const t = {
   webLabel:     { en: 'Website Design',                                                    ar: 'تصميم المواقع' },
   webSub:       { en: 'Professional bilingual websites — with or without AI.',             ar: 'مواقع احترافية ثنائية اللغة — مع أو بدون ذكاء اصطناعي.' },
   webDays:      { en: (n: [number, number]) => `${n[0]}–${n[1]} days`,                    ar: (n: [number, number]) => `${n[0]}–${n[1]} يوم` },
-  webMaint:     { en: (n: number) => `+${n} KWD/mo maintenance (optional)`,               ar: (n: number) => `+${n} د.ك/شهر صيانة (اختياري)` },
-
   // Apps section
   appLabel:     { en: 'Mobile Apps',                                                       ar: 'تطبيقات الجوال' },
   appSub:       { en: 'iOS + Android apps — with or without AI.',                          ar: 'تطبيقات iOS + Android — مع أو بدون ذكاء اصطناعي.' },
@@ -90,10 +79,7 @@ const ID_TO_SLUG = Object.fromEntries(
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const formatPrice = (price: number | [number, number], kwd: string) =>
-  Array.isArray(price)
-    ? `${price[0].toLocaleString()}–${price[1].toLocaleString()} ${kwd}`
-    : `${price.toLocaleString()} ${kwd}`
+
 
 // ─── Bento Tile ───────────────────────────────────────────────────────────────
 
@@ -450,13 +436,11 @@ export default function Bundles() {
                 </ul>
 
                 <div className="mb-4">
-                  <p className="text-[26px] font-bold text-ms-ink-900 leading-none">
-                    {formatPrice(svc.price, t.kwd[lang])}
+                  <p className="text-[15px] font-semibold text-ms-ink-900">
+                    {lang === 'ar' ? 'السعر حسب الطلب' : 'Quote on request'}
                   </p>
-                  <p className="text-[11px] text-ms-ink-400 mt-1">
-                    {typeof t.webMaint[lang] === 'function'
-                      ? (t.webMaint[lang] as (n: number) => string)(svc.monthlyMaintenance)
-                      : ''}
+                  <p className="text-[11px] text-ms-ink-400 mt-0.5 font-mono">
+                    {lang === 'ar' ? 'تواصل معنا للحصول على عرض سعر' : 'Contact us for a custom quote'}
                   </p>
                 </div>
 
