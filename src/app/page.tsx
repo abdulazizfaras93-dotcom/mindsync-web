@@ -5,6 +5,7 @@ import StatsBar from '@/components/sections/StatsBar'
 import Services from '@/components/sections/Services'
 import IndustryResults from '@/components/sections/IndustryResults'
 import Bundles from '@/components/sections/Bundles'
+import PricingCards from '@/components/sections/PricingCards'
 import WhatsAppMockup from '@/components/sections/WhatsAppMockup'
 import ReceptionistChat from '@/components/sections/ReceptionistChat'
 import Process from '@/components/sections/Process'
@@ -26,6 +27,7 @@ export default function Home() {
         <Services />
         <IndustryResults />
         <Bundles />
+        <PricingCards />
 <WhatsAppMockup />
         <ReceptionistChat />
         <Process />
