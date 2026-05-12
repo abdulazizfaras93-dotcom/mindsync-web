@@ -5,7 +5,6 @@ import StatsBar from '@/components/sections/StatsBar'
 import Services from '@/components/sections/Services'
 import IndustryResults from '@/components/sections/IndustryResults'
 import Bundles from '@/components/sections/Bundles'
-import ROICalculator from '@/components/sections/ROICalculator'
 import WhatsAppMockup from '@/components/sections/WhatsAppMockup'
 import ReceptionistChat from '@/components/sections/ReceptionistChat'
 import Process from '@/components/sections/Process'
@@ -27,8 +26,7 @@ export default function Home() {
         <Services />
         <IndustryResults />
         <Bundles />
-        <ROICalculator />
-        <WhatsAppMockup />
+<WhatsAppMockup />
         <ReceptionistChat />
         <Process />
         <FreeTrialSpotlight />
