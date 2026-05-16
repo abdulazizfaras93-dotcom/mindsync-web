@@ -6,6 +6,7 @@ import Image from 'next/image'
 import {
   UtensilsCrossed, Sparkles, ShoppingBag, BookOpen,
   Dumbbell, Wrench, Briefcase, MoreHorizontal, Check,
+  ShoppingCart, Car, Palette, Cookie, Baby, Laptop,
 } from 'lucide-react'
 
 // ─── Lang context ─────────────────────────────────────────────────────────────
@@ -32,7 +33,7 @@ const T = {
     s1: {
       businessName:   'اسم المشروع',
       ownerName:      'اسمك',
-      phone:          'رقم الجوال',
+      phone:          'رقم التلفون',
       phonePh:        '+965',
       email:          'البريد الإلكتروني',
       emailPh:        'email@example.com',
@@ -93,14 +94,20 @@ const T = {
       notSet:       'لم يُحدَّد',
     },
     industries: [
-      { v: 'food',      l: 'أكل ومشروبات' },
-      { v: 'beauty',    l: 'بيوتي وعطور' },
-      { v: 'fashion',   l: 'فاشن وإكسسوارات' },
-      { v: 'education', l: 'تعليم وتدريس' },
-      { v: 'fitness',   l: 'صحة ولياقة' },
-      { v: 'services',  l: 'خدمات منزلية' },
-      { v: 'coaching',  l: 'كوتشز واستشارات' },
-      { v: 'other',     l: 'أخرى' },
+      { v: 'food',          l: 'أكل ومشروبات' },
+      { v: 'beauty',        l: 'بيوتي وعطور' },
+      { v: 'fashion',       l: 'فاشن وإكسسوارات' },
+      { v: 'retail',        l: 'بيع وتجزئة' },
+      { v: 'car-services',  l: 'خدمات سيارات' },
+      { v: 'education',     l: 'تعليم وتدريس' },
+      { v: 'creative',      l: 'إبداع وفنون' },
+      { v: 'fitness',       l: 'صحة ولياقة' },
+      { v: 'sweets',        l: 'حلويات وكيكات' },
+      { v: 'kids',          l: 'أطفال وعائلة' },
+      { v: 'services',      l: 'خدمات منزلية' },
+      { v: 'coaching',      l: 'كوتشز واستشارات' },
+      { v: 'tech',          l: 'تقنية' },
+      { v: 'other',         l: 'أخرى' },
     ],
   },
   en: {
@@ -181,14 +188,20 @@ const T = {
       notSet:       'Not set',
     },
     industries: [
-      { v: 'food',      l: 'Food & Beverages' },
-      { v: 'beauty',    l: 'Beauty & Fragrances' },
-      { v: 'fashion',   l: 'Fashion & Accessories' },
-      { v: 'education', l: 'Education & Tutoring' },
-      { v: 'fitness',   l: 'Health & Fitness' },
-      { v: 'services',  l: 'Home Services' },
-      { v: 'coaching',  l: 'Coaching & Consulting' },
-      { v: 'other',     l: 'Other' },
+      { v: 'food',          l: 'Food & Beverages' },
+      { v: 'beauty',        l: 'Beauty & Fragrances' },
+      { v: 'fashion',       l: 'Fashion & Accessories' },
+      { v: 'retail',        l: 'Sales & Retail' },
+      { v: 'car-services',  l: 'Car Services' },
+      { v: 'education',     l: 'Education & Tutoring' },
+      { v: 'creative',      l: 'Creative & Arts' },
+      { v: 'fitness',       l: 'Health & Fitness' },
+      { v: 'sweets',        l: 'Sweets & Cakes' },
+      { v: 'kids',          l: 'Kids & Family' },
+      { v: 'services',      l: 'Home Services' },
+      { v: 'coaching',      l: 'Coaching & Consulting' },
+      { v: 'tech',          l: 'Technology' },
+      { v: 'other',         l: 'Other' },
     ],
   },
 }
@@ -210,14 +223,20 @@ const empty: F = {
 
 // ─── Industry icons ───────────────────────────────────────────────────────────
 const INDUSTRY_ICONS: Record<string, React.ReactNode> = {
-  food:      <UtensilsCrossed size={20} />,
-  beauty:    <Sparkles size={20} />,
-  fashion:   <ShoppingBag size={20} />,
-  education: <BookOpen size={20} />,
-  fitness:   <Dumbbell size={20} />,
-  services:  <Wrench size={20} />,
-  coaching:  <Briefcase size={20} />,
-  other:     <MoreHorizontal size={20} />,
+  food:         <UtensilsCrossed size={20} />,
+  beauty:       <Sparkles size={20} />,
+  fashion:      <ShoppingBag size={20} />,
+  retail:       <ShoppingCart size={20} />,
+  'car-services': <Car size={20} />,
+  education:    <BookOpen size={20} />,
+  creative:     <Palette size={20} />,
+  fitness:      <Dumbbell size={20} />,
+  sweets:       <Cookie size={20} />,
+  kids:         <Baby size={20} />,
+  services:     <Wrench size={20} />,
+  coaching:     <Briefcase size={20} />,
+  tech:         <Laptop size={20} />,
+  other:        <MoreHorizontal size={20} />,
 }
 
 // ─── UI primitives ────────────────────────────────────────────────────────────
