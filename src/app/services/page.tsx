@@ -8,13 +8,13 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton'
 export const metadata: Metadata = {
   title: 'Services — MindSync | ما نبنيه',
   description:
-    'WhatsApp AI Receptionist, Client Dashboard, Workflow Automations, Website & App Builds, and Monthly Maintenance — all built and run by MindSync.',
+    'Complete AI automation system for home businesses in Kuwait — AI agent, client dashboard, workflow automations, website & app builds, monthly maintenance. MindSync Complete: 349 KWD + 159 KWD/mo.',
   alternates: { canonical: 'https://www.mindsynckw.com/services' },
   openGraph: {
     url:   'https://www.mindsynckw.com/services',
-    title: 'Services — MindSync',
+    title: 'Services — MindSync | ما نبنيه',
     description:
-      'Four systems. One retainer. WhatsApp AI, dashboard, automations, web/app builds.',
+      'Complete AI automation system for home businesses in Kuwait. MindSync Complete: 349 KWD setup + 159 KWD/mo.',
     images: [{ url: '/og/b-terminal-en.png', width: 1200, height: 630 }],
   },
 }

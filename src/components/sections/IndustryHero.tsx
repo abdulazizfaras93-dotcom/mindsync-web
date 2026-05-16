@@ -2,13 +2,14 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 import { useLang } from '@/lib/lang'
+import { MINDSYNC_COMPLETE } from '@/lib/data'
 import type { Bundle } from '@/lib/data'
 
 const t = {
   home:       { en: 'Home',        ar: 'الرئيسية' },
   industries: { en: 'Industries',  ar: 'القطاعات' },
   buildFee:   { en: 'Build fee',   ar: 'رسوم البناء' },
-  from:       { en: 'Retainer from', ar: 'اشتراك يبدأ من' },
+  retainer:   { en: 'Monthly',     ar: 'اشتراك شهري' },
   kwd:        { en: 'KWD',         ar: 'د.ك' },
   mo:         { en: '/mo',         ar: '/شهر' },
   cta:        { en: 'Get Started — Free Trial',  ar: 'ابدأ — أسبوع مجاني' },
@@ -17,7 +18,6 @@ const t = {
 
 export default function IndustryHero({ bundle }: { bundle: Bundle }) {
   const { lang, isAr } = useLang()
-  const smartRetainer = bundle.tiers.find(t => t.id === 'smart')?.retainer ?? 0
 
   return (
     <section className="relative min-h-[72vh] flex flex-col justify-center bg-ms-green-900 overflow-hidden pt-24 pb-20">
@@ -90,14 +90,14 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
             <div>
               <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">{t.buildFee[lang]}</p>
               <p className="text-ms-ivory-0 text-[22px] font-bold">
-                {bundle.buildFee} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}</span>
+                {MINDSYNC_COMPLETE.buildFee} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}</span>
               </p>
             </div>
             <div className="w-px h-8 bg-white/15" />
             <div>
-              <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">{t.from[lang]}</p>
+              <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">{t.retainer[lang]}</p>
               <p className="text-ms-gold-600 text-[22px] font-bold">
-                {smartRetainer} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}{t.mo[lang]}</span>
+                {MINDSYNC_COMPLETE.retainer} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}{t.mo[lang]}</span>
               </p>
             </div>
             <div className="w-px h-8 bg-white/15" />
