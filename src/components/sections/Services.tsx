@@ -1,14 +1,7 @@
 'use client'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { BUNDLES, WEBSITE_SERVICES } from '@/lib/data'
-
-const minBuildFee = Math.min(...BUNDLES.map(b => b.buildFee))
-const minSmart    = Math.min(...BUNDLES.map(b => b.tiers.find(t => t.id === 'smart')!.retainer))
-const minWebsite  = (() => {
-  const p = WEBSITE_SERVICES[0].price
-  return Array.isArray(p) ? p[0] : p
-})()
+import { MINDSYNC_COMPLETE } from '@/lib/data'
 
 const t = {
   eyebrow: { en: 'What We Build', ar: 'ما نبنيه' },
@@ -21,14 +14,10 @@ const t = {
     eyebrow: { en: '01 / FLAGSHIP', ar: '01 / الرائد' },
     title:   { en: 'Custom-Built AI Agent', ar: 'وكيل ذكاء اصطناعي مخصص البناء' },
     desc: {
-      en: 'Not a chatbot template. A fully programmed agent built for your industry and trained on your business. Deploy it on WhatsApp, your website, Instagram — or all three. It handles your entire customer communication layer.',
-      ar: 'ليس نموذجاً جاهزاً. وكيل مبرمج بالكامل لقطاعك ومُدرَّب على أعمالك تحديداً. نشره على واتساب، موقعك، إنستغرام — أو الثلاثة معاً. يتولى طبقة التواصل مع عملائك بالكامل.',
+      en: 'Not a chatbot template. A fully programmed agent built for your home business and trained on how you work. Deployed on WhatsApp, your website, Instagram — or all three. Handles your entire customer communication layer.',
+      ar: 'ليس نموذجاً جاهزاً. وكيل مبرمج بالكامل لمشروعك المنزلي ومُدرَّب على أسلوبك تحديداً. نشره على واتساب، موقعك، إنستغرام — أو الثلاثة معاً. يتولى طبقة التواصل مع عملائك بالكامل.',
     },
-    build:     { en: 'Build', ar: 'بناء' },
-    run:       { en: 'Run',   ar: 'تشغيل' },
-    fromLabel: { en: 'from',  ar: 'من' },
-    currency:  { en: 'KWD',   ar: 'د.ك' },
-    perMonth:  { en: '/ mo',  ar: '/ شهر' },
+    included: { en: 'Included in MindSync Complete', ar: 'مشمول في MindSync Complete' },
   },
   cards: [
     {
@@ -56,7 +45,7 @@ const t = {
         en: 'Bilingual marketing sites and apps that plug straight into your automation stack.',
         ar: 'مواقع وتطبيقات ثنائية اللغة تتكامل مباشرة مع منظومة الأتمتة.',
       },
-      meta: { en: `from ${minWebsite} KWD build`, ar: `من ${minWebsite} د.ك بناءً` },
+      meta: { en: 'Optional add-on · after consultation', ar: 'إضافة اختيارية · بعد استشارة' },
     },
     {
       num: '05',
@@ -65,7 +54,7 @@ const t = {
         en: 'We monitor, debug, retrain, and grow the system every month. One account manager, not a ticket queue.',
         ar: 'نراقب، نصلح، نعيد التدريب، وننمّي النظام كل شهر. مسؤول حساب واحد، لا قائمة انتظار.',
       },
-      meta: { en: `from ${minSmart} KWD / mo`, ar: `من ${minSmart} د.ك / شهر` },
+      meta: { en: 'Included · Monthly retraining on receipts', ar: 'مشمول · إعادة تدريب شهرية بناءً على receipts' },
     },
   ] as const,
 }
@@ -92,7 +81,7 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Flagship banner — depth 1, no tilt (full-width) */}
+        {/* Flagship banner */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,12 +99,9 @@ export default function Services() {
             <p className="text-white/65 text-[15px] leading-relaxed max-w-2xl mb-8">
               {t.flagship.desc[lang]}
             </p>
-            <div className="flex flex-wrap gap-6 pt-5 border-t border-white/[0.12] font-mono text-[12px] text-white/50">
-              <span>
-                {t.flagship.build[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minBuildFee} {t.flagship.currency[lang]}</span>
-              </span>
-              <span>
-                {t.flagship.run[lang]} · <span className="text-ms-gold-500">{t.flagship.fromLabel[lang]} {minSmart} {t.flagship.currency[lang]} {t.flagship.perMonth[lang]}</span>
+            <div className="pt-5 border-t border-white/[0.12]">
+              <span className="inline-block font-mono text-[12px] text-ms-gold-500 border border-ms-gold-600/30 px-4 py-1.5 rounded-full">
+                {t.flagship.included[lang]} · {MINDSYNC_COMPLETE.buildFee} {lang === 'ar' ? 'د.ك' : 'KWD'} + {MINDSYNC_COMPLETE.retainer} {lang === 'ar' ? 'د.ك / شهر' : 'KWD / mo'}
               </span>
             </div>
           </div>

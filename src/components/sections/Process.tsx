@@ -56,12 +56,12 @@ const STEPS = [
     en: {
       title: 'Sign & Build',
       sub:   'Contract + full build',
-      desc:  'After the trial, you sign the agreement and pay the build fee. We finalize all integrations, agents, channels, and your client portal — tailored exactly to your needs.',
+      desc:  'After the trial, you sign the agreement and pay the build fee (349 KWD) and start the subscription (159 KWD / mo). We finalize all integrations, agents, channels, and your client portal — tailored exactly to your needs.',
     },
     ar: {
       title: 'التوقيع والبناء',
       sub:   'عقد + بناء كامل',
-      desc:  'بعد التجربة، توقّع الاتفاقية وتدفع رسوم البناء. نكمّل كل التكاملات، الوكلاء، القنوات، ولوحة التحكم — مخصصة بالكامل لك.',
+      desc:  'بعد التجربة، توقّع الاتفاقية وتدفع رسوم البناء (٣٤٩ د.ك) وتبدأ الاشتراك (١٥٩ د.ك / شهر). نكمّل كل التكاملات، الوكلاء، القنوات، ولوحة التحكم — مخصصة بالكامل لك.',
     },
     trial: false,
   },

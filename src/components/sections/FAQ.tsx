@@ -12,21 +12,21 @@ const FAQS = [
   {
     en: {
       q: 'What exactly does MindSync build?',
-      a: 'We build custom AI automation systems — AI agents trained on your business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
+      a: 'We build custom AI automation systems — AI agents trained on your home business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
     },
     ar: {
       q: 'شنو بالضبط تبني مايند سينك؟',
-      a: 'نبني أنظمة مؤتمتة بالذكاء الاصطناعي — وكلاء مدرّبين على مشروعك يتولون مهام محددة (حجز، متابعة، استفسارات، تحليل) على أي قناة تحتاجها (واتساب، موقع، انستقرام، تطبيق). كذلك نصمم مواقع وتطبيقات بشكل منفصل.',
+      a: 'نبني أنظمة مؤتمتة بالذكاء الاصطناعي — وكلاء مدرّبين على مشروعك المنزلي يتولون مهام محددة (حجز، متابعة، استفسارات، تحليل) على أي قناة تحتاجها (واتساب، موقع، انستقرام، تطبيق). كذلك نصمم مواقع وتطبيقات بشكل منفصل.',
     },
   },
   {
     en: {
       q: 'Do you offer a free trial?',
-      a: 'Yes. For clients who want to see the system in action first, we build your actual AI system based on your real business data and run it live for 7 days — at no cost. If you love it, you pay the build fee and choose your plan. If not, no charge.',
+      a: 'Yes. For clients who want to see the system in action first, we build your actual AI system based on your real business data and run it live for 7 days — at no cost. If you love it, you pay the build fee and start the subscription. If not, no charge.',
     },
     ar: {
       q: 'هل تقدمون تجربة مجانية؟',
-      a: 'أكيد. العملاء اللي يبون يشوفون النظام يشتغل أول — نبني نظامك الذكي الفعلي بناءً على بيانات مشروعك الحقيقية ونشغّله أسبوع كامل بدون تكلفة. إذا عجبك تدفع رسوم البناء وتختار الباقة. وإذا لا، ما في أي رسوم.',
+      a: 'أكيد. العملاء اللي يبون يشوفون النظام يشتغل أول — نبني نظامك الذكي الفعلي بناءً على بيانات مشروعك الحقيقية ونشغّله أسبوع كامل بدون تكلفة. إذا عجبك تدفع رسوم البناء وتبدأ الاشتراك. وإذا لا، ما في أي رسوم.',
     },
   },
   {
@@ -41,12 +41,12 @@ const FAQS = [
   },
   {
     en: {
-      q: 'What does the monthly retainer cover?',
-      a: 'Everything — hosting, API costs, agent monitoring, updates, bug fixes, and support. The retainer is not just a maintenance fee, it\'s the guarantee your system keeps running and improving every month without you asking.',
+      q: 'What does the monthly subscription cover?',
+      a: 'The monthly subscription (159 KWD) fully includes:\n• All AI API and infrastructure costs\n• 1,000 conversations / month\n• 24/7 monitoring and bug fixes\n• Free monthly AI retraining on receipts and business updates\n• Dedicated account manager\n• Regular updates and improvements\n\nIf you exceed 1,000 conversations: +30 KWD for every additional 500 conversations.',
     },
     ar: {
       q: 'شنو يشمل الاشتراك الشهري؟',
-      a: 'كل شي — الاستضافة، تكاليف API، مراقبة الوكيل، التحديثات، إصلاح الأخطاء، والدعم. الاشتراك مو بس رسوم صيانة — هو ضمان إن نظامك يشتغل ويتطور كل شهر بدون ما تطلب.',
+      a: 'الاشتراك الشهري (١٥٩ د.ك) يشمل بالكامل:\n• كل تكاليف الـ AI APIs والـ infrastructure\n• ١٬٠٠٠ محادثة شهرياً مشمولة\n• مراقبة ٢٤/٧ وإصلاح أي عطل\n• إعادة تدريب الـ AI شهرياً بناءً على receipts ومستجدات مشروعك — بلاءً علينا\n• Account manager مخصص\n• تحديثات وتحسينات دورية\n\nلو تجاوزت ١٬٠٠٠ محادثة، الرسوم الإضافية: +٣٠ د.ك لكل ٥٠٠ محادثة إضافية.',
     },
   },
   {
@@ -72,7 +72,7 @@ const FAQS = [
   {
     en: {
       q: 'Who owns the data and the system?',
-      a: "You do. Everything — the agent, the data, the portal — is yours as long as you're paying the monthly retainer. If you ever stop, we export everything and hand it over.",
+      a: "You do. Everything — the agent, the data, the portal — is yours as long as you're paying the monthly subscription. If you ever stop, we export everything and hand it over.",
     },
     ar: {
       q: 'منو يملك البيانات والنظام؟',
@@ -86,7 +86,17 @@ const FAQS = [
     },
     ar: {
       q: 'شلون لو خربت مشكلة بالليل؟',
-      a: 'تراسلنا على واتساب. عندنا تنبيهات مراقبة على كل الأنظمة الشغّالة ونرد ضمن وقت الاستجابة المحدد في خطتك.',
+      a: 'تراسلنا على واتساب. عندنا تنبيهات مراقبة على كل الأنظمة الشغّالة ونرد ضمن وقت الاستجابة المحدد في اشتراكك.',
+    },
+  },
+  {
+    en: {
+      q: 'How is a "conversation" counted?',
+      a: "A conversation = all messages with one customer within a 24-hour window. Whether it's 1 message or 50 messages back and forth — it counts as one conversation. This matches how Meta calculates WhatsApp Business API fees.",
+    },
+    ar: {
+      q: 'شلون تُحسب المحادثة؟',
+      a: 'المحادثة = مجموعة رسائل مع عميل واحد خلال ٢٤ ساعة. سواء كانت رسالة محدة أو ٥٠ رسالة — تُحسب محادثة واحدة. هذا يطابق طريقة Meta لاحتساب رسوم WhatsApp Business API.',
     },
   },
 ]
@@ -172,7 +182,7 @@ export default function FAQ() {
                 <h3 className="text-ms-ivory-0 font-bold text-[19px] leading-snug mb-5">
                   {lang === 'ar' ? FAQS[open].ar.q : FAQS[open].en.q}
                 </h3>
-                <p className="text-white/60 text-[15px] leading-relaxed">
+                <p className="text-white/60 text-[15px] leading-relaxed whitespace-pre-line">
                   {lang === 'ar' ? FAQS[open].ar.a : FAQS[open].en.a}
                 </p>
               </motion.div>

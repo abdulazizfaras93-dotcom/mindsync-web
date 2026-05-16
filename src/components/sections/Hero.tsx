@@ -10,11 +10,13 @@ const NeuralMesh = dynamic(() => import('@/components/canvas/NeuralMesh'), { ssr
 function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
   const ref    = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.5 })
+  // Start from near-final so animation is always visible even on load
+  const startFrom = Math.max(0, to - Math.max(1, Math.round(to * 0.15)))
 
   useEffect(() => {
     if (!inView || !ref.current) return
     const el = ref.current
-    const proxy = { val: 0 }
+    const proxy = { val: startFrom }
     let anim: { revert: () => void } | null = null
     import('animejs').then(({ animate }) => {
       anim = animate(proxy, {
@@ -25,25 +27,25 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
       }) as { revert: () => void }
     })
     return () => { anim?.revert() }
-  }, [inView, to, duration])
+  }, [inView, to, duration, startFrom])
 
-  return <span ref={ref}>0</span>
+  return <span ref={ref}>{startFrom}</span>
 }
 
 const t = {
-  eyebrow:        { en: 'AI Software Agency · Kuwait',   ar: 'شركة برمجيات وذكاء اصطناعي · الكويت' },
-  headline:       { en: 'Your business deserves',        ar: 'مشروعك يستاهل' },
-  headlineAccent: { en: 'to run without you.',           ar: 'يشتغل بدونك.' },
+  eyebrow:        { en: 'AI & Automation System · For Home Businesses in Kuwait',   ar: 'منظومة ذكاء اصطناعي وأتمتة · للمشاريع المنزلية بالكويت' },
+  headline:       { en: 'You started your business from home.',                      ar: 'بدأت مشروعك من البيت.' },
+  headlineAccent: { en: 'You want it to grow — even while you sleep.',               ar: 'تبي مشروعك يكبر — حتى وأنت نايم.' },
   sub: {
-    en: 'We build your business a custom software system with AI agents — responding, booking, following up, and analyzing.\nFrom WhatsApp to your dashboard in 7 business days.',
-    ar: 'نبني ونعلم نظاماً خصصناه ببرمجيات وذكاء اصطناعي —\nيرد، يحجز، يتابع، ويحلل.\nمن واتساب للوحة تحكم في ٧ أيام عمل.',
+    en: 'The intelligent system that replies, books, follows up,\nand analyzes — 24/7. Like having a full team, without one.',
+    ar: 'المنظومة الذكية اللي ترد، تحجز، تتابع، وتحلل ٢٤/٧.\nكأن عندك فريق كامل — بدون فريق.',
   },
-  cta1:   { en: 'Fill in Discovery Form',  ar: 'استبيان لفهم طبيعة مشروعك' },
-  cta2:   { en: 'See the Bundles',         ar: 'شوف الباقات' },
-  stat1l: { en: 'Days to go live',         ar: 'أيام ونخلص الإعداد' },
-  stat2l: { en: 'Industry bundles',        ar: 'باقات متخصصة' },
-  stat3l: { en: 'Agent uptime',            ar: 'وقت التشغيل' },
-  stat4l: { en: 'Data stays yours',        ar: 'البيانات محفوظة عندك' },
+  cta1:   { en: 'Start Your Free Trial →',  ar: 'ابدأ تجربتك المجانية ←' },
+  cta2:   { en: 'See How It Works',         ar: 'شوف كيف يشتغل' },
+  stat1l: { en: 'Days to launch',           ar: 'أيام للإطلاق' },
+  stat2l: { en: 'Complete system',          ar: 'منظومة شاملة' },
+  stat3l: { en: 'Uptime',                   ar: 'وقت التشغيل' },
+  stat4l: { en: 'Data ownership',           ar: 'البيانات تبقى لك' },
 }
 
 export default function Hero() {
@@ -89,7 +91,7 @@ export default function Hero() {
 
   const stats = [
     { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
-    { count: 8,    suffix: '',  display: null,   label: t.stat2l[lang] },
+    { count: 1,    suffix: '',  display: null,   label: t.stat2l[lang] },
     { count: null, suffix: '',  display: '24/7', label: t.stat3l[lang] },
     { count: 100,  suffix: '%', display: null,   label: t.stat4l[lang] },
   ]
@@ -217,7 +219,7 @@ export default function Hero() {
                   </span>
                 </MagneticButton>
                 <a
-                  href="#bundles"
+                  href="#process"
                   className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
                 >
                   {t.cta2[lang]}

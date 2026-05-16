@@ -23,30 +23,27 @@ const mono = JetBrains_Mono({
 })
 
 const SITE_URL   = 'https://www.mindsynckw.com'
-const TITLE      = 'MindSync — Your Business, Automated | أعمالك مؤتمتة'
+const TITLE      = 'MindSync — منظومة ذكاء اصطناعي للمشاريع المنزلية بالكويت'
 const DESCRIPTION =
-  "Kuwait's first AI automation agency for SMBs â custom AI systems, websites & apps. From first message to live system in 7 business days."
-const DESCRIPTION_AR =
-  'أول شركة برمجيات وأتمتة ذكاء اصطناعي في الكويت للشركات الصغيرة والمتوسطة — أنظمة ذكية مخصصة، مواقع، وتطبيقات.'
+  'منظومة AI كاملة للمشاريع المنزلية بالكويت — ترد، تحجز، تتابع، وتحليل ٢٤/٧. سعر شامل: 349 د.ك إعداد + 159 د.ك شهرياً. أسبوع تجربة مجاني.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    'AI automation Kuwait',
+    'مشاريع منزلية الكويت',
+    'أتمتة المشاريع المنزلية',
+    'AI للمشاريع الصغيرة الكويت',
+    'نظام ذكي للأعمال',
+    'واتساب بوت الكويت',
+    'حجز تلقائي',
+    'MindSync',
+    'home business automation Kuwait',
+    'AI agent Kuwait',
     'ذكاء اصطناعي الكويت',
     'نظام مؤتمت الكويت',
     'AI agency Kuwait',
-    'business automation Kuwait',
-    'MindSync',
-    'AI system clinic Kuwait',
-    'AI salon Kuwait',
-    'automation SMB Gulf',
-    'website design Kuwait',
-    'mobile app Kuwait',
-    'واتساب بوت الكويت',
-    'أتمتة مشاريع الكويت',
   ],
   alternates: {
     canonical: SITE_URL,
@@ -60,8 +57,8 @@ export const metadata: Metadata = {
     locale:          'ar_KW',
     alternateLocale: ['en_US'],
     images: [
-      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — أعمالك، مؤتمتة' },
-      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — Your Business, Automated' },
+      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — منظومة ذكاء اصطناعي للمشاريع المنزلية بالكويت' },
+      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — AI System for Home Businesses in Kuwait' },
     ],
   },
   twitter: {
@@ -83,7 +80,7 @@ const JSON_LD = {
   '@type':    'LocalBusiness',
   name:            'MindSync',
   alternateName:   'مايند سينك',
-  description:     "Kuwait's first AI automation agency for SMBs â custom AI systems, websites & apps. Your business, automated.",
+  description:     'Complete AI & automation system for home businesses in Kuwait — replies, books, follows up, and analyzes 24/7.',
   url:             'https://www.mindsynckw.com',
   logo:            'https://www.mindsynckw.com/brand/logo-transparent.png',
   image:           'https://www.mindsynckw.com/og/b-terminal-ar.png',
@@ -104,7 +101,7 @@ const JSON_LD = {
     'AI automation systems',
     'Custom AI agents',
     'WhatsApp Business API',
-    'Business automation',
+    'Home business automation',
     'Website design',
     'Mobile app development',
     'n8n workflows',

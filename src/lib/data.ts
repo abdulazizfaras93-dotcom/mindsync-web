@@ -1242,12 +1242,12 @@ export const FREE_TRIAL = {
 export const CUSTOM_BUNDLE = {
   en: {
     name: 'Custom AI System',
-    desc: "Your business doesn't fit the 8 industries? No problem — we design and build a fully custom AI agent system after a consultation call.",
+    desc: "Your business needs features beyond MindSync Complete? No problem — we design and build a fully custom AI agent system after a free consultation call.",
     cta: 'Book a Consultation',
   },
   ar: {
     name: 'نظام ذكاء اصطناعي مخصص',
-    desc: 'مشروعك ما يناسب الـ٨ قطاعات؟ ولا يهمك — نصمم ونبني نظام وكيل ذكاء اصطناعي مخصص بالكامل بعد مكالمة استشارة.',
+    desc: 'مشروعك يحتاج خصائص خارج نطاق MindSync Complete؟ ولا يهمك — نصمم ونبني نظام وكيل ذكاء اصطناعي مخصص بالكامل بعد مكالمة استشارة مجانية.',
     cta: 'احجز استشارة',
   },
 }
@@ -1344,6 +1344,61 @@ export const DEMO_CONVERSATIONS: Record<string, { en: string[]; ar: string[] }[]
     { en: ['✅ Order confirmed, Dalal! Vanilla sponge + strawberry cream for 20, Friday delivery to Rumaithiya — total 31 KWD. I\'ll send payment details on WhatsApp now ð'], ar: ['✅ تم تأكيد الطلب يا دلال! فانيلا بفراولة لـ٢٠، توصيل الجمعة الرميثية — المجموع ٣١ دينار. أرسللك تفاصيل الدفع على واتساب الحين 🎂'] },
   ],
 }
+
+// ─── MindSync Complete (single product) ──────────────────────────────────────
+
+export const MINDSYNC_COMPLETE = {
+  buildFee: 349,
+  retainer: 159,
+  name: { en: 'MindSync Complete', ar: 'MindSync Complete' },
+  features: {
+    en: [
+      'All infrastructure & AI APIs included',
+      'Full setup & training',
+      'Monthly management',
+      'Free monthly AI retraining on receipts',
+      'Professional analytics dashboard',
+      '1,000 conversations / month included',
+    ],
+    ar: [
+      'كل البنية التحتية والـ AI APIs مشمولة',
+      'Setup وتدريب كامل',
+      'إدارة شهرية',
+      'إعادة تدريب شهرية بناءً على receipts بلاءً علينا',
+      'لوحة تحليل احترافية',
+      '١٬٠٠٠ محادثة شهرياً مشمولة',
+    ],
+  },
+  usageTiers: {
+    en: [
+      '1,001–2,000 conversations: +30 KWD / mo',
+      '2,001+ conversations: +60 KWD / mo',
+    ],
+    ar: [
+      '١٬٠٠١–٢٬٠٠٠ محادثة: +٣٠ د.ك / شهر',
+      '٢٬٠٠١+ محادثة: +٦٠ د.ك / شهر',
+    ],
+  },
+}
+
+// ─── Home Business Categories ─────────────────────────────────────────────────
+
+export const HOME_BUSINESS_CATEGORIES = [
+  { icon: '🍰', ar: 'الأكل والمشروبات',      en: 'Food & Drinks' },
+  { icon: '🧴', ar: 'البيوتي والعطور',        en: 'Beauty & Perfumes' },
+  { icon: '👗', ar: 'الملابس والإكسسوارات',  en: 'Fashion & Accessories' },
+  { icon: '🛍️', ar: 'البيع والتجزئة',        en: 'Sales & Retail' },
+  { icon: '🚗', ar: 'خدمات السيارات',         en: 'Car Services' },
+  { icon: '📚', ar: 'التعليم والتدريس',       en: 'Education & Tutoring' },
+  { icon: '🎨', ar: 'الإبداع والفنون',        en: 'Creative & Arts' },
+  { icon: '🏥', ar: 'الصحة واللياقة',         en: 'Health & Fitness' },
+  { icon: '🍪', ar: 'الحلويات والكيكات',      en: 'Sweets & Cakes' },
+  { icon: '🐶', ar: 'الأطفال والعائلة',       en: 'Kids & Family' },
+  { icon: '🔧', ar: 'الخدمات المنزلية',       en: 'Home Services' },
+  { icon: '💼', ar: 'الكوتش والاستشارات',     en: 'Coaching & Consulting' },
+  { icon: '🕌', ar: 'التقنية',                 en: 'Technology' },
+  { icon: '✨', ar: 'وأكثر',                   en: 'And more' },
+]
 
 // --- Industry Slug Mapping ---
 
