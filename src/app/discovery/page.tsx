@@ -4,8 +4,8 @@ import { createContext, useContext, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import {
-  Stethoscope, Scissors, Sparkles, Dumbbell, Wrench,
-  UtensilsCrossed, Building2, Home,
+  UtensilsCrossed, Sparkles, ShoppingBag, BookOpen,
+  Dumbbell, Wrench, Briefcase, MoreHorizontal, Check,
 } from 'lucide-react'
 
 // ─── Lang context ─────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ const T = {
     successBody:  'فريق مايند سينك سيتواصل معك خلال ٢٤ ساعة.',
     backToSite:   'العودة للموقع',
     required:     'هذا الحقل مطلوب',
-    steps: ['معلومات التواصل', 'نوع مشروعك', 'وضعك الحالي', 'ما تبحث عنه', 'المراجعة والإرسال'],
+    steps: ['معلومات التواصل', 'نوع مشروعك', 'وضعك الحالي', 'التفاصيل الأخيرة', 'المراجعة والإرسال'],
     s1: {
       businessName:   'اسم المشروع',
       ownerName:      'اسمك',
@@ -55,17 +55,18 @@ const T = {
       biggestPainPh:       'مثال: يفوتني طلبات بالليل، ما أقدر أرد بسرعة...',
     },
     s4: {
-      tier:           'الباقة اللي تناسبك',
-      smart:          'الذكي',
-      smartDesc:      'وكيل واحد، ١–٢ قنوات',
-      smartFrom:      'يبدأ من ١٣٠ KWD/شهر',
-      pro:            'المتقدم',
-      proDesc:        'وكيل+ متعدد القنوات',
-      proFrom:        'يبدأ من ١٦٠ KWD/شهر',
-      fullAuto:       'المؤتمت',
-      fullAutoDesc:   'وكلاء متعددة، كل القنوات',
-      fullAutoFrom:   'يبدأ من ٢٨٠ KWD/شهر',
-      mostPopular:    'الأكثر طلباً',
+      packageLabel:   'الباقة المحددة',
+      packageName:    'MindSync Complete',
+      packageDesc:    'وكيل AI مخصص + لوحة تحكم + أتمتة سير العمل + صيانة شهرية. ١٬٠٠٠ محادثة مشمولة شهرياً.',
+      packageFeatures: [
+        'كل البنية التحتية والـ AI APIs مشمولة',
+        'إعداد وتدريب كامل للوكيل',
+        'لوحة تحكم احترافية',
+        'مراقبة ٢٤/٧ وإصلاح الأعطال',
+        'إعادة تدريب شهرية بناءً على مشروعك',
+      ],
+      buildFee:       '٣٤٩ د.ك إعداد',
+      retainer:       '١٥٩ د.ك / شهر',
       timeline:       'متى تبي تبدأ؟',
       timelineOpts:   [{ v: 'asap', l: 'في أقرب وقت' }, { v: '1month', l: 'خلال شهر' }, { v: '3months', l: 'خلال ٣ أشهر' }, { v: 'exploring', l: 'أستكشف فقط' }],
       referral:       'كيف وصلت لمايند سينك؟',
@@ -86,21 +87,20 @@ const T = {
       currentCh:    'القنوات الحالية',
       wantedCh:     'القنوات المطلوبة',
       biggestPain:  'المشكلة الرئيسية',
-      tier:         'الباقة',
       timeline:     'وقت البدء',
       referral:     'مصدر التعرف',
       notes:        'ملاحظات',
       notSet:       'لم يُحدَّد',
     },
     industries: [
-      { v: 'clinic',        l: 'عيادة' },
-      { v: 'salon',         l: 'صالون' },
-      { v: 'spa',           l: 'سبا' },
-      { v: 'gym',           l: 'جيم' },
-      { v: 'garage',        l: 'ورشة' },
-      { v: 'restaurant',    l: 'مطعم' },
-      { v: 'real-estate',   l: 'عقارات' },
-      { v: 'home-business', l: 'مشروع منزلي' },
+      { v: 'food',      l: 'أكل ومشروبات' },
+      { v: 'beauty',    l: 'بيوتي وعطور' },
+      { v: 'fashion',   l: 'فاشن وإكسسوارات' },
+      { v: 'education', l: 'تعليم وتدريس' },
+      { v: 'fitness',   l: 'صحة ولياقة' },
+      { v: 'services',  l: 'خدمات منزلية' },
+      { v: 'coaching',  l: 'كوتشز واستشارات' },
+      { v: 'other',     l: 'أخرى' },
     ],
   },
   en: {
@@ -116,7 +116,7 @@ const T = {
     successBody:  'The MindSync team will contact you within 24 hours.',
     backToSite:   'Back to Website',
     required:     'This field is required',
-    steps: ['Contact Info', 'Your Industry', 'Current Situation', 'What You Need', 'Review & Submit'],
+    steps: ['Contact Info', 'Your Business', 'Current Situation', 'Final Details', 'Review & Submit'],
     s1: {
       businessName:   'Business Name',
       ownerName:      'Your Name',
@@ -128,7 +128,7 @@ const T = {
       cityOpts:       [{ v: 'kuwait', l: 'Kuwait' }, { v: 'saudi', l: 'Saudi Arabia' }, { v: 'uae', l: 'UAE' }, { v: 'other', l: 'Other' }],
     },
     s2: {
-      industry:         'Select your industry',
+      industry:         'Select your business type',
       businessAge:      'Business age',
       businessAgeOpts:  [{ v: 'new', l: 'New (< 1 yr)' }, { v: 'growing', l: 'Growing (1–3 yrs)' }, { v: 'established', l: 'Established (3+ yrs)' }],
       monthlyInquiries: 'Monthly customer inquiries (approx.)',
@@ -143,17 +143,18 @@ const T = {
       biggestPainPh:       'e.g. Miss inquiries at night, slow response...',
     },
     s4: {
-      tier:           'Which package fits you?',
-      smart:          'Smart',
-      smartDesc:      '1 agent, 1–2 channels',
-      smartFrom:      'From 130 KWD/mo',
-      pro:            'Pro',
-      proDesc:        '1+ agents, multiple channels',
-      proFrom:        'From 160 KWD/mo',
-      fullAuto:       'Full Auto',
-      fullAutoDesc:   'Multiple agents, all channels',
-      fullAutoFrom:   'From 280 KWD/mo',
-      mostPopular:    'Most Popular',
+      packageLabel:   'Your Package',
+      packageName:    'MindSync Complete',
+      packageDesc:    'Custom AI agent + client dashboard + workflow automations + monthly maintenance. 1,000 conversations included per month.',
+      packageFeatures: [
+        'All AI APIs & infrastructure costs included',
+        'Full setup and agent training',
+        'Professional client dashboard',
+        '24/7 monitoring and bug fixes',
+        'Monthly AI retraining on your business data',
+      ],
+      buildFee:       '349 KWD setup',
+      retainer:       '159 KWD / mo',
       timeline:       'When do you want to start?',
       timelineOpts:   [{ v: 'asap', l: 'ASAP' }, { v: '1month', l: 'Within 1 month' }, { v: '3months', l: 'Within 3 months' }, { v: 'exploring', l: 'Just exploring' }],
       referral:       'How did you find MindSync?',
@@ -168,27 +169,26 @@ const T = {
       phone:        'Phone',
       email:        'Email',
       city:         'City',
-      industry:     'Industry',
+      industry:     'Business Type',
       businessAge:  'Business Age',
       monthlyInq:   'Monthly Inquiries',
       currentCh:    'Current Channels',
       wantedCh:     'Wanted Channels',
       biggestPain:  'Main Challenge',
-      tier:         'Package',
       timeline:     'Start Timeline',
       referral:     'Referral Source',
       notes:        'Notes',
       notSet:       'Not set',
     },
     industries: [
-      { v: 'clinic',        l: 'Clinic' },
-      { v: 'salon',         l: 'Salon' },
-      { v: 'spa',           l: 'Spa' },
-      { v: 'gym',           l: 'Gym' },
-      { v: 'garage',        l: 'Garage' },
-      { v: 'restaurant',    l: 'Restaurant' },
-      { v: 'real-estate',   l: 'Real Estate' },
-      { v: 'home-business', l: 'Home Business' },
+      { v: 'food',      l: 'Food & Beverages' },
+      { v: 'beauty',    l: 'Beauty & Fragrances' },
+      { v: 'fashion',   l: 'Fashion & Accessories' },
+      { v: 'education', l: 'Education & Tutoring' },
+      { v: 'fitness',   l: 'Health & Fitness' },
+      { v: 'services',  l: 'Home Services' },
+      { v: 'coaching',  l: 'Coaching & Consulting' },
+      { v: 'other',     l: 'Other' },
     ],
   },
 }
@@ -198,26 +198,26 @@ interface F {
   businessName: string; ownerName: string; phone: string; email: string; city: string
   industry: string; businessAge: string; monthlyInquiries: string
   currentChannels: string[]; wantedChannels: string[]; biggestPain: string
-  tier: string; startTimeline: string; referralSource: string; notes: string
+  startTimeline: string; referralSource: string; notes: string
 }
 
 const empty: F = {
   businessName: '', ownerName: '', phone: '', email: '', city: '',
   industry: '', businessAge: '', monthlyInquiries: '',
   currentChannels: [], wantedChannels: [], biggestPain: '',
-  tier: '', startTimeline: '', referralSource: '', notes: '',
+  startTimeline: '', referralSource: '', notes: '',
 }
 
 // ─── Industry icons ───────────────────────────────────────────────────────────
 const INDUSTRY_ICONS: Record<string, React.ReactNode> = {
-  clinic:        <Stethoscope size={20} />,
-  salon:         <Scissors size={20} />,
-  spa:           <Sparkles size={20} />,
-  gym:           <Dumbbell size={20} />,
-  garage:        <Wrench size={20} />,
-  restaurant:    <UtensilsCrossed size={20} />,
-  'real-estate': <Building2 size={20} />,
-  'home-business': <Home size={20} />,
+  food:      <UtensilsCrossed size={20} />,
+  beauty:    <Sparkles size={20} />,
+  fashion:   <ShoppingBag size={20} />,
+  education: <BookOpen size={20} />,
+  fitness:   <Dumbbell size={20} />,
+  services:  <Wrench size={20} />,
+  coaching:  <Briefcase size={20} />,
+  other:     <MoreHorizontal size={20} />,
 }
 
 // ─── UI primitives ────────────────────────────────────────────────────────────
@@ -371,35 +371,40 @@ function Step3({ f, set }: { f: F; set: (k: keyof F, v: unknown) => void }) {
 
 function Step4({ f, set }: { f: F; set: (k: keyof F, v: unknown) => void }) {
   const lang = useLang(); const t = T[lang].s4
-  const tiers = [
-    { v: 'smart',     name: t.smart,    desc: t.smartDesc,    price: t.smartFrom,    popular: false },
-    { v: 'pro',       name: t.pro,      desc: t.proDesc,      price: t.proFrom,      popular: true  },
-    { v: 'full-auto', name: t.fullAuto, desc: t.fullAutoDesc, price: t.fullAutoFrom, popular: false },
-  ]
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
-      <div className="mb-5">
-        <FieldLabel>{t.tier}</FieldLabel>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {tiers.map(tier => (
-            <div key={tier.v} className="relative group transition-all duration-200">
-              {tier.popular && (
-                <span className="absolute -top-2 -right-2 z-10 text-[9px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-full font-bold bg-ms-gold-600 text-ms-green-900 border-2 border-ms-ink-900 rotate-12">
-                  {t.mostPopular}
-                </span>
-              )}
-              <div className={`absolute inset-0 border-2 border-ms-ink-900 rounded-xl transition-all duration-200 shadow-[4px_4px_0px_0px] shadow-ms-ink-900 group-hover:shadow-[6px_6px_0px_0px] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 ${
-                f.tier === tier.v ? 'bg-ms-green-800' : 'bg-ms-ivory-0'
-              }`} />
-              <button type="button" onClick={() => set('tier', tier.v)} className="relative w-full text-left p-4">
-                <p className={`font-bold text-[15px] mb-1 ${f.tier === tier.v ? 'text-ms-ivory-0' : 'text-ms-ink-900'}`}>{tier.name}</p>
-                <p className={`text-[12px] mb-2 ${f.tier === tier.v ? 'text-ms-ivory-0/70' : 'text-ms-ink-400'}`}>{tier.desc}</p>
-                <p className={`text-[12px] font-mono font-semibold ${f.tier === tier.v ? 'text-ms-gold-600' : 'text-ms-green-800'}`}>{tier.price}</p>
-              </button>
+
+      {/* MindSync Complete package display */}
+      <div className="mb-6">
+        <FieldLabel>{t.packageLabel}</FieldLabel>
+        <div className="relative group">
+          <div className="absolute inset-0 bg-ms-green-800 border-2 border-ms-ink-900 rounded-xl shadow-[4px_4px_0px_0px] shadow-ms-ink-900" />
+          <div className="relative p-5">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/40 mb-0.5">MindSync</p>
+                <p className="text-ms-ivory-0 font-bold text-[20px] leading-tight">{t.packageName}</p>
+                <p className="text-white/55 text-[12px] leading-relaxed mt-1 max-w-xs">{t.packageDesc}</p>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="text-ms-gold-600 font-mono font-bold text-[15px]">{t.buildFee}</p>
+                <p className="text-ms-gold-600/70 font-mono text-[13px]">{t.retainer}</p>
+              </div>
             </div>
-          ))}
+            <ul className="space-y-1.5 border-t border-white/10 pt-4">
+              {t.packageFeatures.map((f, i) => (
+                <li key={i} className="flex items-center gap-2.5">
+                  <span className="shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-ms-gold-600/20 border border-ms-gold-600/40">
+                    <Check size={8} strokeWidth={2.5} className="text-ms-gold-600" />
+                  </span>
+                  <span className="text-white/70 text-[12px]">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
+
       <PillGroup label={t.timeline} value={f.startTimeline} onChange={v => set('startTimeline', v)} options={t.timelineOpts} />
       <PillGroup label={t.referral} value={f.referralSource} onChange={v => set('referralSource', v)} options={t.referralOpts} />
       <TextArea label={t.notes} value={f.notes} onChange={v => set('notes', v)} placeholder={t.notesPh} />
@@ -423,7 +428,6 @@ function Step5({ f }: { f: F }) {
     [t.currentCh,    f.currentChannels.join(', ') || t.notSet],
     [t.wantedCh,     f.wantedChannels.join(', ') || t.notSet],
     [t.biggestPain,  f.biggestPain  || t.notSet],
-    [t.tier,         f.tier         || t.notSet],
     [t.timeline,     f.startTimeline || t.notSet],
     [t.referral,     f.referralSource || t.notSet],
     [t.notes,        f.notes        || t.notSet],
@@ -471,7 +475,7 @@ function DiscoveryForm({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
       await fetch('https://ifaras911.app.n8n.cloud/webhook/client-discovery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, lang }),
+        body: JSON.stringify({ ...form, tier: 'mindsync-complete', lang }),
       })
       setStatus('success')
       window.scrollTo({ top: 0, behavior: 'smooth' })
