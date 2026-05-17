@@ -34,14 +34,14 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 
 const t = {
   eyebrow:        { en: 'AI & Automation System · For Home Businesses in Kuwait',   ar: 'منظومة ذكاء اصطناعي وأتمتة · للمشاريع المنزلية بالكويت' },
-  headline:       { en: 'You started your business from home.',                      ar: 'بدأت مشروعك من البيت.' },
-  headlineAccent: { en: 'You want it to grow — even while you sleep.',               ar: 'تبي مشروعك يكبر — حتى وأنت نايم.' },
+  headline:       { en: 'You started your business from home.',                      ar: 'بدأت مشروعك من البيت' },
+  headlineAccent: { en: 'You want it to grow — even while you sleep.',               ar: 'تبي مشروعك يكبر؟' },
   sub: {
     en: 'The intelligent system that replies, books, follows up,\nand analyzes — 24/7. Like having a full team, without one.',
     ar: 'المنظومة الذكية اللي ترد، تحجز، تتابع، وتحلل ٢٤/٧.\nكأن عندك فريق كامل — بدون فريق.',
   },
   cta1:   { en: 'Start Your Free Trial →',  ar: 'ابدأ تجربتك المجانية ←' },
-  cta2:   { en: 'See How It Works',         ar: 'شوف كيف يشتغل' },
+  cta2:   { en: 'See How It Works',         ar: 'شوف شلون يشتغل' },
   stat1l: { en: 'Days to launch',           ar: 'أيام للإطلاق' },
   stat2l: { en: 'Complete system',          ar: 'منظومة شاملة' },
   stat3l: { en: 'Uptime',                   ar: 'وقت التشغيل' },

@@ -4,8 +4,8 @@ import { useLang } from '@/lib/lang'
 import { MINDSYNC_COMPLETE } from '@/lib/data'
 
 const t = {
-  eyebrow: { en: 'What We Build', ar: 'ما نبنيه' },
-  h2:      { en: 'Custom AI. Built for you. Run by us.', ar: 'ذكاء اصطناعي مخصص. يُبنى لك. ندير.' },
+  eyebrow: { en: 'What We Build', ar: 'الي نبنيه' },
+  h2:      { en: 'Custom AI. Built for you. Run by us.', ar: 'ذكاء اصطناعي مخصص. يُبنى لك.' },
   sub: {
     en: 'We design, ship, and run the operational layer your business is missing.',
     ar: 'نصمّم، نبني، وندير الطبقة التشغيلية التي يفتقدها مشروعك.',

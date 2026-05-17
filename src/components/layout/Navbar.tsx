@@ -35,7 +35,7 @@ function MagneticLink({ href, children }: { href: string; children: React.ReactN
 
 const t = {
   services: { en: 'Services',     ar: 'خدماتنا' },
-  process:  { en: 'How It Works', ar: 'كيف يشتغل' },
+  process:  { en: 'How It Works', ar: 'شلون يشتغل' },
   faq:      { en: 'FAQ',          ar: 'الأسئلة' },
   cta:      { en: 'Get Started',  ar: 'ابدأ الحين' },
   toggleAr: { en: 'العربية',      ar: 'English' },

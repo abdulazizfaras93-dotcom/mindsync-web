@@ -50,13 +50,9 @@ Hero               — herobackground.mp4 looping video + NeuralMesh R3F overlay
 StatsBar           — animated count-up stats grid
 Services           — full-width flagship banner + 2×2 neo-brutalist card grid
 IndustryResults    — scroll-parallax neo-brutalist cards (per-card Y spring offset)
-Bundles            — bento grid (8 tiles) → AnimatePresence expand → 3 InlineTierCards per selection
-WhatsAppMockup     — sequential WhatsApp chat animation
+Bundles            — single MindSync Complete pricing card (349 KWD + 159/mo) + WEBSITE_SERVICES + APP_SERVICES neo-brutalist grids
 ReceptionistChat   — live n8n webhook chat (id="chat" — CTAFooter anchors here)
 Process            — 5-step flow, sticky ProcessMorph canvas + interactive step list
-FreeTrialSpotlight — 7-day free trial offer
-BuiltOn            — integration marquee (dark green bg, frosted glass logo tiles)
-Testimonials       — CSS marquee of neo-brutalist cards (dark green bg, gold shadow)
 FAQ                — accordion Q&As
 CTA                — final CTA with KuwaitParticles
 Footer
@@ -65,7 +61,7 @@ Footer
 Global overlays: `WhatsAppButton` (floating corner) + `ExitIntent` (free trial offer on exit).
 
 **Dormant section files** (exist in `sections/` but NOT imported in `page.tsx` — do not delete):
-`WhyNotBot.tsx`, `BeforeAfter.tsx`, `ROICalculator.tsx`, `TrustCluster.tsx`, `Demo.tsx`, `ProductReveal.tsx`
+`WhyNotBot.tsx`, `BeforeAfter.tsx`, `ROICalculator.tsx`, `TrustCluster.tsx`, `Demo.tsx`, `ProductReveal.tsx`, `WhatsAppMockup.tsx`, `FreeTrialSpotlight.tsx`, `BuiltOn.tsx`, `Testimonials.tsx`
 
 ---
 
@@ -104,25 +100,15 @@ Popular/badge pills: absolute positioned, `rotate-12`, `border-2 border-ms-ink-9
 
 #### `src/lib/data.ts` — Single source of truth
 
-Exports:
-- `BUNDLES: Bundle[]` — 8 industries, each with `tiers: BundleTier[]`
-- `WEBSITE_SERVICES`, `APP_SERVICES` — prices in data.ts; UI shows "Quote on request" (do not display raw prices)
-- `FREE_TRIAL`, `CUSTOM_BUNDLE` — AR/EN copy
-- `TIER_ORDER: TierId[]` — `['smart', 'pro', 'full-auto']`
-- `WHATSAPP_URL` — used **only** by `WhatsAppButton`; do not add to other components
-- `DEMO_CONVERSATIONS` — canned scripts per industry (Kuwaiti dialect)
-
-**Bundle pricing (Build Fee / Smart / Pro / Full Auto — KWD/mo):**
-| Industry | Build | Smart | Pro | Full Auto |
-|---|---|---|---|---|
-| Home Business | 250 | 130 | 200 | 280 |
-| Salon | 300 | 160 | 240 | 330 |
-| Spa | 300 | 160 | 240 | 330 |
-| Gym | 320 | 170 | 260 | 360 |
-| Garage | 300 | 160 | 240 | 330 |
-| Restaurant | 380 | 200 | 300 | 420 |
-| Clinic | 400 | 220 | 340 | 460 |
-| Real Estate | 450 | 250 | 380 | 520 |
+Key exports:
+- `MINDSYNC_COMPLETE` — `{ buildFee: 349, retainer: 159, features, usageTiers }` (AR/EN). **The product.** Import this in any component showing pricing.
+- `HOME_BUSINESS_CATEGORIES` — 14-entry `{ icon, en, ar }[]` for the discovery form business-type grid.
+- `BUNDLES: Bundle[]` — 8 legacy industry bundles (each has `tiers: BundleTier[]`). Still used by `[industry]/page.tsx` routing; do not delete.
+- `INDUSTRY_SLUGS` + `getBundleBySlug()` — maps URL slugs (`/clinics`) to bundle IDs.
+- `WEBSITE_SERVICES`, `APP_SERVICES` — fixed prices, displayed as individual neo-brutalist cards.
+- `FREE_TRIAL`, `CUSTOM_BUNDLE`, `DEMO_CONVERSATIONS` — AR/EN copy blocks.
+- `WHATSAPP_URL` — used **only** by `WhatsAppButton`; do not add to other components.
+- `TIER_ORDER: TierId[]` — `['smart', 'pro', 'full-auto']` (legacy, used by industry vertical data).
 
 > After any pricing change: `node C:\tmp\update-agent-prompts.js` to sync n8n agent prompts.
 
@@ -144,15 +130,15 @@ Exports `cn(...inputs)` — clsx + tailwind-merge. Required by shadcn components
 
 - `Hero.tsx` — `herobackground.mp4` looping video + `NeuralMesh` R3F overlay. Mouse parallax: 3 layers driven by `useMotionValue + useSpring`. `KineticText` headline. Falls back to solid bg when `useReducedMotion()`.
 - `Services.tsx` — Full-width flagship banner (dark green, `border-2 border-ms-ink-900 shadow-[6px_6px_0px_0px]`, no hover) + 2×2 neo-brutalist card grid with scroll-entrance stagger.
-- `Bundles.tsx` — **Bento grid pattern**: 8 `BentoTile` buttons (2×4). Click toggles `selectedId`; `AnimatePresence` expands 3 `InlineTierCard` components (neo-brutalist, rotate per index). `WEBSITE_SERVICES` and `APP_SERVICES` render as separate neo-brutalist grids at the bottom.
+- `Bundles.tsx` — **Single MindSync Complete pricing card** (neo-brutalist offset shadow, features checklist, fair-use tiers) + separate neo-brutalist grids for `WEBSITE_SERVICES` and `APP_SERVICES` below. Imports `MINDSYNC_COMPLETE` from `data.ts`. No tier selection or bento grid.
 - `IndustryResults.tsx` — 6 neo-brutalist cards with per-card scroll-driven Y parallax (`useScroll` + `useSpring`). Section bg `bg-ms-ivory-100`.
 - `Testimonials.tsx` — **CSS marquee on `bg-ms-green-900`**. Cards use neo-brutalist style with gold-tinted border + shadow (ink shadow is invisible on dark bg). No hover interaction (marquee).
 - `Process.tsx` — 5 steps, `useState(0)` drives `activeStep`. Sticky `ProcessMorph` canvas left + interactive step list right. `KineticText` headline. `scrollProgress` MotionValue passed to canvas.
 - `ReceptionistChat.tsx` — POSTs to `NEXT_PUBLIC_N8N_BASE/webhook/receptionist-website` (30s timeout). Has `id="chat"` — CTAFooter "Try the Live Demo" anchors here.
 - `FAQ.tsx` — Answer panel: `bg-ms-green-900/85 backdrop-blur-[12px] border border-ms-gold-600/[0.15]` + inset glow shadow. Active question: `w-[3px]` gold absolute left bar.
 - `BuiltOn.tsx` — Dark green surface. Frosted glass logo tiles: `bg-white/[0.06] backdrop-blur-[6px] border border-white/[0.10]`. SimpleIcons CDN color `FBFAF5` for visibility on dark bg.
-- `IndustryBundles.tsx` — Tier cards for **industry vertical pages** (not `page.tsx`). Uses same neo-brutalist TierCard style with rotation per tier (`smart`→−1°, `pro`→+1°, `full-auto`→−1.5°).
-- `IndustryHero.tsx` — Hero for industry vertical pages.
+- `IndustryBundles.tsx` — **Pricing section for industry vertical pages**. Shows single MindSync Complete card (349/159) — same style as `Bundles.tsx`. Also shows pain scenario from the `bundle` prop. Imports `MINDSYNC_COMPLETE`. No tier cards.
+- `IndustryHero.tsx` — Hero for industry vertical pages. Shows `MINDSYNC_COMPLETE.buildFee` (349) and `MINDSYNC_COMPLETE.retainer` (159) in the pricing quick-view bar.
 
 #### `src/components/canvas/`
 All loaded with `dynamic(..., { ssr: false })`:
@@ -199,7 +185,7 @@ const y = useTransform(scrollYProgress, [0, 1], prefersReduced ? ['0%', '0%'] : 
 | `/` | `src/app/page.tsx` | Main landing |
 | `/[industry]` | `src/app/[industry]/page.tsx` | 8 industry verticals via `INDUSTRY_SLUGS` |
 | `/services` | `src/app/services/page.tsx` | Services overview |
-| `/discovery` | `src/app/discovery/page.tsx` | 10-step form → n8n webhook. Has own `LangCtx`. Google Ads conversion on submit. |
+| `/discovery` | `src/app/discovery/page.tsx` | 5-step form → n8n webhook. Has own `LangCtx`. Step 2: 14 home-business categories from `HOME_BUSINESS_CATEGORIES`. Step 4: MindSync Complete card (no tier selection). Google Ads conversion on submit. |
 | `/privacy` | `src/app/privacy/page.tsx` | Bilingual AR/EN privacy policy |
 | `/terms` | `src/app/terms/page.tsx` | Bilingual AR/EN terms of service |
 
