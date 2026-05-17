@@ -83,7 +83,9 @@ export default function LiveDemoChat({ isAr, category }: Props) {
     >
       {/* Header */}
       <div className="bg-[#075E54] px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg flex-shrink-0">🤖</div>
+        <div className="w-9 h-9 rounded-full bg-ms-green-800 overflow-hidden flex items-center justify-center flex-shrink-0 border border-white/20">
+          <img src="/logo.png" alt="MindSync" className="w-7 h-7 object-contain" draggable={false} />
+        </div>
         <div>
           <p className="text-white text-sm font-semibold font-grotesk">
             {isAr ? 'ديمو مباشر — وكيل MindSync' : 'Live Demo — MindSync Agent'}

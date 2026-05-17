@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AIBubble from '../AIBubble'
 import SentMessage from '../SentMessage'
 import ChipButton from '../ChipButton'
-import { STAGE5_INTRO } from '@/lib/conversation/scripts'
+import { STAGE5_INTRO, STAGE5_FOLLOWUP } from '@/lib/conversation/scripts'
 import { FAQ_ITEMS } from '@/lib/conversation/faqAnswers'
 import { trackCtaClicked, trackFaqOpened } from '@/lib/conversation/analytics'
 import type { FaqKey } from '@/types/conversation'
@@ -23,11 +23,20 @@ export default function Stage5FAQ({ isAr }: Props) {
   const [showChips, setShowChips] = useState(false)
   const [answered, setAnswered] = useState<AnsweredFaq[]>([])
   const [remainingKeys, setRemainingKeys] = useState<FaqKey[]>(FAQ_ITEMS.map(f => f.id))
+  const [showFollowup, setShowFollowup] = useState(false)
+  const followupShownRef = useRef(false)
 
   useEffect(() => {
-    const t = setTimeout(() => setShowChips(true), 500)
+    const t = setTimeout(() => setShowChips(true), 600)
     return () => clearTimeout(t)
   }, [])
+
+  useEffect(() => {
+    if (answered.length >= 3 && !followupShownRef.current) {
+      followupShownRef.current = true
+      setTimeout(() => setShowFollowup(true), 800)
+    }
+  }, [answered.length])
 
   const handleFaq = (key: FaqKey) => {
     const item = FAQ_ITEMS.find(f => f.id === key)
@@ -43,10 +52,7 @@ export default function Stage5FAQ({ isAr }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <AIBubble
-        content={isAr ? STAGE5_INTRO.ar : STAGE5_INTRO.en}
-        isAr={isAr}
-      />
+      <AIBubble content={isAr ? STAGE5_INTRO.ar : STAGE5_INTRO.en} isAr={isAr} />
 
       {/* Answered FAQs */}
       <AnimatePresence>
@@ -63,8 +69,32 @@ export default function Stage5FAQ({ isAr }: Props) {
         ))}
       </AnimatePresence>
 
+      {/* Follow-up after 3 FAQs */}
+      {showFollowup && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col gap-3"
+        >
+          <AIBubble content={isAr ? STAGE5_FOLLOWUP.ar : STAGE5_FOLLOWUP.en} isAr={isAr} />
+          <div className={`flex flex-wrap gap-2 ${isAr ? 'justify-end' : 'justify-start'}`}>
+            <ChipButton
+              label={isAr ? 'احجز مكالمة ←' : '→ Book a Call'}
+              onClick={() => { trackCtaClicked('stage5'); window.open('https://wa.me/96599539006', '_blank') }}
+              variant="gold"
+              isAr={isAr}
+            />
+            <ChipButton
+              label={isAr ? 'أكمل الأسئلة' : 'Keep asking'}
+              onClick={() => setShowFollowup(false)}
+              isAr={isAr}
+            />
+          </div>
+        </motion.div>
+      )}
+
       {/* Remaining FAQ chips */}
-      {showChips && remainingKeys.length > 0 && (
+      {showChips && remainingKeys.length > 0 && !showFollowup && (
         <div className={`flex flex-wrap gap-2 ${isAr ? 'justify-end' : 'justify-start'}`}>
           {remainingKeys.map((key, i) => {
             const item = FAQ_ITEMS.find(f => f.id === key)!
@@ -81,18 +111,18 @@ export default function Stage5FAQ({ isAr }: Props) {
         </div>
       )}
 
-      {/* Final CTA — always visible */}
+      {/* Final CTA */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
+        transition={{ delay: 1 }}
         className={`mt-2 flex flex-col gap-3 ${isAr ? 'items-end' : 'items-start'}`}
         dir={isAr ? 'rtl' : 'ltr'}
       >
         <AIBubble
           content={isAr
-            ? 'جاهز تشوف كيف يشتغل لنشاطك؟ احجز ديمو مجاني أو ابدأ الحين.'
-            : 'Ready to see it work for your business? Book a free demo or get started now.'}
+            ? 'جاهز تبدأ؟ الأسبوع الأول مجاناً — بدون أي التزام.'
+            : 'Ready to start? The first week is free — no commitment.'}
           isAr={isAr}
         />
         <div className={`flex flex-wrap gap-2.5 ${isAr ? 'justify-end' : 'justify-start'}`}>
@@ -106,22 +136,8 @@ export default function Stage5FAQ({ isAr }: Props) {
               ${isAr ? 'font-arabic flex-row-reverse' : 'font-grotesk'}
             `}
           >
-            {isAr ? 'ابدأ الآن' : 'Get Started'}
+            {isAr ? 'ابدأ تجربتك المجانية' : 'Start Free Trial'}
             <span>{isAr ? '←' : '→'}</span>
-          </a>
-          <a
-            href="https://wa.me/96599539006"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`
-              inline-flex items-center gap-2 px-5 py-3 rounded-full
-              border border-ms-ivory-200 bg-white text-ms-ink-700 text-sm font-medium
-              hover:border-ms-green-800 hover:text-ms-green-800 transition-all
-              ${isAr ? 'font-arabic flex-row-reverse' : 'font-grotesk'}
-            `}
-          >
-            <span>💬</span>
-            {isAr ? 'تحدث مع MindSync' : 'Talk to MindSync'}
           </a>
         </div>
       </motion.div>

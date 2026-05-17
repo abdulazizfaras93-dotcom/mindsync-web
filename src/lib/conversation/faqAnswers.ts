@@ -2,43 +2,67 @@ import type { FaqKey } from '@/types/conversation'
 
 export const FAQ_ITEMS: { id: FaqKey; q: { en: string; ar: string }; a: { en: string; ar: string } }[] = [
   {
+    id: 'data',
+    q: { en: 'Who owns the data?', ar: 'منو يملك البيانات؟' },
+    a: {
+      en: 'You own 100% of it. All data (messages, customers, orders) is saved under your account. If you stop the subscription, you get a full export.',
+      ar: 'أنت تملكها 100%. كل البيانات (الرسائل، العملاء، الطلبات) محفوظة بحساب باسمك. لو وقفت الاشتراك، تأخذ export كامل.',
+    },
+  },
+  {
     id: 'setup',
-    q: { en: 'How long does setup take?', ar: 'كم تأخذ مدة الإعداد؟' },
-    a: { en: 'Your AI agent is live in 7 business days. We handle everything — no technical skills needed from you.', ar: 'وكيلك الذكي يصير حي خلال ٧ أيام عمل. نحن نتولى كل شي — ما تحتاج خبرة تقنية.' },
-  },
-  {
-    id: 'languages',
-    q: { en: 'Does it speak Arabic and English?', ar: 'يتكلم عربي وإنجليزي؟' },
-    a: { en: 'Yes! Your AI responds in both Arabic and English — automatically matching the customer\'s language.', ar: 'نعم! وكيلك يرد بالعربي والإنجليزي — يتكيف تلقائياً مع لغة الزبون.' },
-  },
-  {
-    id: 'channels',
-    q: { en: 'Which channels are supported?', ar: 'أي قنوات مدعومة؟' },
-    a: { en: 'WhatsApp, Instagram DMs, and Telegram. All conversations in one dashboard.', ar: 'واتساب، رسائل إنستغرام، وتيليغرام. كل المحادثات في لوحة واحدة.' },
-  },
-  {
-    id: 'training',
-    q: { en: 'Can I customize what it says?', ar: 'أقدر أخصص كلامه؟' },
-    a: { en: 'Absolutely. You can edit its knowledge base, tone, and responses anytime from your portal.', ar: 'بالتأكيد. تقدر تعدل قاعدة معرفته، أسلوبه، وردوده في أي وقت من البوابة.' },
+    q: { en: 'What if something breaks at night?', ar: 'شنو لو خربت مشكلة بالليل؟' },
+    a: {
+      en: 'We have 24/7 monitoring + an SLA that guarantees fixes within 4 hours. There\'s also an emergency backup that routes messages directly to you.',
+      ar: 'عندنا monitoring 24/7 + SLA يضمن إصلاح أي عطل خلال 4 ساعات. وفيه backup خطة طوارئ تحوّل الرسائل لك مباشرة.',
+    },
   },
   {
     id: 'cancel',
-    q: { en: 'Can I cancel anytime?', ar: 'أقدر أوقف الاشتراك؟' },
-    a: { en: 'Yes — no contracts, no cancellation fees. Cancel anytime with 30 days notice.', ar: 'نعم — لا عقود، لا رسوم إلغاء. تقدر تلغي في أي وقت مع إشعار ٣٠ يوم.' },
+    q: { en: 'Can I cancel anytime?', ar: 'أقدر ألغي في أي وقت؟' },
+    a: {
+      en: 'Absolutely. No binding contract. Cancel with one button in the dashboard and get a full data export within 7 days.',
+      ar: 'أكيد. مافيه عقد ملزم. تلغي بزر واحد من dashboard، ونعطيك export لكل بياناتك خلال 7 أيام.',
+    },
+  },
+  {
+    id: 'training',
+    q: { en: 'How does a conversation count?', ar: 'شلون تنحسب المحادثة؟' },
+    a: {
+      en: 'A conversation = all messages with one customer in 24 hours. Whether 1 message or 50 — it counts as one. Same method as Meta.',
+      ar: 'المحادثة = مجموعة رسائل مع عميل واحد خلال 24 ساعة. سواء رسالة وحدة أو 50 — تنحسب وحدة. نفس طريقة Meta.',
+    },
+  },
+  {
+    id: 'channels',
+    q: { en: 'Does it work without internet?', ar: 'هل تشتغل بدون انترنت؟' },
+    a: {
+      en: 'The AI needs internet, but the dashboard can store temporarily and sync when the connection returns. 99.9% uptime guaranteed.',
+      ar: 'الـ AI لا — يحتاج انترنت. بس الـ dashboard يقدر يخزّن مؤقتاً ويتزامن لما يرجع الانترنت. ٩٩.٩٪ uptime مضمون.',
+    },
   },
   {
     id: 'trial',
-    q: { en: 'Is there a free trial?', ar: 'في فترة تجريبية مجانية؟' },
-    a: { en: 'We offer a live demo — you see your AI in action before any payment. Book it in the next step.', ar: 'نقدم ديمو مباشر — تشوف وكيلك وهو يشتغل قبل أي دفع. احجزه في الخطوة التالية.' },
-  },
-  {
-    id: 'data',
-    q: { en: 'Is my data secure?', ar: 'بياناتي آمنة؟' },
-    a: { en: 'Yes. All data is encrypted, stored in Kuwait/GCC servers, and never shared with third parties.', ar: 'نعم. كل البيانات مشفرة، مخزنة في سيرفرات الكويت/الخليج، وما تُشارك مع أحد.' },
+    q: { en: 'What does the 159 KWD include?', ar: 'شنو تشمل الـ ١٥٩ د.ك؟' },
+    a: {
+      en: 'Everything: AI APIs (Claude/GPT), WhatsApp Business API, hosting + infrastructure, monthly management + training, 24/7 monitoring, and 1,000 conversations.',
+      ar: 'كل شي:\n• AI APIs (Claude/GPT)\n• WhatsApp Business API\n• Hosting + infrastructure\n• إدارة شهرية + تدريب\n• مراقبة 24/7\n• 1,000 محادثة',
+    },
   },
   {
     id: 'results',
-    q: { en: 'What results can I expect?', ar: 'شو النتائج المتوقعة؟' },
-    a: { en: 'Clients typically see 70% fewer missed messages, 3x faster response times, and hours saved weekly.', ar: 'العملاء عادةً يشوفون ٧٠٪ أقل رسائل فائتة، ردود أسرع ٣ مرات، وساعات توفير أسبوعياً.' },
+    q: { en: 'How are you different from ChatGPT?', ar: 'شلون تختلفون عن chatgpt؟' },
+    a: {
+      en: 'ChatGPT is a general tool. We build a system custom to your business: trained on your products & prices, connected to WhatsApp + Instagram, with a customer dashboard and payment links. ChatGPT can\'t do that.',
+      ar: 'ChatGPT أداة عامة. نحن نبني نظام مخصص لمشروعك:\n- مدرّب على منتجاتك وأسعارك\n- يربط مع WhatsApp + Instagram\n- يحفظ بيانات عملائك بـ dashboard\n- يرسل payment links\nChatGPT ما يسوي هذا.',
+    },
+  },
+  {
+    id: 'languages',
+    q: { en: 'What if I don\'t like it?', ar: 'شنو لو ما عجبني؟' },
+    a: {
+      en: 'The first week is free. If you\'re not happy, we stop — no cost. After activation, you can cancel anytime with one button.',
+      ar: 'الأسبوع الأول مجاناً. لو ما عجبك، نوقف — بدون أي تكلفة. بعد التفعيل، تقدر تلغي في أي وقت بزر واحد.',
+    },
   },
 ]
