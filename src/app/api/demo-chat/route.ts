@@ -47,25 +47,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'bad request' }, { status: 400 })
   }
 
-  const base  = process.env.N8N_BASE
-  const token = process.env.N8N_TOKEN
-  if (!base || !token) {
-    // Fallback: no n8n wired — return graceful stub
-    const stubs: Record<string, string> = {
-      ar: 'شكراً على سؤالك! للحصول على معلومات تفصيلية، تواصل معنا على واتساب أو ابدأ طلبك من صفحة الاكتشاف.',
-      en: 'Thanks for your question! For detailed info, reach us on WhatsApp or start your request from the discovery page.',
-    }
-    return NextResponse.json({ reply: stubs[lang] ?? stubs['en'] })
-  }
+  // Webhook is public — no token required. Uses same endpoint as ReceptionistChat.tsx.
+  const WEBHOOK = 'https://ifaras911.app.n8n.cloud/webhook/receptionist-website'
 
   try {
-    const r = await fetch(`${base}/webhook/receptionist/demo`, {
+    const r = await fetch(WEBHOOK, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ message, industry: category, lang }),
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        text: message,
+        name: 'Demo Visitor',
+        user_id: `demo_${ip}`,
+        channel: 'website',
+        language: lang,
+      }),
       cache: 'no-store',
       signal: AbortSignal.timeout(28_000),
     })
