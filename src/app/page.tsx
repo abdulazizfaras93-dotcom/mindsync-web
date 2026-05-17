@@ -1,35 +1,17 @@
 import { LangProvider } from '@/lib/lang'
-import Navbar from '@/components/layout/Navbar'
-import Hero from '@/components/sections/Hero'
-import StatsBar from '@/components/sections/StatsBar'
-import Services from '@/components/sections/Services'
-import IndustryResults from '@/components/sections/IndustryResults'
-import Bundles from '@/components/sections/Bundles'
-import ReceptionistChat from '@/components/sections/ReceptionistChat'
-import Process from '@/components/sections/Process'
-import FAQ from '@/components/sections/FAQ'
-import { CTA, Footer } from '@/components/sections/CTAFooter'
+import ConversationalLanding from '@/components/chat/ConversationalLanding'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
-import ExitIntent from '@/components/ui/ExitIntent'
+
+export const metadata = {
+  title: 'MindSync — أعمالك، مؤتمتة | Your Business, Automated',
+  description: 'Kuwait\'s only full-stack AI automation agency for home businesses. WhatsApp bot to client dashboard in 7 business days.',
+}
 
 export default function Home() {
   return (
     <LangProvider>
-      <Navbar />
-      <main>
-        <Hero />
-        <StatsBar />
-        <Services />
-        <IndustryResults />
-        <Bundles />
-        <ReceptionistChat />
-        <Process />
-        <FAQ />
-        <CTA />
-      </main>
-      <Footer />
+      <ConversationalLanding />
       <WhatsAppButton />
-      <ExitIntent />
     </LangProvider>
   )
 }
