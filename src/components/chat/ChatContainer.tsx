@@ -7,21 +7,26 @@ interface Props {
 }
 
 export default function ChatContainer({ children, className = '' }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const prevChildCount = useRef(0)
+
+  // Count children to detect additions (works for any ReactNode tree)
+  const childCount = Array.isArray(children) ? children.length : 1
 
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
-  })
+    if (childCount !== prevChildCount.current) {
+      prevChildCount.current = childCount
+      // Small delay so new content has painted before we scroll
+      setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      }, 80)
+    }
+  }, [childCount])
 
   return (
-    <div
-      ref={ref}
-      className={`flex flex-col gap-4 overflow-y-auto px-4 py-4 ${className}`}
-      style={{ scrollbarWidth: 'none' }}
-    >
+    <div className={`flex flex-col gap-4 ${className}`}>
       {children}
+      <div ref={bottomRef} />
     </div>
   )
 }

@@ -78,7 +78,7 @@ export default function LiveDemoChat({ isAr, category }: Props) {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden border border-ms-ivory-200 shadow-md bg-white max-w-sm w-full mx-auto"
+      className="rounded-2xl overflow-hidden border border-ms-ivory-200 shadow-md bg-white w-full"
       dir={isAr ? 'rtl' : 'ltr'}
     >
       {/* Header */}
@@ -101,7 +101,7 @@ export default function LiveDemoChat({ isAr, category }: Props) {
 
       {/* Messages */}
       <div
-        className="flex flex-col gap-3 p-4 min-h-[160px] max-h-[260px] overflow-y-auto"
+        className="flex flex-col gap-3 p-4 h-[380px] overflow-y-auto"
         style={{ background: '#ECE5DD', scrollbarWidth: 'none' }}
       >
         {messages.length === 0 && (
