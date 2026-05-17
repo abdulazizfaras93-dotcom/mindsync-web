@@ -50,3 +50,6 @@ next-env.d.ts
 *.pdf
 mindsync-*.md
 .superpowers/
+
+# Sentry Config File
+.env.sentry-build-plugin
