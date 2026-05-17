@@ -102,7 +102,7 @@ export default function LiveDemoChat({ isAr, category }: Props) {
       {/* Messages */}
       <div
         className="flex flex-col gap-3 p-4 h-[380px] overflow-y-auto"
-        style={{ background: '#ECE5DD', scrollbarWidth: 'none' }}
+        style={{ background: '#ECE5DD' }}
       >
         {messages.length === 0 && (
           <p className={`text-center text-[12px] text-ms-ink-500 mt-4 ${isAr ? 'font-arabic' : 'font-grotesk'}`}>
