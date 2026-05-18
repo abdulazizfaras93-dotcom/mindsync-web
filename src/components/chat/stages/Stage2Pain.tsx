@@ -51,13 +51,28 @@ export default function Stage2Pain({ isAr, category, onSelect }: Props) {
               onClick={() => onSelect(pain.id)}
               dir={isAr ? 'rtl' : 'ltr'}
               className={`
-                w-full max-w-sm px-4 py-3 rounded-xl text-sm font-medium text-left
-                border border-ms-ivory-200 bg-white text-ms-ink-700
-                hover:border-ms-green-800 hover:text-ms-green-800 hover:bg-ms-green-800/5
+                w-full max-w-sm px-4 py-3.5 rounded-xl text-sm font-medium
                 transition-all duration-150 cursor-pointer select-none
-                flex items-center gap-3
-                ${isAr ? 'font-arabic text-right flex-row-reverse' : 'font-grotesk'}
+                flex items-center gap-3 text-white/80
+                ${isAr ? 'font-arabic text-right flex-row-reverse' : 'font-grotesk text-left'}
               `}
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+                minHeight: 44,
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLButtonElement
+                el.style.background = 'rgba(191,141,56,0.08)'
+                el.style.border = '1px solid rgba(191,141,56,0.40)'
+                el.style.color = 'rgba(212,168,90,1)'
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLButtonElement
+                el.style.background = 'rgba(255,255,255,0.04)'
+                el.style.border = '1px solid rgba(255,255,255,0.10)'
+                el.style.color = ''
+              }}
             >
               <span className="text-lg flex-shrink-0">{pain.icon}</span>
               <span>{isAr ? pain.ar : pain.en}</span>

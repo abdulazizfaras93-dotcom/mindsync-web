@@ -41,13 +41,21 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
           className="mx-auto w-full max-w-sm"
           dir={isAr ? 'rtl' : 'ltr'}
         >
-          <div className="rounded-2xl overflow-hidden border border-ms-ivory-200 shadow-md bg-white">
+          <div
+            className="rounded-2xl overflow-hidden backdrop-blur-xl"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.10)',
+            }}
+          >
             {/* Header */}
-            <div className="bg-ms-green-800 px-5 py-5">
+            <div
+              className="px-5 py-5"
+              style={{ background: 'linear-gradient(135deg, #153E2D 0%, #0F2E22 100%)' }}
+            >
               <p className="text-ms-gold-400 font-mono text-[10px] tracking-widest uppercase mb-3">
                 {MINDSYNC_COMPLETE.name.en}
               </p>
-              {/* Dual price display */}
               <div className={`flex items-start gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
                 <div className={isAr ? 'text-right' : 'text-left'}>
                   <div className={`flex items-baseline gap-1 ${isAr ? 'flex-row-reverse' : ''}`}>
@@ -75,16 +83,15 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
             <div className="px-5 py-4">
               <ul className="space-y-2.5">
                 {FEATURES.map((f, i) => (
-                  <li key={i} className={`flex items-start gap-2.5 text-sm text-ms-ink-700 ${isAr ? 'flex-row-reverse' : ''}`}>
+                  <li key={i} className={`flex items-start gap-2.5 text-sm text-white/75 ${isAr ? 'flex-row-reverse' : ''}`}>
                     <span className="text-ms-gold-600 font-bold mt-0.5 flex-shrink-0">✓</span>
                     <span className={isAr ? 'font-arabic text-right' : 'font-grotesk'}>{isAr ? f.ar : f.en}</span>
                   </li>
                 ))}
               </ul>
 
-              {/* Fair use note */}
-              <div className="mt-4 pt-4 border-t border-ms-ivory-200">
-                <p className={`text-[11px] text-ms-ink-400 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
+              <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                <p className={`text-[11px] text-white/35 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
                   {isAr
                     ? 'لو تجاوزت ١٬٠٠٠ محادثة: +٣٠ د.ك / ٥٠٠ محادثة إضافية'
                     : 'Over 1,000 conversations: +30 KWD / 500 extra conversations'}
@@ -108,7 +115,7 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
             onClick={() => trackCtaClicked('stage4')}
             className={`
               inline-flex items-center gap-2 px-6 py-3 rounded-full
-              bg-ms-gold-600 hover:bg-ms-gold-500 text-white font-semibold text-sm
+              bg-ms-gold-600 hover:bg-ms-gold-500 text-ms-green-900 font-semibold text-sm
               transition-all duration-150 shadow-sm hover:shadow-md
               ${isAr ? 'font-arabic flex-row-reverse' : 'font-grotesk'}
             `}

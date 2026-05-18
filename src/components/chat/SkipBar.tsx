@@ -7,13 +7,17 @@ export default function SkipBar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2.5 bg-ms-green-900/95 backdrop-blur-sm border-b border-white/10 text-[12px]"
-      dir={isAr ? 'rtl' : 'ltr'}
+      className="fixed top-4 left-4 right-4 z-50 flex items-center justify-between px-5 py-2.5 rounded-full text-[12px] mx-auto max-w-md backdrop-blur-xl"
+      style={{
+        background: 'rgba(6,14,9,0.75)',
+        border: '1px solid rgba(255,255,255,0.1)',
+      }}
+      dir="ltr"
     >
       <a
         href="/discovery"
         onClick={() => trackCtaClicked('skipbar')}
-        className="text-ms-gold-400 hover:text-ms-gold-400/80 font-mono font-medium tracking-wide transition-colors"
+        className="text-ms-gold-400 hover:text-ms-gold-500 font-mono font-medium tracking-wide transition-colors"
       >
         {isAr ? 'ابدأ الحين ←' : '→ Get Started Now'}
       </a>
@@ -29,9 +33,9 @@ export default function SkipBar() {
         <a
           href="/classic"
           onClick={() => trackCtaClicked('skipbar')}
-          className="text-white/50 hover:text-white/80 transition-colors font-grotesk"
+          className="text-white/40 hover:text-white/70 transition-colors font-grotesk"
         >
-          {isAr ? 'تبي الموقع العادي؟ ↑' : 'Classic site ↑'}
+          {isAr ? 'الموقع العادي ↑' : 'Classic ↑'}
         </a>
       </div>
     </div>

@@ -14,7 +14,6 @@ import Stage4Pricing from './stages/Stage4Pricing'
 import Stage5FAQ from './stages/Stage5FAQ'
 import type { ConversationState, BusinessCategory, PainKey } from '@/types/conversation'
 
-// Chat header — logo + status bar matching spec Section 6
 function ChatHeader({ isAr }: { isAr: boolean }) {
   return (
     <motion.div
@@ -24,25 +23,44 @@ function ChatHeader({ isAr }: { isAr: boolean }) {
       className={`flex items-center gap-3 mb-2 ${isAr ? 'flex-row-reverse' : ''}`}
       dir={isAr ? 'rtl' : 'ltr'}
     >
-      {/* Logo iris */}
       <div className="relative flex-shrink-0">
-        <div className="w-10 h-10 rounded-full bg-ms-green-800 border border-ms-gold-600/30 overflow-hidden flex items-center justify-center shadow-sm">
+        <div className="w-10 h-10 rounded-full bg-ms-green-800 border border-ms-gold-600/30 overflow-hidden flex items-center justify-center">
           <img src="/logo.png" alt="MindSync" className="w-8 h-8 object-contain" draggable={false} />
         </div>
-        {/* Online indicator */}
-        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-white" />
+        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#060E09]" />
       </div>
-
       <div className={isAr ? 'text-right' : 'text-left'}>
-        <p className="font-grotesk font-bold text-[14px] text-ms-ink-900 leading-tight">MindSync</p>
-        <p className={`text-[11px] text-ms-ink-500 flex items-center gap-1 ${isAr ? 'flex-row-reverse justify-end' : ''}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
+        <p className="font-grotesk font-bold text-[14px] text-white leading-tight">MindSync</p>
+        <p className={`text-[11px] text-white/50 flex items-center gap-1 ${isAr ? 'flex-row-reverse justify-end' : ''}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
           <span className={isAr ? 'font-arabic' : 'font-grotesk'}>
             {isAr ? 'متصل · يرد ٢٤/٧' : 'Online · Replies 24/7'}
           </span>
         </p>
       </div>
     </motion.div>
+  )
+}
+
+function ProgressDots({ stage }: { stage: number }) {
+  return (
+    <div className="flex items-center justify-center gap-2 py-3" dir="ltr">
+      {[1, 2, 3, 4, 5].map(s => (
+        <motion.div
+          key={s}
+          animate={{
+            width: s === stage ? 20 : 6,
+            opacity: s < stage ? 0.4 : s === stage ? 1 : 0.2,
+          }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            height: 6,
+            borderRadius: 99,
+            background: s <= stage ? '#BF8D38' : 'rgba(255,255,255,0.4)',
+          }}
+        />
+      ))}
+    </div>
   )
 }
 
@@ -108,35 +126,41 @@ export default function ConversationalLanding() {
 
   if (!hydrated) {
     return (
-      <div className="min-h-screen bg-ms-ivory-0 flex items-center justify-center">
-        <div className="w-5 h-5 rounded-full border-2 border-ms-green-800 border-t-transparent animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#060E09' }}>
+        <div className="w-5 h-5 rounded-full border-2 border-ms-gold-600 border-t-transparent animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-ms-ivory-0 flex flex-col" dir={isAr ? 'rtl' : 'ltr'}>
+    <div
+      className="min-h-screen flex flex-col"
+      dir={isAr ? 'rtl' : 'ltr'}
+      style={{
+        background: '#060E09',
+        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)',
+        backgroundSize: '28px 28px',
+      }}
+    >
       <SkipBar />
 
-      <div className="flex-1 flex flex-col items-center pt-14 pb-8 px-4">
-        {/* Spacer */}
-        <div className="mt-8 mb-4 w-full max-w-md">
-          {resumeFrom ? (
+      <div className="flex-1 flex flex-col items-center pt-20 pb-12 px-4">
+        {resumeFrom && (
+          <div className="mb-4 w-full max-w-md">
             <ResumeBanner
               stage={resumeFrom.stage}
               onResume={resume}
               onRestart={startFresh}
             />
-          ) : null}
-        </div>
+          </div>
+        )}
 
-        {/* Chat frame */}
         <div className="w-full max-w-md">
-          {/* Logo header */}
           <ChatHeader isAr={isAr} />
 
-          {/* Subtle divider */}
-          <div className="h-px bg-ms-ivory-200 mb-4" />
+          <div className="h-px bg-white/[0.07] mb-1" />
+
+          {state && <ProgressDots stage={state.stage} />}
 
           <ChatContainer className="min-h-[60vh]">
             {state && (
@@ -202,7 +226,7 @@ export default function ConversationalLanding() {
           </ChatContainer>
         </div>
 
-        <p className="mt-8 text-center font-mono text-[10px] text-ms-ink-400 tracking-wide">
+        <p className="mt-10 text-center font-mono text-[10px] text-white/20 tracking-wide">
           © {new Date().getFullYear()} MindSync · الكويت
         </p>
       </div>

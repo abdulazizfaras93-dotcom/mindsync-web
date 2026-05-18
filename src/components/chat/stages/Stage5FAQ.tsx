@@ -131,7 +131,7 @@ export default function Stage5FAQ({ isAr }: Props) {
             onClick={() => trackCtaClicked('stage5')}
             className={`
               inline-flex items-center gap-2 px-6 py-3 rounded-full
-              bg-ms-gold-600 hover:bg-ms-gold-500 text-white font-semibold text-sm
+              bg-ms-gold-600 hover:bg-ms-gold-500 text-ms-green-900 font-semibold text-sm
               transition-all duration-150 shadow-sm
               ${isAr ? 'font-arabic flex-row-reverse' : 'font-grotesk'}
             `}

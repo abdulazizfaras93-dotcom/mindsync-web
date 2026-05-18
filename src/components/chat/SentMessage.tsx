@@ -17,10 +17,10 @@ export default function SentMessage({ content, isAr, delay = 0 }: Props) {
     >
       <div
         className={`
-          max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed text-white
-          bg-ms-green-800
+          max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed
           ${isAr ? 'rounded-bl-sm font-arabic text-right' : 'rounded-br-sm font-grotesk text-left'}
         `}
+        style={{ background: '#BF8D38', color: '#0F2E22' }}
         dir={isAr ? 'rtl' : 'ltr'}
       >
         {content}

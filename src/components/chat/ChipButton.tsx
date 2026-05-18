@@ -22,13 +22,29 @@ export default function ChipButton({ label, icon, onClick, delay = 0, variant = 
       dir={isAr ? 'rtl' : 'ltr'}
       className={`
         inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium
-        border transition-all duration-150 select-none cursor-pointer
+        transition-all duration-150 select-none cursor-pointer
         ${variant === 'gold'
-          ? 'bg-ms-gold-600 border-ms-gold-600 text-white hover:bg-ms-gold-500 hover:border-ms-gold-500'
-          : 'bg-white border-ms-ivory-200 text-ms-ink-700 hover:border-ms-green-800 hover:text-ms-green-800'
+          ? 'bg-ms-gold-600 text-ms-green-900 hover:bg-ms-gold-500'
+          : 'text-white/80 hover:text-white'
         }
         ${isAr ? 'font-arabic' : 'font-grotesk'}
       `}
+      style={variant === 'default' ? {
+        background: 'rgba(255,255,255,0.07)',
+        border: '1px solid rgba(255,255,255,0.13)',
+      } : undefined}
+      onMouseEnter={variant === 'default' ? (e) => {
+        const el = e.currentTarget as HTMLButtonElement
+        el.style.background = 'rgba(191,141,56,0.12)'
+        el.style.border = '1px solid rgba(191,141,56,0.35)'
+        el.style.color = '#D4A85A'
+      } : undefined}
+      onMouseLeave={variant === 'default' ? (e) => {
+        const el = e.currentTarget as HTMLButtonElement
+        el.style.background = 'rgba(255,255,255,0.07)'
+        el.style.border = '1px solid rgba(255,255,255,0.13)'
+        el.style.color = ''
+      } : undefined}
     >
       {icon && <span>{icon}</span>}
       {label}
