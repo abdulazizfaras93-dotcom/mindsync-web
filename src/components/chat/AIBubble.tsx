@@ -31,7 +31,7 @@ export default function AIBubble({ content, isAr, delay = 0 }: Props) {
       {/* Bubble */}
       <div
         className={`
-          max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed text-white/92
+          max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed text-white
           whitespace-pre-line backdrop-blur-xl
           ${isAr ? 'rounded-br-sm font-arabic text-right' : 'rounded-bl-sm font-grotesk text-left'}
         `}
