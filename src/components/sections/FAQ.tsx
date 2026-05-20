@@ -42,11 +42,11 @@ const FAQS = [
   {
     en: {
       q: 'What does the monthly subscription cover?',
-      a: 'The monthly subscription (159 KWD) fully includes:\n• All AI API and infrastructure costs\n• 1,000 conversations / month\n• 24/7 monitoring and bug fixes\n• Free monthly AI retraining on receipts and business updates\n• Dedicated account manager\n• Regular updates and improvements\n\nIf you exceed 1,000 conversations: +30 KWD for every additional 500 conversations.',
+      a: 'The monthly subscription (159 KWD) fully includes:\n• All AI API and infrastructure costs\n• 1,000 conversations / month\n• 24/7 monitoring and bug fixes\n• Free monthly AI retraining on receipts and business updates\n• Dedicated account manager\n• Regular updates and improvements\n\nFair Use overage:\n• 1,001–2,000 conversations: +30 KWD / mo\n• 2,001+ conversations: +60 KWD / mo',
     },
     ar: {
       q: 'شنو يشمل الاشتراك الشهري؟',
-      a: 'الاشتراك الشهري (١٥٩ د.ك) يشمل بالكامل:\n• كل تكاليف الـ AI APIs والـ infrastructure\n• ١٬٠٠٠ محادثة شهرياً مشمولة\n• مراقبة ٢٤/٧ وإصلاح أي عطل\n• إعادة تدريب الـ AI شهرياً بناءً على receipts ومستجدات مشروعك — بلاءً علينا\n• Account manager مخصص\n• تحديثات وتحسينات دورية\n\nلو تجاوزت ١٬٠٠٠ محادثة، الرسوم الإضافية: +٣٠ د.ك لكل ٥٠٠ محادثة إضافية.',
+      a: 'الاشتراك الشهري (١٥٩ د.ك) يشمل بالكامل:\n• كل تكاليف الـ AI APIs والـ infrastructure\n• ١٬٠٠٠ محادثة شهرياً مشمولة\n• مراقبة ٢٤/٧ وإصلاح أي عطل\n• إعادة تدريب الـ AI شهرياً بناءً على receipts ومستجدات مشروعك — بلاءً علينا\n• Account manager مخصص\n• تحديثات وتحسينات دورية\n\nرسوم Fair Use الإضافية:\n• ١٬٠٠١–٢٬٠٠٠ محادثة: +٣٠ د.ك / شهر\n• ٢٬٠٠١+ محادثة: +٦٠ د.ك / شهر',
     },
   },
   {

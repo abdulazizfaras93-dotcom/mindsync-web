@@ -40,7 +40,7 @@ const t = {
     en: 'The intelligent system that replies, books, follows up,\nand analyzes — 24/7. Like having a full team, without one.',
     ar: 'المنظومة الذكية اللي ترد، تحجز، تتابع، وتحلل ٢٤/٧.\nكأن عندك فريق كامل — بدون فريق.',
   },
-  cta1:   { en: 'Start Your Free Trial →',  ar: 'ابدأ تجربتك المجانية ←' },
+  cta1:   { en: 'Start Your Free Trial',  ar: 'ابدأ تجربتك المجانية' },
   cta2:   { en: 'See How It Works',         ar: 'شوف شلون يشتغل' },
   stat1l: { en: 'Days to launch',           ar: 'أيام للإطلاق' },
   stat2l: { en: 'Complete system',          ar: 'منظومة شاملة' },
@@ -91,7 +91,7 @@ export default function Hero() {
 
   const stats = [
     { count: 7,    suffix: '',  display: null,   label: t.stat1l[lang] },
-    { count: 1,    suffix: '',  display: null,   label: t.stat2l[lang] },
+    { count: null, suffix: '',  display: '1',    label: t.stat2l[lang] },
     { count: null, suffix: '',  display: '24/7', label: t.stat3l[lang] },
     { count: 100,  suffix: '%', display: null,   label: t.stat4l[lang] },
   ]

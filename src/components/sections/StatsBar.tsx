@@ -5,7 +5,7 @@ import { useLang } from '@/lib/lang'
 
 const STATS = [
   { value: 7,    suffix: '',   isStatic: false, label: { en: 'Days to Launch',    ar: 'أيام للإطلاق' } },
-  { value: 1,    suffix: '',   isStatic: false, label: { en: 'Complete System',   ar: 'منظومة شاملة' } },
+  { value: null, suffix: '',   isStatic: true,  staticVal: '1', label: { en: 'Complete System',   ar: 'منظومة شاملة' } },
   { value: null, suffix: '/7', isStatic: true,  staticVal: '24', label: { en: 'Uptime',         ar: 'وقت التشغيل' } },
   { value: 100,  suffix: '%',  isStatic: false, label: { en: 'Data Ownership',   ar: 'البيانات تبقى لك' } },
 ]

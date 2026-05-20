@@ -16,6 +16,7 @@ export default function Stage1Greeting({ isAr, onSelect }: Props) {
   const [visibleCount, setVisibleCount] = useState(0)
   const [typing, setTyping] = useState(true)
   const [showChips, setShowChips] = useState(false)
+  const [selected, setSelected] = useState<BusinessCategory | null>(null)
 
   useEffect(() => {
     // Reveal 3 bubbles in sequence, then show chips
@@ -31,6 +32,12 @@ export default function Stage1Greeting({ isAr, onSelect }: Props) {
     }, ms))
     return () => timeouts.forEach(clearTimeout)
   }, [])
+
+  const handleSelect = (cat: BusinessCategory) => {
+    setSelected(cat)
+    // Slight delay so user sees the selected state before advancing
+    setTimeout(() => onSelect(cat), 200)
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -53,9 +60,10 @@ export default function Stage1Greeting({ isAr, onSelect }: Props) {
               key={cat.id}
               icon={cat.icon}
               label={isAr ? cat.ar : cat.en}
-              onClick={() => onSelect(cat.id)}
-              delay={i * 0.04}
+              onClick={() => handleSelect(cat.id)}
+              delay={i * 0.07}
               isAr={isAr}
+              selected={selected === cat.id}
             />
           ))}
         </div>
