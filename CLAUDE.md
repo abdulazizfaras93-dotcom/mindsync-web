@@ -163,6 +163,23 @@ All loaded with `dynamic(..., { ssr: false })`:
 #### `src/components/providers/`
 - `SmoothScroll.tsx` — Lenis smooth scroll. `duration: 1.15`, exponential easing. All Framer Motion `useScroll` hooks feed off this loop.
 
+#### `src/components/chat/` — Conversational Landing
+
+WhatsApp-style 5-stage chat flow. Entry point: `ConversationalLanding.tsx` (orchestrator). Rendered as an alternative to the default homepage sections.
+
+Stage flow:
+1. `Stage1Greeting` — opening message + language/greeting chips
+2. `Stage2BusinessType` — 14-category business picker (from `HOME_BUSINESS_CATEGORIES`)
+3. `Stage3PainPoints` — selects pain keys relevant to the chosen category
+4. `Stage4Pricing` — shows MindSync Complete pricing card
+5. `Stage5FAQ` — inline FAQ + final CTA
+
+Supporting components: `AIBubble.tsx`, `SentMessage.tsx`, `TypingIndicator.tsx`, `ChipButton.tsx`, `SkipBar.tsx`, `ResumeBanner.tsx`, `ChatContainer.tsx` (auto-scroll, 80ms delay), `LiveDemoChat.tsx`, `AnimatedDemo.tsx`.
+
+Types: `src/types/conversation.ts` — `ConversationState`, `BusinessCategory`, `PainKey`.
+Persistence: `src/lib/conversation/storage.ts` — `loadState / saveState / clearState` (localStorage).
+Analytics: `src/lib/conversation/analytics.ts` — `trackCategorySelected`, `trackPainSelected`, `trackStageReached`.
+
 ---
 
 ### Animation system
@@ -205,6 +222,19 @@ Sitemap auto-generates via `src/app/sitemap.ts`. Covers `/`, `/discovery`, `/ser
 
 ---
 
+### Sentry
+
+Error tracking is configured for all three Next.js runtimes:
+- `sentry.client.config.ts` — browser (replay integration, 10% session / 100% error capture)
+- `sentry.server.config.ts` — Node server
+- `sentry.edge.config.ts` — edge runtime
+- `src/instrumentation.ts` — Next.js instrumentation hook, imports Sentry server/edge init
+- `src/instrumentation-client.ts` — client-side instrumentation entry
+
+DSN and org slug are set via `NEXT_PUBLIC_SENTRY_DSN` / `SENTRY_ORG` / `SENTRY_PROJECT` env vars. Sentry releases are created automatically by `@sentry/nextjs` during Netlify builds via `withSentryConfig` in `next.config.ts`.
+
+---
+
 ## Brand rules
 
 Gulf Premium palette — **never** introduce navy, teal, indigo, or purple.
@@ -235,10 +265,19 @@ Integration logos: `public/brand/integrations/*.svg` or runtime `cdn.simpleicons
 git add src/lib/data.ts src/components/sections/Bundles.tsx
 git status   # review every staged file before committing
 git commit -m "feat: ..."
-git push origin main   # Netlify auto-builds
+git push origin main   # Netlify auto-builds (MindSyncWeb only)
 ```
 
 > OneDrive can surface MindSync parent directory files inside the repo — `-A` will accidentally stage them (happened in Apr 2026, leaked PDFs to public repo).
+
+**Admin dashboard** (`admin.mindsynckw.com`, Netlify site `83d10da9-db73-4aa3-9421-7c36ad8cf77a`) does **NOT** auto-deploy on git push. It lives in `C:\Users\iAbdu\OneDrive\Desktop\MindSync\app\` and deploys via CLI:
+
+```bash
+# Run from C:\Users\iAbdu\OneDrive\Desktop\MindSync\app\
+npm run build
+cp -r dist /c/tmp/admin-dist   # copy out of OneDrive before deploy (OneDrive reverts dist/)
+netlify deploy --no-build --prod --site 83d10da9-db73-4aa3-9421-7c36ad8cf77a --dir /c/tmp/admin-dist
+```
 
 ---
 
