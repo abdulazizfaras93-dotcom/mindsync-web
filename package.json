@@ -11,8 +11,6 @@
     "@gsap/react": "^2.1.2",
     "@number-flow/react": "^0.6.0",
     "@radix-ui/react-slot": "^1.2.4",
-    "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^8.17.10",
     "@sentry/nextjs": "^10.53.1",
     "animejs": "^4.4.1",
     "class-variance-authority": "^0.7.1",
@@ -24,8 +22,7 @@
     "next": "^14.2.32",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^3.6.0",
-    "three": "^0.170.0"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@types/node": "^20",

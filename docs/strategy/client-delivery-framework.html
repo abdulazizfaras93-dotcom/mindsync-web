@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindSync — Client Discovery, Build Brief & Delivery Roadmap</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ms-green: #153E2D;
+    --ms-green-dark: #0F2E22;
+    --ms-gold: #BF8D38;
+    --ms-ivory: #FBFAF5;
+    --ms-ivory-2: #F5F3EC;
+    --ms-ink: #0E1512;
+    --ms-muted: #4A5550;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--ms-ivory);
+    color: var(--ms-ink);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* PRINT */
+  @media print {
+    body { font-size: 11px; }
+    .no-print { display: none; }
+    .page-break { page-break-before: always; }
+    .part { page-break-inside: avoid; }
+    a { color: var(--ms-ink); text-decoration: none; }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 32px; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--ms-green-dark), var(--ms-green));
+    color: white;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    border-radius: 4px;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ms-gold); letter-spacing: 2px; text-transform: uppercase; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .header .subtitle { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .date-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ms-gold); background: rgba(191,141,56,0.15); padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
+
+  /* PART HEADER */
+  .part-header {
+    background: var(--ms-green);
+    color: white;
+    padding: 12px 20px;
+    margin: 36px 0 0 0;
+    border-radius: 3px 3px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .part-number { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ms-gold); letter-spacing: 1px; }
+  .part-title { font-size: 14px; font-weight: 600; }
+  .part-body { border: 1px solid #D8D4C8; border-top: none; padding: 24px; margin-bottom: 4px; background: white; border-radius: 0 0 3px 3px; }
+
+  /* BLOCK */
+  .block { margin-bottom: 24px; }
+  .block:last-child { margin-bottom: 0; }
+  .block-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .block-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--ms-gold); color: white; padding: 2px 8px; border-radius: 2px; letter-spacing: 1px; text-transform: uppercase; }
+  .block-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ms-muted); }
+  .block h3 { font-size: 13px; font-weight: 600; color: var(--ms-green); }
+
+  /* QUESTIONS */
+  .questions { list-style: none; padding: 0; }
+  .questions li { padding: 5px 0 5px 16px; border-bottom: 1px solid var(--ms-ivory-2); position: relative; color: var(--ms-ink); }
+  .questions li:last-child { border-bottom: none; }
+  .questions li::before { content: '—'; position: absolute; left: 0; color: var(--ms-gold); font-weight: 600; }
+
+  /* CALLOUT */
+  .callout { background: var(--ms-ivory-2); border-left: 3px solid var(--ms-gold); padding: 10px 14px; margin-top: 12px; font-size: 12px; font-style: italic; color: var(--ms-green); border-radius: 0 2px 2px 0; }
+  .callout strong { font-style: normal; }
+
+  /* NOTE */
+  .note { background: #FFF8EC; border: 1px solid #E8D5A0; padding: 8px 12px; border-radius: 3px; font-size: 11px; color: #7A5C1A; margin-top: 8px; }
+
+  /* FORM FIELDS */
+  .form-grid { display: grid; grid-template-columns: 160px 1fr; gap: 0; }
+  .form-row { display: contents; }
+  .form-row .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ms-muted); padding: 6px 8px 6px 0; border-bottom: 1px solid var(--ms-ivory-2); display: flex; align-items: center; }
+  .form-row .field { border-bottom: 1px solid var(--ms-ivory-2); padding: 6px 0; position: relative; }
+  .form-row .field::after { content: ''; display: block; border-bottom: 1px solid #C8C4B8; margin-top: 2px; }
+  .form-row:last-child .label, .form-row:last-child .field { border-bottom: none; }
+  .form-row:last-child .field::after { display: none; }
+
+  /* CHECKBOX LIST */
+  .check-list { list-style: none; padding: 0; }
+  .check-list li { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; font-size: 12px; }
+  .check-list li::before { content: '☐'; font-size: 14px; line-height: 1.2; flex-shrink: 0; color: var(--ms-green); }
+
+  /* CREDENTIALS BLOCK */
+  .cred-section { margin-bottom: 16px; }
+  .cred-section h4 { font-size: 11px; font-weight: 600; color: var(--ms-green); border-bottom: 1px solid var(--ms-gold); padding-bottom: 4px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace; }
+  .cred-item { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px dotted #D8D4C8; font-size: 11px; }
+  .cred-item:last-child { border-bottom: none; }
+  .cred-label { color: var(--ms-muted); min-width: 180px; flex-shrink: 0; }
+  .cred-field { flex: 1; border-bottom: 1px solid #C0BBB0; min-height: 16px; }
+
+  /* INDUSTRY GRID */
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .industry-card { border: 1px solid #D8D4C8; border-radius: 3px; padding: 12px; background: var(--ms-ivory); }
+  .industry-card h4 { font-size: 11px; font-weight: 700; color: var(--ms-green); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--ms-gold); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .industry-card .cred-item { font-size: 10.5px; }
+  .industry-card .cred-label { min-width: 140px; }
+
+  /* PHASE */
+  .phase { margin-bottom: 20px; }
+  .phase-header { display: flex; align-items: center; gap: 12px; background: var(--ms-ivory-2); padding: 10px 14px; border-radius: 3px; margin-bottom: 10px; border-left: 3px solid var(--ms-green); }
+  .phase-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: white; background: var(--ms-green); padding: 2px 8px; border-radius: 2px; }
+  .phase-name { font-size: 13px; font-weight: 600; }
+  .phase-trigger { font-size: 11px; color: var(--ms-muted); font-style: italic; }
+  .phase-checklist { list-style: none; padding: 0 0 0 8px; }
+  .phase-checklist li { padding: 4px 0 4px 20px; position: relative; font-size: 12px; border-bottom: 1px solid var(--ms-ivory-2); }
+  .phase-checklist li:last-child { border-bottom: none; }
+  .phase-checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--ms-green); }
+
+  /* TRACK GRID */
+  .track-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .track { border: 1px solid #D8D4C8; border-radius: 3px; padding: 12px; }
+  .track-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: white; background: var(--ms-green); padding: 2px 8px; border-radius: 2px; display: inline-block; margin-bottom: 8px; }
+  .track ul { list-style: none; padding: 0; }
+  .track ul li { font-size: 11px; padding: 3px 0 3px 12px; position: relative; border-bottom: 1px solid var(--ms-ivory-2); }
+  .track ul li:last-child { border-bottom: none; }
+  .track ul li::before { content: '›'; position: absolute; left: 0; color: var(--ms-gold); font-weight: 700; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th { background: var(--ms-green); color: white; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 11px; }
+  tbody td { padding: 8px 12px; border-bottom: 1px solid var(--ms-ivory-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--ms-ivory); }
+
+  /* TOTALS BOX */
+  .totals-box { background: var(--ms-green-dark); color: white; padding: 16px 20px; border-radius: 3px; margin-top: 12px; }
+  .totals-box .row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .totals-box .row:last-child { border-bottom: none; padding-top: 8px; margin-top: 4px; font-weight: 700; font-size: 13px; color: var(--ms-gold); }
+  .totals-box .divider { border-top: 1px solid rgba(255,255,255,0.3); margin: 6px 0; }
+
+  /* FOOTER */
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #D8D4C8; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: var(--ms-muted); font-family: 'JetBrains Mono', monospace; }
+  .footer-brand { color: var(--ms-green); font-weight: 600; }
+
+  /* SUBHEADING */
+  h4.sub { font-size: 12px; color: var(--ms-green); margin: 16px 0 8px; font-weight: 600; }
+
+  /* SECTION DIVIDER */
+  .divider { border: none; border-top: 1px solid #D8D4C8; margin: 24px 0; }
+
+  /* PRINT BUTTON */
+  .print-btn { position: fixed; top: 20px; right: 20px; background: var(--ms-green); color: white; border: none; padding: 10px 20px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; z-index: 100; }
+  .print-btn:hover { background: var(--ms-green-dark); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">MindSync · Internal Reference</div>
+      <div class="date-badge">2026-05-03</div>
+    </div>
+    <h1>Client Discovery, Build Brief & Delivery Roadmap</h1>
+    <div class="subtitle">Operational framework — from first conversation to live AI system, across all 8 industries</div>
+  </div>
+
+  <!-- PART 1: DISCOVERY CALL GUIDE -->
+  <div class="part">
+    <div class="part-header">
+      <span class="part-number">PART 01</span>
+      <span class="part-title">The Discovery Call Guide</span>
+    </div>
+    <div class="part-body">
+      <p style="margin-bottom:16px; font-size:12px; color:var(--ms-muted);">Run through this on WhatsApp or a call. ~15–20 minutes. Client talks, MindSync notes. No forms for the client to fill. After this call you have everything to fill the Build Brief and write the proposal.</p>
+
+      <!-- Block 1 -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-tag">Block 1</span>
+          <span class="block-time">2 min</span>
+          <h3>Business Identity</h3>
+        </div>
+        <ul class="questions">
+          <li>Business name + industry</li>
+          <li>How long have they been operating?</li>
+          <li>Owner-operated, or do they have staff? How many?</li>
+          <li>Primary language with customers — Arabic, English, or both?</li>
+          <li>Which platforms are they active on? (WhatsApp, Instagram, website, Google Maps, Snapchat, TikTok)</li>
+        </ul>
+      </div>
+
+      <!-- Block 2 -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-tag">Block 2</span>
+          <span class="block-time">5 min</span>
+          <h3>The Pain</h3>
+        </div>
+        <ul class="questions">
+          <li>How do customers contact you today? (WhatsApp, phone, walk-in, Instagram DMs)</li>
+          <li>How many messages or calls do you get per day roughly?</li>
+          <li>Who replies — you, a staff member, or does it go unanswered?</li>
+          <li>What happens when you miss a message?</li>
+          <li>Do you follow up with customers after they visit?</li>
+          <li>Have you tried any tool, app, or staff to fix this? What happened?</li>
+        </ul>
+      </div>
+
+      <!-- Block 3 -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-tag">Block 3</span>
+          <span class="block-time">5 min</span>
+          <h3>Business Content</h3>
+        </div>
+        <ul class="questions">
+          <li>List your services and their prices (or "send me your menu / price list")</li>
+          <li>Working hours — daily schedule including weekends</li>
+          <li>Address / area (for Google Maps link in agent responses)</li>
+          <li>Any active promotions or seasonal offers?</li>
+          <li>What should the agent <strong>never</strong> say or offer?</li>
+          <li>How do you currently handle bookings? (WhatsApp, Google Calendar, booking app, walk-in)</li>
+          <li>Agent confirms bookings directly, or collects request and staff follows up?</li>
+        </ul>
+      </div>
+
+      <!-- Block 4 -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-tag">Block 4</span>
+          <span class="block-time">3 min</span>
+          <h3>Channels & Platforms</h3>
+        </div>
+        <ul class="questions">
+          <li>Do you have a <strong>WhatsApp Business account</strong> (not personal WhatsApp)?</li>
+          <li>Do you manage your own Instagram DMs, or does someone else?</li>
+          <li>Do you have a website? If yes, what's the URL?</li>
+          <li>Do you use any booking system, CRM, or Google Calendar?</li>
+          <li>Do you have a Google account linked to the business?</li>
+        </ul>
+        <h4 class="sub">If Website ordered:</h4>
+        <ul class="questions">
+          <li>Photos, logo, and written content ready — or do you need help?</li>
+          <li>Any website you liked the look of? (Send me a link)</li>
+          <li>Main job of the website — show services, take bookings, or both?</li>
+        </ul>
+        <h4 class="sub">If Mobile App ordered:</h4>
+        <ul class="questions">
+          <li>Who is the app for — customers, staff, or both?</li>
+          <li>The one thing the app must do? (Bookings / Loyalty / Ordering / Tracking)</li>
+          <li>iOS, Android, or both?</li>
+        </ul>
+      </div>
+
+      <!-- Block 5 -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-tag">Block 5</span>
+          <span class="block-time">2 min</span>
+          <h3>Expectations & Access</h3>
+        </div>
+        <ul class="questions">
+          <li>What's the #1 thing you want handled automatically?</li>
+          <li>Any concerns about an AI agent talking to your customers?</li>
+          <li>Is there a deadline or upcoming season driving the go-live date?</li>
+          <li>Who will be the point of contact for approvals during the build?</li>
+        </ul>
+        <div class="callout"><strong>End of call — say this:</strong> "After we agree to work together, I'll send you a short checklist on WhatsApp — things like your Meta Business account access, logo file, and a few logins. Most of it takes 5 minutes to gather. I'll walk you through anything that's new to you."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2: BUILD BRIEF -->
+  <div class="part page-break">
+    <div class="part-header">
+      <span class="part-number">PART 02</span>
+      <span class="part-title">The Build Brief</span>
+    </div>
+    <div class="part-body">
+      <p style="margin-bottom:16px; font-size:12px; color:var(--ms-muted);">Filled by MindSync after the discovery call (~5 min). Single reference doc for agent config, website scope, app scope, proposal numbers, and credentials.</p>
+
+      <!-- Part A -->
+      <h4 class="sub">A — Client Profile</h4>
+      <div class="form-grid">
+        <div class="form-row"><div class="label">Client Name</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">Business Name</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">Industry</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Clinic · Salon · Spa · Gym · Garage · Restaurant · Real Estate · Home Business · Custom</div></div>
+        <div class="form-row"><div class="label">Language</div><div class="field" style="font-size:10px; color:var(--ms-muted);">AR · EN · Bilingual</div></div>
+        <div class="form-row"><div class="label">Tier</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Smart · Pro · Full Auto</div></div>
+        <div class="form-row"><div class="label">Services Ordered</div><div class="field" style="font-size:10px; color:var(--ms-muted);">☐ AI Agents &nbsp;&nbsp; ☐ Website &nbsp;&nbsp; ☐ App</div></div>
+        <div class="form-row"><div class="label">Point of Contact</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">Target Go-Live</div><div class="field"></div></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Part B -->
+      <h4 class="sub">B — AI Agent Configuration <span style="font-weight:400; color:var(--ms-muted); font-family:JetBrains Mono,monospace; font-size:10px;">→ maps to ⚙️ CLIENT CONFIG node in n8n</span></h4>
+      <div class="form-grid">
+        <div class="form-row"><div class="label">businessName</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">industry</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">agentName</div><div class="field" style="font-size:10px; color:var(--ms-muted);">e.g. لمى / سارة / نورة</div></div>
+        <div class="form-row"><div class="label">language</div><div class="field" style="font-size:10px; color:var(--ms-muted);">ar · en · bilingual</div></div>
+        <div class="form-row"><div class="label">services</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">workingHours</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">address</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">phoneNumberId</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">whatsappToken</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">sheetId</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">ownerPhone</div><div class="field"></div></div>
+      </div>
+      <div style="margin-top:10px; font-size:11px; color:var(--ms-muted);">
+        Channels: ☐ WhatsApp Business &nbsp; ☐ Instagram DMs &nbsp; ☐ Website Chat Widget &nbsp; ☐ Other: _______<br>
+        Booking: ☐ Agent collects → staff follows up &nbsp; ☐ Books into Google Calendar &nbsp; ☐ Redirects to: _______
+      </div>
+
+      <hr class="divider">
+
+      <!-- Part C -->
+      <h4 class="sub">C — Website Scope <span style="font-size:10px; font-weight:400; color:var(--ms-muted);">(only if ordered)</span></h4>
+      <div class="form-grid">
+        <div class="form-row"><div class="label">Type</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Landing Page 300 KWD · Business 550 KWD · Advanced 900–1,400 KWD</div></div>
+        <div class="form-row"><div class="label">Main job</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Show services · Take bookings · Both · Portfolio</div></div>
+        <div class="form-row"><div class="label">Content ready</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Yes · Partial · No (needs copywriting)</div></div>
+        <div class="form-row"><div class="label">Photos ready</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Yes · No</div></div>
+        <div class="form-row"><div class="label">Reference sites</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">Special pages</div><div class="field"></div></div>
+        <div class="form-row"><div class="label">Connect to agent</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Yes — embed chat widget · No</div></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Part D -->
+      <h4 class="sub">D — App Scope <span style="font-size:10px; font-weight:400; color:var(--ms-muted);">(only if ordered)</span></h4>
+      <div class="form-grid">
+        <div class="form-row"><div class="label">Type</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Simple 2,000–2,500 KWD · Advanced 3,500–6,000 KWD</div></div>
+        <div class="form-row"><div class="label">Users</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Customers · Staff · Both</div></div>
+        <div class="form-row"><div class="label">Core feature</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Bookings · Loyalty · Ordering · Tracking · Other</div></div>
+        <div class="form-row"><div class="label">Platform</div><div class="field" style="font-size:10px; color:var(--ms-muted);">iOS · Android · Both</div></div>
+        <div class="form-row"><div class="label">Connect to agent</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Yes · No</div></div>
+        <div class="form-row"><div class="label">Login required</div><div class="field" style="font-size:10px; color:var(--ms-muted);">Yes · No</div></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Part E -->
+      <h4 class="sub">E — Proposal Numbers <span style="font-size:10px; font-weight:400; color:var(--ms-muted);">Pull from data.ts — never quote from memory</span></h4>
+      <div class="totals-box">
+        <div class="row"><span>AI Agent Build Fee</span><span>___ KWD</span></div>
+        <div class="row"><span>AI Agent Retainer</span><span>___ KWD/mo</span></div>
+        <div class="row"><span>Website (if ordered)</span><span>___ KWD + 80 KWD/mo</span></div>
+        <div class="row"><span>App (if ordered)</span><span>___ KWD + 150 KWD/mo</span></div>
+        <div class="divider"></div>
+        <div class="row"><span>Total Build</span><span>___ KWD</span></div>
+        <div class="row" style="font-size:11px; font-weight:400; color:rgba(255,255,255,0.7);"><span>&nbsp;&nbsp;→ 50% due upfront</span><span>___ KWD</span></div>
+        <div class="row" style="font-size:11px; font-weight:400; color:rgba(255,255,255,0.7);"><span>&nbsp;&nbsp;→ 50% due at go-live</span><span>___ KWD</span></div>
+        <div class="row"><span>Total Monthly (from go-live)</span><span>___ KWD/mo</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2F: CREDENTIALS -->
+  <div class="part page-break">
+    <div class="part-header">
+      <span class="part-number">PART 02F</span>
+      <span class="part-title">Credentials & Access</span>
+    </div>
+    <div class="part-body">
+      <p style="margin-bottom:16px; font-size:12px; color:var(--ms-muted);">Collected in Phase 0. Warn client during Block 4 of discovery call. Store securely — never share or expose.</p>
+
+      <!-- Universal -->
+      <div class="cred-section">
+        <h4>Universal — Every Client</h4>
+        <h4 class="sub" style="font-size:11px;">WhatsApp Business API</h4>
+        <div class="cred-item"><span class="cred-label">Meta Business Manager URL</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">WhatsApp Business Account ID</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Phone Number ID</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Permanent System User Token</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Verified phone number</span><span class="cred-field"></span></div>
+        <div class="note">If no Meta Business API yet — Phase 0 setup task. Allow 1–3 days for Meta verification. Start immediately.</div>
+
+        <h4 class="sub" style="font-size:11px; margin-top:12px;">Google Access</h4>
+        <div class="cred-item"><span class="cred-label">Google account email</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Google Calendar access</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Share with agent's account (Editor)</span></div>
+        <div class="cred-item"><span class="cred-label">Google My Business</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Owner access</span></div>
+
+        <h4 class="sub" style="font-size:11px; margin-top:12px;">Social Media</h4>
+        <div class="cred-item"><span class="cred-label">Instagram connected to Meta?</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Yes · No</span></div>
+        <div class="cred-item"><span class="cred-label">Instagram username + type</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Business · Creator · Personal</span></div>
+        <div class="cred-item"><span class="cred-label">Facebook Page ID</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Snapchat handle</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">TikTok handle</span><span class="cred-field"></span></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Website creds -->
+      <div class="cred-section">
+        <h4>If Website Ordered</h4>
+        <div class="cred-item"><span class="cred-label">Domain registrar login</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">GoDaddy / Namecheap / SaudiNIC — or DNS access only</span></div>
+        <div class="cred-item"><span class="cred-label">Existing hosting login</span><span class="cred-field"></span></div>
+        <div class="cred-item"><span class="cred-label">Existing CMS login</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">WordPress / Webflow / etc.</span></div>
+        <div class="cred-item"><span class="cred-label">Google Analytics</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Existing or create new</span></div>
+        <div class="cred-item"><span class="cred-label">Google Search Console</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Existing or create new</span></div>
+        <div style="margin-top:8px; font-size:11px; color:var(--ms-muted);">
+          Brand assets: ☐ Logo (SVG/PNG) &nbsp; ☐ Brand colors &nbsp; ☐ Photos &nbsp; ☐ Services list &nbsp; ☐ About us text &nbsp; ☐ PDFs (menu/brochure)
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- App creds -->
+      <div class="cred-section">
+        <h4>If App Ordered</h4>
+        <div class="cred-item"><span class="cred-label">Apple Developer Account</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Existing or MindSync creates ($99/yr — client pays)</span></div>
+        <div class="cred-item"><span class="cred-label">Google Play Console</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Existing or MindSync creates ($25 — client pays)</span></div>
+        <div class="cred-item"><span class="cred-label">Payment gateway API key</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">KNET / MyFatoorah / Tap / HyperPay / Moyasar</span></div>
+        <div class="cred-item"><span class="cred-label">App Store legal info</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Legal name + address (required for publishing)</span></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Per-industry -->
+      <h4 style="font-size:11px; font-weight:700; color:var(--ms-green); margin-bottom:12px; font-family:JetBrains Mono,monospace; text-transform:uppercase;">Per-Industry Credentials</h4>
+      <div class="industry-grid">
+
+        <div class="industry-card">
+          <h4>Clinic / Medical</h4>
+          <div class="cred-item"><span class="cred-label">Booking system login</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Staff schedule</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Calendar share or screenshot</span></div>
+          <div class="cred-item"><span class="cred-label">Insurance accepted</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Clinic license number</span><span class="cred-field"></span></div>
+          <div class="note" style="font-size:10px;">Agent never accesses patient records. Books only.</div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Salon / Spa</h4>
+          <div class="cred-item"><span class="cred-label">Booking platform</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Fresha / Vagaro / Booksy</span></div>
+          <div class="cred-item"><span class="cred-label">Staff roster</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Name + speciality</span></div>
+          <div class="cred-item"><span class="cred-label">Service menu + durations</span><span class="cred-field"></span></div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Gym / Fitness</h4>
+          <div class="cred-item"><span class="cred-label">Membership system</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">Mindbody / GymMaster</span></div>
+          <div class="cred-item"><span class="cred-label">Class schedule</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">PDF or Google Sheet</span></div>
+          <div class="cred-item"><span class="cred-label">Trainer profiles</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Membership tiers + prices</span><span class="cred-field"></span></div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Garage / Auto</h4>
+          <div class="cred-item"><span class="cred-label">Service rate card (KWD)</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Accepted car brands</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Job tracking method</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">WhatsApp / Paper / Software</span></div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Restaurant / Café</h4>
+          <div class="cred-item"><span class="cred-label">Full menu</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">PDF or image</span></div>
+          <div class="cred-item"><span class="cred-label">Talabat portal login</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Carriage / Hungerstation</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">POS system login</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Allergen / dietary info</span><span class="cred-field"></span></div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Real Estate</h4>
+          <div class="cred-item"><span class="cred-label">CRM login</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Property listings sheet</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Bayut / Property Finder</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Agent roster</span><span class="cred-field"></span></div>
+        </div>
+
+        <div class="industry-card">
+          <h4>Home Business</h4>
+          <div class="cred-item"><span class="cred-label">Product/service catalogue</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Delivery areas + fees</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Instagram shop link</span><span class="cred-field"></span></div>
+          <div class="cred-item"><span class="cred-label">Payment method</span><span class="cred-field" style="font-size:10px; color:var(--ms-muted);">KNET QR / bank / MyFatoorah</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3: DELIVERY ROADMAP -->
+  <div class="part page-break">
+    <div class="part-header">
+      <span class="part-number">PART 03</span>
+      <span class="part-title">The Delivery Roadmap</span>
+    </div>
+    <div class="part-body">
+      <p style="margin-bottom:16px; font-size:12px; color:var(--ms-muted);">AI Agent is the core track. Website and App are parallel tracks that sync at go-live. All active tracks run simultaneously.</p>
+
+      <!-- Phase 0 -->
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">PHASE 0</span>
+          <span class="phase-name">Kickoff — Day 0</span>
+          <span class="phase-trigger">Triggered when contract signed + 50% upfront received</span>
+        </div>
+        <ul class="phase-checklist">
+          <li>Send client "We've started" WhatsApp message</li>
+          <li>Create client's Project in self-hosted n8n (agents.mindsynckw.com)</li>
+          <li>Create client's Google Sheet (copy master template)</li>
+          <li>Fill Build Brief Parts A–F</li>
+          <li>Collect all credentials from Part F checklist</li>
+          <li>If no Meta Business API: start verification immediately (1–3 days)</li>
+          <li>Duplicate Universal Receptionist into client's Project → set webhook path to /webhook/receptionist-{clientslug}</li>
+          <li>Open active tracks: AI Agent ✅ | Website (if ordered) | App (if ordered)</li>
+          <li>Add client to Admin Dashboard</li>
+        </ul>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">PHASE 1</span>
+          <span class="phase-name">Build — Days 1–X</span>
+          <span class="phase-trigger">All active tracks run in parallel</span>
+        </div>
+        <div class="track-grid">
+          <div class="track">
+            <span class="track-label">AI AGENT TRACK</span>
+            <ul>
+              <li>Configure ⚙️ CLIENT CONFIG node from Part B</li>
+              <li>Load knowledge base: services, hours, FAQs, tone, escalation</li>
+              <li>Connect channels: WhatsApp, Instagram, website widget</li>
+              <li>Internal test: 10 scenarios in both languages</li>
+            </ul>
+          </div>
+          <div class="track">
+            <span class="track-label">WEBSITE TRACK</span>
+            <ul>
+              <li>Scaffold Next.js from MindSync template</li>
+              <li>Build sections from Part C scope</li>
+              <li>Embed AI Agent chat widget</li>
+              <li>Internal review before showing client</li>
+            </ul>
+          </div>
+          <div class="track">
+            <span class="track-label">APP TRACK</span>
+            <ul>
+              <li>Scaffold from MindSync app template</li>
+              <li>Build core feature from Part D</li>
+              <li>Connect to agent backend</li>
+              <li>Internal review before showing client</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkpoint 1 -->
+      <div class="phase">
+        <div class="phase-header" style="border-left-color: var(--ms-gold);">
+          <span class="phase-num" style="background:var(--ms-gold);">CHECK 1</span>
+          <span class="phase-name">Client Review</span>
+          <span class="phase-trigger">Max 1 round · max 3 revision items per track · scope locks after this</span>
+        </div>
+        <ul class="phase-checklist">
+          <li>AI Agent: give client a test WhatsApp number to message freely</li>
+          <li>Website: share Netlify preview link</li>
+          <li>App: share TestFlight link (iOS) or APK (Android)</li>
+          <li>Collect feedback · address all items before Phase 2</li>
+        </ul>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">PHASE 2</span>
+          <span class="phase-name">Refine & Connect</span>
+          <span class="phase-trigger">Apply feedback + wire all tracks together</span>
+        </div>
+        <ul class="phase-checklist">
+          <li>Apply all Checkpoint 1 feedback across active tracks</li>
+          <li>Wire: Website chat widget → AI Agent</li>
+          <li>Wire: App bookings → Google Calendar / agent backend</li>
+          <li>Wire: All channels → unified Google Sheet CRM log</li>
+          <li>End-to-end test: full customer journey across all active channels</li>
+          <li>Prepare go-live checklist</li>
+        </ul>
+      </div>
+
+      <!-- Checkpoint 2 -->
+      <div class="phase">
+        <div class="phase-header" style="border-left-color: var(--ms-gold);">
+          <span class="phase-num" style="background:var(--ms-gold);">CHECK 2</span>
+          <span class="phase-name">Final Sign-Off</span>
+          <span class="phase-trigger">15-min WhatsApp call · invoice 2nd 50% · collect before activating</span>
+        </div>
+        <ul class="phase-checklist">
+          <li>Full live walkthrough of the connected system</li>
+          <li>Staff micro-training: what the agent does, escalates, how to read the Sheet</li>
+          <li>Client confirms verbally or via WhatsApp</li>
+          <li>Collect 50% final payment before go-live activation</li>
+        </ul>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">PHASE 3</span>
+          <span class="phase-name">Go-Live</span>
+          <span class="phase-trigger">First retainer charge processed on this day</span>
+        </div>
+        <ul class="phase-checklist">
+          <li>Activate all n8n workflows on agents.mindsynckw.com</li>
+          <li>Point website domain (if applicable)</li>
+          <li>Submit app to App Store / Google Play (if applicable)</li>
+          <li>Monitor first 48 hours — Google Sheet for activity, errors, escalations</li>
+          <li>Send client "You're live" WhatsApp with Client Portal link</li>
+          <li>Update client status to Active in Admin Dashboard</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 4 & 5: TERMS + TIMELINE -->
+  <div class="part">
+    <div class="part-header">
+      <span class="part-number">PART 04</span>
+      <span class="part-title">Commercial Terms & Timeline Estimates</span>
+    </div>
+    <div class="part-body">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+        <div>
+          <h4 class="sub">Commercial Terms</h4>
+          <table>
+            <thead><tr><th>Item</th><th>Rule</th></tr></thead>
+            <tbody>
+              <tr><td>Payment split</td><td>50% upfront · 50% at go-live</td></tr>
+              <tr><td>Retainer start</td><td>Go-live day — charged immediately</td></tr>
+              <tr><td>Revisions included</td><td>1 round per checkpoint (max 3 items/track)</td></tr>
+              <tr><td>Post-go-live additions</td><td>Always quoted separately</td></tr>
+              <tr><td>Communication</td><td>WhatsApp only</td></tr>
+              <tr><td>Response hours</td><td>10am – 10pm, Sun–Thu</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 class="sub">Delivery Timeline Estimates</h4>
+          <table>
+            <thead><tr><th>Services Ordered</th><th>Estimated</th></tr></thead>
+            <tbody>
+              <tr><td>AI Agents only</td><td>~7 business days</td></tr>
+              <tr><td>AI Agents + Website</td><td>~10–14 days</td></tr>
+              <tr><td>AI Agents + App</td><td>~14–21 days</td></tr>
+              <tr><td>All three</td><td>~21–30 days</td></tr>
+            </tbody>
+          </table>
+          <div class="note" style="margin-top:8px;">Assumes credentials on Day 0 + client feedback within 24h of each checkpoint.</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <h4 class="sub">Ongoing Maintenance</h4>
+      <table>
+        <thead><tr><th>Timeline</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Week 4</td><td>First performance summary: messages handled, bookings made, escalations</td></tr>
+          <tr><td>Month 2</td><td>Check-in: new services, changed hours, new promotions?</td></tr>
+          <tr><td>Month 2</td><td>Upsell conversation: Smart → Pro? New channels?</td></tr>
+          <tr><td>Month 3+</td><td>Quarterly knowledge base refresh + retainer renewal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-brand">MindSync</span>
+    <span>يعمالك، مؤتمتة · Your Business, Automated</span>
+    <span>admin@mindsynckw.com</span>
+  </div>
+
+</div>
+</body>
+</html>
