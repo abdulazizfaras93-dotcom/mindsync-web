@@ -7,7 +7,7 @@ import TypingIndicator from '../TypingIndicator'
 import ChipButton from '../ChipButton'
 import AnimatedDemo from '../AnimatedDemo'
 import LiveDemoChat from '../LiveDemoChat'
-import { PAINS, getStage3Message, STAGE3_DEMO_INTRO } from '@/lib/conversation/scripts'
+import { PAINS, getStage3Message, getStage4Message, STAGE3_DEMO_INTRO } from '@/lib/conversation/scripts'
 import type { BusinessCategory, PainKey } from '@/types/conversation'
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Stage3Solution({ isAr, category, pain, onNext }: Props) {
-  const [phase, setPhase] = useState<'typing1' | 'solution' | 'typing2' | 'demo-intro' | 'demo' | 'live-toggle' | 'live'>('typing1')
+  const [phase, setPhase] = useState<'typing1' | 'solution' | 'intro' | 'typing2' | 'demo-intro' | 'demo' | 'live-toggle' | 'live'>('typing1')
   const [showLiveDemo, setShowLiveDemo] = useState(false)
 
   const painItem = PAINS.find(p => p.id === pain)
@@ -26,11 +26,12 @@ export default function Stage3Solution({ isAr, category, pain, onNext }: Props) 
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase('solution'), 800)
-    const t2 = setTimeout(() => setPhase('typing2'), 1600)
-    const t3 = setTimeout(() => setPhase('demo-intro'), 2400)
-    const t4 = setTimeout(() => setPhase('demo'), 2900)
-    const t5 = setTimeout(() => setPhase('live-toggle'), 10000)
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5) }
+    const t2 = setTimeout(() => setPhase('intro'), 1700)
+    const t3 = setTimeout(() => setPhase('typing2'), 2500)
+    const t4 = setTimeout(() => setPhase('demo-intro'), 3300)
+    const t5 = setTimeout(() => setPhase('demo'), 3800)
+    const t6 = setTimeout(() => setPhase('live-toggle'), 11000)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6) }
   }, [])
 
   return (
@@ -45,6 +46,10 @@ export default function Stage3Solution({ isAr, category, pain, onNext }: Props) 
 
       {phase !== 'typing1' && (
         <AIBubble content={getStage3Message(pain, category, isAr)} isAr={isAr} />
+      )}
+
+      {phase !== 'typing1' && phase !== 'solution' && (
+        <AIBubble content={getStage4Message(pain, isAr)} isAr={isAr} />
       )}
 
       {/* Typing → demo intro */}

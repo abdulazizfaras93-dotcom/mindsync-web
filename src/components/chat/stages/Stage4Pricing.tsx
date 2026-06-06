@@ -1,9 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import AIBubble from '../AIBubble'
+import SentMessage from '../SentMessage'
 import ChipButton from '../ChipButton'
-import { STAGE4_INTRO } from '@/lib/conversation/scripts'
+import {
+  STAGE4_INTRO, OBJECTIONS, getStage5Response, OFFER_DETAILS, DISCOVERY_LINK,
+} from '@/lib/conversation/scripts'
+import type { ObjectionKey } from '@/lib/conversation/scripts'
 import { MINDSYNC_COMPLETE } from '@/lib/data'
 import { trackCtaClicked } from '@/lib/conversation/analytics'
 
@@ -12,22 +16,35 @@ interface Props {
   onNext: () => void
 }
 
-const FEATURES: { en: string; ar: string }[] = [
-  { ar: 'كل البنية التحتية مشمولة (AI APIs + WhatsApp + Hosting)', en: 'All infrastructure included (AI APIs + WhatsApp + Hosting)' },
-  { ar: '١٬٠٠٠ محادثة شهرياً مشمولة', en: '1,000 conversations / month included' },
-  { ar: 'Setup + إدارة شهرية + إعادة تدريب', en: 'Setup + monthly management + retraining' },
-  { ar: 'أسبوع تجربة مجاناً', en: 'Free first week trial' },
-]
+interface AnsweredObjection {
+  id: ObjectionKey
+  label: string
+  response: string
+}
 
 export default function Stage4Pricing({ isAr, onNext }: Props) {
   const [showCard, setShowCard] = useState(false)
   const [showActions, setShowActions] = useState(false)
+  const [answered, setAnswered] = useState<AnsweredObjection[]>([])
+  const [remainingIds, setRemainingIds] = useState<ObjectionKey[]>(OBJECTIONS.map(o => o.id))
 
   useEffect(() => {
     const t1 = setTimeout(() => setShowCard(true), 400)
     const t2 = setTimeout(() => setShowActions(true), 900)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
+
+  const handleObjection = (id: ObjectionKey) => {
+    const obj = OBJECTIONS.find(o => o.id === id)!
+    setAnswered(prev => [...prev, {
+      id,
+      label: isAr ? obj.ar : obj.en,
+      response: getStage5Response(id, isAr),
+    }])
+    setRemainingIds(prev => prev.filter(k => k !== id))
+  }
+
+  const offer = OFFER_DETAILS[isAr ? 'ar' : 'en']
 
   return (
     <div className="flex flex-col gap-4">
@@ -82,36 +99,36 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
             {/* Features */}
             <div className="px-5 py-4">
               <ul className="space-y-2.5">
-                {FEATURES.map((f, i) => (
+                {offer.includes.map((f, i) => (
                   <li key={i} className={`flex items-start gap-2.5 text-sm text-white/75 ${isAr ? 'flex-row-reverse' : ''}`}>
                     <span className="text-ms-gold-600 font-bold mt-0.5 flex-shrink-0">✓</span>
-                    <span className={isAr ? 'font-arabic text-right' : 'font-grotesk'}>{isAr ? f.ar : f.en}</span>
+                    <span className={isAr ? 'font-arabic text-right' : 'font-grotesk'}>{f}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className={`text-[11px] text-white/35 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
-                  {isAr
-                    ? 'لو تجاوزت ١٬٠٠٠ محادثة: +٣٠ د.ك / ٥٠٠ محادثة إضافية'
-                    : 'Over 1,000 conversations: +30 KWD / 500 extra conversations'}
-                </p>
+              <div className="mt-4 pt-4 space-y-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                {offer.extra.map((line, i) => (
+                  <p key={i} className={`text-[11px] text-white/35 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
+                    {line}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
         </motion.div>
       )}
 
+      {/* Primary CTA */}
       {showActions && (
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className={`flex flex-wrap gap-2.5 ${isAr ? 'justify-end' : 'justify-start'}`}
           dir={isAr ? 'rtl' : 'ltr'}
         >
           <a
-            href="/discovery"
+            href={DISCOVERY_LINK}
             onClick={() => trackCtaClicked('stage4')}
             className={`
               inline-flex items-center gap-2 px-6 py-3 rounded-full
@@ -123,12 +140,52 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
             {isAr ? 'ابدأ تجربتك المجانية' : 'Start Free Trial'}
             <span>{isAr ? '←' : '→'}</span>
           </a>
+        </motion.div>
+      )}
 
-          <ChipButton
-            label={isAr ? 'عندي سؤال' : 'I have a question'}
-            onClick={onNext}
-            isAr={isAr}
-          />
+      {/* Answered objections */}
+      <AnimatePresence>
+        {answered.map(item => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col gap-3"
+          >
+            <SentMessage content={item.label} isAr={isAr} />
+            <AIBubble content={item.response} isAr={isAr} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* Objection chips + more questions */}
+      {showActions && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+          className={`flex flex-wrap gap-2 ${isAr ? 'justify-end' : 'justify-start'}`}
+          dir={isAr ? 'rtl' : 'ltr'}
+        >
+          {remainingIds.map((id, i) => {
+            const obj = OBJECTIONS.find(o => o.id === id)!
+            return (
+              <ChipButton
+                key={id}
+                label={isAr ? obj.ar : obj.en}
+                onClick={() => handleObjection(id)}
+                delay={i * 0.05}
+                isAr={isAr}
+              />
+            )
+          })}
+          {answered.length > 0 && (
+            <ChipButton
+              label={isAr ? 'عندي سؤال ثاني' : 'More questions'}
+              onClick={onNext}
+              isAr={isAr}
+            />
+          )}
         </motion.div>
       )}
     </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import AIBubble from '../AIBubble'
 import SentMessage from '../SentMessage'
 import ChipButton from '../ChipButton'
-import { STAGE5_INTRO, STAGE5_FOLLOWUP } from '@/lib/conversation/scripts'
+import { STAGE5_INTRO, STAGE5_FOLLOWUP, CLOSE_MESSAGE, DISCOVERY_LINK } from '@/lib/conversation/scripts'
 import { FAQ_ITEMS } from '@/lib/conversation/faqAnswers'
 import { trackCtaClicked, trackFaqOpened } from '@/lib/conversation/analytics'
 import type { FaqKey } from '@/types/conversation'
@@ -120,14 +120,12 @@ export default function Stage5FAQ({ isAr }: Props) {
         dir={isAr ? 'rtl' : 'ltr'}
       >
         <AIBubble
-          content={isAr
-            ? 'جاهز تبدأ؟ الأسبوع الأول مجاناً — بدون أي التزام.'
-            : 'Ready to start? The first week is free — no commitment.'}
+          content={isAr ? CLOSE_MESSAGE.ar : CLOSE_MESSAGE.en}
           isAr={isAr}
         />
         <div className={`flex flex-wrap gap-2.5 ${isAr ? 'justify-end' : 'justify-start'}`}>
           <a
-            href="/discovery"
+            href={DISCOVERY_LINK}
             onClick={() => trackCtaClicked('stage5')}
             className={`
               inline-flex items-center gap-2 px-6 py-3 rounded-full
