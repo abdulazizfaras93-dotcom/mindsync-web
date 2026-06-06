@@ -83,12 +83,37 @@ export default function ReceptionistChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
-  // Autoscroll — smooth on desktop, instant on mobile to avoid janky animated scroll
+  // Autoscroll
   useEffect(() => {
     const el = chatRef.current
     if (!el) return
     el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
   }, [messages, loading])
+
+  // iOS keyboard: shrink messages area when keyboard opens so input stays visible
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const vv = window.visualViewport
+    if (!vv) return
+    let savedHeight = 0
+
+    const onResize = () => {
+      const chatEl = chatRef.current
+      if (!chatEl) return
+      const kbHeight = window.innerHeight - vv.height
+      if (kbHeight > 150) {
+        if (!savedHeight) savedHeight = chatEl.offsetHeight
+        chatEl.style.height = `${Math.max(160, savedHeight - kbHeight + 40)}px`
+        setTimeout(() => inputRef.current?.scrollIntoView({ block: 'nearest' }), 80)
+      } else {
+        chatEl.style.height = ''
+        savedHeight = 0
+      }
+    }
+
+    vv.addEventListener('resize', onResize)
+    return () => vv.removeEventListener('resize', onResize)
+  }, [])
 
   async function send(e: React.FormEvent) {
     e.preventDefault()
