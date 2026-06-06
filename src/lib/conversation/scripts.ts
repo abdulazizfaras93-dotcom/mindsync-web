@@ -283,34 +283,34 @@ type DemoLine = { role: 'user' | 'ai'; en: string; ar: string }
 
 export const DEMO_SCRIPTS: Record<BusinessCategory, DemoLine[]> = {
   food: [
-    { role: 'user', en: 'Assalam o alaikum, I want a chocolate cake for 10 people', ar: 'السلام عليكم، أبي كيكة شوكولاتة لـ ١٠ أشخاص' },
-    { role: 'ai',   en: 'Wa alaikum assalam 🍫\nChocolate cake for 10: 15 KWD\nWhen do you want it?', ar: 'وعليكم السلام 🍫\nكيكة شوكولاتة ١٠ أشخاص: ١٥ د.ك\nمتى تبيها؟' },
+    { role: 'user', en: 'Assalam o alaikum, I want a chocolate cake for 10 people', ar: 'السلام عليكم، أبي كيكة ككاو لـ ١٠ أشخاص' },
+    { role: 'ai',   en: 'Wa alaikum assalam 🍫\nChocolate cake for 10: 15 KWD\nWhen do you want it?', ar: 'وعليكم السلام 🍫\nكيكة ككاو ١٠ أشخاص: ١٥ د.ك\nمتى تبيها؟' },
     { role: 'user', en: 'Tomorrow at 6',              ar: 'باجر الساعة ٦' },
     { role: 'ai',   en: 'Done ✓ Ready tomorrow 6 PM\nSent you the payment link: [link]', ar: 'تم ✓ راح تكون جاهزة باجر ٦ م\nارسلت لك رابط الدفع: [link]' },
   ],
   beauty: [
-    { role: 'user', en: 'How much for lash extensions?', ar: 'كم سعر الرفرفة؟' },
-    { role: 'ai',   en: 'Hello 🌸\nClassic lashes: 12 KWD\nVolume: 18 KWD\nWant to book?', ar: 'هلا حبيبتي 🌸\nالرفرفة الكلاسيك: ١٢ د.ك\nالفوليوم: ١٨ د.ك\nتبين تحجزين؟' },
+    { role: 'user', en: 'How much for lash extensions?', ar: 'جم سعر الرموش؟' },
+    { role: 'ai',   en: 'Hello 🌸\nClassic lashes: 12 KWD\nVolume: 18 KWD\nWant to book?', ar: 'هلا حبيبتي 🌸\nالرموش الكلاسيك: ١٢ د.ك\nالفوليوم: ١٨ د.ك\nتبين تحجزين؟' },
     { role: 'user', en: 'Yes, tomorrow afternoon', ar: 'إي، باجر العصر' },
     { role: 'ai',   en: 'Done ✓ Tomorrow 4:30 PM\nSent you the confirmation link on WhatsApp', ar: 'تم ✓ غداً ٤:٣٠ م\nأرسلت لج رابط التأكيد على واتساب' },
   ],
   fashion: [
-    { role: 'user', en: 'Do you have abayas in size L?', ar: 'عندكم عباية مقاس L؟' },
+    { role: 'user', en: 'Do you have abayas in size L?', ar: 'عندكم عبايه مقاس L؟' },
     { role: 'ai',   en: 'Yes! 3 styles in size L. Let me send you photos 📸', ar: 'إي عندنا 3 موديلات مقاس L.\nأرسل لج الصور 📸' },
-    { role: 'user', en: 'How much is the black one?', ar: 'بكم السوداء؟' },
-    { role: 'ai',   en: 'Black abaya: 28 KWD 🖤\nFree delivery over 20 KWD! Want it?', ar: 'العباية السوداء: ٢٨ د.ك 🖤\nتوصيل مجاني فوق ٢٠ د.ك! تبينها؟' },
+    { role: 'user', en: 'How much is the black one?', ar: 'بجم العبايه السودا؟' },
+    { role: 'ai',   en: 'Black abaya: 28 KWD 🖤\nFree delivery over 20 KWD! Want it?', ar: 'العبايه السودا: ٢٨ د.ك 🖤\nتوصيل مجاني فوق ٢٠ د.ك! تبينها؟' },
   ],
   retail: [
-    { role: 'user', en: 'Is this still in stock?',  ar: 'هذي المنتج لا زال موجود؟' },
+    { role: 'user', en: 'Is this still in stock?',  ar: 'المنتج ليلحين موجود؟' },
     { role: 'ai',   en: 'Yes still available! How many do you need? 📦', ar: 'إي متوفر! جم قطعة تريد؟ 📦' },
     { role: 'user', en: '3 pieces', ar: '٣ قطع' },
     { role: 'ai',   en: '3 pieces added ✓\nPayment: COD or transfer. Which do you prefer? 💳', ar: 'تم حجز ٣ قطع ✓\nالدفع: عند الاستلام أو تحويل. أيهم تفضل؟ 💳' },
   ],
   cars: [
-    { role: 'user', en: 'How much for an oil change?', ar: 'بكم تغيير الزيت؟' },
-    { role: 'ai',   en: 'Oil change from 8 KWD (filter included) 🔧\nCan you come tomorrow?', ar: 'تغيير الزيت يبدأ من ٨ د.ك (مع الفلتر) 🔧\nتقدر تجي بكرة؟' },
+    { role: 'user', en: 'How much for an oil change?', ar: 'بجم تغيير الزيت؟' },
+    { role: 'ai',   en: 'Oil change from 8 KWD (filter included) 🔧\nCan you come tomorrow?', ar: 'تغيير الزيت يبدأ من ٨ د.ك (مع الفلتر) 🔧\nتقدر تمرنا باجر؟' },
     { role: 'user', en: 'Yes morning is fine', ar: 'إي الصبح زين' },
-    { role: 'ai',   en: 'Booked! Tomorrow 9 AM\nWe\'ll remind you 1 hour before 🚗', ar: 'تم الحجز! بكرة ٩ الصبح\nراح ترسل لك تذكير قبل ساعة 🚗' },
+    { role: 'ai',   en: 'Booked! Tomorrow 9 AM\nWe\'ll remind you 1 hour before 🚗', ar: 'تم الحجز! باجر ٩ الصبح\nراح يوصلك تذكير قبل ساعة 🚗' },
   ],
   education: [
     { role: 'user', en: 'Do you tutor grade 10 math?', ar: 'عندكم مدرس رياضيات للصف العاشر؟' },
@@ -321,8 +321,8 @@ export const DEMO_SCRIPTS: Record<BusinessCategory, DemoLine[]> = {
   creative: [
     { role: 'user', en: 'Do you do custom portraits?', ar: 'تسوون بورتريه شخصي؟' },
     { role: 'ai',   en: 'Yes! Watercolor or digital, 5-7 days 🎨\nHow many people?', ar: 'إي! بالألوان المائية أو رقمي، ٥–٧ أيام 🎨\nجم شخص؟' },
-    { role: 'user', en: 'A family of 4', ar: 'عيلة ٤ أشخاص' },
-    { role: 'ai',   en: 'Family portrait (4): 35 KWD digital / 65 KWD framed 🖼️\nWhich do you prefer?', ar: 'بورتريه عيلة (٤): ٣٥ د.ك رقمي / ٦٥ د.ك مع إطار 🖼️\nأيهم تفضل؟' },
+    { role: 'user', en: 'A family of 4', ar: 'عايله ٤ أشخاص' },
+    { role: 'ai',   en: 'Family portrait (4): 35 KWD digital / 65 KWD framed 🖼️\nWhich do you prefer?', ar: 'بورتريه عايله (٤): ٣٥ د.ك رقمي / ٦٥ د.ك مع إطار 🖼️\nأيهم تفضل؟' },
   ],
   health: [
     { role: 'user', en: 'Do you have female trainers?', ar: 'عندكم مدربات؟' },
@@ -364,6 +364,6 @@ export const DEMO_SCRIPTS: Record<BusinessCategory, DemoLine[]> = {
     { role: 'user', en: 'Hi, can you help me?', ar: 'هلا، تقدر تساعدني؟' },
     { role: 'ai',   en: 'Of course! Here 24/7 😊\nWhat do you need?', ar: 'طبعاً! أنا هنا ٢٤/٧ 😊\nشنو تحتاج؟' },
     { role: 'user', en: 'What are your prices?', ar: 'شنو أسعاركم؟' },
-    { role: 'ai',   en: 'Pulling up the latest pricing for you 📋', ar: 'أجيب لك آخر الأسعار الحين 📋' },
+    { role: 'ai',   en: 'Pulling up the latest pricing for you 📋', ar: 'هذي آخر الأسعار 📋' },
   ],
 }
