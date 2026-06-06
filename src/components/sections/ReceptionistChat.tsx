@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { useLang } from '@/lib/lang'
@@ -27,7 +28,7 @@ const t = {
   bullet1: { en: 'Replies in Kuwaiti dialect, Arabic, or English', ar: 'يرد باللهجة الكويتية أو الإنجليزية' },
   bullet2: { en: 'Books appointments and qualifies leads', ar: 'يحجز المواعيد ويؤهل العملاء' },
   bullet3: { en: 'Hands off to your team on WhatsApp', ar: 'يحوّل العميل لفريقك على واتساب' },
-  agentName: { en: 'MindSync Receptionist', ar: 'موظف الاستقبال' },
+  agentName: { en: 'MindSync Receptionist', ar: 'موظف استقبال مايندسينك' },
   online: { en: 'Online · 24/7', ar: 'متصل · ٢٤/٧' },
   placeholder: { en: 'Type your message…', ar: 'اكتب كل الاسئلة الي فبالك...' },
   opener: {
@@ -82,9 +83,11 @@ export default function ReceptionistChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
-  // Autoscroll
+  // Autoscroll — smooth on desktop, instant on mobile to avoid janky animated scroll
   useEffect(() => {
-    if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight
+    const el = chatRef.current
+    if (!el) return
+    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
   }, [messages, loading])
 
   async function send(e: React.FormEvent) {
@@ -177,13 +180,8 @@ export default function ReceptionistChat() {
         >
           {/* Header */}
           <div className="bg-ms-green-800 px-4 py-3 flex items-center gap-3 border-b border-ms-gold-600/15">
-            <div className="w-9 h-9 rounded-full bg-ms-gold-600/20 flex items-center justify-center" aria-hidden>
-              <svg width="18" height="18" viewBox="0 0 64 64" fill="none">
-                <path d="M 12 44 C 12 28 20 18 32 18 C 44 18 52 28 52 44" stroke="#BF8D38" strokeWidth="4" fill="none" strokeLinecap="round" />
-                <path d="M 22 44 C 22 34 26 28 32 28 C 38 28 42 34 42 44" stroke="#BF8D38" strokeWidth="3" fill="none" strokeLinecap="round" />
-                <circle cx="12" cy="44" r="3.5" fill="#BF8D38" />
-                <circle cx="52" cy="44" r="3.5" fill="#BF8D38" />
-              </svg>
+            <div className="w-9 h-9 rounded-full bg-ms-green-900/60 flex items-center justify-center overflow-hidden flex-shrink-0" aria-hidden>
+              <Image src="/brand/logo-transparent.png" alt="MindSync" width={32} height={32} className="object-contain" />
             </div>
             <div>
               <p className="text-ms-ivory-0 text-[14px] font-semibold leading-none">{t.agentName[lang]}</p>
@@ -197,7 +195,8 @@ export default function ReceptionistChat() {
           {/* Messages */}
           <div
             ref={chatRef}
-            className="bg-ms-green-900/40 max-h-[480px] min-h-[360px] overflow-y-auto px-4 py-4 space-y-3"
+            className="bg-ms-green-900/40 h-[320px] sm:h-[420px] overflow-y-auto overscroll-contain px-4 py-4 space-y-3"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {messages.map((m) => {
               if (m.kind === 'fallback') {
@@ -231,7 +230,7 @@ export default function ReceptionistChat() {
               onChange={(e) => setInput(e.target.value)}
               placeholder={t.placeholder[lang]}
               disabled={loading}
-              className="flex-1 bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-full px-4 py-2 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 focus-visible:ring-offset-0 disabled:opacity-60"
+              className="flex-1 bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-full px-4 py-2 text-[16px] sm:text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 focus-visible:ring-offset-0 disabled:opacity-60"
               aria-label={t.placeholder[lang]}
             />
             <button
