@@ -195,7 +195,7 @@ export default function ReceptionistChat() {
           {/* Messages */}
           <div
             ref={chatRef}
-            className="bg-ms-green-900/40 h-[320px] sm:h-[420px] overflow-y-auto overscroll-contain px-4 py-4 space-y-3"
+            className="bg-ms-green-900/40 h-[320px] sm:h-[420px] overflow-y-scroll overscroll-contain px-4 py-4 space-y-3"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {messages.map((m) => {
@@ -250,6 +250,32 @@ export default function ReceptionistChat() {
   )
 }
 
+function linkify(text: string, isUser: boolean): React.ReactNode[] {
+  const urlRe = /https?:\/\/[^\s]+|mindsynckw\.com\/[^\s]*/g
+  const result: React.ReactNode[] = []
+  let last = 0
+  let m: RegExpExecArray | null
+  while ((m = urlRe.exec(text)) !== null) {
+    if (m.index > last) result.push(text.slice(last, m.index))
+    const raw = m[0].replace(/[.,;!?)]+$/, '')
+    const href = raw.startsWith('http') ? raw : `https://${raw}`
+    result.push(
+      <a
+        key={m.index}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`underline break-all ${isUser ? 'text-ms-green-900/80 hover:text-ms-green-900' : 'text-ms-gold-400 hover:text-ms-gold-300'}`}
+      >
+        {raw}
+      </a>
+    )
+    last = m.index + raw.length
+  }
+  if (last < text.length) result.push(text.slice(last))
+  return result
+}
+
 function Bubble({ isUser, text, ts }: { isUser: boolean; text: string; ts: string }) {
   return (
     <motion.div
@@ -259,13 +285,13 @@ function Bubble({ isUser, text, ts }: { isUser: boolean; text: string; ts: strin
       className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
     >
       <div
-        className={`max-w-[78%] px-3.5 py-2 rounded-2xl text-[13px] leading-relaxed shadow-sm whitespace-pre-line ${
+        className={`max-w-[78%] px-3.5 py-2 rounded-2xl text-[13px] leading-relaxed shadow-sm whitespace-pre-line break-words ${
           isUser
             ? 'bg-ms-gold-600 text-ms-green-900 rounded-br-sm'
             : 'bg-ms-green-700 text-ms-ivory-0 rounded-bl-sm'
         }`}
       >
-        {text}
+        {linkify(text, isUser)}
         <span className={`text-[10px] ms-2 float-right mt-0.5 ${isUser ? 'text-ms-green-900/60' : 'text-ms-ivory-0/50'}`}>{ts}</span>
       </div>
     </motion.div>
