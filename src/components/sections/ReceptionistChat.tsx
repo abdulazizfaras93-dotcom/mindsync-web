@@ -14,7 +14,7 @@ type Msg = {
   from: 'user' | 'bot'
   text: string
   ts: string
-  kind?: 'text' | 'fallback' | 'contact-form'
+  kind?: 'text' | 'fallback'
 }
 
 const t = {
@@ -39,17 +39,6 @@ const t = {
     ar: 'تواصل ويانا على الواتساب 👇',
   },
   waCta: { en: 'Open WhatsApp', ar: 'افتح الواتساب' },
-  contactAsk: {
-    en: 'Your name and WhatsApp number? So we can follow up 🙏',
-    ar: 'اسمك ورقم واتسابك؟ عشان نتواصل معاك 🙏',
-  },
-  contactNamePh: { en: 'Your name', ar: 'اسمك' },
-  contactPhonePh: { en: 'WhatsApp number', ar: 'رقم واتسابك' },
-  contactSubmit: { en: 'Send', ar: 'إرسال' },
-  contactDone: {
-    en: 'Done! Our team will reach out soon ✅',
-    ar: 'تم! راح يتواصل معك الفريق قريباً ✅',
-  },
 }
 
 function nowTime() {
@@ -72,8 +61,6 @@ export default function ReceptionistChat() {
   const [loading, setLoading] = useState(false)
   const [sessionId, setSessionId] = useState('')
   const [opened, setOpened] = useState(false)
-  const [contactShown, setContactShown] = useState(false)
-  const [contactDone, setContactDone] = useState(false)
 
   const chatRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -106,7 +93,6 @@ export default function ReceptionistChat() {
     if (!text || loading || !sessionId) return
 
     const userMsg: Msg = { id: uid(), from: 'user', text, ts: nowTime() }
-    const userMsgCount = messages.filter((m) => m.from === 'user').length + 1
     setMessages((prev) => [...prev, userMsg])
     setInput('')
     setLoading(true)
@@ -132,14 +118,6 @@ export default function ReceptionistChat() {
       const reply: string = data?.reply ?? t.errorReply[lang]
 
       setMessages((prev) => [...prev, { id: uid(), from: 'bot', text: reply, ts: nowTime() }])
-
-      if (userMsgCount >= 3 && !contactShown && !contactDone) {
-        setContactShown(true)
-        setMessages((prev) => [
-          ...prev,
-          { id: uid(), from: 'bot', text: t.contactAsk[lang], ts: nowTime(), kind: 'contact-form' },
-        ])
-      }
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -149,32 +127,6 @@ export default function ReceptionistChat() {
       setLoading(false)
       setTimeout(() => inputRef.current?.focus(), 50)
     }
-  }
-
-  async function submitContact(name: string, phone: string) {
-    setContactDone(true)
-    setMessages((prev) => prev.filter((m) => m.kind !== 'contact-form'))
-
-    try {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: 'Contact info collected',
-          name,
-          phone,
-          user_id: sessionId,
-          channel: 'website',
-        }),
-      })
-    } catch {
-      // Local confirmation still shown — silent failure is fine for this lead capture
-    }
-
-    setMessages((prev) => [
-      ...prev,
-      { id: uid(), from: 'bot', text: t.contactDone[lang], ts: nowTime() },
-    ])
   }
 
   return (
@@ -248,18 +200,6 @@ export default function ReceptionistChat() {
             className="bg-ms-green-900/40 max-h-[480px] min-h-[360px] overflow-y-auto px-4 py-4 space-y-3"
           >
             {messages.map((m) => {
-              if (m.kind === 'contact-form' && !contactDone) {
-                return (
-                  <ContactFormBubble
-                    key={m.id}
-                    askText={m.text}
-                    namePh={t.contactNamePh[lang]}
-                    phonePh={t.contactPhonePh[lang]}
-                    submitText={t.contactSubmit[lang]}
-                    onSubmit={submitContact}
-                  />
-                )
-              }
               if (m.kind === 'fallback') {
                 return (
                   <FallbackBubble
@@ -372,62 +312,3 @@ function FallbackBubble({ text, ts, waText }: { text: string; ts: string; waText
   )
 }
 
-function ContactFormBubble({
-  askText,
-  namePh,
-  phonePh,
-  submitText,
-  onSubmit,
-}: {
-  askText: string
-  namePh: string
-  phonePh: string
-  submitText: string
-  onSubmit: (name: string, phone: string) => void
-}) {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const valid = name.trim().length > 1 && phone.trim().length >= 6
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
-      className="flex justify-start"
-    >
-      <div className="max-w-[88%] w-full bg-ms-green-700 text-ms-ivory-0 rounded-2xl rounded-bl-sm shadow-sm px-3.5 py-3 text-[13px] leading-relaxed">
-        <p className="mb-2.5">{askText}</p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            if (valid) onSubmit(name.trim(), phone.trim())
-          }}
-          className="flex flex-col gap-2"
-        >
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={namePh}
-            className="bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-lg px-3 py-2 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600"
-          />
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={phonePh}
-            className="bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-lg px-3 py-2 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600"
-          />
-          <button
-            type="submit"
-            disabled={!valid}
-            className="self-start bg-ms-gold-600 text-ms-green-900 font-semibold text-[12px] rounded-full px-4 py-1.5 disabled:opacity-40 hover:bg-ms-gold-500 transition-colors"
-          >
-            {submitText}
-          </button>
-        </form>
-      </div>
-    </motion.div>
-  )
-}
