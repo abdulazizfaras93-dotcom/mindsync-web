@@ -1,50 +1,29 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import AIBubble from '../AIBubble'
-import SentMessage from '../SentMessage'
-import ChipButton from '../ChipButton'
 import {
-  STAGE4_INTRO, OBJECTIONS, getStage5Response, OFFER_DETAILS, DISCOVERY_LINK,
+  STAGE4_INTRO, OFFER_DETAILS, DISCOVERY_LINK,
 } from '@/lib/conversation/scripts'
-import type { ObjectionKey } from '@/lib/conversation/scripts'
 import { TIERS, PILOT } from '@/lib/data'
 import type { TierId } from '@/lib/data'
 import { trackCtaClicked } from '@/lib/conversation/analytics'
 
 interface Props {
   isAr: boolean
-  onNext: () => void
+  onNext?: () => void
 }
 
-interface AnsweredObjection {
-  id: ObjectionKey
-  label: string
-  response: string
-}
-
-export default function Stage4Pricing({ isAr, onNext }: Props) {
+export default function Stage4Pricing({ isAr }: Props) {
   const [showCard, setShowCard] = useState(false)
   const [showActions, setShowActions] = useState(false)
   const [selectedTier, setSelectedTier] = useState<TierId>('coordinator')
-  const [answered, setAnswered] = useState<AnsweredObjection[]>([])
-  const [remainingIds, setRemainingIds] = useState<ObjectionKey[]>(OBJECTIONS.map(o => o.id))
 
   useEffect(() => {
     const t1 = setTimeout(() => setShowCard(true), 400)
     const t2 = setTimeout(() => setShowActions(true), 900)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
-
-  const handleObjection = (id: ObjectionKey) => {
-    const obj = OBJECTIONS.find(o => o.id === id)!
-    setAnswered(prev => [...prev, {
-      id,
-      label: isAr ? obj.ar : obj.en,
-      response: getStage5Response(id, isAr),
-    }])
-    setRemainingIds(prev => prev.filter(k => k !== id))
-  }
 
   const offer = OFFER_DETAILS[isAr ? 'ar' : 'en']
 
@@ -166,51 +145,6 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
         </motion.div>
       )}
 
-      {/* Answered objections */}
-      <AnimatePresence>
-        {answered.map(item => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col gap-3"
-          >
-            <SentMessage content={item.label} isAr={isAr} />
-            <AIBubble content={item.response} isAr={isAr} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-
-      {/* Objection chips + more questions */}
-      {showActions && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.15 }}
-          className={`flex flex-wrap gap-2 ${isAr ? 'justify-end' : 'justify-start'}`}
-          dir={isAr ? 'rtl' : 'ltr'}
-        >
-          {remainingIds.map((id, i) => {
-            const obj = OBJECTIONS.find(o => o.id === id)!
-            return (
-              <ChipButton
-                key={id}
-                label={isAr ? obj.ar : obj.en}
-                onClick={() => handleObjection(id)}
-                delay={i * 0.05}
-                isAr={isAr}
-              />
-            )
-          })}
-          {answered.length > 0 && (
-            <ChipButton
-              label={isAr ? 'عندي سؤال ثاني' : 'More questions'}
-              onClick={onNext}
-              isAr={isAr}
-            />
-          )}
-        </motion.div>
-      )}
     </div>
   )
 }
