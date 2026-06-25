@@ -51,7 +51,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-base font-semibold text-ms-ink-900 mb-2">6. Cookies</h2>
-                <p>Our website uses a cookie to remember your language preference (Arabic/English). We also use Google Ads conversion measurement to understand which ads lead to enquiries, which may set cookies in your browser. We do not sell your data, build advertising profiles, or use intrusive cross-site tracking. You can block or clear cookies at any time through your browser settings.</p>
+                <p>Our website uses a cookie to remember your language preference (Arabic/English). We also use Google Ads conversion measurement to understand which ads lead to enquiries, which may set cookies in your browser. With your consent, we also use PostHog product analytics to understand how visitors use the site so we can improve it — you can decline when prompted, and we honour your choice. We do not sell your data, build advertising profiles, or use intrusive cross-site tracking. You can block or clear cookies at any time through your browser settings.</p>
               </section>
 
               <section>
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-base font-semibold text-ms-ink-900 mb-2">٦. ملفات تعريف الارتباط</h2>
-                <p>يستخدم موقعنا ملف تعريف ارتباط لحفظ تفضيلات اللغة (عربي/إنجليزي). كما نستخدم أداة قياس التحويلات من Google Ads لمعرفة الإعلانات التي تؤدي إلى استفسارات، وقد يضع ذلك ملفات ارتباط في متصفحك. لا نبيع بياناتك ولا نُنشئ ملفات إعلانية ولا نستخدم تتبعاً متعدد المواقع. يمكنك حظر ملفات الارتباط أو حذفها في أي وقت من إعدادات متصفحك.</p>
+                <p>يستخدم موقعنا ملف تعريف ارتباط لحفظ تفضيلات اللغة (عربي/إنجليزي). كما نستخدم أداة قياس التحويلات من Google Ads لمعرفة الإعلانات التي تؤدي إلى استفسارات، وقد يضع ذلك ملفات ارتباط في متصفحك. وبموافقتك، نستخدم أيضاً تحليلات PostHog لفهم كيفية استخدام الزوار للموقع بهدف تحسينه — يمكنك الرفض عند ظهور الإشعار، ونحترم اختيارك. لا نبيع بياناتك ولا نُنشئ ملفات إعلانية ولا نستخدم تتبعاً متعدد المواقع. يمكنك حظر ملفات الارتباط أو حذفها في أي وقت من إعدادات متصفحك.</p>
               </section>
 
               <section>

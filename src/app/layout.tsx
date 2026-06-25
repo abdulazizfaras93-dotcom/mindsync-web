@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, Noto_Kufi_Arabic, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import SmoothScroll from '@/components/providers/SmoothScroll'
+import PostHogProvider from '@/components/providers/PostHogProvider'
+import ConsentBanner from '@/components/ui/ConsentBanner'
 import './globals.css'
 
 const grotesk = Space_Grotesk({
@@ -174,7 +176,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('config', 'AW-18124307098');
         `}
       </Script>
-      <body className="antialiased"><SmoothScroll>{children}</SmoothScroll></body>
+      <body className="antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
+        <PostHogProvider />
+        <ConsentBanner />
+      </body>
     </html>
   )
 }
