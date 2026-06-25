@@ -1,17 +1,15 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { PILOT } from '@/lib/data'
 
 const t = {
-  eyebrow: { ar: 'منظومة ذكاء اصطناعي وأتمتة · الكويت', en: 'AI & Automation System · Kuwait' },
-  h1a:     { ar: 'نظام ذكاء اصطناعي كامل',              en: 'A complete AI system' },
-  h1b:     { ar: 'لمشروعك المنزلي.',                    en: 'for your home business.' },
-  sub:     { ar: 'يرد، يحجز، يتابع، ويحلل ٢٤/٧ — كأن عندك فريق كامل، بدون فريق.', en: 'It replies, books, follows up, and analyzes 24/7 — like a full team, without one.' },
+  eyebrow: { ar: 'شركة مايندسينك لتصميم وبرمجة البرمجيات الخاصة للمشاريع والأعمال', en: 'MindSync · Custom Software Design & Development for Businesses' },
+  h1a:     { ar: 'نظام إدارة اعمال ذكي',  en: 'A smart business management system' },
+  h1b:     { ar: 'كامل لمشروعك',          en: 'complete, for your business.' },
+  sub:     { ar: 'يرد، يحجز، يتابع، ويحلل ٢٤/٧ — كأن عندك فريق موظفين', en: 'It replies, books, follows up, and analyzes 24/7 — like having a whole team of staff.' },
   cta1:    { ar: 'ابدأ تجربة الـ٣٠ يوم', en: 'Start your 30-day pilot' },
   cta2:    { ar: 'جرّب الحين',            en: 'Try it live' },
   offer:   { ar: 'من ٧٩ د.ك شهرياً · الإعداد من ١٥٥ د.ك', en: 'From 79 KWD/mo · setup from 155 KWD' },
-  pilot:   { ar: PILOT.ar.name,           en: PILOT.en.name },
 }
 
 const STATS = [
@@ -48,8 +46,6 @@ export default function HomeHero() {
 
         <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 ${ar ? 'flex-row-reverse justify-end' : ''}`}>
           <span className={`text-ms-ink-900 font-bold text-[20px] ${font}`}>{t.offer[lang]}</span>
-          <span className="text-ms-ink-300">·</span>
-          <span className={`text-ms-green-800 font-medium text-[14px] ${font}`}>{t.pilot[lang]}</span>
         </div>
 
         <div className={`flex flex-wrap gap-3 mb-14 ${ar ? 'flex-row-reverse justify-end' : ''}`}>

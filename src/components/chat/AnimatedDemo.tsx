@@ -17,7 +17,7 @@ const REVEAL_DELAY = 1200  // ms AI message stays visible before next
 const USER_DELAY   = 800   // ms between user lines
 
 export default function AnimatedDemo({ category, isAr, autoPlay = true }: Props) {
-  const script = DEMO_SCRIPTS[category] ?? DEMO_SCRIPTS['other']
+  const script = DEMO_SCRIPTS[category]
   const lines: DemoLine[] = script.map(l => ({ role: l.role, text: isAr ? l.ar : l.en }))
 
   const [visible, setVisible] = useState<DemoLine[]>([])

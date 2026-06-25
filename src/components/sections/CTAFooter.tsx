@@ -12,8 +12,8 @@ const t = {
     ar: 'شنو الشغل اللي تعبت تسويه يدوياً؟ احنا نأتمته.',
   },
   sub: {
-    en: 'Tell us your business name and your daily problem. We\'ll reply with a clear plan in under 24 hours.',
-    ar: 'أخبرنا باسم مشروعك والمشكلة اليومية. نرد عليك بخطة واضحة بأقل من ٢٤ ساعة.',
+    en: "Tell us your business name and your daily problems, and we'll reply with a clear plan as soon as possible.",
+    ar: 'قول لنا اسم مشروعك ومشاكل مشروعك اليومية، ونرد عليك بخطة واضحة بأسرع وقت ممكن',
   },
   cta1:    { en: 'Fill in Discovery Form', ar: 'استبيان لفهم طبيعة مشروعك' },
   cta2:    { en: 'Try the Live Demo',      ar: 'عرض توضيحي مباشر' },
@@ -71,7 +71,7 @@ export function CTA() {
               {t.cta1[lang]}
             </a>
             <a
-              href="#chat"
+              href="#try"
               className="text-ms-ivory-0 font-medium text-[14px] px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
             >
               {t.cta2[lang]}

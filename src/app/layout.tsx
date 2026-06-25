@@ -25,23 +25,23 @@ const mono = JetBrains_Mono({
 })
 
 const SITE_URL   = 'https://www.mindsynckw.com'
-const TITLE      = 'MindSync — منظومة ذكاء اصطناعي للمشاريع المنزلية بالكويت'
+const TITLE      = 'MindSync — نظام إدارة أعمال ذكي لأصحاب المشاريع بالكويت'
 const DESCRIPTION =
-  'منظومة AI كاملة للمشاريع المنزلية بالكويت — ترد، تحجز، تتابع ٢٤/٧. ثلاث باقات من ٧٩ د.ك شهرياً. تجربة ٣٠ يوم.'
+  'نظام إدارة أعمال ذكي كامل لمشاريعك بالكويت — يرد، يحجز، يتابع ٢٤/٧. ثلاث باقات من ٧٩ د.ك شهرياً. تجربة ٣٠ يوم.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    'مشاريع منزلية الكويت',
-    'أتمتة المشاريع المنزلية',
+    'نظام إدارة أعمال ذكي',
+    'إدارة أعمال الكويت',
     'AI للمشاريع الصغيرة الكويت',
     'نظام ذكي للأعمال',
     'واتساب بوت الكويت',
     'حجز تلقائي',
     'MindSync',
-    'home business automation Kuwait',
+    'business automation Kuwait',
     'AI agent Kuwait',
     'ذكاء اصطناعي الكويت',
     'نظام مؤتمت الكويت',
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     locale:          'ar_KW',
     alternateLocale: ['en_US'],
     images: [
-      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — منظومة ذكاء اصطناعي للمشاريع المنزلية بالكويت' },
-      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — AI System for Home Businesses in Kuwait' },
+      { url: '/og/b-terminal-ar.png', width: 1200, height: 630, alt: 'MindSync — نظام إدارة أعمال ذكي لأصحاب المشاريع بالكويت' },
+      { url: '/og/b-terminal-en.png', width: 1200, height: 630, alt: 'MindSync — Smart Business Management System in Kuwait' },
     ],
   },
   twitter: {
@@ -108,7 +108,7 @@ const JSON_LD = {
       '@id':   `${SITE_URL}/#localbusiness`,
       name:            'MindSync',
       alternateName:   'مايند سينك',
-      description:     'Complete AI & automation system for home businesses in Kuwait — replies, books, follows up, and analyzes 24/7.',
+      description:     'Complete smart business-management system for businesses in Kuwait — replies, books, follows up, and analyzes 24/7.',
       url:             SITE_URL,
       logo:            `${SITE_URL}/brand/logo-transparent.png`,
       image:           `${SITE_URL}/og/b-terminal-ar.png`,
@@ -129,7 +129,7 @@ const JSON_LD = {
         'AI automation systems',
         'Custom AI agents',
         'WhatsApp Business API',
-        'Home business automation',
+        'Business management systems',
         'Website design',
         'Mobile app development',
         'n8n workflows',

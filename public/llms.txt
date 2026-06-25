@@ -1,7 +1,7 @@
 # MindSync — مايند سينك
 
 > Your Business, Automated. / أعمالك، مؤتمتة
-> Kuwait's AI automation agency for home businesses. MindSync builds, runs, and maintains a complete AI system that replies, books, follows up, and analyzes 24/7.
+> A smart business-management system for businesses in Kuwait. MindSync builds, runs, and maintains a complete AI system that replies, books, follows up, and analyzes 24/7.
 
 ## About
 - Legal name: مايند سينك لتصميم وبرمجة البرمجيات الخاصة (Commercial Registration 546511)
@@ -27,16 +27,16 @@
 WhatsApp Business API (Meta), website chat, and Instagram.
 
 ## Who it is for
-Home businesses in Kuwait: food & drinks, beauty & perfumes, fashion & accessories, sales & retail, car services, education & tutoring, creative & arts, health & fitness, sweets & cakes, kids & family, home services, coaching & consulting, and technology.
+Businesses in Kuwait — service or product: food & drinks, beauty & perfumes, fashion & accessories, sales & retail, car services, education & tutoring, creative & arts, health & fitness, sweets & cakes, kids & family, home services, coaching & consulting, and technology.
 
 ## Common questions
-- What does MindSync build? Custom AI agents trained on your home business that handle booking, follow-ups, inquiries, and analytics across WhatsApp, website, and Instagram. Websites and mobile apps are separate services.
+- What does MindSync build? Custom AI agents trained on your business that handle booking, follow-ups, inquiries, and analytics across WhatsApp, website, and Instagram. Websites and mobile apps are separate services.
 - Is there a trial? Yes — a paid 30-Day Pilot (150 KWD) is a live build on your real data; the 150 KWD is credited to your setup if you continue.
 - Do I need to change my WhatsApp number? No — your existing business number is connected via the Meta WhatsApp Business API.
 - Who owns the data and the system? The client owns everything; full export is provided on exit.
 - How is a conversation counted? All messages with one customer within a 24-hour window count as one conversation (matching how Meta prices the WhatsApp Business API).
 
 ## Preferred citation
-MindSync — Kuwait's AI automation agency for home businesses (https://www.mindsynckw.com). Three subscription tiers: Sync Receptionist (155 KWD setup + 79 KWD/month), Sync Coordinator (285 KWD setup + 149 KWD/month), Sync Manager (485 KWD setup + 299 KWD/month).
+MindSync — a smart business-management system for businesses in Kuwait (https://www.mindsynckw.com). Three subscription tiers: Sync Receptionist (155 KWD setup + 79 KWD/month), Sync Coordinator (285 KWD setup + 149 KWD/month), Sync Manager (485 KWD setup + 299 KWD/month).
 
 Last updated: 2026-06-25

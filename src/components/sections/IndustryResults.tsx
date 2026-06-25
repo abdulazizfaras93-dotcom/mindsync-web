@@ -13,17 +13,17 @@ export default function IndustryResults() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-12">
           <p className="font-mono text-[10px] uppercase tracking-widest text-ms-gold-600 mb-3">
-            {isAr ? 'مشروعك من البيت' : 'Your Home Business'}
+            {isAr ? 'نخدم كل المشاريع' : 'Every kind of business'}
           </p>
           <h2 className="font-grotesk text-3xl md:text-4xl font-bold text-ms-ink-900 mb-4">
             {isAr
-              ? 'مشروعك من البيت، احنا نكمله.'
-              : 'Run a business from home? We\'ve got you.'}
+              ? 'أي مشروع… وإحنا نكمّله.'
+              : 'Any business — we complete it.'}
           </h2>
           <p className="text-ms-ink-500 text-[15px] max-w-md mx-auto leading-relaxed">
             {isAr
-              ? 'أي مشروع منزلي بالكويت — نبني له المنظومة المناسبة.'
-              : 'Any home business in Kuwait — we build the right system for it.'}
+              ? 'أي مشروع بالكويت — خدمي أو منتجات — نبني له النظام اللي يحتاجه.'
+              : 'Any business in Kuwait — service or product — we build the system it needs.'}
           </p>
         </div>
 
@@ -54,8 +54,8 @@ export default function IndustryResults() {
         {/* Caption */}
         <p className="text-center text-ms-ink-400 text-[13px] font-mono mt-8">
           {isAr
-            ? 'أي مشروع منزلي بالكويت — نبني له المنظومة المناسبة.'
-            : 'Any home business in Kuwait — we build the right system for it.'}
+            ? 'من أول رسالة لعميل… لين إدارة مشروعك كامل.'
+            : 'From the first customer message… to running your whole business.'}
         </p>
       </div>
     </section>

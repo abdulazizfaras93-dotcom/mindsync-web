@@ -3,18 +3,18 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 
 const t = {
-  eyebrow: { en: 'What We Build', ar: 'الي نبنيه' },
-  h2:      { en: 'Custom AI. Built for you. Run by us.', ar: 'ذكاء اصطناعي مخصص. يُبنى لك.' },
+  eyebrow: { en: 'What We Build', ar: 'اللي نبنيه' },
+  h2:      { en: 'Custom AI — we build it and run it for you.', ar: 'ذكاء اصطناعي مخصص — نبنيه ونشغّله لك.' },
   sub: {
-    en: 'We design, ship, and run the operational layer your business is missing.',
-    ar: 'نصمّم، نبني، وندير الطبقة التشغيلية التي يفتقدها مشروعك.',
+    en: 'We design, build, and run the operational layer your business is missing — so you focus on your work.',
+    ar: 'نصمم، نبني، وندير الجزء التشغيلي اللي ناقص مشروعك — وأنت تركّز على شغلك.',
   },
   flagship: {
     eyebrow: { en: '01 / FLAGSHIP', ar: '01 / الرائد' },
-    title:   { en: 'Custom-Built AI Agent', ar: 'وكيل ذكاء اصطناعي مخصص البناء' },
+    title:   { en: 'An AI agent built just for you', ar: 'وكيل ذكاء اصطناعي مبني خصيصاً لك' },
     desc: {
-      en: 'Not a chatbot template. A fully programmed agent built for your home business and trained on how you work. Deployed on WhatsApp, your website, Instagram — or all three. Handles your entire customer communication layer.',
-      ar: 'ليس نموذجاً جاهزاً. وكيل مبرمج بالكامل لمشروعك المنزلي ومُدرَّب على أسلوبك تحديداً. نشره على واتساب، موقعك، إنستغرام — أو الثلاثة معاً. يتولى طبقة التواصل مع عملائك بالكامل.',
+      en: 'Not a ready-made template. A fully programmed agent for your business, trained on exactly how you work. We deploy it on WhatsApp, your website, Instagram — or all three. It handles your entire customer communication.',
+      ar: 'مو قالب جاهز. وكيل مبرمج بالكامل لمشروعك ومدرّب على أسلوبك بالضبط. ننشره على واتساب، موقعك، إنستقرام — أو الثلاثة. ويتولى التواصل مع عملائك كامل.',
     },
     included: { en: 'Included in every tier', ar: 'مشمول في كل الباقات' },
     price:    { en: 'from 79 KWD/mo', ar: 'من ٧٩ د.ك شهرياً' },
@@ -34,9 +34,9 @@ const t = {
       title: { en: 'Workflow Automations', ar: 'أتمتة سير العمل' },
       desc: {
         en: 'Reminders, follow-ups, review requests, no-show recovery — all triggered automatically.',
-        ar: 'تذكيرات، متابعات، طلبات تقييم، واسترداد الغائبين — كلها تشتغل تلقائياً.',
+        ar: 'تذكيرات، متابعات، طلبات تقييم، واسترجاع العملاء اللي ما حضروا — كلها تشتغل تلقائياً.',
       },
-      meta: { en: '10+ flows from day one', ar: '+١٠ سير عمل من اليوم الأول' },
+      meta: { en: '10+ automations from day one', ar: '+١٠ أتمتة من اليوم الأول' },
     },
     {
       num: '04',
@@ -54,7 +54,7 @@ const t = {
         en: 'We monitor, debug, retrain, and grow the system every month. One account manager, not a ticket queue.',
         ar: 'نراقب، نصلح، نعيد التدريب، وننمّي النظام كل شهر. مسؤول حساب واحد، لا قائمة انتظار.',
       },
-      meta: { en: 'Included · Monthly retraining on receipts', ar: 'مشمول · إعادة تدريب شهرية بناءً على receipts' },
+      meta: { en: 'Included · monthly retraining on your invoices', ar: 'مشمول · إعادة تدريب شهرية على فواتيرك ومستجدات مشروعك' },
     },
   ] as const,
 }

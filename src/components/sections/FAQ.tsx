@@ -12,11 +12,11 @@ const FAQS = [
   {
     en: {
       q: 'What exactly does MindSync build?',
-      a: 'We build custom AI automation systems — AI agents trained on your home business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
+      a: 'We build custom AI automation systems — AI agents trained on your business that handle specific tasks (booking, follow-ups, inquiries, analytics) on whatever channels you need (WhatsApp, website, Instagram, app). We also design websites and mobile apps separately.',
     },
     ar: {
       q: 'شنو بالضبط تبني مايند سينك؟',
-      a: 'نبني أنظمة مؤتمتة بالذكاء الاصطناعي — وكلاء مدرّبين على مشروعك المنزلي يتولون مهام محددة (حجز، متابعة، استفسارات، تحليل) على أي قناة تحتاجها (واتساب، موقع، انستقرام، تطبيق). كذلك نصمم مواقع وتطبيقات بشكل منفصل.',
+      a: 'نبني أنظمة مؤتمتة بالذكاء الاصطناعي — وكلاء مدرّبين على مشروعك يتولون مهام محددة (حجز، متابعة، استفسارات، تحليل) على أي قناة تحتاجها (واتساب، موقع، انستقرام، تطبيق). كذلك نصمم مواقع وتطبيقات بشكل منفصل.',
     },
   },
   {

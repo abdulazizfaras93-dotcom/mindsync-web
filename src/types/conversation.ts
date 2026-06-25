@@ -1,7 +1,4 @@
-export type BusinessCategory =
-  | 'food' | 'beauty' | 'fashion' | 'retail' | 'cars'
-  | 'education' | 'creative' | 'health' | 'sweets' | 'kids'
-  | 'home-services' | 'coaching' | 'tech' | 'other'
+export type BusinessCategory = 'service' | 'product'
 
 export type ConversationStage = 1 | 2 | 3 | 4 | 5
 

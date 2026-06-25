@@ -33,7 +33,7 @@ function CountUp({ to, duration = 1400 }: { to: number; duration?: number }) {
 }
 
 const t = {
-  eyebrow:        { en: 'AI & Automation System · For Home Businesses in Kuwait',   ar: 'منظومة ذكاء اصطناعي وأتمتة · للمشاريع المنزلية بالكويت' },
+  eyebrow:        { en: 'Smart Business Management System · Kuwait',   ar: 'نظام إدارة أعمال ذكي · الكويت' },
   headline:       { en: 'You started your business from home.',                      ar: 'بدأت مشروعك من البيت' },
   headlineAccent: { en: 'You want it to grow — even while you sleep.',               ar: 'تبي مشروعك يكبر؟' },
   sub: {
