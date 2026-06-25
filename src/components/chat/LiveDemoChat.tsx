@@ -88,7 +88,7 @@ export default function LiveDemoChat({ isAr, category }: Props) {
         </div>
         <div>
           <p className="text-white text-sm font-semibold font-grotesk">
-            {isAr ? 'ديمو مباشر — وكيل MindSync' : 'Live Demo — MindSync Agent'}
+            {isAr ? 'ديمو مباشر — وكيل مايندسينك' : 'Live Demo — MindSync Agent'}
           </p>
           <div className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
@@ -106,7 +106,7 @@ export default function LiveDemoChat({ isAr, category }: Props) {
       >
         {messages.length === 0 && (
           <p className={`text-center text-[12px] text-ms-ink-500 mt-4 ${isAr ? 'font-arabic' : 'font-grotesk'}`}>
-            {isAr ? 'اسأل أي سؤال تريده 👇' : 'Ask any question below 👇'}
+            {isAr ? 'اسأل أي سؤال تبيه 👇' : 'Ask any question you want 👇'}
           </p>
         )}
 
