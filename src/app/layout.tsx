@@ -27,7 +27,7 @@ const mono = JetBrains_Mono({
 const SITE_URL   = 'https://www.mindsynckw.com'
 const TITLE      = 'MindSync — منظومة ذكاء اصطناعي للمشاريع المنزلية بالكويت'
 const DESCRIPTION =
-  'منظومة AI كاملة للمشاريع المنزلية بالكويت — ترد، تحجز، تتابع، وتحليل ٢٤/٧. سعر شامل: 349 د.ك إعداد + 159 د.ك شهرياً. أسبوع تجربة مجاني.'
+  'منظومة AI كاملة للمشاريع المنزلية بالكويت — ترد، تحجز، تتابع ٢٤/٧. ثلاث باقات من ٧٩ د.ك شهرياً. تجربة ٣٠ يوم.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -137,12 +137,13 @@ const JSON_LD = {
       ],
       parentOrganization: { '@id': `${SITE_URL}/#organization` },
       makesOffer: {
-        '@type':      'Offer',
-        name:         'MindSync Complete',
-        description:  'Complete AI automation system: 349 KWD one-time setup + 159 KWD/month subscription (1,000 conversations/month included).',
-        priceCurrency:'KWD',
-        price:        '349',
-        url:          `${SITE_URL}/discovery`,
+        '@type':       'AggregateOffer',
+        priceCurrency: 'KWD',
+        lowPrice:      '79',
+        highPrice:     '299',
+        offerCount:    3,
+        name:          'MindSync subscription tiers',
+        url:           `${SITE_URL}/discovery`,
       },
     },
   ],

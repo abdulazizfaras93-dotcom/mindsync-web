@@ -21,12 +21,12 @@ const FAQS = [
   },
   {
     en: {
-      q: 'Do you offer a free trial?',
-      a: 'Yes. For clients who want to see the system in action first, we build your actual AI system based on your real business data and run it live for 7 days — at no cost. If you love it, you pay the build fee and start the subscription. If not, no charge.',
+      q: 'Can I try it before committing fully?',
+      a: 'Yes — through our 30-Day Pilot. For 150 KWD we build your actual AI agent on your real business data and run it live for 30 days, so you see real results before scaling up. The 150 KWD pilot fee is credited toward your setup if you continue. No free trial — a real, working agent from day one.',
     },
     ar: {
-      q: 'هل تقدمون تجربة مجانية؟',
-      a: 'أكيد. العملاء اللي يبون يشوفون النظام يشتغل أول — نبني نظامك الذكي الفعلي بناءً على بيانات مشروعك الحقيقية ونشغّله أسبوع كامل بدون تكلفة. إذا عجبك تدفع رسوم البناء وتبدأ الاشتراك. وإذا لا، ما في أي رسوم.',
+      q: 'أقدر أجرّبه قبل ما ألتزم بالكامل؟',
+      a: 'أكيد — عن طريق تجربة الـ٣٠ يوم. بـ ١٥٠ د.ك نبني وكيلك الذكي الفعلي على بيانات مشروعك الحقيقية ونشغّله مباشرة لمدة ٣٠ يوم، عشان تشوف نتائج حقيقية قبل ما تكبّر. رسوم التجربة (١٥٠ د.ك) تُحتسب ضمن رسوم التأسيس إذا استمريت. ما في تجربة مجانية — وكيل حقيقي يشتغل من أول يوم.',
     },
   },
   {
@@ -42,11 +42,11 @@ const FAQS = [
   {
     en: {
       q: 'What does the monthly subscription cover?',
-      a: 'The monthly subscription (159 KWD) fully includes:\n• All AI API and infrastructure costs\n• 1,000 conversations / month\n• 24/7 monitoring and bug fixes\n• Free monthly AI retraining on receipts and business updates\n• Dedicated account manager\n• Regular updates and improvements\n\nFair Use overage:\n• 1,001–2,000 conversations: +30 KWD / mo\n• 2,001+ conversations: +60 KWD / mo',
+      a: 'Pricing depends on which tier fits your business — monthly plans start from 79 KWD/mo. Every tier fully includes:\n• All AI API and infrastructure costs\n• A monthly bundle of included conversations (1,000 on the entry tier, more on higher tiers)\n• 24/7 monitoring and bug fixes\n• Free monthly AI retraining on receipts and business updates\n• Dedicated account manager\n• Regular updates and improvements\n\nFair Use overage:\n• If you exceed your monthly conversation bundle, extra conversations are billed at 30 KWD per additional 1,000.',
     },
     ar: {
       q: 'شنو يشمل الاشتراك الشهري؟',
-      a: 'الاشتراك الشهري (١٥٩ د.ك) يشمل بالكامل:\n• كل تكاليف الـ AI APIs والـ infrastructure\n• ١٬٠٠٠ محادثة شهرياً مشمولة\n• مراقبة ٢٤/٧ وإصلاح أي عطل\n• إعادة تدريب الـ AI شهرياً بناءً على receipts ومستجدات مشروعك — بلاءً علينا\n• Account manager مخصص\n• تحديثات وتحسينات دورية\n\nرسوم Fair Use الإضافية:\n• ١٬٠٠١–٢٬٠٠٠ محادثة: +٣٠ د.ك / شهر\n• ٢٬٠٠١+ محادثة: +٦٠ د.ك / شهر',
+      a: 'السعر يعتمد على الباقة المناسبة لمشروعك — الاشتراك الشهري يبدأ من ٧٩ د.ك شهرياً. كل الباقات تشمل بالكامل:\n• كل تكاليف الـ AI APIs والـ infrastructure\n• حصة شهرية من المحادثات المشمولة (١٬٠٠٠ في الباقة الأساسية، وأكثر في الباقات الأعلى)\n• مراقبة ٢٤/٧ وإصلاح أي عطل\n• إعادة تدريب الـ AI شهرياً بناءً على receipts ومستجدات مشروعك — بلاءً علينا\n• Account manager مخصص\n• تحديثات وتحسينات دورية\n\nرسوم Fair Use الإضافية:\n• إذا تجاوزت حصتك الشهرية من المحادثات، تُحسب كل ١٬٠٠٠ محادثة إضافية بـ ٣٠ د.ك.',
     },
   },
   {

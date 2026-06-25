@@ -1,18 +1,17 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { MINDSYNC_COMPLETE } from '@/lib/data'
+import { PILOT } from '@/lib/data'
 
 const t = {
   eyebrow: { ar: 'منظومة ذكاء اصطناعي وأتمتة · الكويت', en: 'AI & Automation System · Kuwait' },
   h1a:     { ar: 'نظام ذكاء اصطناعي كامل',              en: 'A complete AI system' },
   h1b:     { ar: 'لمشروعك المنزلي.',                    en: 'for your home business.' },
   sub:     { ar: 'يرد، يحجز، يتابع، ويحلل ٢٤/٧ — كأن عندك فريق كامل، بدون فريق.', en: 'It replies, books, follows up, and analyzes 24/7 — like a full team, without one.' },
-  cta1:    { ar: 'ابدأ تجربتك المجانية', en: 'Start your free trial' },
+  cta1:    { ar: 'ابدأ تجربة الـ٣٠ يوم', en: 'Start your 30-day pilot' },
   cta2:    { ar: 'جرّب الحين',            en: 'Try it live' },
-  setup:   { ar: 'إعداد',                en: 'setup' },
-  mo:      { ar: 'شهرياً',               en: '/mo' },
-  trial:   { ar: 'أسبوع تجربة مجاني',     en: '7-day free trial' },
+  offer:   { ar: 'من ٧٩ د.ك شهرياً · الإعداد من ١٥٥ د.ك', en: 'From 79 KWD/mo · setup from 155 KWD' },
+  pilot:   { ar: PILOT.ar.name,           en: PILOT.en.name },
 }
 
 const STATS = [
@@ -48,15 +47,9 @@ export default function HomeHero() {
         <p className={`text-ms-ink-700 text-[17px] leading-relaxed max-w-[540px] mb-8 ${font}`}>{t.sub[lang]}</p>
 
         <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 ${ar ? 'flex-row-reverse justify-end' : ''}`}>
-          <span className="text-ms-ink-900 font-bold text-[20px] font-mono">
-            {MINDSYNC_COMPLETE.buildFee} <span className="text-ms-ink-500 text-[13px] font-sans">KWD {t.setup[lang]}</span>
-          </span>
+          <span className={`text-ms-ink-900 font-bold text-[20px] ${font}`}>{t.offer[lang]}</span>
           <span className="text-ms-ink-300">·</span>
-          <span className="text-ms-ink-900 font-bold text-[20px] font-mono">
-            {MINDSYNC_COMPLETE.retainer} <span className="text-ms-ink-500 text-[13px] font-sans">KWD{t.mo[lang]}</span>
-          </span>
-          <span className="text-ms-ink-300">·</span>
-          <span className={`text-ms-green-800 font-medium text-[14px] ${font}`}>{t.trial[lang]}</span>
+          <span className={`text-ms-green-800 font-medium text-[14px] ${font}`}>{t.pilot[lang]}</span>
         </div>
 
         <div className={`flex flex-wrap gap-3 mb-14 ${ar ? 'flex-row-reverse justify-end' : ''}`}>

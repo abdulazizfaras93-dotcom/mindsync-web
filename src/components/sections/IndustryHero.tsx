@@ -2,22 +2,24 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 import { useLang } from '@/lib/lang'
-import { MINDSYNC_COMPLETE } from '@/lib/data'
-import type { Bundle } from '@/lib/data'
+import type { Vertical } from '@/lib/data'
 
 const t = {
   home:       { en: 'Home',        ar: 'الرئيسية' },
   industries: { en: 'Industries',  ar: 'القطاعات' },
-  buildFee:   { en: 'Build fee',   ar: 'رسوم البناء' },
-  retainer:   { en: 'Monthly',     ar: 'اشتراك شهري' },
-  kwd:        { en: 'KWD',         ar: 'د.ك' },
-  mo:         { en: '/mo',         ar: '/شهر' },
-  cta:        { en: 'Get Started — Free Trial',  ar: 'ابدأ — أسبوع مجاني' },
+  startsFrom: { en: 'Starts from', ar: 'يبدأ من' },
+  price:      { en: 'from 79 KWD/mo', ar: 'من ٧٩ د.ك شهرياً' },
+  tagline:    {
+    en: 'AI that replies, books, and follows up 24/7.',
+    ar: 'ذكاء اصطناعي يرد، يحجز، ويتابع ٢٤/٧.',
+  },
+  cta:        { en: 'Get Started',  ar: 'ابدأ الآن' },
   delivery:   { en: '7-day delivery',             ar: 'جاهز في ٧ أيام' },
 }
 
-export default function IndustryHero({ bundle }: { bundle: Bundle }) {
+export default function IndustryHero({ vertical }: { vertical: Vertical }) {
   const { lang, isAr } = useLang()
+  const name = vertical[isAr ? 'ar' : 'en']
 
   return (
     <section className="relative min-h-[72vh] flex flex-col justify-center bg-ms-green-900 overflow-hidden pt-24 pb-20">
@@ -42,7 +44,7 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
           <ChevronRight size={10} className={isAr ? 'rotate-180' : ''} />
           <span className="text-white/40">{t.industries[lang]}</span>
           <ChevronRight size={10} className={isAr ? 'rotate-180' : ''} />
-          <span className="text-ms-gold-600">{bundle[isAr ? 'ar' : 'en']}</span>
+          <span className="text-ms-gold-600">{name}</span>
         </nav>
 
         <div className="max-w-3xl">
@@ -55,7 +57,7 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
             className="flex items-center gap-3 mb-6"
           >
             <span className="text-ms-gold-600 text-[11px] tracking-[0.22em] uppercase font-mono font-semibold">
-              {bundle.industry[lang]}
+              {name}
             </span>
             <span className="h-px flex-1 max-w-[60px] bg-ms-gold-600/30" />
           </motion.div>
@@ -65,19 +67,19 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.05 }}
-            className="text-[44px] md:text-[62px] font-bold text-ms-ivory-0 tracking-tight leading-[1.05] mb-6"
+            className={`text-[44px] md:text-[62px] font-bold text-ms-ivory-0 tracking-tight leading-[1.05] mb-6 ${isAr ? 'font-arabic' : ''}`}
           >
-            {bundle[isAr ? 'ar' : 'en']}
+            {name}
           </motion.h1>
 
-          {/* Pain stat */}
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-white/65 text-[17px] md:text-[19px] leading-relaxed mb-10 max-w-2xl"
+            className={`text-white/65 text-[17px] md:text-[19px] leading-relaxed mb-10 max-w-2xl ${isAr ? 'font-arabic' : ''}`}
           >
-            {bundle.painStat[lang]}
+            {t.tagline[lang]}
           </motion.p>
 
           {/* Pricing quick-view */}
@@ -88,22 +90,15 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
             className="flex items-center gap-6 mb-10 flex-wrap"
           >
             <div>
-              <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">{t.buildFee[lang]}</p>
-              <p className="text-ms-ivory-0 text-[22px] font-bold">
-                {MINDSYNC_COMPLETE.buildFee} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}</span>
-              </p>
-            </div>
-            <div className="w-px h-8 bg-white/15" />
-            <div>
-              <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">{t.retainer[lang]}</p>
-              <p className="text-ms-gold-600 text-[22px] font-bold">
-                {MINDSYNC_COMPLETE.retainer} <span className="text-[13px] text-white/50 font-normal">{t.kwd[lang]}{t.mo[lang]}</span>
+              <p className={`text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5 ${isAr ? 'font-arabic' : ''}`}>{t.startsFrom[lang]}</p>
+              <p className={`text-ms-gold-600 text-[22px] font-bold ${isAr ? 'font-arabic' : ''}`}>
+                {t.price[lang]}
               </p>
             </div>
             <div className="w-px h-8 bg-white/15" />
             <div>
               <p className="text-[10px] text-white/40 uppercase tracking-wider font-mono mb-0.5">&nbsp;</p>
-              <p className="text-ms-ivory-0/60 text-[13px] font-mono">{t.delivery[lang]}</p>
+              <p className={`text-ms-ivory-0/60 text-[13px] font-mono ${isAr ? 'font-arabic' : ''}`}>{t.delivery[lang]}</p>
             </div>
           </motion.div>
 
@@ -116,10 +111,10 @@ export default function IndustryHero({ bundle }: { bundle: Bundle }) {
           >
             <a
               href="/discovery"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-ms-gold-600 text-ms-green-900 text-[14px] font-bold hover:bg-ms-gold-500 transition-all duration-150 active:scale-[0.98]"
+              className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-ms-gold-600 text-ms-green-900 text-[14px] font-bold hover:bg-ms-gold-500 transition-all duration-150 active:scale-[0.98] ${isAr ? 'font-arabic' : ''}`}
             >
               {t.cta[lang]}
-              <ArrowRight size={15} strokeWidth={2.5} />
+              <ArrowRight size={15} strokeWidth={2.5} className={isAr ? 'rotate-180' : ''} />
             </a>
             <a
               href="/#bundles"

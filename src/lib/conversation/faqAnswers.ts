@@ -43,10 +43,10 @@ export const FAQ_ITEMS: { id: FaqKey; q: { en: string; ar: string }; a: { en: st
   },
   {
     id: 'trial',
-    q: { en: 'What does the 159 KWD include?', ar: 'شنو تشمل الـ ١٥٩ د.ك؟' },
+    q: { en: 'What\'s included in the monthly price?', ar: 'شنو يشمل السعر الشهري؟' },
     a: {
-      en: 'Everything: AI APIs (Claude/GPT), WhatsApp Business API, hosting + infrastructure, monthly management + training, 24/7 monitoring, and 1,000 conversations.',
-      ar: 'كل شي:\n• AI APIs (Claude/GPT)\n• WhatsApp Business API\n• Hosting + infrastructure\n• إدارة شهرية + تدريب\n• مراقبة 24/7\n• 1,000 محادثة',
+      en: 'There are 3 tiers — from 79 KWD/mo (Receptionist) to 149 (Coordinator) to 299 (Manager). Every tier covers: AI APIs (Claude/GPT), WhatsApp Business API, hosting + infrastructure, monthly management + training, 24/7 monitoring — and your included conversations (1,000 / 3,000 / 8,000). No surprise AI bills.',
+      ar: 'عندنا 3 باقات — من ٧٩ د.ك بالشهر (موظف الاستقبال) إلى ١٤٩ (المنسّق) إلى ٢٩٩ (المدير). كل باقة تشمل:\n• AI APIs (Claude/GPT)\n• WhatsApp Business API\n• Hosting + infrastructure\n• إدارة شهرية + تدريب\n• مراقبة 24/7\n• المحادثات المشمولة (١٬٠٠٠ / ٣٬٠٠٠ / ٨٬٠٠٠)\nوما في فواتير ذكاء اصطناعي مفاجئة.',
     },
   },
   {
@@ -61,8 +61,8 @@ export const FAQ_ITEMS: { id: FaqKey; q: { en: string; ar: string }; a: { en: st
     id: 'languages',
     q: { en: 'What if I don\'t like it?', ar: 'شنو لو ما عجبني؟' },
     a: {
-      en: 'The first week is free. If you\'re not happy, we stop — no cost. After activation, you can cancel anytime with one button.',
-      ar: 'الأسبوع الأول مجاناً. لو ما عجبك، نوقف — بدون أي تكلفة. بعد التفعيل، تقدر تلغي في أي وقت بزر واحد.',
+      en: 'You start with a paid 30-Day Pilot (150 KWD) — a live agent on your real business. If you continue, the 150 is credited to your setup fee. After that, no binding contract — cancel anytime with one button.',
+      ar: 'تبدأ بتجربة ٣٠ يوم مدفوعة (١٥٠ د.ك) — وكيل حقيقي على مشروعك. لو استمريت، الـ ١٥٠ تُحتسب ضمن رسوم التأسيس. وبعدها مافيه عقد ملزم — تلغي في أي وقت بزر واحد.',
     },
   },
 ]

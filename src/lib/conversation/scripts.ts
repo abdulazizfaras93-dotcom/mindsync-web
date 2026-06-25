@@ -211,50 +211,44 @@ export function getStage5Response(objection: ObjectionKey, isAr: boolean): strin
 // ─── STAGE 6 — Present the Offer ─────────────────────────────────────────────
 
 export const STAGE4_INTRO = {
-  en: 'Like what you see? 💚\nBuilt right here in Kuwait. Every client gets a full week trial — zero risk.\nHere\'s everything included:',
-  ar: 'عجبك؟ 💚\nمبني هني في الكويت. وأي عميل يجرّب أسبوع كامل — بدون ما يدفع فلس.\nهذا شنو يشمل:',
+  en: 'Like what you see? 💚\nBuilt right here in Kuwait. Three tiers — pick the level that fits your business.\nStart with a paid 30-day Pilot, credited to your setup if you continue:',
+  ar: 'عجبك؟ 💚\nمبني هني في الكويت. ثلاث باقات — اختر المستوى اللي يناسب مشروعك.\nتقدر تبدأ بتجربة ٣٠ يوم مدفوعة، وتُحتسب ضمن رسوم التأسيس إذا استمريت:',
 }
 
 export const OFFER_DETAILS = {
   ar: {
-    title: 'مايندسينك كومبليت — كل شي بسعر واحد',
-    setup: '٣٤٩ دينار رسوم البناء — مرة وحدة',
-    monthly: '١٥٩ دينار بالشهر — يشمل كل شي',
+    title: 'ثلاث باقات — اختر مستواك',
+    setup: 'رسوم التأسيس تبدأ من ١٥٥ دينار — مرة وحدة',
+    monthly: 'من ٧٩ دينار بالشهر',
     includes: [
-      'وكيل ذكي مخصص لمشروعك — يشتغل على واتساب وإنستقرام وموقعك',
-      'داشبورد تتابع فيه مشروعك',
-      'أكثر من ١٠ أتمتة من اليوم الأول',
-      '١٠٠٠ محادثة بالشهر مشمولة',
+      'موظف الاستقبال — من ١٥٥ تأسيس / ٧٩ بالشهر · ١٠٠٠ محادثة',
+      'المنسّق (الأكثر طلباً) — من ٢٨٥ تأسيس / ١٤٩ بالشهر · ٣٠٠٠ محادثة',
+      'المدير — من ٤٨٥ تأسيس / ٢٩٩ بالشهر · ٨٠٠٠ محادثة',
+      'كل الباقات: لهجة كويتية، ردود فورية، مراقبة وصيانة شهرية',
       'كل تكاليف الذكاء الاصطناعي مشمولة — ما في فواتير مفاجئة',
-      'مراقبة وإصلاح ٢٤ ساعة',
-      'تحديث الوكيل كل شهر حسب بياناتك',
-      'مدير حساب متخصص',
     ],
     extra: [
-      '١٠٠١ إلى ٢٠٠٠ محادثة: +٣٠ دينار بالشهر',
-      'أكثر من ٢٠٠١: +٦٠ دينار بالشهر',
+      'محادثات إضافية: +٣٠ دينار لكل ١٠٠٠ محادثة',
+      'تقدر تترقّى أو تنزّل الباقة في أي وقت',
     ],
-    trial: 'أسبوع تجريبي مجاني — النظام الحقيقي على حساباتك، بدون ما تدفع فلس',
+    trial: 'تجربة ٣٠ يوم مدفوعة بـ ١٥٠ دينار — وكيل حقيقي على مشروعك، وتُحتسب ضمن رسوم التأسيس إذا استمريت',
   },
   en: {
-    title: 'MindSync Complete — one price, everything included',
-    setup: '349 KWD setup — one time',
-    monthly: '159 KWD/month — covers everything',
+    title: 'Three tiers — pick your level',
+    setup: 'Setup from 155 KWD — one time',
+    monthly: 'From 79 KWD/month',
     includes: [
-      'Custom AI agent — built and running on your WhatsApp, Instagram, and website',
-      'Business analytics dashboard',
-      '10+ automations from day one',
-      '1,000 conversations/month included',
+      'Sync Receptionist — from 155 setup / 79/mo · 1,000 conversations',
+      'Sync Coordinator (Most Popular) — from 285 setup / 149/mo · 3,000 conversations',
+      'Sync Manager — from 485 setup / 299/mo · 8,000 conversations',
+      'Every tier: Kuwaiti dialect, instant replies, monthly monitoring & maintenance',
       'All AI costs covered — no surprise bills',
-      '24/7 monitoring and fixes',
-      'Monthly agent update based on your business data',
-      'Dedicated account manager',
     ],
     extra: [
-      '1,001–2,000 conversations: +30 KWD/mo',
-      '2,001+: +60 KWD/mo',
+      'Extra conversations: +30 KWD per 1,000',
+      'Upgrade or downgrade your tier anytime',
     ],
-    trial: 'Free 1-week trial — real system on your accounts, zero risk',
+    trial: 'Paid 30-Day Pilot for 150 KWD — a live agent on your real business, credited to setup if you continue',
   },
 }
 

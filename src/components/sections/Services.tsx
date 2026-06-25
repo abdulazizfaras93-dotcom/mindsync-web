@@ -1,7 +1,6 @@
 'use client'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/lang'
-import { MINDSYNC_COMPLETE } from '@/lib/data'
 
 const t = {
   eyebrow: { en: 'What We Build', ar: 'الي نبنيه' },
@@ -17,7 +16,8 @@ const t = {
       en: 'Not a chatbot template. A fully programmed agent built for your home business and trained on how you work. Deployed on WhatsApp, your website, Instagram — or all three. Handles your entire customer communication layer.',
       ar: 'ليس نموذجاً جاهزاً. وكيل مبرمج بالكامل لمشروعك المنزلي ومُدرَّب على أسلوبك تحديداً. نشره على واتساب، موقعك، إنستغرام — أو الثلاثة معاً. يتولى طبقة التواصل مع عملائك بالكامل.',
     },
-    included: { en: 'Included in MindSync Complete', ar: 'مشمول في MindSync Complete' },
+    included: { en: 'Included in every tier', ar: 'مشمول في كل الباقات' },
+    price:    { en: 'from 79 KWD/mo', ar: 'من ٧٩ د.ك شهرياً' },
   },
   cards: [
     {
@@ -101,7 +101,7 @@ export default function Services() {
             </p>
             <div className="pt-5 border-t border-white/[0.12]">
               <span className="inline-block font-mono text-[12px] text-ms-gold-500 border border-ms-gold-600/30 px-4 py-1.5 rounded-full">
-                {t.flagship.included[lang]} · {MINDSYNC_COMPLETE.buildFee} {lang === 'ar' ? 'د.ك' : 'KWD'} + {MINDSYNC_COMPLETE.retainer} {lang === 'ar' ? 'د.ك / شهر' : 'KWD / mo'}
+                {t.flagship.included[lang]} · {t.flagship.price[lang]}
               </span>
             </div>
           </div>

@@ -13,7 +13,7 @@ import ExitIntent from '@/components/ui/ExitIntent'
 
 export const metadata = {
   title: 'MindSync — أعمالك، مؤتمتة | Your Business, Automated',
-  description: "Kuwait's only full-stack AI automation agency for home businesses. A complete AI system — replies, books, follows up, and analyzes 24/7. 349 KWD setup + 159 KWD/mo. 7-day free trial.",
+  description: "Kuwait's only full-stack AI automation agency for home businesses. A complete AI system — replies, books, follows up, and analyzes 24/7. Three tiers from 79 KWD/mo. 30-day paid pilot, credited to setup.",
 }
 
 export default function Home() {

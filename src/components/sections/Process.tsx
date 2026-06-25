@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useLang } from '@/lib/lang'
 import { KineticText } from '@/components/motion'
+import { PILOT } from '@/lib/data'
 
 const ProcessMorph = dynamic(() => import('@/components/canvas/ProcessMorph'), { ssr: false })
 
@@ -12,10 +13,10 @@ const t = {
   eyebrow:    { en: 'How It Works',                          ar: 'كيف يشتغل النظام' },
   headline:   { en: 'From first message to live system.',    ar: 'من أول رسالة لنظام شغّال.' },
   sub: {
-    en: 'A clear process, a real timeline, and a free trial so you can see it work before you pay.',
-    ar: 'خطوات واضحة، مواعيد حقيقية، وأسبوع تجربة مجانية تشوف فيه النظام يشتغل قبل ما تدفع.',
+    en: `A clear process, a real timeline, and a paid ${PILOT.days}-day pilot on your real business so you see it work before you scale.`,
+    ar: `خطوات واضحة، مواعيد حقيقية، وتجربة مدفوعة ${PILOT.days} يوم على مشروعك الحقيقي تشوف فيها النظام يشتغل قبل ما تكبّر.`,
   },
-  trialBadge: { en: 'Free', ar: 'مجانية' },
+  trialBadge: { en: 'Pilot', ar: 'تجربة' },
   footnote: {
     en: "We don't start building until tasks and channels are agreed in the discovery call.",
     ar: 'لا نبدأ بناء النظام إلا بعد الاتفاق على المهام والقنوات في مكالمة الاستكشاف.',
@@ -40,14 +41,14 @@ const STEPS = [
   {
     num: '02',
     en: {
-      title: 'Free 1-Week Trial',
-      sub:   'Try before you pay',
-      desc:  'We build your actual AI system based on your real business data and run it live for 7 days. If you love it, we activate. If not — no charge, no questions.',
+      title: `${PILOT.days}-Day Pilot`,
+      sub:   'A real agent, not a demo',
+      desc:  `We build your actual AI agent on your real business data and run it live for ${PILOT.days} days (${PILOT.price} KWD). You see real results before you scale — and the ${PILOT.price} KWD is credited to your setup if you continue.`,
     },
     ar: {
-      title: 'أسبوع تجربة مجانية',
-      sub:   'جرّب قبل ما تدفع',
-      desc:  'نبني نظامك الذكي الفعلي بناءً على بيانات مشروعك الحقيقية ونشغّله أسبوع كامل. إذا عجبك نفعّله — وإذا لا، ما في أي تكلفة.',
+      title: `تجربة ${PILOT.days} يوم`,
+      sub:   'وكيل حقيقي، مو مجرد عرض',
+      desc:  `نبني وكيلك الذكي الفعلي على بيانات مشروعك الحقيقية ونشغّله مباشرة لمدة ${PILOT.days} يوم (${PILOT.price} د.ك). تشوف نتائج حقيقية قبل ما تكبّر — ورسوم التجربة (${PILOT.price} د.ك) تُحتسب ضمن رسوم التأسيس إذا استمريت.`,
     },
     trial: true,
   },
@@ -56,12 +57,12 @@ const STEPS = [
     en: {
       title: 'Sign & Build',
       sub:   'Contract + full build',
-      desc:  'After the trial, you sign the agreement and pay the build fee (349 KWD) and start the subscription (159 KWD / mo). We finalize all integrations, agents, channels, and your client portal — tailored exactly to your needs.',
+      desc:  'After the pilot, you sign the agreement and pay the setup fee (from 155 KWD) and start your plan (from 79 KWD / mo). We finalize all integrations, agents, channels, and your client portal — tailored exactly to your needs.',
     },
     ar: {
       title: 'التوقيع والبناء',
       sub:   'عقد + بناء كامل',
-      desc:  'بعد التجربة، توقّع الاتفاقية وتدفع رسوم البناء (٣٤٩ د.ك) وتبدأ الاشتراك (١٥٩ د.ك / شهر). نكمّل كل التكاملات، الوكلاء، القنوات، ولوحة التحكم — مخصصة بالكامل لك.',
+      desc:  'بعد التجربة، توقّع الاتفاقية وتدفع رسوم التأسيس (من ١٥٥ د.ك) وتبدأ خطتك (من ٧٩ د.ك / شهر). نكمّل كل التكاملات، الوكلاء، القنوات، ولوحة التحكم — مخصصة بالكامل لك.',
     },
     trial: false,
   },

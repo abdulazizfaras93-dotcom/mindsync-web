@@ -9,38 +9,40 @@ import ROICalculator from '@/components/sections/ROICalculator'
 import Process from '@/components/sections/Process'
 import { CTA, Footer } from '@/components/sections/CTAFooter'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
-import { INDUSTRY_SLUGS, getBundleBySlug } from '@/lib/data'
+import { VERTICALS, getVerticalBySlug } from '@/lib/data'
 
 export function generateStaticParams() {
-  return Object.keys(INDUSTRY_SLUGS).map(slug => ({ industry: slug }))
+  return VERTICALS.map(v => ({ industry: v.slug }))
 }
 
 export async function generateMetadata(
   { params }: { params: { industry: string } }
 ): Promise<Metadata> {
-  const bundle = getBundleBySlug(params.industry)
-  if (!bundle) return {}
+  const vertical = getVerticalBySlug(params.industry)
+  if (!vertical) return {}
+  const title = `${vertical.en} — MindSync Kuwait`
+  const description = `AI automation for ${vertical.en.toLowerCase()} in Kuwait — replies, books, follows up 24/7.`
   return {
-    title: `${bundle.en} — MindSync Kuwait`,
-    description: bundle.painStat.en,
+    title,
+    description,
     openGraph: {
-      title: `${bundle.en} — MindSync Kuwait`,
-      description: bundle.painStat.en,
+      title,
+      description,
       url: `https://www.mindsynckw.com/${params.industry}`,
     },
   }
 }
 
 export default function IndustryPage({ params }: { params: { industry: string } }) {
-  const bundle = getBundleBySlug(params.industry)
-  if (!bundle) notFound()
+  const vertical = getVerticalBySlug(params.industry)
+  if (!vertical) notFound()
 
   return (
     <LangProvider>
       <Navbar />
       <main>
-        <IndustryHero bundle={bundle} />
-        <IndustryBundles bundle={bundle} />
+        <IndustryHero vertical={vertical} />
+        <IndustryBundles vertical={vertical} />
         <ReceptionistChat />
         <ROICalculator />
         <Process />

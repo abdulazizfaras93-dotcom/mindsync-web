@@ -1,11 +1,11 @@
 import { MetadataRoute } from 'next';
-import { INDUSTRY_SLUGS } from '@/lib/data';
+import { VERTICALS } from '@/lib/data';
 
 const BASE = 'https://www.mindsynckw.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const industryPages = Object.keys(INDUSTRY_SLUGS).map(slug => ({
-    url: `${BASE}/${slug}`,
+  const industryPages = VERTICALS.map(v => ({
+    url: `${BASE}/${v.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.9,

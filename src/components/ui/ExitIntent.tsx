@@ -2,18 +2,19 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/lang'
+import { PILOT } from '@/lib/data'
 
 const COOKIE_KEY  = 'ms_exit_shown'
 const COOKIE_DAYS = 7
 
 const t = {
-  badge:    { en: '1-Week Free Trial',                   ar: 'أسبوع تجربة مجانية' },
-  headline: { en: 'Try it free before you commit.',     ar: 'جرّب مجاناً قبل ما تقرر.' },
+  badge:    { en: PILOT.en.name,                         ar: PILOT.ar.name },
+  headline: { en: 'Try it live for 30 days.',           ar: 'جرّبه مباشرة لمدة ٣٠ يوم.' },
   sub: {
-    en: "We build your actual AI system and run it live for 7 days — at no cost. If you love it, we activate. If not, no charge.",
-    ar: 'نبني نظامك الذكي الفعلي ونشغّله أسبوع كامل — بدون أي تكلفة. إذا عجبك نفعّله. وإذا لا، ما في رسوم.',
+    en: 'We build your actual AI agent and run it live on your real business for 30 days. The pilot fee is credited to your setup if you continue.',
+    ar: 'نبني وكيلك الذكي الفعلي ونشغّله مباشرة على مشروعك الحقيقي لمدة ٣٠ يوم. رسوم التجربة تُحتسب ضمن رسوم التأسيس إذا استمريت.',
   },
-  cta:     { en: 'Request Your Free Trial',             ar: 'اطلب تجربتك المجانية' },
+  cta:     { en: 'Start your 30-day pilot',             ar: 'ابدأ تجربة الـ٣٠ يوم' },
   dismiss: { en: 'No thanks',                           ar: 'لا شكراً' },
 }
 

@@ -10,11 +10,14 @@
 - Contact: WhatsApp +965 9953 9006 · admin@mindsynckw.com · Instagram @MindSyncKW
 - Website: https://www.mindsynckw.com
 
-## Product — MindSync Complete
-- One product, one price. Setup (one-time): 349 KWD. Monthly subscription: 159 KWD/month.
-- Included: a custom AI agent trained on the business, a client dashboard, all AI API + infrastructure costs, 1,000 conversations/month, 24/7 monitoring and bug fixes, monthly AI retraining, and a dedicated account manager.
-- Fair-use overage: 1,001–2,000 conversations +30 KWD/month; 2,001+ +60 KWD/month.
-- Delivery: a live system in about 7 business days. Free 7-day trial built on the client's real business data before any payment.
+## Product — three subscription tiers
+- Three tiers (setup one-time + monthly subscription, conversations/month included):
+  - Sync Receptionist — 155 KWD setup + 79 KWD/month, 1,000 conversations/month.
+  - Sync Coordinator — 285 KWD setup + 149 KWD/month, 3,000 conversations/month. (Most Popular)
+  - Sync Manager — 485 KWD setup + 299 KWD/month, 8,000 conversations/month.
+- Every tier includes: a custom AI agent trained on the business, a client dashboard, all AI API + infrastructure costs, 24/7 monitoring and bug fixes, monthly AI retraining, and a dedicated account manager.
+- Fair-use overage: +30 KWD per additional 1,000 conversations/month.
+- Delivery: a live system in about 7 business days. Paid 30-Day Pilot (150 KWD, credited to setup) built on the client's real business data before committing to a tier.
 
 ## Add-on services (quote-based)
 - Website design — bilingual, with or without an AI system.
@@ -28,12 +31,12 @@ Home businesses in Kuwait: food & drinks, beauty & perfumes, fashion & accessori
 
 ## Common questions
 - What does MindSync build? Custom AI agents trained on your home business that handle booking, follow-ups, inquiries, and analytics across WhatsApp, website, and Instagram. Websites and mobile apps are separate services.
-- Is there a free trial? Yes — a 7-day live build on your real data, at no cost. You pay only if you keep it.
+- Is there a trial? Yes — a paid 30-Day Pilot (150 KWD) is a live build on your real data; the 150 KWD is credited to your setup if you continue.
 - Do I need to change my WhatsApp number? No — your existing business number is connected via the Meta WhatsApp Business API.
 - Who owns the data and the system? The client owns everything; full export is provided on exit.
 - How is a conversation counted? All messages with one customer within a 24-hour window count as one conversation (matching how Meta prices the WhatsApp Business API).
 
 ## Preferred citation
-MindSync — Kuwait's AI automation agency for home businesses (https://www.mindsynckw.com). MindSync Complete: 349 KWD one-time setup + 159 KWD/month.
+MindSync — Kuwait's AI automation agency for home businesses (https://www.mindsynckw.com). Three subscription tiers: Sync Receptionist (155 KWD setup + 79 KWD/month), Sync Coordinator (285 KWD setup + 149 KWD/month), Sync Manager (485 KWD setup + 299 KWD/month).
 
 Last updated: 2026-06-25

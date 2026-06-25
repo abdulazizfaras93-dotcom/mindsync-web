@@ -8,7 +8,8 @@ import {
   STAGE4_INTRO, OBJECTIONS, getStage5Response, OFFER_DETAILS, DISCOVERY_LINK,
 } from '@/lib/conversation/scripts'
 import type { ObjectionKey } from '@/lib/conversation/scripts'
-import { MINDSYNC_COMPLETE } from '@/lib/data'
+import { TIERS, PILOT } from '@/lib/data'
+import type { TierId } from '@/lib/data'
 import { trackCtaClicked } from '@/lib/conversation/analytics'
 
 interface Props {
@@ -25,6 +26,7 @@ interface AnsweredObjection {
 export default function Stage4Pricing({ isAr, onNext }: Props) {
   const [showCard, setShowCard] = useState(false)
   const [showActions, setShowActions] = useState(false)
+  const [selectedTier, setSelectedTier] = useState<TierId>('coordinator')
   const [answered, setAnswered] = useState<AnsweredObjection[]>([])
   const [remainingIds, setRemainingIds] = useState<ObjectionKey[]>(OBJECTIONS.map(o => o.id))
 
@@ -55,66 +57,87 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
           initial={{ opacity: 0, y: 16, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto w-full max-w-sm"
+          className="mx-auto w-full max-w-sm flex flex-col gap-3"
           dir={isAr ? 'rtl' : 'ltr'}
         >
-          <div
-            className="rounded-2xl overflow-hidden backdrop-blur-xl"
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.10)',
-            }}
-          >
-            {/* Header */}
-            <div
-              className="px-5 py-5"
-              style={{ background: 'linear-gradient(135deg, #153E2D 0%, #0F2E22 100%)' }}
-            >
-              <p className="text-ms-gold-400 font-mono text-[10px] tracking-widest uppercase mb-3">
-                {MINDSYNC_COMPLETE.name.en}
+          <p className={`text-ms-gold-400 font-mono text-[10px] tracking-widest uppercase ${isAr ? 'font-arabic text-right' : 'text-left'}`}>
+            {offer.title}
+          </p>
+
+          {/* 3-tier picker */}
+          {TIERS.map(tier => {
+            const isSelected = tier.id === selectedTier
+            const role = isAr ? tier.roleAr : tier.roleEn
+            const name = tier.en
+            const features = (isAr ? tier.features.ar : tier.features.en).slice(0, 3)
+            const badge = tier.badge ? (isAr ? tier.badge.ar : tier.badge.en) : null
+            return (
+              <button
+                key={tier.id}
+                type="button"
+                onClick={() => setSelectedTier(tier.id)}
+                aria-pressed={isSelected}
+                className="relative w-full rounded-2xl overflow-hidden text-start transition-all duration-200"
+                style={{
+                  background: isSelected
+                    ? 'linear-gradient(135deg, #153E2D 0%, #0F2E22 100%)'
+                    : 'rgba(255,255,255,0.04)',
+                  border: isSelected
+                    ? '1px solid rgba(191,141,56,0.55)'
+                    : '1px solid rgba(255,255,255,0.10)',
+                  boxShadow: isSelected ? '0 0 0 1px rgba(191,141,56,0.25)' : 'none',
+                }}
+              >
+                {badge && (
+                  <span
+                    className={`absolute top-0 ${isAr ? 'left-0 rounded-br-lg' : 'right-0 rounded-bl-lg'} px-2.5 py-1 text-[9px] font-semibold tracking-wide uppercase bg-ms-gold-600 text-ms-green-900 ${isAr ? 'font-arabic' : 'font-grotesk'}`}
+                  >
+                    {badge}
+                  </span>
+                )}
+
+                <div className="px-4 py-3.5">
+                  <div className={`flex items-baseline justify-between gap-2 ${isAr ? 'flex-row-reverse' : ''}`}>
+                    <div className={isAr ? 'text-right' : 'text-left'}>
+                      <p className={`text-white font-semibold text-sm ${isAr ? 'font-arabic' : 'font-grotesk'}`}>{role}</p>
+                      <p className="text-white/35 text-[10px] font-mono tracking-wide">{name}</p>
+                    </div>
+                    <div className={isAr ? 'text-left' : 'text-right'}>
+                      <div className={`flex items-baseline gap-1 ${isAr ? 'flex-row-reverse' : ''}`}>
+                        <span className="text-white font-grotesk font-bold text-xl">{tier.monthly}</span>
+                        <span className="text-white/55 text-[11px]">{isAr ? 'د.ك/شهر' : 'KWD/mo'}</span>
+                      </div>
+                      <p className={`text-white/40 text-[10px] mt-0.5 ${isAr ? 'font-arabic' : 'font-grotesk'}`}>
+                        {isAr ? `+ ${tier.buildFee} د.ك تأسيس` : `+ ${tier.buildFee} KWD setup`}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="mt-2.5 space-y-1.5">
+                    {features.map((f, i) => (
+                      <li key={i} className={`flex items-start gap-2 text-[11px] text-white/70 ${isAr ? 'flex-row-reverse text-right' : ''}`}>
+                        <span className="text-ms-gold-600 font-bold flex-shrink-0">✓</span>
+                        <span className={isAr ? 'font-arabic' : 'font-grotesk'}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </button>
+            )
+          })}
+
+          {/* Pilot mention + overage */}
+          <div className="px-1 pt-1 space-y-1" dir={isAr ? 'rtl' : 'ltr'}>
+            <p className={`text-[11px] text-ms-gold-400/90 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
+              {isAr
+                ? `${PILOT.ar.name} (${PILOT.price} د.ك): ${PILOT.ar.body}`
+                : `${PILOT.en.name} (${PILOT.price} KWD): ${PILOT.en.body}`}
+            </p>
+            {offer.extra.map((line, i) => (
+              <p key={i} className={`text-[11px] text-white/35 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
+                {line}
               </p>
-              <div className={`flex items-start gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
-                <div className={isAr ? 'text-right' : 'text-left'}>
-                  <div className={`flex items-baseline gap-1 ${isAr ? 'flex-row-reverse' : ''}`}>
-                    <span className="text-white font-grotesk font-bold text-3xl">{MINDSYNC_COMPLETE.buildFee}</span>
-                    <span className="text-white/60 text-sm">{isAr ? 'د.ك' : 'KWD'}</span>
-                  </div>
-                  <p className={`text-white/50 text-[11px] mt-0.5 ${isAr ? 'font-arabic' : 'font-grotesk'}`}>
-                    {isAr ? 'إعداد' : 'one-time setup'}
-                  </p>
-                </div>
-                <div className="text-white/30 text-2xl font-light mt-1">+</div>
-                <div className={isAr ? 'text-right' : 'text-left'}>
-                  <div className={`flex items-baseline gap-1 ${isAr ? 'flex-row-reverse' : ''}`}>
-                    <span className="text-white font-grotesk font-bold text-3xl">{MINDSYNC_COMPLETE.retainer}</span>
-                    <span className="text-white/60 text-sm">{isAr ? 'د.ك/شهر' : 'KWD/mo'}</span>
-                  </div>
-                  <p className={`text-white/50 text-[11px] mt-0.5 ${isAr ? 'font-arabic' : 'font-grotesk'}`}>
-                    {isAr ? 'اشتراك' : 'subscription'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Features */}
-            <div className="px-5 py-4">
-              <ul className="space-y-2.5">
-                {offer.includes.map((f, i) => (
-                  <li key={i} className={`flex items-start gap-2.5 text-sm text-white/75 ${isAr ? 'flex-row-reverse' : ''}`}>
-                    <span className="text-ms-gold-600 font-bold mt-0.5 flex-shrink-0">✓</span>
-                    <span className={isAr ? 'font-arabic text-right' : 'font-grotesk'}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-4 pt-4 space-y-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                {offer.extra.map((line, i) => (
-                  <p key={i} className={`text-[11px] text-white/35 leading-relaxed ${isAr ? 'font-arabic text-right' : 'font-grotesk'}`}>
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </motion.div>
       )}
@@ -137,7 +160,7 @@ export default function Stage4Pricing({ isAr, onNext }: Props) {
               ${isAr ? 'font-arabic flex-row-reverse' : 'font-grotesk'}
             `}
           >
-            {isAr ? 'ابدأ تجربتك المجانية' : 'Start Free Trial'}
+            {isAr ? 'ابدأ تجربة الـ ٣٠ يوم' : 'Start your 30-Day Pilot'}
             <span>{isAr ? '←' : '→'}</span>
           </a>
         </motion.div>
