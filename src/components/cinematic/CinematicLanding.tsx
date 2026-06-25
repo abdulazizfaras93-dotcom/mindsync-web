@@ -136,6 +136,7 @@ export default function CinematicLanding() {
   const heroRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(0)
   const [prog, setProg] = useState(0)
+  const [cursorOn, setCursorOn] = useState(false)
 
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const apY = useTransform(scrollYProgress, [0, 1], ['0%', '60%'])
@@ -153,13 +154,12 @@ export default function CinematicLanding() {
     const move = (e: PointerEvent) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)` }
     const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px,${ry}px)`; raf = requestAnimationFrame(loop) }
     window.addEventListener('pointermove', move); loop()
-    document.body.classList.add('hascur')
+    setCursorOn(true)
     const els = Array.from(document.querySelectorAll('a,button,[data-hov]'))
     const en = () => ring.classList.add(s.big), lv = () => ring.classList.remove(s.big)
     els.forEach(el => { el.addEventListener('pointerenter', en); el.addEventListener('pointerleave', lv) })
     return () => {
       window.removeEventListener('pointermove', move); cancelAnimationFrame(raf)
-      document.body.classList.remove('hascur')
       els.forEach(el => { el.removeEventListener('pointerenter', en); el.removeEventListener('pointerleave', lv) })
     }
   }, [reduce])
@@ -226,7 +226,7 @@ export default function CinematicLanding() {
   ]
 
   return (
-    <div className={`${s.root} ${isAr ? '' : s.ltr}`}>
+    <div className={`${s.root} ${isAr ? '' : s.ltr} ${cursorOn ? s.noCursor : ''}`}>
       <div className={s.sheet} aria-hidden />
       <div className={s.grain} aria-hidden />
       <canvas ref={dustRef} className={s.dust} aria-hidden />

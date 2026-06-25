@@ -20,7 +20,7 @@
 .curDot{width:7px;height:7px;background:var(--gold-2);margin:-3.5px 0 0 -3.5px;box-shadow:0 0 10px rgba(216,174,90,.8)}
 .curRing{width:34px;height:34px;border:1.5px solid rgba(191,141,56,.6);margin:-17px 0 0 -17px;transition:width .25s,height .25s,margin .25s,background .25s,border-color .25s}
 .big{width:60px;height:60px;margin:-30px 0 0 -30px;background:rgba(191,141,56,.1);border-color:var(--gold-2)}
-:global(body.hascur *){cursor:none !important}
+.noCursor,.noCursor *{cursor:none !important}
 @media(pointer:coarse){.cur{display:none}}
 
 .langtog{position:fixed;top:22px;inset-inline-end:26px;z-index:30;display:flex;border:1px solid var(--w12);border-radius:30px;overflow:hidden;background:rgba(10,31,23,.55)}
