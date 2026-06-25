@@ -64,7 +64,7 @@ function ProgressDots({ stage }: { stage: number }) {
   )
 }
 
-export default function ConversationalLanding() {
+export default function ConversationalLanding({ embedded = false }: { embedded?: boolean }) {
   const { isAr } = useLang()
   const [state, setState] = useState<ConversationState | null>(null)
   const [resumeFrom, setResumeFrom] = useState<ConversationState | null>(null)
@@ -126,7 +126,7 @@ export default function ConversationalLanding() {
 
   if (!hydrated) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#060E09' }}>
+      <div className={`${embedded ? 'min-h-[60vh]' : 'min-h-screen'} flex items-center justify-center`} style={{ background: '#060E09' }}>
         <div className="w-5 h-5 rounded-full border-2 border-ms-gold-600 border-t-transparent animate-spin" />
       </div>
     )
@@ -134,7 +134,7 @@ export default function ConversationalLanding() {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className={`${embedded ? '' : 'min-h-screen'} flex flex-col`}
       dir={isAr ? 'rtl' : 'ltr'}
       style={{
         background: '#060E09',
@@ -142,9 +142,9 @@ export default function ConversationalLanding() {
         backgroundSize: '28px 28px',
       }}
     >
-      <SkipBar />
+      {!embedded && <SkipBar />}
 
-      <div className="flex-1 flex flex-col items-center pt-20 pb-12 px-4">
+      <div className={`flex-1 flex flex-col items-center ${embedded ? 'pt-12' : 'pt-20'} pb-12 px-4`}>
         {resumeFrom && (
           <div className="mb-4 w-full max-w-md">
             <ResumeBanner
@@ -226,9 +226,11 @@ export default function ConversationalLanding() {
           </ChatContainer>
         </div>
 
-        <p className="mt-10 text-center font-mono text-[10px] text-white/20 tracking-wide">
-          © {new Date().getFullYear()} MindSync · الكويت
-        </p>
+        {!embedded && (
+          <p className="mt-10 text-center font-mono text-[10px] text-white/20 tracking-wide">
+            © {new Date().getFullYear()} MindSync · الكويت
+          </p>
+        )}
       </div>
     </div>
   )
