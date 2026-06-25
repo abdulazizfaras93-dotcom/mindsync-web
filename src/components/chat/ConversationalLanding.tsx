@@ -162,7 +162,7 @@ export default function ConversationalLanding({ embedded = false }: { embedded?:
 
           {state && <ProgressDots stage={state.stage} />}
 
-          <ChatContainer className="min-h-[60vh]">
+          <ChatContainer className="min-h-[60vh]" autoScroll={!embedded}>
             {state && (
               <>
                 <Stage1Greeting isAr={isAr} onSelect={handleCategorySelect} />
