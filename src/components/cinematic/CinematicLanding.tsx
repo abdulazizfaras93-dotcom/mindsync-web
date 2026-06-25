@@ -407,7 +407,17 @@ export default function CinematicLanding() {
           <a className={s.mbtn} href="/discovery" data-hov>{isAr ? 'احجز مكالمة الاستكشاف' : 'Book a discovery call'}</a>
         </Reveal>
       </section>
-      <div className={s.foot}>MindSync · {isAr ? 'مدينة الكويت' : 'Kuwait City'}</div>
+      <footer className={s.foot}>
+        <div className={s.footLinks}>
+          <a href="/discovery">{isAr ? 'ابدأ' : 'Get started'}</a>
+          <a href="/services">{isAr ? 'الخدمات' : 'Services'}</a>
+          <a href="https://wa.me/96599539006" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://instagram.com/MindSyncKW" target="_blank" rel="noopener noreferrer">@MindSyncKW</a>
+          <a href="/privacy">{isAr ? 'الخصوصية' : 'Privacy'}</a>
+          <a href="/terms">{isAr ? 'الشروط' : 'Terms'}</a>
+        </div>
+        <div>{isAr ? 'مايند سينك · مدينة الكويت · س.ت ٥٤٦٥١١' : 'MindSync · Kuwait City · CR 546511'} · © 2026</div>
+      </footer>
     </div>
   )
 }
