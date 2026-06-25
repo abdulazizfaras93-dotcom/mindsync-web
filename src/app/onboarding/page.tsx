@@ -15,8 +15,8 @@ const T = {
     submit: 'إرسال الاستبيان',
     submitting: 'جاري الإرسال...',
     error: 'صار خطأ بالإرسال. حاول مرة ثانية أو راسلنا على واتساب.',
-    successTitle: 'وصلنا استبيانك! 🎉',
-    successBody: 'بنراجع معلوماتك ونبدأ ببناء نظامك. بنتواصل معك على واتساب قريب.',
+    successTitle: 'فتحنا لك واتساب ✅',
+    successBody: 'اضغط «إرسال» في واتساب ويوصلنا استبيانك — وبعدها نبدأ نبني نظامك 🚀',
     backHome: 'العودة للموقع',
     optional: '(اختياري)',
     sec1: 'معلومات المشروع',
@@ -70,8 +70,8 @@ const T = {
     submit: 'Submit brief',
     submitting: 'Sending...',
     error: 'Something went wrong. Try again or message us on WhatsApp.',
-    successTitle: 'We got your brief! 🎉',
-    successBody: "We'll review it and start building your system. We'll reach out on WhatsApp soon.",
+    successTitle: 'WhatsApp is open ✅',
+    successBody: 'Tap “Send” in WhatsApp and your brief reaches us — then we start building 🚀',
     backHome: 'Back to website',
     optional: '(optional)',
     sec1: 'Business info',
@@ -136,9 +136,6 @@ const empty: F = {
   agentName: '', tone: '', languages: '', faqs: '',
   tier: '', integrations: '', notes: '',
 }
-
-const encode = (data: Record<string, string>) =>
-  Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&')
 
 function Section({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
@@ -236,18 +233,36 @@ export default function OnboardingPage() {
   const isAr = lang === 'ar'
   const set = (k: keyof F, v: unknown) => setF(p => ({ ...p, [k]: v as never }))
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus('loading')
-    try {
-      const res = await fetch('/__forms.html', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'onboarding', lang, ...f, currentChannels: f.currentChannels.join(', ') }),
-      })
-      if (res.ok) { setStatus('success'); window.scrollTo({ top: 0, behavior: 'smooth' }) }
-      else setStatus('error')
-    } catch { setStatus('error') }
+    const opt = (opts: readonly { v: string; l: string }[], v: string) => opts.find(o => o.v === v)?.l || ''
+    const line = (k: string, v: string) => (v && v.trim() ? `*${k}:* ${v}\n` : '')
+    const msg =
+      (isAr ? '📋 استبيان بناء النظام — مايندسينك\n\n' : '📋 System Build Brief — MindSync\n\n') +
+      line(t.businessName, f.businessName) +
+      line(t.ownerName, f.ownerName) +
+      line(t.phone, f.phone) +
+      line(t.email, f.email) +
+      line(t.city, f.city) +
+      line(t.bType, opt(t.bTypeOpts, f.businessType)) +
+      line(t.offering, f.offering) +
+      line(t.mainItems, f.mainItems) +
+      line(t.workingHours, f.workingHours) +
+      line(t.daysOff, f.daysOff) +
+      line(t.whatsappNumber, f.whatsappNumber) +
+      line(t.instagram, f.instagram) +
+      line(t.website, f.website) +
+      line(t.currentChannels, f.currentChannels.map(v => opt(t.chOpts, v)).filter(Boolean).join('، ')) +
+      line(t.agentName, f.agentName) +
+      line(t.tone, opt(t.toneOpts, f.tone)) +
+      line(t.languages, opt(t.langOpts, f.languages)) +
+      line(t.faqs, f.faqs) +
+      line(t.tier, opt(t.tierOpts, f.tier)) +
+      line(t.integrations, f.integrations) +
+      line(t.notes, f.notes)
+    window.open(`https://wa.me/96599539006?text=${encodeURIComponent(msg)}`, '_blank')
+    setStatus('success')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   if (status === 'success') {
@@ -292,10 +307,7 @@ export default function OnboardingPage() {
           <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-6 text-[13px] text-red-700">{t.error}</div>
         )}
 
-        <form name="onboarding" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={onSubmit}>
-          <input type="hidden" name="form-name" value="onboarding" />
-          <p hidden><input name="bot-field" onChange={() => {}} /></p>
-
+        <form onSubmit={onSubmit}>
           <Section n="01" title={t.sec1}>
             <Field label={t.businessName} name="businessName" value={f.businessName} onChange={v => set('businessName', v)} required />
             <Field label={t.ownerName} name="ownerName" value={f.ownerName} onChange={v => set('ownerName', v)} required />
