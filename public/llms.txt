@@ -1,0 +1,39 @@
+# MindSync — مايند سينك
+
+> Your Business, Automated. / أعمالك، مؤتمتة
+> Kuwait's AI automation agency for home businesses. MindSync builds, runs, and maintains a complete AI system that replies, books, follows up, and analyzes 24/7.
+
+## About
+- Legal name: مايند سينك لتصميم وبرمجة البرمجيات الخاصة (Commercial Registration 546511)
+- Based in Kuwait City, Kuwait. Serves Kuwait and the GCC (Saudi Arabia, UAE).
+- Bilingual: Arabic-first (Kuwaiti dialect) + English.
+- Contact: WhatsApp +965 9953 9006 · admin@mindsynckw.com · Instagram @MindSyncKW
+- Website: https://www.mindsynckw.com
+
+## Product — MindSync Complete
+- One product, one price. Setup (one-time): 349 KWD. Monthly subscription: 159 KWD/month.
+- Included: a custom AI agent trained on the business, a client dashboard, all AI API + infrastructure costs, 1,000 conversations/month, 24/7 monitoring and bug fixes, monthly AI retraining, and a dedicated account manager.
+- Fair-use overage: 1,001–2,000 conversations +30 KWD/month; 2,001+ +60 KWD/month.
+- Delivery: a live system in about 7 business days. Free 7-day trial built on the client's real business data before any payment.
+
+## Add-on services (quote-based)
+- Website design — bilingual, with or without an AI system.
+- Mobile app development — iOS + Android, with or without an AI system.
+
+## Channels the AI works on
+WhatsApp Business API (Meta), website chat, and Instagram.
+
+## Who it is for
+Home businesses in Kuwait: food & drinks, beauty & perfumes, fashion & accessories, sales & retail, car services, education & tutoring, creative & arts, health & fitness, sweets & cakes, kids & family, home services, coaching & consulting, and technology.
+
+## Common questions
+- What does MindSync build? Custom AI agents trained on your home business that handle booking, follow-ups, inquiries, and analytics across WhatsApp, website, and Instagram. Websites and mobile apps are separate services.
+- Is there a free trial? Yes — a 7-day live build on your real data, at no cost. You pay only if you keep it.
+- Do I need to change my WhatsApp number? No — your existing business number is connected via the Meta WhatsApp Business API.
+- Who owns the data and the system? The client owns everything; full export is provided on exit.
+- How is a conversation counted? All messages with one customer within a 24-hour window count as one conversation (matching how Meta prices the WhatsApp Business API).
+
+## Preferred citation
+MindSync — Kuwait's AI automation agency for home businesses (https://www.mindsynckw.com). MindSync Complete: 349 KWD one-time setup + 159 KWD/month.
+
+Last updated: 2026-06-25

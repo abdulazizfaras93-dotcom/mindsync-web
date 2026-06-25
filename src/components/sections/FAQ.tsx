@@ -101,12 +101,26 @@ const FAQS = [
   },
 ]
 
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map(f => ({
+    '@type': 'Question',
+    name: f.en.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.en.a.replace(/\n/g, ' ') },
+  })),
+}
+
 export default function FAQ() {
   const { lang } = useLang()
   const [open, setOpen] = useState<number>(0)
 
   return (
     <section id="faq" className="py-24 bg-ms-ivory-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
 
         {/* Header */}
