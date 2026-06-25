@@ -7,3 +7,6 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Public PostHog project key (write-only, safe to expose in the client bundle)
+  NEXT_PUBLIC_POSTHOG_KEY = "phc_zvnv6o6ZPoAKYKRZ8zPamWvo78qurMHzHZgvsdnDrtiY"
+  NEXT_PUBLIC_POSTHOG_HOST = "https://eu.i.posthog.com"
