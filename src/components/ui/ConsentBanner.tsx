@@ -32,8 +32,8 @@ export default function ConsentBanner() {
       }}
     >
       <p style={{ margin: 0, maxWidth: 640, textAlign: 'center' }}>
-        نستخدم تحليلات لفهم كيف نطوّر الموقع.
-        <span style={{ opacity: 0.7 }}> · We use analytics to understand and improve the site.</span>
+        🍪 نستخدم كوكيز لتحسين الموقع.
+        <span style={{ opacity: 0.7 }}> · We use cookies to improve the site.</span>
       </p>
       <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
         <button
