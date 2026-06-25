@@ -57,6 +57,8 @@ const T = {
     faqsPh: 'مثال:\n- كم السعر؟ → الأسعار تبدأ من...\n- وين موقعكم؟ → نحن في...\n- متى الدوام؟ → من ١٠ إلى ١٠',
     tier: 'الباقة اللي تفكر فيها',
     tierOpts: [{ v: 'receptionist', l: 'موظف الاستقبال (٧٩)' }, { v: 'coordinator', l: 'المنسّق (١٤٩)' }, { v: 'manager', l: 'المدير (٢٩٩)' }, { v: 'unsure', l: 'مو متأكد — نصحوني' }],
+    addons: 'إضافات تهمك؟ (تقدر تختار أكثر من وحدة)',
+    addonOpts: [{ v: 'website', l: 'موقع إلكتروني' }, { v: 'eshop', l: 'متجر إلكتروني' }, { v: 'app', l: 'تطبيق موبايل' }, { v: 'voice', l: 'وكيل صوتي' }, { v: 'connect', l: 'ربط بنظامي الحالي' }, { v: 'whatsapp', l: 'تفعيل واتساب الرسمي + التوثيق' }],
     integrations: 'أنظمة تستخدمها (حجوزات، كاشير، محاسبة...)',
     integrationsPh: 'مثال: نظام حجوزات، انستقرام شوب...',
     notes: 'أي شي ثاني تبي تضيفه',
@@ -112,6 +114,8 @@ const T = {
     faqsPh: 'e.g.\n- How much? → Prices start from...\n- Where are you? → We are at...\n- What hours? → 10 to 10',
     tier: 'Tier you have in mind',
     tierOpts: [{ v: 'receptionist', l: 'Receptionist (79)' }, { v: 'coordinator', l: 'Coordinator (149)' }, { v: 'manager', l: 'Manager (299)' }, { v: 'unsure', l: 'Not sure — advise me' }],
+    addons: "Add-ons you're interested in (pick any)",
+    addonOpts: [{ v: 'website', l: 'Website' }, { v: 'eshop', l: 'E-shop' }, { v: 'app', l: 'Mobile app' }, { v: 'voice', l: 'Voice agent' }, { v: 'connect', l: 'Connect my existing system' }, { v: 'whatsapp', l: 'Official WhatsApp setup + verification' }],
     integrations: 'Systems you use (bookings, POS, accounting...)',
     integrationsPh: 'e.g. a booking system, Instagram shop...',
     notes: 'Anything else to add',
@@ -125,7 +129,7 @@ interface F {
   workingHours: string; daysOff: string
   whatsappNumber: string; instagram: string; website: string; currentChannels: string[]
   agentName: string; tone: string; languages: string; faqs: string
-  tier: string; integrations: string; notes: string
+  tier: string; addons: string[]; integrations: string; notes: string
 }
 
 const empty: F = {
@@ -134,7 +138,7 @@ const empty: F = {
   workingHours: '', daysOff: '',
   whatsappNumber: '', instagram: '', website: '', currentChannels: [],
   agentName: '', tone: '', languages: '', faqs: '',
-  tier: '', integrations: '', notes: '',
+  tier: '', addons: [], integrations: '', notes: '',
 }
 
 function Section({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
@@ -258,6 +262,7 @@ export default function OnboardingPage() {
       line(t.languages, opt(t.langOpts, f.languages)) +
       line(t.faqs, f.faqs) +
       line(t.tier, opt(t.tierOpts, f.tier)) +
+      line(t.addons, f.addons.map(v => opt(t.addonOpts, v)).filter(Boolean).join('، ')) +
       line(t.integrations, f.integrations) +
       line(t.notes, f.notes)
     window.open(`https://wa.me/96599539006?text=${encodeURIComponent(msg)}`, '_blank')
@@ -348,6 +353,8 @@ export default function OnboardingPage() {
           <Section n="06" title={t.sec6}>
             <Pills label={t.tier} value={f.tier} onChange={v => set('tier', v)} options={t.tierOpts} />
             <input type="hidden" name="tier" value={f.tier} />
+            <MultiPills label={t.addons} values={f.addons} onChange={v => set('addons', v)} options={t.addonOpts} />
+            <input type="hidden" name="addons" value={f.addons.join(', ')} />
           </Section>
 
           <Section n="07" title={t.sec7}>
