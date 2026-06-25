@@ -48,7 +48,7 @@ const T = {
       inquiryOpts:      [{ v: 'lt50', l: 'أقل من ٥٠' }, { v: '50-200', l: '٥٠–٢٠٠' }, { v: '200-500', l: '٢٠٠–٥٠٠' }, { v: '500plus', l: '+٥٠٠' }],
     },
     s3: {
-      currentChannels:     'كيف تتواصل مع عملاءك الآن؟',
+      currentChannels:     'شلون تتواصل مع عملاءك الآن؟',
       currentChOpts:       [{ v: 'whatsapp-manual', l: 'واتساب يدوي' }, { v: 'instagram', l: 'انستجرام DMs' }, { v: 'phone', l: 'مكالمات هاتفية' }, { v: 'walkin', l: 'زيارات مباشرة' }, { v: 'none', l: 'ما في نظام' }],
       wantedChannels:      'القنوات اللي تبيها',
       wantedChOpts:        [{ v: 'whatsapp', l: 'واتساب' }, { v: 'instagram', l: 'انستجرام' }, { v: 'website', l: 'موقع إلكتروني' }, { v: 'app', l: 'تطبيق موبايل' }],
@@ -70,7 +70,7 @@ const T = {
       retainer:       'من ٧٩ د.ك / شهر',
       timeline:       'متى تبي تبدأ؟',
       timelineOpts:   [{ v: 'asap', l: 'في أقرب وقت' }, { v: '1month', l: 'خلال شهر' }, { v: '3months', l: 'خلال ٣ أشهر' }, { v: 'exploring', l: 'أستكشف فقط' }],
-      referral:       'كيف وصلت لمايند سينك؟',
+      referral:       'شلون وصلت لمايند سينك؟',
       referralOpts:   [{ v: 'instagram', l: 'انستجرام' }, { v: 'whatsapp', l: 'واتساب' }, { v: 'google', l: 'جوجل' }, { v: 'referral', l: 'توصية' }, { v: 'other', l: 'أخرى' }],
       notes:          'ملاحظات إضافية (اختياري)',
       notesPh:        'أي شي تبي تضيفه...',

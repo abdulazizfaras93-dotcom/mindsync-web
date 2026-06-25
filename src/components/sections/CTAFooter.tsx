@@ -30,7 +30,7 @@ const t = {
   copy:    { en: '© 2026 MindSync · Kuwait City', ar: '© 2026 مايندسينك · مدينة الكويت' },
   links:   {
     en: ['Bundles', 'How It Works', 'FAQ', 'Fill in Discovery Form'],
-    ar: ['الباقات', 'كيف يشتغل', 'الأسئلة', 'استبيان لفهم طبيعة مشروعك'],
+    ar: ['الباقات', 'شلون يشتغل', 'الأسئلة', 'استبيان لفهم طبيعة مشروعك'],
   },
   navLabel: { en: 'Navigation', ar: 'التنقل' },
   contact:  { en: 'Contact',    ar: 'تواصل' },

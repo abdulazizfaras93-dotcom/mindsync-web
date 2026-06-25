@@ -10,7 +10,7 @@ import { PILOT } from '@/lib/data'
 const ProcessMorph = dynamic(() => import('@/components/canvas/ProcessMorph'), { ssr: false })
 
 const t = {
-  eyebrow:    { en: 'How It Works',                          ar: 'كيف يشتغل النظام' },
+  eyebrow:    { en: 'How It Works',                          ar: 'شلون يشتغل النظام' },
   headline:   { en: 'From first message to live system.',    ar: 'من أول رسالة لنظام شغّال.' },
   sub: {
     en: `A clear process, a real timeline, and a paid ${PILOT.days}-day pilot on your real business so you see it work before you scale.`,
