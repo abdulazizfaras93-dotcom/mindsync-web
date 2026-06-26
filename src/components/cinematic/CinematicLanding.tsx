@@ -155,11 +155,15 @@ export default function CinematicLanding() {
     const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px,${ry}px)`; raf = requestAnimationFrame(loop) }
     window.addEventListener('pointermove', move); loop()
     setCursorOn(true)
+    const hideStyle = document.createElement('style')
+    hideStyle.textContent = '*{cursor:none !important}'
+    document.head.appendChild(hideStyle)
     const els = Array.from(document.querySelectorAll('a,button,[data-hov]'))
     const en = () => ring.classList.add(s.big), lv = () => ring.classList.remove(s.big)
     els.forEach(el => { el.addEventListener('pointerenter', en); el.addEventListener('pointerleave', lv) })
     return () => {
       window.removeEventListener('pointermove', move); cancelAnimationFrame(raf)
+      hideStyle.remove()
       els.forEach(el => { el.removeEventListener('pointerenter', en); el.removeEventListener('pointerleave', lv) })
     }
   }, [reduce])
