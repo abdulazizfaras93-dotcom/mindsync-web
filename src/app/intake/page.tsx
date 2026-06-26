@@ -124,18 +124,18 @@ export default function IntakePage() {
       } catch {}
       setUploading(false)
     }
-    const L: string[] = ['🌿 نموذج استكشاف العميل — MindSync', '']
+    const L: string[] = ['*نموذج استكشاف العميل*', '']
     el.querySelectorAll<HTMLElement>('[data-sec]').forEach((sec) => {
       const title = sec.getAttribute('data-sec') || ''
       const lines: string[] = []
       sec.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('[data-q]').forEach((f) => {
         const v = (f.value || '').trim()
-        if (v) lines.push('• ' + f.getAttribute('data-q') + ': ' + v)
+        if (v) lines.push('- ' + f.getAttribute('data-q') + ': ' + v)
       })
       sec.querySelectorAll<HTMLElement>('[data-group]').forEach((g) => {
         const picked: string[] = []
         g.querySelectorAll<HTMLInputElement>('input:checked').forEach((i) => picked.push(i.value))
-        if (picked.length) lines.push('• ' + g.getAttribute('data-group') + ': ' + picked.join('، '))
+        if (picked.length) lines.push('- ' + g.getAttribute('data-group') + ': ' + picked.join('، '))
       })
       const svc = sec.querySelector('[data-svc]')
       if (svc) {
@@ -144,15 +144,15 @@ export default function IntakePage() {
           const nm = (row.querySelector('.' + s.nm) as HTMLInputElement)?.value.trim() || ''
           const pr = (row.querySelector('.' + s.pr) as HTMLInputElement)?.value.trim() || ''
           const du = (row.querySelector('.' + s.du) as HTMLInputElement)?.value.trim() || ''
-          if (nm) r.push('   - ' + nm + (pr ? ' — ' + pr + ' د.ك' : '') + (du ? ' (' + du + ')' : ''))
+          if (nm) r.push('   - ' + nm + (pr ? ' - ' + pr + ' د.ك' : '') + (du ? ' (' + du + ')' : ''))
         })
-        if (r.length) lines.push('• الخدمات/المنتجات:', ...r)
+        if (r.length) lines.push('- الخدمات/المنتجات:', ...r)
       }
       if (sec.querySelector('[data-logo]')) {
-        if (logoUrl) lines.push('📎 لوقو المشروع: ' + logoUrl)
-        else if (logo) lines.push('📎 لوقو المشروع: ' + logo)
+        if (logoUrl) lines.push('- لوقو المشروع: ' +logoUrl)
+        else if (logo) lines.push('- لوقو المشروع: ' +logo)
       }
-      if (lines.length) L.push('▪️ ' + title, ...lines, '')
+      if (lines.length) L.push('*' + title + '*', ...lines, '')
     })
     window.location.href = `https://wa.me/${WA}?text=${encodeURIComponent(L.join('\n'))}`
   }
