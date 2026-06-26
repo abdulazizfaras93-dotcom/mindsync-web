@@ -150,14 +150,13 @@ export default function CinematicLanding() {
     if (reduce || !window.matchMedia('(pointer:fine)').matches) return
     const dot = dotRef.current, ring = ringRef.current
     if (!dot || !ring) return
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, raf = 0
-    const move = (e: PointerEvent) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)` }
-    const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px,${ry}px)`; raf = requestAnimationFrame(loop) }
-    window.addEventListener('pointermove', move); loop()
-    setCursorOn(true)
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, raf = 0, shown = false
     const hideStyle = document.createElement('style')
     hideStyle.textContent = '*{cursor:none !important}'
-    document.head.appendChild(hideStyle)
+    const reveal = () => { shown = true; rx = mx; ry = my; dot.style.opacity = '1'; ring.style.opacity = '1'; document.head.appendChild(hideStyle); setCursorOn(true) }
+    const move = (e: PointerEvent) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)`; if (!shown) reveal() }
+    const loop = () => { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px,${ry}px)`; raf = requestAnimationFrame(loop) }
+    window.addEventListener('pointermove', move); loop()
     const els = Array.from(document.querySelectorAll('a,button,[data-hov]'))
     const en = () => ring.classList.add(s.big), lv = () => ring.classList.remove(s.big)
     els.forEach(el => { el.addEventListener('pointerenter', en); el.addEventListener('pointerleave', lv) })
