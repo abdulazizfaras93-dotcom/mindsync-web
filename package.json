@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@netlify/blobs": "^10.7.9",
     "@number-flow/react": "^0.6.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-three/drei": "^9.122.0",

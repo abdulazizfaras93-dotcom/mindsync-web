@@ -45,5 +45,18 @@
 .barInner { max-width: 640px; margin: 0 auto; }
 .send { width: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); color: var(--green); border: none; border-radius: 14px; padding: 16px; font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 24px rgba(191,141,56,.3); }
 .hint { font-size: 12px; color: #9a9384; text-align: center; margin-top: 8px; }
+select.input { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: 16px calc(50% - 2px), 21px calc(50% - 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-left: 34px; }
+select.input:invalid { color: #9a9384; }
+.upload { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed var(--gold); color: var(--gold); border-radius: 12px; padding: 14px; cursor: pointer; font-size: 14px; font-weight: 600; background: #faf8f3; text-align: center; }
+.upload.has { border-style: solid; color: var(--green3); }
+.daychips span { padding: 8px 13px; font-size: 13px; }
+.ss { position: relative; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag { background: var(--green3); color: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.tag b { color: var(--gold2); font-weight: 400; }
+.dropdown { position: absolute; left: 0; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,.12); max-height: 240px; overflow-y: auto; z-index: 30; }
+.opt { padding: 11px 14px; font-size: 15px; color: var(--ink); cursor: pointer; border-bottom: 1px solid #f4f0e6; }
+.opt:last-child { border-bottom: none; }
+.opt:active, .opt:hover { background: #f4f1e8; }
 .ltr { direction: ltr; unicode-bidi: embed; display: inline-block; }
 .foot { text-align: center; font-size: 11px; color: #a39c8c; margin-top: 18px; font-family: var(--font-grotesk), sans-serif; direction: ltr; }
