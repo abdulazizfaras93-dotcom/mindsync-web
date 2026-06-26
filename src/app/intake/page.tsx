@@ -22,11 +22,11 @@ const AREA_OPTS = ['كل الكويت', ...GOVS, ...ALL_AREAS]
 
 type Group = { q: string; name: string; opts: string[]; multi?: boolean; cls?: string }
 
-function Field({ q, type = 'text' }: { q: string; type?: string }) {
+function Field({ q, type = 'text', dir }: { q: string; type?: string; dir?: 'ltr' | 'rtl' }) {
   return (
     <div className={s.fld}>
       <label>{q}</label>
-      <input className={s.input} type={type} data-q={q} />
+      <input className={s.input} type={type} data-q={q} dir={dir} />
     </div>
   )
 }
@@ -228,13 +228,23 @@ export default function IntakePage() {
           <Chips q="الرد بعد الدوام؟" name="after" opts={['نعم', 'لا']} />
         </div>
 
+        <div className={s.sec} data-sec="وين يشتغل الوكيل (حساباتكم)">
+          <div className={s.sh}><div className={s.n}>٥</div><h2>وين يشتغل الوكيل</h2></div>
+          <div className={s.note}>وين تبي الوكيل يرد على عملائك؟ عطنا حساباتك عشان نجهّز الوكيل عليها.</div>
+          <Chips q="وين تبي الوكيل يشتغل؟" name="deploy" opts={['واتساب', 'انستقرام', 'الموقع', 'سناب شات', 'تيك توك']} multi />
+          <Field q="رقم واتساب العمل" type="tel" dir="ltr" />
+          <Field q="حساب انستقرام" />
+          <Field q="حسابات تواصل أخرى (سناب / تيك توك / ثريدز)" />
+          <Field q="الموقع الإلكتروني (إن وجد)" />
+        </div>
+
         <div className={s.sec} data-sec="أكثر الأسئلة من العملاء">
-          <div className={s.sh}><div className={s.n}>٥</div><h2>أكثر الأسئلة من العملاء</h2></div>
+          <div className={s.sh}><div className={s.n}>٦</div><h2>أكثر الأسئلة من العملاء</h2></div>
           <Area q="أكثر الأسئلة المتكررة" note="هذي اللي بيتعلمها الوكيل ويرد عليها بدالك." />
         </div>
 
         <div className={s.sec} data-sec="الهوية والنبرة">
-          <div className={s.sh}><div className={s.n}>٦</div><h2>الهوية والنبرة</h2></div>
+          <div className={s.sh}><div className={s.n}>٧</div><h2>الهوية والنبرة</h2></div>
           <Chips q="نبرة المخاطبة" name="tone" opts={['لهجة كويتية', 'لغة عربية رسمية', 'لغة انجليزية', 'أخرى']} />
           <Field q="نبرة أخرى (اكتبها)" />
           <div className={s.fld}>
@@ -243,14 +253,13 @@ export default function IntakePage() {
               <input type="file" accept="image/*" data-logo style={{ display: 'none' }} onChange={(e) => setLogo(e.target.files?.[0]?.name || '')} />
               <span>{logo ? '✓ ' + logo : '📎 اختر لوقو مشروعك'}</span>
             </label>
-            <div className={s.note}>بعد ما تضغط إرسال، أرفق اللوقو مع رسالة الواتساب 💚</div>
           </div>
           <Field q="عبارات تحب الوكيل يستخدمها" />
           <Area q="كلمات أو أمور نتجنّبها" />
         </div>
 
         <div className={s.sec} data-sec="الأهداف ونقاط الألم">
-          <div className={s.sh}><div className={s.n}>٧</div><h2>الأهداف ونقاط الألم</h2></div>
+          <div className={s.sh}><div className={s.n}>٨</div><h2>الأهداف ونقاط الألم</h2></div>
           <Chips q="أكبر مشكلة الحين" name="pain" opts={['متابعة الحجوزات', 'الأسئلة المتكررة', 'الرد المتأخر', 'التنظيم/الجدول', 'أخرى']} multi />
           <Area q="الهدف خلال ٣ أشهر" />
           <Area q="ملاحظات" />
