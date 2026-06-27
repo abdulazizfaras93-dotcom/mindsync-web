@@ -65,7 +65,6 @@ export default function TryMatchaPage() {
   return (
     <div className={s.page}>
       <div className={s.head}>
-        <svg className={s.hicon} viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 19l-7-7 7-7 1.4 1.4L11.3 12l5.6 5.6z" /></svg>
         <div className={s.av}><img src="/clients/matcha.jpg" alt="ماتشا سبا" /></div>
         <div className={s.hmeta}>
           <div className={s.nm}>ماتشا سبا</div>
