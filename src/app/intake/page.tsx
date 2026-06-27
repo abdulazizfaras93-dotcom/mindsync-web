@@ -14,6 +14,15 @@ const KW: Record<string, string[]> = {
   'الجهراء': ['الجهراء', 'القصر', 'النعيم', 'النسيم', 'العيون', 'الواحة', 'تيماء', 'الصليبية', 'أمغرة', 'كبد', 'السالمي', 'العبدلي', 'سعد العبدالله'],
 }
 const GOVS = Object.keys(KW)
+// What MindSync can build — edit this list to add/remove service types (auto-renders as chips).
+const NEEDS = [
+  'وكيل ذكاء اصطناعي (واتساب / انستقرام)',
+  'موقع إلكتروني',
+  'تطبيق موبايل',
+  'ربط الذكاء الاصطناعي بنظامنا الحالي',
+  'بناء نظام ذكي كامل من الصفر',
+  'نظام إدارة / سوفتوير',
+]
 const STAFF = ['١', '٢', '٣', '٤', '٥', '٦–١٠', 'أكثر من ١٠']
 const DAYS = ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 const HOURS = ['٦ ص', '٧ ص', '٨ ص', '٩ ص', '١٠ ص', '١١ ص', '١٢ ظهراً', '١ م', '٢ م', '٣ م', '٤ م', '٥ م', '٦ م', '٧ م', '٨ م', '٩ م', '١٠ م', '١١ م', '١٢ منتصف الليل']
@@ -192,6 +201,8 @@ export default function IntakePage() {
       instagram: txt('حساب انستقرام'),
       services,
       profile: {
+        service_type: grp('شنو تحتاج من MindSync؟'),
+        project_brief: txt('اشرح مشروعك أو احتياجك بالتفصيل'),
         governorate: txt('المحافظة'), area: txt('المنطقة'), staff: txt('عدد الموظفين'),
         days: grp('أيام العمل'), hours: [txt('من الساعة'), txt('إلى الساعة')].filter(Boolean).join(' - '),
         website: txt('الموقع الإلكتروني (إن وجد)'), faqs: txt('أكثر الأسئلة المتكررة'),
@@ -225,6 +236,13 @@ export default function IntakePage() {
           <div className={s.k}>MindSync · Discovery</div>
           <h1>نموذج <span>استكشاف</span> مشروعك</h1>
           <p>هلا فيك 🌿 عبّ النموذج من تلفونك — ثواني وتخلص، وبيوصلنا كل شي عشان نجهّز العرض التوضيحي.</p>
+        </div>
+
+        <div className={s.sec} data-sec="الخدمة المطلوبة">
+          <div className={s.sh}><div className={s.n}>✦</div><h2>شنو تحتاج من MindSync؟</h2></div>
+          <div className={s.note}>اختر كل اللي تحتاجه — نقدر نسوي أكثر من خدمة لنفس المشروع.</div>
+          <Chips q="شنو تحتاج من MindSync؟" name="needs" opts={NEEDS} multi />
+          <Area q="اشرح مشروعك أو احتياجك بالتفصيل" note="مثال: عيادة تبي ربط وكلاء ذكاء اصطناعي بنظامها الحالي، أو بناء نظام عيادة كامل (حجوزات، تفريغ طبي، فوترة تأمين، متابعة...)." />
         </div>
 
         <div className={s.sec} data-sec="نبذة عن المشروع">
