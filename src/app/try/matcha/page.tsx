@@ -22,6 +22,13 @@ export default function TryMatchaPage() {
 
   useEffect(() => { bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' }) }, [msgs, busy])
 
+  useEffect(() => {
+    const d = document.documentElement, b = document.body
+    const pd = d.style.overflowX, pb = b.style.overflowX
+    d.style.overflowX = 'hidden'; b.style.overflowX = 'hidden'
+    return () => { d.style.overflowX = pd; b.style.overflowX = pb }
+  }, [])
+
   const send = async (text: string) => {
     const t = text.trim()
     if (!t || busy) return
