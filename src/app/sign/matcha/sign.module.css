@@ -1,0 +1,78 @@
+.page {
+  --green: #0F2E22; --green2: #153E2D; --gold: #BF8D38; --gold2: #9a7320; --ivory: #FBFAF5; --ink: #1d2a22;
+  direction: rtl;
+  min-height: 100dvh;
+  background: #ECE7DC;
+  font-family: var(--font-kufi), 'Noto Kufi Arabic', sans-serif;
+  color: var(--ink);
+  padding: 0 0 40px;
+}
+
+.bar { display: flex; align-items: center; gap: 10px; background: var(--green); color: #fff; padding: 12px 18px; font-size: 14px; }
+.bar img { width: 30px; height: 30px; object-fit: contain; }
+
+.contract {
+  background: #fff;
+  max-width: 760px;
+  margin: 18px auto;
+  padding: 30px 38px 34px;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.08);
+  font-size: 14px;
+  line-height: 1.85;
+}
+.hd { display: flex; align-items: center; gap: 13px; border-bottom: 2.5px solid var(--gold); padding-bottom: 12px; }
+.hd img { width: 60px; height: auto; }
+.hd h1 { color: var(--green2); font-size: 20px; font-weight: 700; line-height: 1.3; }
+.hd .s { color: var(--gold2); font-size: 12px; margin-top: 3px; }
+
+.parties { background: #F6F3EA; border: 1px solid #E7E0CF; border-radius: 8px; padding: 12px 15px; margin: 14px 0 4px; font-size: 13px; }
+.parties b { color: var(--green2); }
+
+.art { margin-top: 15px; break-inside: avoid; }
+.art h3 { color: var(--gold); font-size: 14.5px; font-weight: 700; margin-bottom: 5px; }
+.art p { text-align: justify; }
+.feat { margin: 0 18px 0 0; }
+.feat li { margin-bottom: 4px; }
+
+.price { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+.price th { background: var(--green); color: var(--ivory); padding: 8px 10px; text-align: right; font-weight: 600; }
+.price td { padding: 8px 10px; border-bottom: 1px solid #E7E0CF; }
+.amt { color: var(--gold2); font-weight: 700; white-space: nowrap; }
+.nt { color: #5c6657; font-size: 12px; }
+
+.signrow { display: flex; gap: 28px; margin-top: 28px; break-inside: avoid; }
+.sigbox { flex: 1; border-top: 1.5px solid var(--ink); padding-top: 8px; font-size: 12.5px; }
+.sigrole { color: var(--gold2); font-weight: 700; margin-bottom: 10px; }
+.sigline { margin-bottom: 8px; color: #444; }
+.signedName { font-size: 16px; font-weight: 700; color: var(--green2); }
+.sigimg { display: block; max-width: 180px; max-height: 70px; margin: 4px 0; }
+.signedMeta { font-size: 11.5px; color: var(--gold2); }
+
+.widget, .done { max-width: 760px; margin: 16px auto 0; background: #fff; border-radius: 12px; padding: 22px 24px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+.widget h3 { color: var(--green2); font-size: 17px; font-weight: 700; margin-bottom: 14px; }
+.lbl { display: block; font-size: 13.5px; color: #444; margin: 12px 0 6px; }
+.inp { width: 100%; font-family: inherit; font-size: 16px; color: var(--ink); background: #faf8f2; border: 1.5px solid #ddd5c4; border-radius: 10px; padding: 12px 14px; outline: none; }
+.inp:focus { border-color: var(--gold); background: #fff; }
+
+.padwrap { position: relative; }
+.pad { width: 100%; height: 200px; background: #fff; border: 1.5px dashed #c9c0a8; border-radius: 10px; touch-action: none; cursor: crosshair; }
+.clear { position: absolute; top: 8px; left: 8px; background: #f0ece1; border: 1px solid #ddd5c4; border-radius: 8px; padding: 5px 12px; font-family: inherit; font-size: 12px; color: #555; cursor: pointer; }
+
+.agree { display: flex; align-items: center; gap: 9px; margin: 16px 0; font-size: 14px; color: #333; cursor: pointer; }
+.agree input { width: 19px; height: 19px; accent-color: var(--green); }
+
+.signbtn { width: 100%; background: var(--green); color: #fff; border: none; border-radius: 12px; padding: 15px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.signbtn:disabled { opacity: .5; cursor: not-allowed; }
+.hint { font-size: 11.5px; color: #8a8a7a; margin-top: 10px; text-align: center; }
+
+.done { text-align: center; border-top: 3px solid var(--gold); }
+.doneMsg { color: var(--green2); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.done p { color: #555; font-size: 14px; margin-bottom: 16px; }
+.dl { background: linear-gradient(135deg, var(--gold), #D8AE5A); color: var(--green); border: none; border-radius: 12px; padding: 14px 30px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+@page { margin: 14mm; }
+@media print {
+  .page { background: #fff; padding: 0; }
+  .contract { max-width: none; margin: 0; padding: 0; box-shadow: none; border-radius: 0; }
+}
