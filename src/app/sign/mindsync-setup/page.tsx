@@ -82,7 +82,7 @@ export default function MindSyncSetupPage() {
           <input value={name} onChange={(e) => setName(e.target.value)}
             style={{ width: '100%', fontSize: 16, padding: '11px 14px', border: '1.5px solid #ddd5c4', borderRadius: 10, fontFamily: 'inherit', marginBottom: 14 }} />
 
-          <label style={{ fontSize: 13.5, color: '#444', display: 'block', marginBottom: 6 }}>وقّع هنا 👇</label>
+          <label style={{ fontSize: 13.5, color: '#444', display: 'block', marginBottom: 6 }}>التوقيع</label>
           <div style={{ position: 'relative' }}>
             <canvas ref={canvasRef} width={600} height={200}
               onPointerDown={start} onPointerMove={move} onPointerUp={() => (drawing.current = false)} onPointerLeave={() => (drawing.current = false)}

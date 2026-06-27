@@ -114,7 +114,7 @@ export default function SignMatchaPage() {
 
         <div className={s.parties}>
           أُبرم هذا العقد بين:<br />
-          <b>الطرف الأول (مزوّد الخدمة):</b> MindSync (مايند سينك) — رقم التواصل: ٩٩٥٣٩٠٠٦<br />
+          <b>الطرف الأول (مزوّد الخدمة):</b> MindSync (مايند سينك) — رقم الرخصة التجارية: ______ · البريد الإلكتروني: admin@mindsynckw.com · رقم التواصل: ٩٩٥٣٩٠٠٦<br />
           <b>الطرف الثاني (العميل):</b> صالون «ماتشا سبا» — رقم واتساب العمل: ٦٧٦٥٧١٧٦
         </div>
 
@@ -175,8 +175,8 @@ export default function SignMatchaPage() {
         <div className={`${s.widget} noprint`}>
           <h3>التوقيع الإلكتروني</h3>
           <label className={s.lbl}>الاسم الكامل</label>
-          <input className={s.inp} value={name} onChange={(e) => setName(e.target.value)} placeholder="اكتبي اسمج الكامل" />
-          <label className={s.lbl}>وقّعي هنا 👇</label>
+          <input className={s.inp} value={name} onChange={(e) => setName(e.target.value)} />
+          <label className={s.lbl}>التوقيع</label>
           <div className={s.padwrap}>
             <canvas ref={canvasRef} className={s.pad} width={600} height={200}
               onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerLeave={end} />
@@ -189,7 +189,7 @@ export default function SignMatchaPage() {
           <button className={s.signbtn} disabled={busy || !name.trim() || !agreed} onClick={sign}>
             {busy ? 'جارٍ التوقيع…' : 'توقيع وإتمام العقد'}
           </button>
-          <p className={s.hint}>بالضغط على «توقيع» يُسجَّل توقيعج مع التاريخ والوقت كموافقة إلكترونية.</p>
+          <p className={s.hint}>بالضغط على «توقيع» يُسجَّل التوقيع مع التاريخ والوقت كموافقة إلكترونية.</p>
         </div>
       ) : (
         <div className={`${s.done} noprint`}>
