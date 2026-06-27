@@ -61,10 +61,10 @@ export async function POST(req: Request) {
       body: JSON.stringify({ model: MODEL, max_tokens: 400, system: SYSTEM, messages: msgs }),
       signal: AbortSignal.timeout(28_000),
     })
-    if (!r.ok) { const e = await r.text(); return NextResponse.json({ reply: 'عذراً، صار خطأ بسيط. جرّبي مرة ثانية 🌸', _debug: `${r.status}: ${e.slice(0, 300)}` }) }
-    const data = (await r.json()) as { content?: { type: string; text?: string }[]; stop_reason?: string }
+    if (!r.ok) return NextResponse.json({ reply: 'عذراً، صار خطأ بسيط. جرّبي مرة ثانية 🌸' })
+    const data = (await r.json()) as { content?: { type: string; text?: string }[] }
     const reply = data?.content?.find((c) => c.type === 'text')?.text?.trim()
-    return NextResponse.json({ reply: reply || 'تمام 🌸 قوليلي شنو تحتاجين وأساعدج.', _raw: { stop: data?.stop_reason, types: (data?.content || []).map((c) => c.type) } })
+    return NextResponse.json({ reply: reply || 'تمام 🌸 قوليلي شنو تحتاجين وأساعدج.' })
   } catch {
     return NextResponse.json({ reply: 'تأخرت شوي بالرد، جرّبي مرة ثانية 🌸' })
   }
