@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     })
     if (!r.ok) return NextResponse.json({ reply: 'عذراً، صار خطأ بسيط. جرّبي مرة ثانية 🌸' })
     const data = (await r.json()) as { output?: string }
-    return NextResponse.json({ reply: data.output?.trim() || 'عفواً، ما فهمت — ممكن توضحين أكثر؟' })
+    return NextResponse.json({ reply: data.output?.trim() || 'تمام 🌸 قوليلي الخدمة اللي تبينها واليوم والوقت والمنطقة وأرتّبلج — والعربون ٥ د.ك يثبّت الموعد.' })
   } catch {
     return NextResponse.json({ reply: 'تأخرت شوي بالرد، جرّبي مرة ثانية 🌸' })
   }
