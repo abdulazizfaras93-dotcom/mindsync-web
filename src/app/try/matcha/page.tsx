@@ -17,6 +17,7 @@ export default function TryMatchaPage() {
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
+  const [zoom, setZoom] = useState(false)
   const sid = useRef<string>('s_' + Math.random().toString(36).slice(2) + Date.now().toString(36))
   const bodyRef = useRef<HTMLDivElement>(null)
 
@@ -62,7 +63,10 @@ export default function TryMatchaPage() {
         <span key={i}>
           {clean && <span className={s.txt}>{clean}</span>}
           {i < parts.length - 1 && (
-            <img className={s.menuImg} src="/clients/matcha-menu.png" alt="قائمة خدمات وأسعار ماتشا سبا" />
+            <span className={s.menuWrap}>
+              <img className={s.menuImg} src="/clients/matcha-menu.png" alt="قائمة خدمات وأسعار ماتشا سبا" onClick={() => setZoom(true)} />
+              <span className={s.menuHint}>اضغطي ع الصورة للتكبير والحفظ</span>
+            </span>
           )}
         </span>
       )
@@ -116,6 +120,14 @@ export default function TryMatchaPage() {
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 20.5v-6l8-2.5-8-2.5v-6l19 8.5z" /></svg>
         </button>
       </div>
+
+      {zoom && (
+        <div className={s.lightbox} onClick={() => setZoom(false)}>
+          <button className={s.lbClose} onClick={() => setZoom(false)} aria-label="إغلاق">✕</button>
+          <img src="/clients/matcha-menu.png" alt="قائمة خدمات وأسعار ماتشا سبا" onClick={(e) => e.stopPropagation()} />
+          <a className={s.lbSave} href="/clients/matcha-menu.png" download="ماتشا-سبا-الأسعار.png" onClick={(e) => e.stopPropagation()}>حفظ الصورة</a>
+        </div>
+      )}
     </div>
   )
 }
