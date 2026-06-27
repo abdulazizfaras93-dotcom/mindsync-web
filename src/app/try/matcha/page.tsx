@@ -20,13 +20,15 @@ export default function TryMatchaPage() {
     const t = text.trim()
     if (!t || busy) return
     setInput('')
-    setMsgs((m) => [...m, { who: 'c', text: t }])
+    const next: Msg[] = [...msgs, { who: 'c', text: t }]
+    setMsgs(next)
     setBusy(true)
     try {
+      const history = next.slice(1).map((m) => ({ role: m.who === 'c' ? 'user' : 'assistant', content: m.text }))
       const r = await fetch('/api/try-matcha', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ message: t, sessionId: sid.current }),
+        body: JSON.stringify({ messages: history }),
       })
       const data = await r.json()
       setMsgs((m) => [...m, { who: 'a', text: data.reply || '...' }])
