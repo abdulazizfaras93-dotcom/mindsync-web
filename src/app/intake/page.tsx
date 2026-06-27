@@ -154,6 +154,66 @@ export default function IntakePage() {
       }
       if (lines.length) L.push('*' + title + '*', ...lines, '')
     })
+
+    // ── Build a structured record + send it to the pipeline (creates a discovery card in the admin) ──
+    const txt = (q: string) => (el.querySelector(`[data-q="${q}"]`) as HTMLInputElement | null)?.value?.trim() || ''
+    const grp = (q: string) => {
+      const g = el.querySelector(`[data-group="${q}"]`)
+      const picked: string[] = []
+      g?.querySelectorAll<HTMLInputElement>('input:checked').forEach((i) => picked.push(i.value))
+      return picked.join('، ')
+    }
+    const services: { name: string; price: string; note: string }[] = []
+    el.querySelectorAll<HTMLElement>('[data-srow]').forEach((row) => {
+      const name = (row.querySelector('.' + s.nm) as HTMLInputElement)?.value.trim() || ''
+      const price = (row.querySelector('.' + s.pr) as HTMLInputElement)?.value.trim() || ''
+      const note = (row.querySelector('.' + s.du) as HTMLInputElement)?.value.trim() || ''
+      if (name) services.push({ name, price, note })
+    })
+    // generic safety-net: capture every answered field so fields added later still flow through
+    const raw: Record<string, string> = {}
+    el.querySelectorAll<HTMLElement>('[data-q]').forEach((f) => {
+      const v = ((f as HTMLInputElement).value || '').trim(); const q = f.getAttribute('data-q') || ''
+      if (v && q) raw[q] = v
+    })
+    el.querySelectorAll<HTMLElement>('[data-group]').forEach((g) => {
+      const v = grp(g.getAttribute('data-group') || ''); const q = g.getAttribute('data-group') || ''
+      if (v && q) raw[q] = v
+    })
+
+    const biz = txt('اسم المشروع')
+    const row = {
+      slug: 'lead-' + Date.now().toString(36),
+      status: 'discovery',
+      tier: 'coordinator',
+      business_name: biz,
+      business_type: txt('نوع النشاط'),
+      whatsapp: txt('رقم واتساب العمل'),
+      instagram: txt('حساب انستقرام'),
+      services,
+      profile: {
+        governorate: txt('المحافظة'), area: txt('المنطقة'), staff: txt('عدد الموظفين'),
+        days: grp('أيام العمل'), hours: [txt('من الساعة'), txt('إلى الساعة')].filter(Boolean).join(' - '),
+        website: txt('الموقع الإلكتروني (إن وجد)'), faqs: txt('أكثر الأسئلة المتكررة'),
+        tone: grp('نبرة المخاطبة'), phrases: txt('عبارات تحب الوكيل يستخدمها'),
+        avoid: txt('كلمات أو أمور نتجنّبها'), logo_url: logoUrl || '', intake_raw: raw,
+      },
+      booking: {
+        delivery: grp('عندكم توصيل؟') === 'نعم', delivery_fee: txt('رسوم التوصيل (د.ك)'),
+        deposit: txt('عربون / دفعة مقدمة'), payment_methods: grp('طرق الدفع'),
+        delivery_areas: txt('مناطق التوصيل'), intake: grp('شلون تستقبلون الطلبات / الحجوزات؟'),
+      },
+      channels: {
+        current: grp('القنوات'), other: txt('قنوات أخرى'), responder: txt('منو يرد على الرسايل الحين؟'),
+        daily_volume: txt('متوسط الرسايل يومياً'), after_hours: grp('الرد بعد الدوام؟'), deploy: grp('وين تبي الوكيل يشتغل؟'),
+      },
+      notes: ['المشكلة: ' + grp('أكبر مشكلة الحين'), 'الهدف: ' + txt('الهدف خلال ٣ أشهر'), 'ملاحظات: ' + txt('ملاحظات')]
+        .filter((x) => x.length > 10).join('\n'),
+    }
+    if (biz) {
+      try { await fetch('/api/intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(row) }) } catch {}
+    }
+
     window.location.href = `https://wa.me/${WA}?text=${encodeURIComponent(L.join('\n'))}`
   }
 
