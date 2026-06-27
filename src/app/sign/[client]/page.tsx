@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import s from './sign.module.css'
-import { CONTRACTS, PROVIDER, scopeFor, article1, REST_ARTICLES } from '@/lib/contracts'
+import { CONTRACTS, PROVIDER, scopeFor, article1, REST_ARTICLES, type ContractData } from '@/lib/contracts'
 
 const REST_NUM = ['٤', '٥', '٦', '٧', '٨', '٩', '١٠', '١١']
 
@@ -11,7 +11,10 @@ function fmtDate(iso: string) {
 }
 
 export default function SignContractPage({ params }: { params: { client: string } }) {
-  const data = CONTRACTS[params.client]
+  // Record-driven: start from the static contracts.ts (instant for existing clients),
+  // then upgrade from the live onboarding record if one exists for this slug.
+  const [data, setData] = useState<ContractData | undefined>(CONTRACTS[params.client])
+  const [loading, setLoading] = useState(!CONTRACTS[params.client])
 
   const [name, setName] = useState('')
   const [agreed, setAgreed] = useState(false)
@@ -35,6 +38,17 @@ export default function SignContractPage({ params }: { params: { client: string 
       .then((d) => setMsSig({ name: d.name || PROVIDER.name, signature: d.signature || null })).catch(() => {})
   }, [])
 
+  useEffect(() => {
+    fetch(`/api/contract?slug=${encodeURIComponent(params.client)}`)
+      .then((r) => r.json())
+      .then((j) => { if (j?.found && j.contract) setData(j.contract as ContractData) })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [params.client])
+
+  if (loading) {
+    return <div style={{ direction: 'rtl', padding: 40, textAlign: 'center', fontFamily: 'var(--font-kufi), sans-serif' }}>جارٍ التحميل…</div>
+  }
   if (!data) {
     return <div style={{ direction: 'rtl', padding: 40, textAlign: 'center', fontFamily: 'var(--font-kufi), sans-serif' }}>هذا العقد غير موجود.</div>
   }
