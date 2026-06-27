@@ -41,6 +41,7 @@ export default function SignMatchaPage() {
   const [signedAt, setSignedAt] = useState('')
   const [sigUrl, setSigUrl] = useState('')
   const [busy, setBusy] = useState(false)
+  const [msSig, setMsSig] = useState<{ name: string; signature: string | null }>({ name: 'عبدالعزيز شاكر فرس', signature: null })
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const drawing = useRef(false)
   const hasDrawn = useRef(false)
@@ -51,6 +52,12 @@ export default function SignMatchaPage() {
     const ctx = c.getContext('2d')!
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height)
     ctx.strokeStyle = '#10231a'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/mindsync-signature').then((r) => r.json())
+      .then((d) => setMsSig({ name: d.name || 'عبدالعزيز شاكر فرس', signature: d.signature || null }))
+      .catch(() => {})
   }, [])
 
   const pos = (e: React.PointerEvent) => {
@@ -135,9 +142,15 @@ export default function SignMatchaPage() {
         <div className={s.signrow}>
           <div className={s.sigbox}>
             <div className={s.sigrole}>الطرف الأول — MindSync</div>
-            <div className={s.sigline}>الاسم: ______________</div>
-            <div className={s.sigline}>التوقيع: ______________</div>
-            <div className={s.sigline}>التاريخ: ______________</div>
+            <div className={s.signedName}>{msSig.name}</div>
+            {msSig.signature ? (
+              <>
+                <img className={s.sigimg} src={msSig.signature} alt="توقيع MindSync" />
+                <div className={s.signedMeta}>موقّع مسبقاً عن MindSync</div>
+              </>
+            ) : (
+              <div className={s.sigline}>التوقيع: ______________</div>
+            )}
           </div>
           <div className={s.sigbox}>
             <div className={s.sigrole}>الطرف الثاني — ماتشا سبا</div>
