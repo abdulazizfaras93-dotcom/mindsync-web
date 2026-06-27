@@ -7,13 +7,15 @@
   --wa-ink: #111B21;
   --wa-meta: #667781;
   direction: rtl;
-  height: 100dvh;
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   background: var(--wa-chat);
   font-family: var(--font-kufi), 'Noto Kufi Arabic', sans-serif;
   color: var(--wa-ink);
   overflow: hidden;
+  z-index: 40;
 }
 
 .head {
@@ -28,8 +30,9 @@
 .hicon { width: 23px; height: 23px; flex-shrink: 0; opacity: .95; }
 .av { width: 40px; height: 40px; border-radius: 50%; background: #fff; overflow: hidden; flex-shrink: 0; }
 .av img { width: 40px; height: 40px; object-fit: cover; }
+.head { overflow: hidden; }
 .hmeta { flex: 1; min-width: 0; }
-.hmeta .nm { font-size: 16px; font-weight: 600; line-height: 1.25; }
+.hmeta .nm { font-size: 16px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hmeta .st { font-size: 12.5px; color: #d9efe8; margin-top: 1px; }
 
 .body {
