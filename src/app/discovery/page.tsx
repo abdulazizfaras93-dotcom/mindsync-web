@@ -405,7 +405,7 @@ export default function IntakePage() {
         <div className={s.barInner}>
           {missing.length > 0 && (
             <div className={s.errBanner}>
-              <b>عبّي الحقول المطلوبة قبل الإرسال ({missing.length}):</b>
+              <b>عبّ الحقول المطلوبة قبل الإرسال ({missing.length}):</b>
               <span> {missing.slice(0, 6).join(' · ')}{missing.length > 6 ? ` · +${missing.length - 6}` : ''}</span>
             </div>
           )}
