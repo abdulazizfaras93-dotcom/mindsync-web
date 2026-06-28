@@ -31,38 +31,40 @@ const AREA_OPTS = ['كل الكويت', ...GOVS, ...ALL_AREAS]
 
 type Group = { q: string; name: string; opts: string[]; multi?: boolean; cls?: string }
 
-function Field({ q, type = 'text', dir }: { q: string; type?: string; dir?: 'ltr' | 'rtl' }) {
+function Opt() { return <span className={s.optTag}> (اختياري)</span> }
+
+function Field({ q, type = 'text', dir, opt }: { q: string; type?: string; dir?: 'ltr' | 'rtl'; opt?: boolean }) {
   return (
     <div className={s.fld}>
-      <label>{q}</label>
+      <label>{q}{opt && <Opt />}</label>
       <input className={s.input} type={type} data-q={q} dir={dir} />
     </div>
   )
 }
-function Area({ q, note }: { q: string; note?: string }) {
+function Area({ q, note, opt }: { q: string; note?: string; opt?: boolean }) {
   return (
     <div className={s.fld}>
-      <label>{q}</label>
+      <label>{q}{opt && <Opt />}</label>
       {note && <div className={s.note}>{note}</div>}
       <textarea className={s.ta} data-q={q} />
     </div>
   )
 }
-function Select({ q, opts, ph = 'اختر' }: { q: string; opts: string[]; ph?: string }) {
+function Select({ q, opts, ph = 'اختر', opt }: { q: string; opts: string[]; ph?: string; opt?: boolean }) {
   return (
     <div className={s.fld}>
-      <label>{q}</label>
-      <select className={s.input} data-q={q} defaultValue="" required>
+      <label>{q}{opt && <Opt />}</label>
+      <select className={s.input} data-q={q} defaultValue="">
         <option value="" disabled>{ph}</option>
         {opts.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
     </div>
   )
 }
-function Chips({ q, name, opts, multi, cls }: Group) {
+function Chips({ q, name, opts, multi, cls, opt }: Group & { opt?: boolean }) {
   return (
     <div className={s.fld} data-group={q}>
-      <label>{q}</label>
+      <label>{q}{opt && <Opt />}</label>
       <div className={`${s.chips} ${cls || ''}`}>
         {opts.map((o) => (
           <label key={o}>
@@ -116,10 +118,64 @@ export default function IntakePage() {
   const [gov, setGov] = useState('')
   const [logo, setLogo] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [missing, setMissing] = useState<string[]>([])
 
   const submit = async () => {
     const el = root.current
     if (!el) return
+
+    // ── helpers (used by validation + record building) ──
+    const txt = (q: string) => (el.querySelector(`[data-q="${q}"]`) as HTMLInputElement | null)?.value?.trim() || ''
+    const grp = (q: string) => {
+      const g = el.querySelector(`[data-group="${q}"]`)
+      const picked: string[] = []
+      g?.querySelectorAll<HTMLInputElement>('input:checked').forEach((i) => picked.push(i.value))
+      return picked.join('، ')
+    }
+
+    // ── REQUIRED-FIELD VALIDATION (block submit until the important fields are answered) ──
+    const OPTIONAL = new Set([
+      'عدد الموظفين', 'رسوم التوصيل (د.ك)', 'عربون / دفعة مقدمة', 'مناطق التوصيل', 'قنوات أخرى',
+      'منو يرد على الرسايل الحين؟', 'متوسط الرسايل يومياً', 'حساب انستقرام',
+      'حسابات تواصل أخرى (سناب / تيك توك / ثريدز)', 'الموقع الإلكتروني (إن وجد)',
+      'نبرة أخرى (اكتبها)', 'عبارات تحب الوكيل يستخدمها', 'كلمات أو أمور نتجنّبها', 'ملاحظات',
+    ])
+    const REQ_GROUPS = ['شنو تحتاج من MindSync؟', 'أيام العمل', 'شلون تستقبلون الطلبات / الحجوزات؟',
+      'عندكم توصيل؟', 'طرق الدفع', 'القنوات', 'وين تبي الوكيل يشتغل؟', 'نبرة المخاطبة', 'أكبر مشكلة الحين']
+    const miss: string[] = []
+    const firstBad: HTMLElement[] = []
+    el.querySelectorAll<HTMLElement>('.' + s.err).forEach((x) => x.classList.remove(s.err))
+    const mark = (c: HTMLElement | null | undefined, label: string) => {
+      if (c) { c.classList.add(s.err); firstBad.push(c) }
+      miss.push(label)
+    }
+    el.querySelectorAll<HTMLElement>('[data-q]').forEach((f) => {
+      const q = f.getAttribute('data-q') || ''
+      if (!q || OPTIONAL.has(q)) return
+      const v = ((f as HTMLInputElement).value || '').trim()
+      const cell = f.closest('.' + s.fld) as HTMLElement | null
+      if (!v) { mark(cell, q); return }
+      if (q === 'البريد الإلكتروني' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) mark(cell, 'البريد الإلكتروني (صيغة غير صحيحة)')
+    })
+    REQ_GROUPS.forEach((q) => {
+      const g = el.querySelector(`[data-group="${q}"]`) as HTMLElement | null
+      if (g && !g.querySelector('input:checked')) mark(g, q)
+    })
+    let hasSvc = false
+    el.querySelectorAll<HTMLElement>('[data-srow]').forEach((r) => {
+      if ((r.querySelector('.' + s.nm) as HTMLInputElement)?.value.trim()) hasSvc = true
+    })
+    if (!hasSvc) mark(el.querySelector('[data-svc]') as HTMLElement | null, 'خدمة واحدة على الأقل (الاسم + السعر)')
+    if (grp('عندكم توصيل؟') === 'نعم' && !txt('مناطق التوصيل')) {
+      mark((el.querySelector('[data-q="مناطق التوصيل"]') as HTMLElement | null)?.closest('.' + s.fld) as HTMLElement | null, 'مناطق التوصيل')
+    }
+    if (miss.length) {
+      setMissing(miss)
+      firstBad[0]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    setMissing([])
+
     let logoUrl = ''
     const fi = el.querySelector('[data-logo]') as HTMLInputElement | null
     if (fi?.files?.[0]) {
@@ -165,13 +221,6 @@ export default function IntakePage() {
     })
 
     // ── Build a structured record + send it to the pipeline (creates a discovery card in the admin) ──
-    const txt = (q: string) => (el.querySelector(`[data-q="${q}"]`) as HTMLInputElement | null)?.value?.trim() || ''
-    const grp = (q: string) => {
-      const g = el.querySelector(`[data-group="${q}"]`)
-      const picked: string[] = []
-      g?.querySelectorAll<HTMLInputElement>('input:checked').forEach((i) => picked.push(i.value))
-      return picked.join('، ')
-    }
     const services: { name: string; price: string; note: string }[] = []
     el.querySelectorAll<HTMLElement>('[data-srow]').forEach((row) => {
       const name = (row.querySelector('.' + s.nm) as HTMLInputElement)?.value.trim() || ''
@@ -272,7 +321,7 @@ export default function IntakePage() {
               </select>
             </div>
           </div>
-          <Select q="عدد الموظفين" opts={STAFF} />
+          <Select q="عدد الموظفين" opts={STAFF} opt />
           <Chips q="أيام العمل" name="days" opts={DAYS} multi cls={s.daychips} />
           <div className={s.two}>
             <Select q="من الساعة" opts={HOURS} />
@@ -300,16 +349,16 @@ export default function IntakePage() {
           <Chips q="شلون تستقبلون الطلبات / الحجوزات؟" name="orders" opts={['واتساب', 'انستقرام', 'مكالمات', 'الموقع', 'تطبيق توصيل', 'حضور مباشر']} multi />
           <Chips q="عندكم توصيل؟" name="delivery" opts={['نعم', 'لا']} />
           <SearchSelect q="مناطق التوصيل" options={AREA_OPTS} />
-          <div className={s.two}><Field q="رسوم التوصيل (د.ك)" /><Field q="عربون / دفعة مقدمة" /></div>
+          <div className={s.two}><Field q="رسوم التوصيل (د.ك)" opt /><Field q="عربون / دفعة مقدمة" opt /></div>
           <Chips q="طرق الدفع" name="pay" opts={['كي نت', 'كاش', 'تحويل', 'أونلاين']} multi />
         </div>
 
         <div className={s.sec} data-sec="القنوات والوضع الحالي">
           <div className={s.sh}><div className={s.n}>٤</div><h2>القنوات والوضع الحالي</h2></div>
           <Chips q="القنوات" name="channels" opts={['واتساب', 'انستقرام', 'مكالمات', 'الموقع']} multi />
-          <Field q="قنوات أخرى" />
-          <div className={s.two}><Field q="منو يرد على الرسايل الحين؟" /><Field q="متوسط الرسايل يومياً" /></div>
-          <Chips q="الرد بعد الدوام؟" name="after" opts={['نعم', 'لا']} />
+          <Field q="قنوات أخرى" opt />
+          <div className={s.two}><Field q="منو يرد على الرسايل الحين؟" opt /><Field q="متوسط الرسايل يومياً" opt /></div>
+          <Chips q="الرد بعد الدوام؟" name="after" opts={['نعم', 'لا']} opt />
         </div>
 
         <div className={s.sec} data-sec="وين يشتغل الوكيل (حساباتكم)">
@@ -317,9 +366,9 @@ export default function IntakePage() {
           <div className={s.note}>وين تبي الوكيل يرد على عملائك؟ عطنا حساباتك عشان نجهّز الوكيل عليها.</div>
           <Chips q="وين تبي الوكيل يشتغل؟" name="deploy" opts={['واتساب', 'انستقرام', 'الموقع', 'سناب شات', 'تيك توك']} multi />
           <Field q="رقم واتساب العمل" type="tel" dir="ltr" />
-          <Field q="حساب انستقرام" />
-          <Field q="حسابات تواصل أخرى (سناب / تيك توك / ثريدز)" />
-          <Field q="الموقع الإلكتروني (إن وجد)" />
+          <Field q="حساب انستقرام" opt />
+          <Field q="حسابات تواصل أخرى (سناب / تيك توك / ثريدز)" opt />
+          <Field q="الموقع الإلكتروني (إن وجد)" opt />
         </div>
 
         <div className={s.sec} data-sec="أكثر الأسئلة من العملاء">
@@ -330,23 +379,23 @@ export default function IntakePage() {
         <div className={s.sec} data-sec="الهوية والنبرة">
           <div className={s.sh}><div className={s.n}>٧</div><h2>الهوية والنبرة</h2></div>
           <Chips q="نبرة المخاطبة" name="tone" opts={['لهجة كويتية', 'لغة عربية رسمية', 'لغة انجليزية', 'أخرى']} />
-          <Field q="نبرة أخرى (اكتبها)" />
+          <Field q="نبرة أخرى (اكتبها)" opt />
           <div className={s.fld}>
-            <label>لوقو المشروع</label>
+            <label>لوقو المشروع<Opt /></label>
             <label className={`${s.upload} ${logo ? s.has : ''}`}>
               <input type="file" accept="image/*" data-logo style={{ display: 'none' }} onChange={(e) => setLogo(e.target.files?.[0]?.name || '')} />
               <span>{logo ? '✓ ' + logo : '📎 اختر لوقو مشروعك'}</span>
             </label>
           </div>
-          <Field q="عبارات تحب الوكيل يستخدمها" />
-          <Area q="كلمات أو أمور نتجنّبها" />
+          <Field q="عبارات تحب الوكيل يستخدمها" opt />
+          <Area q="كلمات أو أمور نتجنّبها" opt />
         </div>
 
         <div className={s.sec} data-sec="الأهداف ونقاط الألم">
           <div className={s.sh}><div className={s.n}>٨</div><h2>الأهداف ونقاط الألم</h2></div>
           <Chips q="أكبر مشكلة الحين" name="pain" opts={['متابعة الحجوزات', 'الأسئلة المتكررة', 'الرد المتأخر', 'التنظيم/الجدول', 'أخرى']} multi />
           <Area q="الهدف خلال ٣ أشهر" />
-          <Area q="ملاحظات" />
+          <Area q="ملاحظات" opt />
         </div>
 
         <div className={s.foot}>MindSync · AI Automation · <span className={s.ltr}>+965 9953 9006</span> · mindsynckw.com</div>
@@ -354,6 +403,12 @@ export default function IntakePage() {
 
       <div className={s.bar}>
         <div className={s.barInner}>
+          {missing.length > 0 && (
+            <div className={s.errBanner}>
+              <b>عبّي الحقول المطلوبة قبل الإرسال ({missing.length}):</b>
+              <span> {missing.slice(0, 6).join(' · ')}{missing.length > 6 ? ` · +${missing.length - 6}` : ''}</span>
+            </div>
+          )}
           <button className={s.send} onClick={submit} disabled={uploading}>{uploading ? 'جاري رفع اللوقو…' : 'إرسال إجاباتي عبر واتساب 💬'}</button>
           <div className={s.hint}>بيفتح واتساب بإجاباتك جاهزة — بس اضغط إرسال 💚</div>
         </div>

@@ -60,3 +60,13 @@ select.input:invalid { color: #9a9384; }
 .opt:active, .opt:hover { background: #f4f1e8; }
 .ltr { direction: ltr; unicode-bidi: embed; display: inline-block; }
 .foot { text-align: center; font-size: 11px; color: #a39c8c; margin-top: 18px; font-family: var(--font-grotesk), sans-serif; direction: ltr; }
+
+/* required-field validation */
+.optTag { color: #a39c8c; font-weight: 400; font-size: 12px; }
+.err label { color: #c0392b; }
+.err .input, .err .ta, .err .nm, .err .pr, .err .du,
+.err input, .err select, .err textarea { border-color: #c0392b; background: #fdf3f1; }
+.err .chips { outline: 1.5px solid #e8b4ad; outline-offset: 6px; border-radius: 12px; }
+.err[data-svc] { outline: 1.5px solid #e8b4ad; outline-offset: 6px; border-radius: 12px; }
+.errBanner { background: #fdecea; border: 1px solid #f5c6c0; color: #a93226; border-radius: 12px; padding: 10px 13px; font-size: 12.5px; margin-bottom: 10px; line-height: 1.7; }
+.errBanner b { color: #922b21; }
