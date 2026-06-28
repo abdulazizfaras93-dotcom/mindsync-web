@@ -50,7 +50,7 @@ function Area({ q, note, opt }: { q: string; note?: string; opt?: boolean }) {
     </div>
   )
 }
-function Select({ q, opts, ph = 'اختر', opt }: { q: string; opts: string[]; ph?: string; opt?: boolean }) {
+function Select({ q, opts, ph = 'اختاروا', opt }: { q: string; opts: string[]; ph?: string; opt?: boolean }) {
   return (
     <div className={s.fld}>
       <label>{q}{opt && <Opt />}</label>
@@ -138,10 +138,10 @@ export default function IntakePage() {
       'عدد الموظفين', 'رسوم التوصيل (د.ك)', 'عربون / دفعة مقدمة', 'مناطق التوصيل', 'قنوات أخرى',
       'منو يرد على الرسايل الحين؟', 'متوسط الرسايل يومياً', 'حساب انستقرام',
       'حسابات تواصل أخرى (سناب / تيك توك / ثريدز)', 'الموقع الإلكتروني (إن وجد)',
-      'نبرة أخرى (اكتبها)', 'عبارات تحب الوكيل يستخدمها', 'كلمات أو أمور نتجنّبها', 'ملاحظات',
+      'نبرة أخرى (اكتبوها)', 'عبارات تحبون الوكيل يستخدمها', 'كلمات أو أمور نتجنّبها', 'ملاحظات',
     ])
-    const REQ_GROUPS = ['شنو تحتاج من MindSync؟', 'أيام العمل', 'شلون تستقبلون الطلبات / الحجوزات؟',
-      'عندكم توصيل؟', 'طرق الدفع', 'القنوات', 'وين تبي الوكيل يشتغل؟', 'نبرة المخاطبة', 'أكبر مشكلة الحين']
+    const REQ_GROUPS = ['شنو تحتاجون من MindSync؟', 'أيام العمل', 'شلون تستقبلون الطلبات / الحجوزات؟',
+      'عندكم توصيل؟', 'طرق الدفع', 'القنوات', 'وين تبون الوكيل يشتغل؟', 'نبرة المخاطبة', 'أكبر مشكلة الحين']
     const miss: string[] = []
     const firstBad: HTMLElement[] = []
     el.querySelectorAll<HTMLElement>('.' + s.err).forEach((x) => x.classList.remove(s.err))
@@ -246,18 +246,18 @@ export default function IntakePage() {
       tier: 'coordinator',
       business_name: biz,
       business_type: txt('نوع النشاط'),
-      owner_name: txt('اسمك'),
+      owner_name: txt('اسمكم'),
       whatsapp: txt('رقم واتساب العمل'),
       instagram: txt('حساب انستقرام'),
       services,
       profile: {
         email: txt('البريد الإلكتروني'),
-        service_type: grp('شنو تحتاج من MindSync؟'),
-        project_brief: txt('اشرح مشروعك أو احتياجك بالتفصيل'),
+        service_type: grp('شنو تحتاجون من MindSync؟'),
+        project_brief: txt('اشرحوا مشروعكم أو احتياجكم بالتفصيل'),
         governorate: txt('المحافظة'), area: txt('المنطقة'), staff: txt('عدد الموظفين'),
         days: grp('أيام العمل'), hours: [txt('من الساعة'), txt('إلى الساعة')].filter(Boolean).join(' - '),
         website: txt('الموقع الإلكتروني (إن وجد)'), faqs: txt('أكثر الأسئلة المتكررة'),
-        tone: grp('نبرة المخاطبة'), phrases: txt('عبارات تحب الوكيل يستخدمها'),
+        tone: grp('نبرة المخاطبة'), phrases: txt('عبارات تحبون الوكيل يستخدمها'),
         avoid: txt('كلمات أو أمور نتجنّبها'), logo_url: logoUrl || '', intake_raw: raw,
       },
       booking: {
@@ -267,7 +267,7 @@ export default function IntakePage() {
       },
       channels: {
         current: grp('القنوات'), other: txt('قنوات أخرى'), responder: txt('منو يرد على الرسايل الحين؟'),
-        daily_volume: txt('متوسط الرسايل يومياً'), after_hours: grp('الرد بعد الدوام؟'), deploy: grp('وين تبي الوكيل يشتغل؟'),
+        daily_volume: txt('متوسط الرسايل يومياً'), after_hours: grp('الرد بعد الدوام؟'), deploy: grp('وين تبون الوكيل يشتغل؟'),
       },
       notes: ['المشكلة: ' + grp('أكبر مشكلة الحين'), 'الهدف: ' + txt('الهدف خلال ٣ أشهر'), 'ملاحظات: ' + txt('ملاحظات')]
         .filter((x) => x.length > 10).join('\n'),
@@ -286,14 +286,14 @@ export default function IntakePage() {
           <img src="/brand/logo-transparent.png" alt="MindSync" />
           <div className={s.k}>MindSync · Discovery</div>
           <h1>نموذج <span>استكشاف</span> مشروعك</h1>
-          <p>هلا فيك 🌿 عبّ النموذج من تلفونك — ثواني وتخلص، وبيوصلنا كل شي عشان نجهّز العرض التوضيحي.</p>
+          <p>هلا فيكم 🌿 عبّوا النموذج من تلفونكم — ثواني وتخلصون، وبيوصلنا كل شي عشان نجهّز العرض التوضيحي.</p>
         </div>
 
         <div className={s.sec} data-sec="الخدمة المطلوبة">
-          <div className={s.sh}><div className={s.n}>✦</div><h2>شنو تحتاج من MindSync؟</h2></div>
+          <div className={s.sh}><div className={s.n}>✦</div><h2>شنو تحتاجون من MindSync؟</h2></div>
           <div className={s.note}>اختر كل اللي تحتاجه — نقدر نسوي أكثر من خدمة لنفس المشروع.</div>
-          <Chips q="شنو تحتاج من MindSync؟" name="needs" opts={NEEDS} multi />
-          <Area q="اشرح مشروعك أو احتياجك بالتفصيل" note="مثال: عيادة تبي ربط وكلاء ذكاء اصطناعي بنظامها الحالي، أو بناء نظام عيادة كامل (حجوزات، تفريغ طبي، فوترة تأمين، متابعة...)." />
+          <Chips q="شنو تحتاجون من MindSync؟" name="needs" opts={NEEDS} multi />
+          <Area q="اشرحوا مشروعكم أو احتياجكم بالتفصيل" note="مثال: عيادة تبي ربط وكلاء ذكاء اصطناعي بنظامها الحالي، أو بناء نظام عيادة كامل (حجوزات، تفريغ طبي، فوترة تأمين، متابعة...)." />
         </div>
 
         <div className={s.sec} data-sec="نبذة عن المشروع">
@@ -301,7 +301,7 @@ export default function IntakePage() {
           <Field q="اسم المشروع" />
           <Field q="نوع النشاط" />
           <div className={s.two}>
-            <Field q="اسمك" />
+            <Field q="اسمكم" />
             <Field q="البريد الإلكتروني" type="email" dir="ltr" />
           </div>
           {/* Location: governorate -> dependent area */}
@@ -309,14 +309,14 @@ export default function IntakePage() {
             <div className={s.fld}>
               <label>المحافظة</label>
               <select className={s.input} data-q="المحافظة" value={gov} onChange={(e) => setGov(e.target.value)} required>
-                <option value="" disabled>اختر المحافظة</option>
+                <option value="" disabled>اختاروا المحافظة</option>
                 {GOVS.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className={s.fld}>
               <label>المنطقة</label>
               <select className={s.input} data-q="المنطقة" defaultValue="" required>
-                <option value="" disabled>اختر المنطقة</option>
+                <option value="" disabled>اختاروا المنطقة</option>
                 {(KW[gov] || []).map((a) => <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
@@ -331,7 +331,7 @@ export default function IntakePage() {
 
         <div className={s.sec} data-sec="الخدمات / المنتجات والأسعار">
           <div className={s.sh}><div className={s.n}>٢</div><h2>الخدمات / المنتجات والأسعار</h2></div>
-          <div className={s.note}>أضِف كل خدمة أو منتج بسعره — هذي أهم معلومة عشان الوكيل يسعّر صح.</div>
+          <div className={s.note}>أضيفوا كل خدمة أو منتج بسعره — هذي أهم معلومة عشان الوكيل يسعّر صح.</div>
           <div data-svc>
             {Array.from({ length: rows }).map((_, i) => (
               <div className={s.srow} data-srow key={i}>
@@ -341,7 +341,7 @@ export default function IntakePage() {
               </div>
             ))}
           </div>
-          <button type="button" className={s.addbtn} onClick={() => setRows((r) => r + 1)}>＋ أضِف خدمة</button>
+          <button type="button" className={s.addbtn} onClick={() => setRows((r) => r + 1)}>＋ أضيفوا خدمة</button>
         </div>
 
         <div className={s.sec} data-sec="الطلبات والحجوزات والدفع">
@@ -363,8 +363,8 @@ export default function IntakePage() {
 
         <div className={s.sec} data-sec="وين يشتغل الوكيل (حساباتكم)">
           <div className={s.sh}><div className={s.n}>٥</div><h2>وين يشتغل الوكيل</h2></div>
-          <div className={s.note}>وين تبي الوكيل يرد على عملائك؟ عطنا حساباتك عشان نجهّز الوكيل عليها.</div>
-          <Chips q="وين تبي الوكيل يشتغل؟" name="deploy" opts={['واتساب', 'انستقرام', 'الموقع', 'سناب شات', 'تيك توك']} multi />
+          <div className={s.note}>وين تبون الوكيل يرد على عملائكم؟ عطونا حساباتكم عشان نجهّز الوكيل عليها.</div>
+          <Chips q="وين تبون الوكيل يشتغل؟" name="deploy" opts={['واتساب', 'انستقرام', 'الموقع', 'سناب شات', 'تيك توك']} multi />
           <Field q="رقم واتساب العمل" type="tel" dir="ltr" />
           <Field q="حساب انستقرام" opt />
           <Field q="حسابات تواصل أخرى (سناب / تيك توك / ثريدز)" opt />
@@ -373,21 +373,21 @@ export default function IntakePage() {
 
         <div className={s.sec} data-sec="أكثر الأسئلة من العملاء">
           <div className={s.sh}><div className={s.n}>٦</div><h2>أكثر الأسئلة من العملاء</h2></div>
-          <Area q="أكثر الأسئلة المتكررة" note="هذي اللي بيتعلمها الوكيل ويرد عليها بدالك." />
+          <Area q="أكثر الأسئلة المتكررة" note="هذي اللي بيتعلمها الوكيل ويرد عليها بدالكم." />
         </div>
 
         <div className={s.sec} data-sec="الهوية والنبرة">
           <div className={s.sh}><div className={s.n}>٧</div><h2>الهوية والنبرة</h2></div>
           <Chips q="نبرة المخاطبة" name="tone" opts={['لهجة كويتية', 'لغة عربية رسمية', 'لغة انجليزية', 'أخرى']} />
-          <Field q="نبرة أخرى (اكتبها)" opt />
+          <Field q="نبرة أخرى (اكتبوها)" opt />
           <div className={s.fld}>
             <label>لوقو المشروع<Opt /></label>
             <label className={`${s.upload} ${logo ? s.has : ''}`}>
               <input type="file" accept="image/*" data-logo style={{ display: 'none' }} onChange={(e) => setLogo(e.target.files?.[0]?.name || '')} />
-              <span>{logo ? '✓ ' + logo : '📎 اختر لوقو مشروعك'}</span>
+              <span>{logo ? '✓ ' + logo : '📎 اختاروا لوقو مشروعكم'}</span>
             </label>
           </div>
-          <Field q="عبارات تحب الوكيل يستخدمها" opt />
+          <Field q="عبارات تحبون الوكيل يستخدمها" opt />
           <Area q="كلمات أو أمور نتجنّبها" opt />
         </div>
 
@@ -405,12 +405,12 @@ export default function IntakePage() {
         <div className={s.barInner}>
           {missing.length > 0 && (
             <div className={s.errBanner}>
-              <b>عبّ الحقول المطلوبة قبل الإرسال ({missing.length}):</b>
+              <b>عبّوا الحقول المطلوبة قبل الإرسال ({missing.length}):</b>
               <span> {missing.slice(0, 6).join(' · ')}{missing.length > 6 ? ` · +${missing.length - 6}` : ''}</span>
             </div>
           )}
           <button className={s.send} onClick={submit} disabled={uploading}>{uploading ? 'جاري رفع اللوقو…' : 'إرسال إجاباتي عبر واتساب 💬'}</button>
-          <div className={s.hint}>بيفتح واتساب بإجاباتك جاهزة — بس اضغط إرسال 💚</div>
+          <div className={s.hint}>بيفتح واتساب بإجاباتكم جاهزة — بس اضغطوا إرسال 💚</div>
         </div>
       </div>
     </div>
