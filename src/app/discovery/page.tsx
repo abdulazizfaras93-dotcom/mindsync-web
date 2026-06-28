@@ -141,7 +141,7 @@ export default function IntakePage() {
       'نبرة أخرى (اكتبوها)', 'عبارات تحبون الوكيل يستخدمها', 'كلمات أو أمور نتجنّبها', 'ملاحظات',
     ])
     const REQ_GROUPS = ['شنو تحتاجون من MindSync؟', 'أيام العمل', 'شلون تستقبلون الطلبات / الحجوزات؟',
-      'عندكم توصيل؟', 'طرق الدفع', 'القنوات', 'وين تبون الوكيل يشتغل؟', 'نبرة المخاطبة', 'أكبر مشكلة الحين']
+      'خدمة منزلية؟ (تطلعون لبيت العميل)', 'عندكم توصيل؟', 'طرق الدفع', 'القنوات', 'وين تبون الوكيل يشتغل؟', 'نبرة المخاطبة', 'أكبر مشكلة الحين']
     const miss: string[] = []
     const firstBad: HTMLElement[] = []
     el.querySelectorAll<HTMLElement>('.' + s.err).forEach((x) => x.classList.remove(s.err))
@@ -255,6 +255,7 @@ export default function IntakePage() {
         service_type: grp('شنو تحتاجون من MindSync؟'),
         project_brief: txt('اشرحوا مشروعكم أو احتياجكم بالتفصيل'),
         governorate: txt('المحافظة'), area: txt('المنطقة'), staff: txt('عدد الموظفين'),
+        visits_home: grp('خدمة منزلية؟ (تطلعون لبيت العميل)') === 'نعم',
         days: grp('أيام العمل'), hours: [txt('من الساعة'), txt('إلى الساعة')].filter(Boolean).join(' - '),
         website: txt('الموقع الإلكتروني (إن وجد)'), faqs: txt('أكثر الأسئلة المتكررة'),
         tone: grp('نبرة المخاطبة'), phrases: txt('عبارات تحبون الوكيل يستخدمها'),
@@ -347,6 +348,7 @@ export default function IntakePage() {
         <div className={s.sec} data-sec="الطلبات والحجوزات والدفع">
           <div className={s.sh}><div className={s.n}>٣</div><h2>الطلبات والحجوزات والدفع</h2></div>
           <Chips q="شلون تستقبلون الطلبات / الحجوزات؟" name="orders" opts={['واتساب', 'انستقرام', 'مكالمات', 'الموقع', 'تطبيق توصيل', 'حضور مباشر']} multi />
+          <Chips q="خدمة منزلية؟ (تطلعون لبيت العميل)" name="home" opts={['نعم', 'لا']} />
           <Chips q="عندكم توصيل؟" name="delivery" opts={['نعم', 'لا']} />
           <SearchSelect q="مناطق التوصيل" options={AREA_OPTS} />
           <div className={s.two}><Field q="رسوم التوصيل (د.ك)" opt /><Field q="عربون / دفعة مقدمة" opt /></div>
