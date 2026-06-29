@@ -20,6 +20,14 @@ const nextConfig = {
       },
     ]
   },
+  async redirects() {
+    return [
+      { source: '/classic', destination: '/', permanent: true },
+      { source: '/v1', destination: '/', permanent: true },
+      ...['clinics', 'salons', 'spas', 'gyms', 'garages', 'restaurants', 'real-estate', 'home-businesses']
+        .map((s) => ({ source: `/${s}`, destination: '/services', permanent: true })),
+    ]
+  },
 }
 
 export default withSentryConfig(nextConfig, {
