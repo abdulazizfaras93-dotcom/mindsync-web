@@ -109,7 +109,7 @@ export function buildContractHtml(data: ContractData, signerName: string, signat
   </style></head><body>
     <div class="hd">
       <img src="https://www.mindsynckw.com/logo.png" alt="MindSync"/>
-      <div><h1>عقد تقديم خدمة — وكيل ذكاء اصطناعي</h1><div class="s">MindSync · مايند سينك — حلول الذكاء الاصطناعي</div></div>
+      <div><h1>عقد تقديم خدمة</h1><div class="s">MindSync · مايند سينك — حلول الذكاء الاصطناعي</div></div>
     </div>
     <div class="parties">
       أُبرم هذا العقد بين:<br/>

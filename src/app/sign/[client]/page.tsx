@@ -99,7 +99,7 @@ export default function SignContractPage({ params }: { params: { client: string 
       <div id="contract" className={s.contract}>
         <div className={s.hd}>
           <img src="/logo.png" alt="MindSync" />
-          <div><h1>عقد تقديم خدمة — وكيل ذكاء اصطناعي</h1><div className={s.s}>MindSync · مايند سينك — حلول الذكاء الاصطناعي</div></div>
+          <div><h1>عقد تقديم خدمة</h1><div className={s.s}>MindSync · مايند سينك — حلول الذكاء الاصطناعي</div></div>
         </div>
 
         <div className={s.parties}>
