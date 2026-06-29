@@ -68,28 +68,76 @@ function fmtDateAr(iso: string): string {
   return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
 }
 export function buildContractHtml(data: ContractData, signerName: string, signatureDataUrl: string, msSignatureDataUrl: string | null, signedAt: string): string {
-  const scope = scopeFor(data.channelsAr).map((x) => `<li>${x}</li>`).join('')
-  const price = data.pricing.map(([a, b, c]) => `<tr><td>${a}</td><td style="font-weight:700;color:#153E2D">${b}</td><td style="color:#6B7570">${c}</td></tr>`).join('')
+  // Mirrors the branded /sign/[client] page exactly (sign.module.css) so the emailed PDF == the contract the client signed.
+  const feats = scopeFor(data.channelsAr).map((x) => `<li>${x}</li>`).join('')
+  const price = data.pricing.map(([a, b, c]) => `<tr><td>${a}</td><td class="amt">${b}</td><td class="nt">${c}</td></tr>`).join('')
   const rest = REST_ARTICLES.map(([t, b], i) => `<div class="art"><h3>المادة ${REST_NUM[i]}: ${t}</h3><p>${b}</p></div>`).join('')
-  const msSig = msSignatureDataUrl ? `<img src="${msSignatureDataUrl}" style="max-height:72px"/>` : '<div>التوقيع: ______________</div>'
-  return `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><style>
-    body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;color:#0E1512;padding:34px;line-height:1.75}
-    h1{color:#153E2D;font-size:22px;margin:0}.sub{color:#6B7570;font-size:12px}
-    .art{margin:14px 0}.art h3{color:#153E2D;font-size:15px;margin:0 0 4px}.art p{margin:0;font-size:13px}
-    table{width:100%;border-collapse:collapse;margin:8px 0}td,th{border:1px solid #E2DDCF;padding:8px;text-align:right;font-size:13px}
-    th{background:#F0F6F3;color:#153E2D}ul{padding-right:20px;margin:6px 0}li{margin:3px 0;font-size:13px}
-    .parties{background:#F5F3EC;padding:12px;border-radius:8px;font-size:13px;margin:12px 0}
-    .sigrow{display:flex;gap:28px;margin-top:30px}.sigbox{flex:1;border-top:2px solid #153E2D;padding-top:10px}.role{color:#6B7570;font-size:12px}.nm{font-weight:700;margin:4px 0}
+  const msSig = msSignatureDataUrl
+    ? `<img class="sigimg" src="${msSignatureDataUrl}" alt="توقيع MindSync"/><div class="signedMeta">موقّع مسبقاً عن MindSync</div>`
+    : `<div class="sigline">التوقيع: ______________</div>`
+  return `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--green:#0F2E22;--green2:#153E2D;--gold:#BF8D38;--gold2:#9a7320;--ivory:#FBFAF5;--ink:#1d2a22}
+    *{box-sizing:border-box}
+    @page{margin:14mm}
+    body{direction:rtl;font-family:'Noto Kufi Arabic',sans-serif;color:var(--ink);margin:0;background:#fff;font-size:14px;line-height:1.85}
+    .hd{display:flex;align-items:center;gap:13px;border-bottom:2.5px solid var(--gold);padding-bottom:12px}
+    .hd img{width:60px;height:auto}
+    .hd h1{color:var(--green2);font-size:20px;font-weight:700;line-height:1.3;margin:0}
+    .hd .s{color:var(--gold2);font-size:12px;margin-top:3px}
+    .parties{background:#F6F3EA;border:1px solid #E7E0CF;border-radius:8px;padding:12px 15px;margin:14px 0 4px;font-size:13px}
+    .parties b{color:var(--green2)}
+    .art{margin-top:15px;page-break-inside:avoid}
+    .art h3{color:var(--gold);font-size:14.5px;font-weight:700;margin:0 0 5px}
+    .art p{text-align:justify;margin:0}
+    .feat{margin:0 18px 0 0;padding:0}
+    .feat li{margin-bottom:4px}
+    .price{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+    .price th{background:var(--green);color:var(--ivory);padding:8px 10px;text-align:right;font-weight:600}
+    .price td{padding:8px 10px;border-bottom:1px solid #E7E0CF}
+    .amt{color:var(--gold2);font-weight:700;white-space:nowrap}
+    .nt{color:#5c6657;font-size:12px}
+    .signrow{display:flex;gap:28px;margin-top:28px;page-break-inside:avoid}
+    .sigbox{flex:1;border-top:1.5px solid var(--ink);padding-top:8px;font-size:12.5px}
+    .sigrole{color:var(--gold2);font-weight:700;margin-bottom:10px}
+    .sigline{margin-bottom:8px;color:#444}
+    .signedName{font-size:16px;font-weight:700;color:var(--green2)}
+    .sigimg{display:block;max-width:180px;max-height:70px;margin:4px 0}
+    .signedMeta{font-size:11.5px;color:var(--gold2)}
   </style></head><body>
-    <h1>عقد تقديم خدمة — وكيل ذكاء اصطناعي</h1><div class="sub">MindSync · مايند سينك — حلول الذكاء الاصطناعي</div>
-    <div class="parties"><b>الطرف الأول (مزوّد الخدمة):</b> MindSync — رقم الرخصة: ${PROVIDER.license} · ${PROVIDER.email} · ${PROVIDER.phone}<br/><b>الطرف الثاني (العميل):</b> ${data.businessName} — واتساب: ${data.whatsapp}</div>
+    <div class="hd">
+      <img src="https://www.mindsynckw.com/logo.png" alt="MindSync"/>
+      <div><h1>عقد تقديم خدمة — وكيل ذكاء اصطناعي</h1><div class="s">MindSync · مايند سينك — حلول الذكاء الاصطناعي</div></div>
+    </div>
+    <div class="parties">
+      أُبرم هذا العقد بين:<br/>
+      <b>الطرف الأول (مزوّد الخدمة):</b> MindSync (مايند سينك) — رقم الرخصة التجارية: ${PROVIDER.license} · البريد الإلكتروني: ${PROVIDER.email} · رقم التواصل: ${PROVIDER.phone}<br/>
+      <b>الطرف الثاني (العميل):</b> ${data.businessName} — رقم واتساب العمل: ${data.whatsapp}
+    </div>
     <div class="art"><h3>المادة ١: موضوع العقد</h3><p>${article1(data.channelsAr)}</p></div>
-    <div class="art"><h3>المادة ٢: نطاق الخدمة</h3><ul>${scope}</ul></div>
-    <div class="art"><h3>المادة ٣: الرسوم والدفع</h3><table><tr><th>البند</th><th>المبلغ</th><th>ملاحظات</th></tr>${price}</table></div>
+    <div class="art"><h3>المادة ٢: نطاق الخدمة</h3><ul class="feat">${feats}</ul></div>
+    <div class="art"><h3>المادة ٣: الرسوم والدفع</h3>
+      <table class="price"><tbody>
+        <tr><th>البند</th><th>المبلغ</th><th>ملاحظات</th></tr>
+        ${price}
+      </tbody></table>
+      <p>تُدفع رسوم الاشتراك الشهري مقدماً في بداية كل دورة. جميع المبالغ بالدينار الكويتي وغير شاملة أي رسوم خارجية لمزوّدي الخدمات (مثل واتساب الرسمي) إن وُجدت.</p>
+    </div>
     ${rest}
-    <div class="sigrow">
-      <div class="sigbox"><div class="role">الطرف الأول — MindSync</div><div class="nm">${PROVIDER.name}</div>${msSig}</div>
-      <div class="sigbox"><div class="role">الطرف الثاني — ${data.businessName}</div><div class="nm">${signerName}</div><img src="${signatureDataUrl}" style="max-height:72px"/><div class="sub">موقّع إلكترونياً · ${fmtDateAr(signedAt)}</div></div>
+    <div class="signrow">
+      <div class="sigbox">
+        <div class="sigrole">الطرف الأول — MindSync</div>
+        <div class="signedName">${PROVIDER.name}</div>
+        ${msSig}
+      </div>
+      <div class="sigbox">
+        <div class="sigrole">الطرف الثاني — ${data.businessName}</div>
+        <div class="signedName">${signerName}</div>
+        <img class="sigimg" src="${signatureDataUrl}" alt="التوقيع"/>
+        <div class="signedMeta">موقّع إلكترونياً · ${fmtDateAr(signedAt)}</div>
+      </div>
     </div>
   </body></html>`
 }
