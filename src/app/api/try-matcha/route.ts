@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 
-// The agent (system prompt, flow, words) lives in the n8n "Matcha Demo Agent" workflow.
-// Edit it there — no code change needed.
-const WEBHOOK = 'https://ifaras911.app.n8n.cloud/webhook/matcha-try'
+// ONE client agent — same engine the portal + (later) the live channel use.
+// Reads the client's brain (agent_brain) by slug. Edit knowledge/prices in the portal AI Brain.
+const WEBHOOK = 'https://ifaras911.app.n8n.cloud/webhook/client/agent'
 
 const ipMap = new Map<string, { count: number; resetAt: number }>()
 const WINDOW_MS = 5 * 60 * 1000
@@ -31,13 +31,13 @@ export async function POST(req: Request) {
     const r = await fetch(WEBHOOK, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ message, sessionId, businessName: 'ماتشا سبا', lang: 'ar' }),
+      body: JSON.stringify({ message, sessionId, slug: 'matcha' }),
       cache: 'no-store',
       signal: AbortSignal.timeout(28_000),
     })
     if (!r.ok) return NextResponse.json({ reply: 'عذراً، صار خطأ بسيط. جرّبي مرة ثانية 🌸' })
-    const data = (await r.json()) as { output?: string }
-    return NextResponse.json({ reply: data.output?.trim() || 'تمام 🌸 قوليلي شنو تحتاجين وأساعدج.' })
+    const data = (await r.json()) as { reply?: string; output?: string }
+    return NextResponse.json({ reply: (data.reply || data.output)?.trim() || 'تمام 🌸 قوليلي شنو تحتاجين وأساعدج.' })
   } catch {
     return NextResponse.json({ reply: 'تأخرت شوي بالرد، جرّبي مرة ثانية 🌸' })
   }
