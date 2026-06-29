@@ -1,6 +1,7 @@
 import { LangProvider } from '@/lib/lang'
 import CinematicLanding from '@/components/cinematic/CinematicLanding'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import ReceptionistWidget from '@/components/ui/ReceptionistWidget'
 import ExitIntent from '@/components/ui/ExitIntent'
 
 export const metadata = {
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <LangProvider>
       <CinematicLanding />
+      <ReceptionistWidget />
       <WhatsAppButton />
       <ExitIntent />
     </LangProvider>
