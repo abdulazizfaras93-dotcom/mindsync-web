@@ -73,7 +73,7 @@ export function buildContractHtml(data: ContractData, signerName: string, signat
   const price = data.pricing.map(([a, b, c]) => `<tr><td>${a}</td><td class="amt">${b}</td><td class="nt">${c}</td></tr>`).join('')
   const rest = REST_ARTICLES.map(([t, b], i) => `<div class="art"><h3>المادة ${REST_NUM[i]}: ${t}</h3><p>${b}</p></div>`).join('')
   const msSig = msSignatureDataUrl
-    ? `<img class="sigimg" src="${msSignatureDataUrl}" alt="توقيع MindSync"/><div class="signedMeta">موقّع مسبقاً عن MindSync</div>`
+    ? `<img class="sigimg" src="${msSignatureDataUrl}" alt="توقيع MindSync"/>`
     : `<div class="sigline">التوقيع: ______________</div>`
   return `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -130,7 +130,7 @@ export default function SignContractPage({ params }: { params: { client: string 
             <div className={s.sigrole}>الطرف الأول — MindSync</div>
             <div className={s.signedName}>{msSig.name}</div>
             {msSig.signature ? (
-              <><img className={s.sigimg} src={msSig.signature} alt="توقيع MindSync" /><div className={s.signedMeta}>موقّع مسبقاً عن MindSync</div></>
+              <img className={s.sigimg} src={msSig.signature} alt="توقيع MindSync" />
             ) : <div className={s.sigline}>التوقيع: ______________</div>}
           </div>
           <div className={s.sigbox}>
