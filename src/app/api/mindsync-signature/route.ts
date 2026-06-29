@@ -22,14 +22,21 @@ export async function POST(req: Request) {
   }
 }
 
-// Serve the default signature for contract/sign pages.
+// Serve the default signature for contract/sign pages. CORS-open so the admin Templates
+// preview (admin.mindsynckw.com) can embed it too — the signature is already public via /sign.
+const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS' }
+
+export function OPTIONS() {
+  return new Response(null, { status: 204, headers: CORS })
+}
+
 export async function GET() {
   try {
     const store = getStore({ name: 'mindsync' })
     const raw = await store.get(KEY, { type: 'text' })
-    if (!raw) return Response.json({ name: DEFAULT_NAME, signature: null })
-    return Response.json(JSON.parse(raw))
+    if (!raw) return Response.json({ name: DEFAULT_NAME, signature: null }, { headers: CORS })
+    return Response.json(JSON.parse(raw), { headers: CORS })
   } catch {
-    return Response.json({ name: DEFAULT_NAME, signature: null })
+    return Response.json({ name: DEFAULT_NAME, signature: null }, { headers: CORS })
   }
 }

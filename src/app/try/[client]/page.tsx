@@ -99,7 +99,7 @@ export default function TryClientPage() {
       <div className={s.body} ref={bodyRef}>
         <div className={s.enc}>🔒 الرسائل محمية. هذا وكيل ذكي يرد عن {display}</div>
         {msgs.length === 0 && (
-          <div className={s.empty}>اكتبي «هلا» تحت عشان تبدئين 👇</div>
+          <div className={s.empty}>اكتبوا «هلا» تحت عشان تبدون 👇</div>
         )}
         {msgs.map((m, i) => (
           <div key={i} className={`${s.row} ${m.who === 'a' ? s.ai : s.cust}`}>
