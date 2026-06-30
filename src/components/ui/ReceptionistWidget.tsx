@@ -163,7 +163,7 @@ export default function ReceptionistWidget() {
     <>
       {open && (
         <div
-          className="fixed bottom-24 left-4 right-4 sm:left-6 sm:right-auto z-[60] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-ms-gold-600/25 bg-ms-green-800/95 backdrop-blur-md h-[70vh] max-h-[560px] sm:h-[540px]"
+          className="fixed bottom-24 left-4 right-4 sm:left-6 sm:right-auto z-[60] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-ms-gold-600/25 bg-ms-green-800/95 backdrop-blur-md h-[70vh] max-h-[85vh] sm:h-[540px] sm:max-h-none"
           style={isDesktop ? { width: size.w, height: size.h } : undefined}
         >
           {/* resize grip — desktop only (grab the top-right corner) */}
