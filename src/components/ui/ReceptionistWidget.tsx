@@ -124,6 +124,30 @@ export default function ReceptionistWidget() {
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
   }, [messages, loading])
 
+  // keep the input visible above the mobile soft keyboard (visual viewport)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return
+    const vv = window.visualViewport
+    let saved = 0
+    const onResize = () => {
+      const el = chatRef.current
+      if (!el) return
+      const kb = window.innerHeight - vv.height
+      if (kb > 150) {
+        if (!saved) saved = el.offsetHeight
+        el.style.flex = 'none'
+        el.style.height = `${Math.max(140, saved - kb)}px`
+        setTimeout(() => inputRef.current?.scrollIntoView({ block: 'nearest' }), 80)
+      } else {
+        el.style.flex = ''
+        el.style.height = ''
+        saved = 0
+      }
+    }
+    vv.addEventListener('resize', onResize)
+    return () => vv.removeEventListener('resize', onResize)
+  }, [])
+
   function startResize(e: React.PointerEvent) {
     e.preventDefault()
     drag.current = { x: e.clientX, y: e.clientY, w: size.w, h: size.h }
@@ -163,7 +187,7 @@ export default function ReceptionistWidget() {
     <>
       {open && (
         <div
-          className="fixed bottom-24 left-4 right-4 sm:left-6 sm:right-auto z-[60] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-ms-gold-600/25 bg-ms-green-800/95 backdrop-blur-md h-[70vh] max-h-[85vh] sm:h-[540px] sm:max-h-none"
+          className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:left-6 sm:right-auto z-[60] flex flex-col overflow-hidden bg-ms-green-800/95 backdrop-blur-md sm:h-[540px] sm:w-[384px] sm:rounded-2xl sm:border sm:border-ms-gold-600/25 sm:shadow-2xl"
           style={isDesktop ? { width: size.w, height: size.h } : undefined}
         >
           {/* resize grip — desktop only (grab the top-right corner) */}
@@ -248,7 +272,7 @@ export default function ReceptionistWidget() {
       )}
 
       <button onClick={() => { setOpen((o) => !o); setNudge(false) }} title={T.launch[lang]} aria-label={T.launch[lang]}
-        className="fixed bottom-6 left-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105"
+        className={`fixed bottom-6 left-6 z-[60] w-14 h-14 rounded-full items-center justify-center shadow-lg transition-transform hover:scale-105 ${open ? 'hidden sm:flex' : 'flex'}`}
         style={{ background: 'linear-gradient(135deg,#1C5038,#BF8D38)' }}>
         {open ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
