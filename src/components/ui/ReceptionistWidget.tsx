@@ -5,6 +5,7 @@ import { WHATSAPP_URL } from '@/lib/data'
 
 // Floating AI-receptionist launcher for the homepage. Opens a chat popup wired to
 // MindSync's own Receptionist agent (n8n /webhook/receptionist-website → { reply }).
+// Desktop: the popup is drag-to-resize (grip at the top-right corner).
 const WEBHOOK_URL = 'https://ifaras911.app.n8n.cloud/webhook/receptionist-website'
 
 type Msg = { id: string; from: 'user' | 'bot'; text: string; ts: string; fallback?: boolean }
@@ -22,6 +23,7 @@ const T = {
   err: { en: 'Reach us on WhatsApp 👇', ar: 'تواصلوا ويانا على الواتساب 👇' },
   wa: { en: 'Open WhatsApp', ar: 'افتح الواتساب' },
   close: { en: 'Close', ar: 'إغلاق' },
+  resize: { en: 'Drag to resize', ar: 'اسحب لتغيير الحجم' },
 }
 
 function nowTime() {
@@ -33,6 +35,27 @@ function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`
 }
 
+// Turn URLs (incl. mindsynckw.com/... links like the discovery link) into clickable links.
+function linkify(text: string): React.ReactNode[] {
+  const urlRe = /(https?:\/\/[^\s]+|(?:www\.)?mindsynckw\.com\/[^\s)]+)/g
+  const out: React.ReactNode[] = []
+  let last = 0
+  let m: RegExpExecArray | null
+  while ((m = urlRe.exec(text)) !== null) {
+    if (m.index > last) out.push(text.slice(last, m.index))
+    const raw = m[0].replace(/[.,;:!؟?)]+$/, '')
+    const href = raw.startsWith('http') ? raw : `https://${raw}`
+    out.push(
+      <a key={m.index} href={href} target="_blank" rel="noopener noreferrer" className="underline font-semibold text-ms-gold-400 hover:text-ms-gold-300 break-all">
+        {raw}
+      </a>
+    )
+    last = m.index + raw.length
+  }
+  if (last < text.length) out.push(text.slice(last))
+  return out
+}
+
 export default function ReceptionistWidget() {
   const { lang } = useLang()
   const [open, setOpen] = useState(false)
@@ -41,18 +64,49 @@ export default function ReceptionistWidget() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [sessionId, setSessionId] = useState('')
+  const [isDesktop, setIsDesktop] = useState(false)
+  const [size, setSize] = useState({ w: 384, h: 540 })
   const chatRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const drag = useRef<{ x: number; y: number; w: number; h: number } | null>(null)
 
   useEffect(() => { setSessionId(uid()) }, [])
 
-  // one-time discoverability nudge
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // resize: listeners attached once, gated by drag.current (stable refs)
+  useEffect(() => {
+    function move(e: PointerEvent) {
+      const d = drag.current
+      if (!d) return
+      const w = Math.min(Math.max(d.w + (e.clientX - d.x), 320), window.innerWidth - 48)
+      const h = Math.min(Math.max(d.h - (e.clientY - d.y), 360), window.innerHeight - 120)
+      setSize({ w, h })
+    }
+    function up() {
+      if (drag.current) {
+        drag.current = null
+        document.body.style.userSelect = ''
+      }
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+    return () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+    }
+  }, [])
+
   useEffect(() => {
     const t = setTimeout(() => setNudge(true), 3000)
     return () => clearTimeout(t)
   }, [])
 
-  // fire opener the first time the panel is opened
   useEffect(() => {
     if (!open || messages.length) return
     setLoading(true)
@@ -65,11 +119,16 @@ export default function ReceptionistWidget() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
-  // autoscroll
   useEffect(() => {
     const el = chatRef.current
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
   }, [messages, loading])
+
+  function startResize(e: React.PointerEvent) {
+    e.preventDefault()
+    drag.current = { x: e.clientX, y: e.clientY, w: size.w, h: size.h }
+    document.body.style.userSelect = 'none'
+  }
 
   async function send(e: React.FormEvent) {
     e.preventDefault()
@@ -103,61 +162,81 @@ export default function ReceptionistWidget() {
   return (
     <>
       {open && (
-        <div className="fixed z-[60] bottom-24 left-4 right-4 sm:right-auto sm:left-6 sm:w-[370px] max-w-[calc(100vw-2rem)]">
-          <div className="flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-ms-gold-600/25 bg-ms-green-800/95 backdrop-blur-md">
-            <div className="bg-ms-green-800 px-4 py-3 flex items-center gap-3 border-b border-ms-gold-600/15">
-              <div className="w-9 h-9 rounded-full bg-ms-green-900/60 flex items-center justify-center text-ms-gold-400" aria-hidden>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" /></svg>
-              </div>
-              <div className="flex-1">
-                <p className="text-ms-ivory-0 text-[14px] font-semibold leading-none">{T.agent[lang]}</p>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  <p className="text-ms-ivory-0/60 text-[11px]">{T.online[lang]}</p>
-                </div>
-              </div>
-              <button onClick={() => setOpen(false)} aria-label={T.close[lang]} className="text-ms-ivory-0/60 hover:text-ms-ivory-0 w-7 h-7 flex items-center justify-center rounded-full hover:bg-ms-green-900/50">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
-              </button>
+        <div
+          className="fixed bottom-24 left-4 right-4 sm:left-6 sm:right-auto z-[60] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-ms-gold-600/25 bg-ms-green-800/95 backdrop-blur-md h-[70vh] max-h-[560px] sm:h-[540px]"
+          style={isDesktop ? { width: size.w, height: size.h } : undefined}
+        >
+          {/* resize grip — desktop only (grab the top-right corner) */}
+          {isDesktop && (
+            <div
+              onPointerDown={startResize}
+              title={T.resize[lang]}
+              role="separator"
+              aria-label={T.resize[lang]}
+              className="absolute top-1.5 right-1.5 z-30 w-5 h-5 flex items-center justify-center text-ms-gold-400/70 hover:text-ms-gold-300 cursor-nesw-resize"
+              style={{ touchAction: 'none' }}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M21 15L15 21M21 9L9 21" /></svg>
             </div>
+          )}
 
-            <div ref={chatRef} className="bg-ms-green-900/50 h-[340px] overflow-y-auto overscroll-contain px-3.5 py-3.5 space-y-2.5" style={{ WebkitOverflowScrolling: 'touch' }}>
-              {messages.map((m) =>
-                m.fallback ? (
-                  <div key={m.id} className="flex justify-start">
-                    <div className="max-w-[80%] bg-ms-green-700 text-ms-ivory-0 rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-[13px] leading-relaxed">
-                      <p className="whitespace-pre-line">{m.text}</p>
-                      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 bg-ms-green-800 text-ms-ivory-0 text-[12px] font-semibold rounded-full px-3.5 py-1.5 hover:bg-ms-green-700">{T.wa[lang]}</a>
-                    </div>
-                  </div>
-                ) : (
-                  <div key={m.id} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[80%] px-3.5 py-2 rounded-2xl text-[13px] leading-relaxed whitespace-pre-line break-words ${m.from === 'user' ? 'bg-ms-gold-600 text-ms-green-900 rounded-br-sm' : 'bg-ms-green-700 text-ms-ivory-0 rounded-bl-sm'}`}>
-                      {m.text}
-                      <span className={`block text-[10px] mt-0.5 ${m.from === 'user' ? 'text-ms-green-900/60' : 'text-ms-ivory-0/50'}`}>{m.ts}</span>
-                    </div>
-                  </div>
-                )
-              )}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="bg-ms-green-700 px-4 py-2.5 rounded-2xl rounded-bl-sm flex gap-1" aria-label="typing">
-                    <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              )}
+          {/* close — top-left corner (clear of the resize grip) */}
+          <button onClick={() => setOpen(false)} aria-label={T.close[lang]} className="absolute top-2 left-2 z-30 text-ms-ivory-0/60 hover:text-ms-ivory-0 w-7 h-7 flex items-center justify-center rounded-full hover:bg-ms-green-900/50">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+
+          {/* header with the MindSync logo */}
+          <div className="shrink-0 bg-ms-green-800 px-11 py-3 flex items-center gap-3 border-b border-ms-gold-600/15">
+            <div className="w-9 h-9 rounded-full bg-ms-ivory-0/95 flex items-center justify-center overflow-hidden flex-shrink-0 ring-1 ring-ms-gold-600/30" aria-hidden>
+              <img src="/brand/logo-transparent.png" alt="MindSync" width={28} height={28} className="object-contain w-7 h-7" />
             </div>
-
-            <form onSubmit={send} className="bg-ms-green-800 border-t border-ms-gold-600/15 px-3 py-2.5 flex items-center gap-2">
-              <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder={T.ph[lang]} disabled={loading} aria-label={T.ph[lang]}
-                className="flex-1 bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-full px-4 py-2 text-[16px] sm:text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 disabled:opacity-60" />
-              <button type="submit" disabled={loading || !input.trim()} aria-label="send" className="w-9 h-9 bg-ms-gold-600 rounded-full flex items-center justify-center disabled:opacity-40 flex-shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z" /></svg>
-              </button>
-            </form>
+            <div className="flex-1 min-w-0">
+              <p className="text-ms-ivory-0 text-[14px] font-semibold leading-none truncate">{T.agent[lang]}</p>
+              <div className="flex items-center gap-1.5 mt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <p className="text-ms-ivory-0/60 text-[11px]">{T.online[lang]}</p>
+              </div>
+            </div>
           </div>
+
+          {/* messages — flex-1 so the panel resize grows the conversation area */}
+          <div ref={chatRef} className="flex-1 min-h-0 bg-ms-green-900/50 overflow-y-auto overscroll-contain px-3.5 py-3.5 space-y-2.5" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {messages.map((m) =>
+              m.fallback ? (
+                <div key={m.id} className="flex justify-start">
+                  <div className="max-w-[80%] bg-ms-green-700 text-ms-ivory-0 rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-[13px] leading-relaxed">
+                    <p className="whitespace-pre-line">{m.text}</p>
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 bg-ms-green-800 text-ms-ivory-0 text-[12px] font-semibold rounded-full px-3.5 py-1.5 hover:bg-ms-green-700">{T.wa[lang]}</a>
+                  </div>
+                </div>
+              ) : (
+                <div key={m.id} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[82%] px-3.5 py-2 rounded-2xl text-[13px] leading-relaxed whitespace-pre-line break-words ${m.from === 'user' ? 'bg-ms-gold-600 text-ms-green-900 rounded-br-sm' : 'bg-ms-green-700 text-ms-ivory-0 rounded-bl-sm'}`}>
+                    {linkify(m.text)}
+                    <span className={`block text-[10px] mt-0.5 ${m.from === 'user' ? 'text-ms-green-900/60' : 'text-ms-ivory-0/50'}`}>{m.ts}</span>
+                  </div>
+                </div>
+              )
+            )}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="bg-ms-green-700 px-4 py-2.5 rounded-2xl rounded-bl-sm flex gap-1" aria-label="typing">
+                  <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 bg-ms-ivory-0/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* input */}
+          <form onSubmit={send} className="shrink-0 bg-ms-green-800 border-t border-ms-gold-600/15 px-3 py-2.5 flex items-center gap-2">
+            <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder={T.ph[lang]} disabled={loading} aria-label={T.ph[lang]}
+              className="flex-1 bg-ms-green-900 text-ms-ivory-0 placeholder:text-ms-ivory-0/40 rounded-full px-4 py-2 text-[16px] sm:text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ms-gold-600 disabled:opacity-60" />
+            <button type="submit" disabled={loading || !input.trim()} aria-label="send" className="w-9 h-9 bg-ms-gold-600 rounded-full flex items-center justify-center disabled:opacity-40 flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z" /></svg>
+            </button>
+          </form>
         </div>
       )}
 
