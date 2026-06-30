@@ -35,22 +35,43 @@ function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`
 }
 
-// Turn URLs (incl. mindsynckw.com/... links like the discovery link) into clickable links.
-function linkify(text: string): React.ReactNode[] {
-  const urlRe = /(https?:\/\/[^\s]+|(?:www\.)?mindsynckw\.com\/[^\s)]+)/g
+// Known links get a clean named CTA (no raw URL, no bold).
+function namedLabel(href: string, lang: 'ar' | 'en'): string | null {
+  if (/mindsynckw\.com\/discovery/i.test(href)) return lang === 'ar' ? 'ابدأ الحين' : 'Start now'
+  if (/calendar\.google\.com/i.test(href)) return lang === 'ar' ? 'تأكيد الحجز' : 'Confirm booking'
+  return null
+}
+
+// Render markdown [label](url) and bare URLs as links. Discovery/Calendar (and any
+// markdown-labelled) links become a clean named gold pill; other URLs a plain link.
+function linkify(text: string, lang: 'ar' | 'en'): React.ReactNode[] {
+  const re = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s]+|(?:www\.)?mindsynckw\.com\/[^\s)]+)/g
   const out: React.ReactNode[] = []
   let last = 0
   let m: RegExpExecArray | null
-  while ((m = urlRe.exec(text)) !== null) {
+  while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(text.slice(last, m.index))
-    const raw = m[0].replace(/[.,;:!؟?)]+$/, '')
-    const href = raw.startsWith('http') ? raw : `https://${raw}`
+    let href: string, label: string, cta: boolean
+    if (m[1]) {
+      label = m[1]; href = m[2]; cta = true
+    } else {
+      const raw = m[3].replace(/[.,;:!؟?)]+$/, '')
+      href = raw.startsWith('http') ? raw : `https://${raw}`
+      const named = namedLabel(href, lang)
+      label = named ?? raw
+      cta = !!named
+    }
     out.push(
-      <a key={m.index} href={href} target="_blank" rel="noopener noreferrer" className="underline font-semibold text-ms-gold-400 hover:text-ms-gold-300 break-all">
-        {raw}
-      </a>
+      cta ? (
+        <a key={m.index} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 my-1 bg-ms-gold-600 text-ms-green-900 no-underline rounded-full px-3 py-1 text-[12px] align-middle hover:bg-ms-gold-500">
+          {label}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17L17 7M17 7H8M17 7v9" /></svg>
+        </a>
+      ) : (
+        <a key={m.index} href={href} target="_blank" rel="noopener noreferrer" className="underline text-ms-gold-400 hover:text-ms-gold-300 break-all">{label}</a>
+      )
     )
-    last = m.index + raw.length
+    last = m.index + m[0].length
   }
   if (last < text.length) out.push(text.slice(last))
   return out
@@ -236,7 +257,7 @@ export default function ReceptionistWidget() {
               ) : (
                 <div key={m.id} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[82%] px-3.5 py-2 rounded-2xl text-[13px] leading-relaxed whitespace-pre-line break-words ${m.from === 'user' ? 'bg-ms-gold-600 text-ms-green-900 rounded-br-sm' : 'bg-ms-green-700 text-ms-ivory-0 rounded-bl-sm'}`}>
-                    {linkify(m.text)}
+                    {linkify(m.text, lang)}
                     <span className={`block text-[10px] mt-0.5 ${m.from === 'user' ? 'text-ms-green-900/60' : 'text-ms-ivory-0/50'}`}>{m.ts}</span>
                   </div>
                 </div>
