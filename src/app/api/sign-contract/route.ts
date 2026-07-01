@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 const SB = 'https://kymdwwuujmsaojzetigd.supabase.co'
 // Public anon key (RLS-gated; admin_onboarding_sign is a SECURITY DEFINER RPC granted to anon).
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5bWR3d3V1am1zYW9qemV0aWdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNDU4NDMsImV4cCI6MjA5NDYyMTg0M30.qNwM5UJrhsM5f9xQnc0hT_0DhP6wYUB6FR760N-zfdI'
+const ANON = process.env.SUPABASE_ANON_KEY!
 const N8N = 'https://ifaras911.app.n8n.cloud'
 
 export async function POST(req: Request) {

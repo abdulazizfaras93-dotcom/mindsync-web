@@ -7,7 +7,7 @@ export const runtime = 'nodejs'
 const WEBHOOK = 'https://ifaras911.app.n8n.cloud/webhook/client/agent'
 const SB = 'https://kymdwwuujmsaojzetigd.supabase.co'
 // Public anon key (read-only, RLS-gated; agent_brain is a SECURITY DEFINER RPC granted to anon).
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5bWR3d3V1am1zYW9qemV0aWdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwNDU4NDMsImV4cCI6MjA5NDYyMTg0M30.qNwM5UJrhsM5f9xQnc0hT_0DhP6wYUB6FR760N-zfdI'
+const ANON = process.env.SUPABASE_ANON_KEY!
 
 const slugRe = /^[a-z0-9-]{1,40}$/
 
