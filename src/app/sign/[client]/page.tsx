@@ -105,7 +105,7 @@ export default function SignContractPage({ params }: { params: { client: string 
         <div className={s.parties}>
           أُبرم هذا العقد بين:<br />
           <b>الطرف الأول (مزوّد الخدمة):</b> MindSync (مايند سينك) — رقم الرخصة التجارية: {PROVIDER.license} · البريد الإلكتروني: {PROVIDER.email} · رقم التواصل: {PROVIDER.phone}<br />
-          <b>الطرف الثاني (العميل):</b> {data.businessName} — رقم واتساب العمل: {data.whatsapp}
+          <b>الطرف الثاني (العميل):</b> {data.businessName} — رقم واتساب العمل: {data.whatsapp}{data.crNumber ? ` · رقم السجل التجاري: ${data.crNumber}` : ''}
         </div>
 
         <div className={s.art}><h3>المادة ١: موضوع العقد</h3><p>{article1(data.channelsAr)}</p></div>

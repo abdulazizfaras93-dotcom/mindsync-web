@@ -15,6 +15,7 @@ export type ContractData = {
   channelsAr: string // واتساب وإنستقرام
   tierAr: string // المنسّق
   pricing: [string, string, string][] // [item, amount, note]
+  crNumber?: string // رقم السجل التجاري — Arabic-indic digits, optional (not every client has one on file yet)
 }
 
 export function scopeFor(channelsAr: string): string[] {
@@ -52,6 +53,7 @@ export const CONTRACTS: Record<string, ContractData> = {
     whatsapp: '٦٧٦٥٧١٧٦',
     channelsAr: 'واتساب وإنستقرام',
     tierAr: 'المنسّق',
+    crNumber: '٥٠٦٥٨٧',
     pricing: [
       ['التجربة (٣٠ يوماً)', '١٠٠ د.ك', 'مخصومة · تُحتسب من رسوم التأسيس عند الاستمرار'],
       ['رسوم التأسيس (مرة واحدة)', '٢٨٥ د.ك', 'تدفع ١٠٠ الآن · يتبقى ١٨٥ د.ك بعد التجربة'],
@@ -114,7 +116,7 @@ export function buildContractHtml(data: ContractData, signerName: string, signat
     <div class="parties">
       أُبرم هذا العقد بين:<br/>
       <b>الطرف الأول (مزوّد الخدمة):</b> MindSync (مايند سينك) — رقم الرخصة التجارية: ${PROVIDER.license} · البريد الإلكتروني: ${PROVIDER.email} · رقم التواصل: ${PROVIDER.phone}<br/>
-      <b>الطرف الثاني (العميل):</b> ${data.businessName} — رقم واتساب العمل: ${data.whatsapp}
+      <b>الطرف الثاني (العميل):</b> ${data.businessName} — رقم واتساب العمل: ${data.whatsapp}${data.crNumber ? ` · رقم السجل التجاري: ${data.crNumber}` : ''}
     </div>
     <div class="art"><h3>المادة ١: موضوع العقد</h3><p>${article1(data.channelsAr)}</p></div>
     <div class="art"><h3>المادة ٢: نطاق الخدمة</h3><ul class="feat">${feats}</ul></div>

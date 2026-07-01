@@ -32,6 +32,7 @@ export async function GET(req: Request) {
       whatsapp: wa,
       channelsAr,
       tierAr: TIER_AR[rec.tier as string] || 'المنسّق',
+      crNumber: rec.cr_number ? toAr(String(rec.cr_number)) : undefined,
       pricing: [
         ['التجربة (٣٠ يوماً)', `${toAr(pilot)} د.ك`, 'تُحتسب من رسوم التأسيس عند الاستمرار'],
         ['رسوم التأسيس (مرة واحدة)', `${toAr(setup)} د.ك`, `يتبقى ${toAr(Math.max(0, setup - pilot))} د.ك بعد خصم مبلغ التجربة`],
